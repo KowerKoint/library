@@ -3,37 +3,41 @@
 
 namespace library_internal {
     template <typename T>
-    T default_mult(T a, T b) { return a * b; }
-    template <typename T>
     T default_add(T a, T b) { return a + b; }
     template <typename T>
     T default_sub(T a, T b) { return a - b; }
     template <typename T>
+    T zero() { return 0; }
+    template <typename T>
     T default_div(T a, T b) { return a / b; }
+    template <typename T>
+    T default_mult(T a, T b) { return a * b; }
+    template <typename T>
+    T one() { return 1; }
 }
 
 template <
     typename T,
     T (*add)(T, T)=library_internal::default_add,
-    T zero=0,
+    T (*zero)()=library_internal::zero,
     T (*mult)(T, T)=library_internal::default_mult,
-    T one=1,
+    T (*one)()=library_internal::one,
     T (*sub)(T, T)=library_internal::default_sub,
     T (*div)(T, T)=library_internal::default_div
 >
-class Matrix {
+struct Matrix {
     vector<vector<T>> A;
 
-    Matrix(size_t n, size_t m) : A(n, vector<T>(m, zero)) {}
+    Matrix(size_t n, size_t m) : A(n, vector<T>(m, zero())) {}
 
     size_t height() const { return A.size(); }
     size_t width() const { return A[0].size(); }
 
-    const vector<T> &operator[](int i) const { return A.at(i); }
+    vector<T> &operator[](int i) { return A.at(i); }
 
     static Matrix I(size_t n) {
         Matrix ret(n, n);
-        REP(i, n) ret[i][i] = one;
+        REP(i, n) ret[i][i] = one();
         return ret;
     }
 
@@ -57,16 +61,22 @@ class Matrix {
         return (Matrix(*this) -= B);
     }
 
-    Matrix &operator*=(const Matrix &B) const {
+    Matrix &operator*=(const Matrix &B) {
         size_t n = height(), m = width(), l = B.width();
         assert(m == B.height());
-        vector<vector<T>> res(n, vector<T>(l, zero));
+        vector<vector<T>> res(n, vector<T>(l, zero()));
         REP(i, n) REP(j, m) REP(k, l) res[i][k] = add(res[i][k], mult(A[i][j], B[j][k]));
         A.swap(res);
         return (*this);
     }
     Matrix operator*(const Matrix &B) const {
         return (Matrix(*this) *= B);
+    }
+
+    friend istream &operator>>(istream &is, Matrix &mat) {
+        size_t n = mat.height(), m = mat.width();
+        REP(i, n) REP(j, m) is >> mat[i][j];
+        return is;
     }
 
     friend ostream &operator<<(ostream &os, Matrix &mat) {
@@ -77,23 +87,23 @@ class Matrix {
         return os;
     }
 
-    pair<Matrix, T> gaussian_elimination() {
+    pair<Matrix, T> gaussian_elimination() const {
         int n = height(), m = width();
         Matrix mat(*this);
-        T det = one;
+        T det = one();
         VI columns;
         int i = 0;
         int j = 0;
         while(i < n && j < m) {
             int idx = -1;
-            FOR(k, i, n) if(mat[k][j] != zero) idx = k;
+            FOR(k, i, n) if(mat[k][j] != zero()) idx = k;
             if(idx == -1) {
-                det = zero;
+                det = zero();
                 j++;
                 continue;
             }
             if(i != idx) {
-                det *= sub(zero, one);
+                det *= sub(zero(), one());
                 swap(mat[i], mat[idx]);
             }
             det *= mat[i][j];
@@ -116,16 +126,16 @@ class Matrix {
                 }
             }
         }
-        return tie(mat, det);
+        return make_pair(mat, det);
     }
 
-    Matrix inv() {
+    Matrix inv() const {
         int n = height();
-        Matrix and_i(n, n*2, zero);
+        Matrix and_i(n, n*2, zero());
         REP(i, n) REP(j, n) and_i[i][j] = A[i][j];
-        REP(i, n) and_i[i][n+i] = one;
-        auto [i_and, det] = and_i.gaussian_elimination();
-        assert(det != zero);
+        REP(i, n) and_i[i][n+i] = one();
+        auto& [i_and, det] = and_i.gaussian_elimination();
+        assert(det != zero());
         Matrix res(n, n);
         REP(i, n) REP(j, n) res[i][j] = i_and[i][n+i];
         return res;

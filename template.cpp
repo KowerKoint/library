@@ -1,4 +1,5 @@
-// This is a dummy line
+#pragma once
+
 #ifndef ONLINE_JUDGE
 #define _GLIBCXX_DEBUG
 #endif
