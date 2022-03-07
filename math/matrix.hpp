@@ -1,29 +1,15 @@
 #pragma once
 #include "../template.cpp"
-
-namespace library_internal {
-    template <typename T>
-    T default_add(T a, T b) { return a + b; }
-    template <typename T>
-    T default_sub(T a, T b) { return a - b; }
-    template <typename T>
-    T zero() { return 0; }
-    template <typename T>
-    T default_div(T a, T b) { return a / b; }
-    template <typename T>
-    T default_mult(T a, T b) { return a * b; }
-    template <typename T>
-    T one() { return 1; }
-}
+#include "../internal_operator.hpp"
 
 template <
     typename T,
-    T (*add)(T, T)=library_internal::default_add,
-    T (*zero)()=library_internal::zero,
-    T (*mult)(T, T)=library_internal::default_mult,
-    T (*one)()=library_internal::one,
-    T (*sub)(T, T)=library_internal::default_sub,
-    T (*div)(T, T)=library_internal::default_div
+    T (*add)(T, T)=internal_operator::default_add,
+    T (*zero)()=internal_operator::zero,
+    T (*mult)(T, T)=internal_operator::default_mult,
+    T (*one)()=internal_operator::one,
+    T (*sub)(T, T)=internal_operator::default_sub,
+    T (*div)(T, T)=internal_operator::default_div
 >
 struct Matrix {
     vector<vector<T>> A;
