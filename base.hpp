@@ -130,15 +130,3 @@ pair<vector<T>, vector<T>> factorial(int n) {
     }
     return make_pair(res, rev);
 }
-
-#ifdef ATCODER_MODINT_HPP
-
-#include "expansion/ac-library/modint.hpp"
-
-#endif
-
-#ifdef ATCODER_SEGTREE_HPP
-
-#include "expansion/ac-library/segtree.hpp"
-
-#endif
