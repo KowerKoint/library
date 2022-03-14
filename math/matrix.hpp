@@ -4,12 +4,12 @@
 
 template <
     typename T,
-    T (*add)(T, T)=internal_operator::default_add,
+    T (*add)(const T, const T)=internal_operator::default_add,
     T (*zero)()=internal_operator::zero,
-    T (*mult)(T, T)=internal_operator::default_mult,
+    T (*mult)(const T, const T)=internal_operator::default_mult,
     T (*one)()=internal_operator::one,
-    T (*sub)(T, T)=internal_operator::default_sub,
-    T (*div)(T, T)=internal_operator::default_div
+    T (*sub)(const T, const T)=internal_operator::default_sub,
+    T (*div)(const T, const T)=internal_operator::default_div
 >
 struct Matrix {
     vector<vector<T>> A;
@@ -20,6 +20,7 @@ struct Matrix {
     size_t width() const { return A[0].size(); }
 
     vector<T> &operator[](int i) { return A.at(i); }
+    const vector<T> &operator[](int i) const { return A.at(i); }
 
     static Matrix I(size_t n) {
         Matrix ret(n, n);
@@ -117,10 +118,10 @@ struct Matrix {
 
     Matrix inv() const {
         int n = height();
-        Matrix and_i(n, n*2, zero());
+        Matrix and_i(n, n*2);
         REP(i, n) REP(j, n) and_i[i][j] = A[i][j];
         REP(i, n) and_i[i][n+i] = one();
-        auto& [i_and, det] = and_i.gaussian_elimination();
+        auto [i_and, det] = and_i.gaussian_elimination();
         assert(det != zero());
         Matrix res(n, n);
         REP(i, n) REP(j, n) res[i][j] = i_and[i][n+i];
