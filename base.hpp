@@ -12,12 +12,6 @@ using namespace std;
 #define ALL(a) (a).begin(),(a).end()
 #define END(...) { print(__VA_ARGS__); return; }
 
-#ifdef ONLINE_JUDGE
-#define DBG(...) {}
-#else
-#define DBG(a) { cerr << #a << ": "; dbg(a); }
-#endif
-
 using VI = vector<int>;
 using VVI = vector<VI>;
 using VVVI = vector<VVI>;
