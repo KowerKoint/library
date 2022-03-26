@@ -12,12 +12,12 @@ template <
     T (*div)(const T, const T)=internal_operator::default_div
 >
 struct Matrix {
+    int n, m;
     vector<vector<T>> A;
 
-    Matrix(size_t n, size_t m) : A(n, vector<T>(m, zero())) {}
-
-    size_t height() const { return A.size(); }
-    size_t width() const { return A[0].size(); }
+    Matrix() : n(0), m(0), A(vector<vector<T>>(0)) {}
+    Matrix(size_t _n, size_t _m) : n(_n), m(_m), A(_n, vector<T>(_m, zero())) {}
+    Matrix(vector<vector<T>> _A) : n(_A.size()), m(_A[0].size()), A(_A) {}
 
     vector<T> &operator[](int i) { return A.at(i); }
     const vector<T> &operator[](int i) const { return A.at(i); }
@@ -29,8 +29,7 @@ struct Matrix {
     }
 
     Matrix &operator+=(const Matrix &B) {
-        size_t n = height(), m = width();
-        assert(n == B.height() && m == B.width());
+        assert(n == B.n && m == B.m);
         REP(i, n) REP(j, m) A[i][j] = add(A[i][j], B[i][j]);
         return *this;
     }
@@ -39,8 +38,7 @@ struct Matrix {
     }
 
     Matrix &operator-=(const Matrix &B) {
-        size_t n = height(), m = width();
-        assert(n == B.height() && m == B.width());
+        assert(n == B.n && m == B.m);
         REP(i, n) REP(j, m) A[i][j] = sub(A[i][j], B[i][j]);
         return *this;
     }
@@ -49,33 +47,78 @@ struct Matrix {
     }
 
     Matrix &operator*=(const Matrix &B) {
-        size_t n = height(), m = width(), l = B.width();
-        assert(m == B.height());
-        vector<vector<T>> res(n, vector<T>(l, zero()));
-        REP(i, n) REP(j, m) REP(k, l) res[i][k] = add(res[i][k], mult(A[i][j], B[j][k]));
+        assert(m == B.n);
+        vector<vector<T>> res(n, vector<T>(B.m, zero()));
+        REP(i, n) REP(j, m) REP(k, B.m) res[i][k] = add(res[i][k], mult(A[i][j], B[j][k]));
         A.swap(res);
+        m = B.m;
         return (*this);
     }
     Matrix operator*(const Matrix &B) const {
         return (Matrix(*this) *= B);
     }
 
+    Matrix &operator|=(const Matrix &B) {
+        assert(B.n == n);
+        REP(i, n) {
+            A[i].resize(m+B.m);
+            REP(j, B.m) A[i][m+j] = B[i][j];
+        }
+        m += B.m;
+        return (*this);
+    }
+    Matrix operator|(const Matrix &B) const {
+        return (Matrix(*this) |= B);
+    }
+
+    Matrix &operator|=(const vector<T> &B) {
+        assert(B.size() == n);
+        REP(i, n) {
+            A[i].push_back(B[i]);
+        }
+        m++;
+        return (*this);
+    }
+    Matrix operator|(const vector<T> &B) const {
+        return (Matrix(*this) |= B);
+    }
+
+    Matrix &operator&=(const Matrix &B) {
+        assert(B.m == m);
+        A.resize(n+B.n);
+        REP(i, B.n) {
+            A[n+i] = B[i];
+        }
+        n += B.n;
+        return (*this);
+    }
+    Matrix operator&(const Matrix &B) const {
+        return (Matrix(*this) &= B);
+    }
+
+    Matrix &operator&=(const vector<T> &B) {
+        assert(B.size() == m);
+        A.push_back(B);
+        n++;
+        return (*this);
+    }
+    Matrix operator&(const vector<T> &B) const {
+        return (Matrix(*this) &= B);
+    }
+
     friend istream &operator>>(istream &is, Matrix &mat) {
-        size_t n = mat.height(), m = mat.width();
-        REP(i, n) REP(j, m) is >> mat[i][j];
+        REP(i, mat.n) REP(j, mat.m) is >> mat[i][j];
         return is;
     }
 
     friend ostream &operator<<(ostream &os, Matrix &mat) {
-        size_t n = mat.height(), m = mat.width();
-        REP(i, n) {
-            REP(j, m) os << mat[i][j] << (j==m-1? '\n' : ' ');
+        REP(i, mat.n) {
+            REP(j, mat.m) os << mat[i][j] << (j==mat.m-1? '\n' : ' ');
         }
         return os;
     }
 
     pair<Matrix, T> gaussian_elimination() const {
-        int n = height(), m = width();
         Matrix mat(*this);
         T det = one();
         VI columns;
@@ -116,15 +159,47 @@ struct Matrix {
         return make_pair(mat, det);
     }
 
+    void make_basis() {
+        *this = gaussian_elimination().first;
+        while(n && get_bra(n-1) == vector<T>(m, zero())) pop_bra();
+    }
+
     Matrix inv() const {
-        int n = height();
-        Matrix and_i(n, n*2);
-        REP(i, n) REP(j, n) and_i[i][j] = A[i][j];
-        REP(i, n) and_i[i][n+i] = one();
+        Matrix and_i = A | I(n);
         auto [i_and, det] = and_i.gaussian_elimination();
         assert(det != zero());
         Matrix res(n, n);
         REP(i, n) REP(j, n) res[i][j] = i_and[i][n+i];
+        return res;
+    }
+
+    vector<T> get_bra(int i) const {
+        assert(0 <= i && i < n);
+        return A[i];
+    }
+
+    vector<T> get_ket(int i) const {
+        assert(0 <= i && i < m);
+        vector<T> res(n);
+        REP(i, n) res[i] = A[i][i];
+        return res;
+    }
+
+    void pop_bra() {
+        assert(n > 0);
+        A.pop_back();
+        n--;
+    }
+
+    void pop_ket() {
+        assert(m > 0);
+        REP(i, n) A[i].pop_back();
+        m--;
+    }
+
+    Matrix transpose() const {
+        Matrix res(m, n);
+        REP(i, n) REP(j, m) res[j][i] = A[i][j];
         return res;
     }
 
@@ -133,7 +208,7 @@ struct Matrix {
             *this = this->inv();
             n = -n;
         }
-        Matrix res = Matrix::I(height());
+        Matrix res = Matrix::I(n);
         while(n) {
             if(n & 1) res *= *this;
             *this *= *this;
@@ -146,3 +221,13 @@ struct Matrix {
         return (Matrix(*this) ^= n);
     }
 };
+
+using XorMatrix = Matrix<
+    int,
+    internal_operator::default_xor<int>,
+    internal_operator::zero<int>,
+    internal_operator::default_and<int>,
+    internal_operator::one<int>,
+    internal_operator::default_xor<int>,
+    internal_operator::default_and<int>
+>;
