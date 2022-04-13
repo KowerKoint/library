@@ -111,7 +111,7 @@ struct Matrix {
         return is;
     }
 
-    friend ostream &operator<<(ostream &os, Matrix &mat) {
+    friend ostream &operator<<(ostream &os, const Matrix &mat) {
         REP(i, mat.n) {
             REP(j, mat.m) os << mat[i][j] << (j==mat.m-1? '\n' : ' ');
         }
