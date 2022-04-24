@@ -1,8 +1,8 @@
-#define aclmodint
-#include "atcoder/all"
+#include "KowerKoint/base.hpp"
+#include <atcoder/all>
 using namespace atcoder;
-#include "KowerKoint/template.cpp"
-#include "KowerKoint/math/matrix.hpp"
+#include "KowerKoint/expansion/ac-library/modint.hpp"
+#include "KowerKoint/matrix.hpp"
 
 int main(void) {
     int n; cin >> n;

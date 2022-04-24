@@ -1,6 +1,6 @@
 #pragma once
-#include "../base.hpp"
-#include "../internal_operator.hpp"
+#include "base.hpp"
+#include "internal_operator.hpp"
 
 template <
     typename T,
