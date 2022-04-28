@@ -64,3 +64,17 @@ map<ll, int> prime_factor(ll n) {
     if(n > 1) factor[n]++;
     return factor;
 }
+
+ll extgcd(ll a, ll b, ll& x, ll& y) {
+    stack<LP> stk;
+    while(b) {
+        stk.emplace(a, b);
+        tie(a, b) = LP(b, a % b);
+    }
+    x = 1, y = 0;
+    while(!stk.empty()) {
+        tie(a, b) = stk.top(); stk.pop();
+        tie(x, y) = LP(y, x - a/b * y);
+    }
+    return a;
+}
