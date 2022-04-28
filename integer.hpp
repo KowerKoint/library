@@ -72,6 +72,7 @@ ll extgcd(ll a, ll b, ll& x, ll& y) {
         ll q = a / b;
         tie(a, b) = LP(b, a % b);
         tie(x, nx) = LP(nx, x - nx*q);
+        tie(y, ny) = LP(ny, y - ny*q);
     }
     return a;
 }
