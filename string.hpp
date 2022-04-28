@@ -1,6 +1,6 @@
 #pragma once
 
-#include "KowerKoint/base.hpp"
+#include "base.hpp"
 
 template <typename It>
 vector<int> kmp_table(It begin, It end) {
