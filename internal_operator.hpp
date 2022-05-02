@@ -1,3 +1,6 @@
+#pragma once
+#include "base.hpp"
+
 namespace internal_operator {
     template <typename T>
     T default_add(T a, T b) { return a + b; }
@@ -17,5 +20,8 @@ namespace internal_operator {
     T default_and(T a, T b) { return a & b; }
     template <typename T>
     T default_or(T a, T b) { return a | b; }
+    ll mod3() { return 998244353LL; }
+    ll mod7() { return 1000000007LL; }
+    ll mod9() { return 1000000009LL; }
 }
 
