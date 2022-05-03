@@ -1,6 +1,6 @@
 #pragma once
 
-#include "base.hpp"
+#include "modint.hpp"
 
 template <typename It>
 vector<int> kmp_table(It begin, It end) {
@@ -130,5 +130,55 @@ struct Trie {
 
     ll aho_corasick(string &s) {
         return aho_corasick(ALL(s));
+    }
+};
+
+template <typename T>
+struct RollingHash {
+    int num;
+    vector<T> base;
+    vector<vector<T>> power;
+
+    RollingHash(vector<T> base_) : num(base_.size()), base(base_) {
+        power = vector<vector<T>>(num, vector<T>(1, 1));
+    }
+
+    RollingHash(int num_=3) : num(num_) {
+        assert(num_ > 0);
+        power = vector<vector<T>>(num, vector<T>(1, 1));
+        mt19937 engine((random_device){}());
+        REP(i, num) base.push_back(engine());
+    }
+
+    void expand(int n) {
+        int m = power[0].size();
+        if(m > n) return;
+        REP(i, num) {
+            power[i].resize(n+1);
+            FOR(j, m, n+1) power[i][j] = power[i][j-1] * base[i];
+        }
+    }
+
+    template<typename It>
+    vector<vector<T>> build(It begin, It end) {
+        int n = end - begin;
+        vector<vector<T>> res(num, vector<T>(n+1));
+        REP(i, num) REP(j, n) {
+            res[i][j+1] = res[i][j] * base[i] + *(begin+j);
+        }
+        return res;
+    }
+
+    vector<vector<T>> build(const string& s) {
+        return build(ALL(s));
+    }
+
+    vector<T> query(const vector<vector<T>>& hash, int l, int r) {
+        assert(hash.size() == num);
+        assert(0 <= l && l <= r && r < hash[0].size());
+        expand(r - l);
+        vector<T> res(num);
+        REP(i, num) res[i] = hash[i][r] - hash[i][l] * power[i][r-l];
+        return res;
     }
 };

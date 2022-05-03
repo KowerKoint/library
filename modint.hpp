@@ -25,7 +25,7 @@ struct Modint {
 
     Modint& operator-=(const Modint& r) {
         val -= r.val;
-        if(val < mod()) val += mod();
+        if(val < 0) val += mod();
         return *this;
     }
     friend Modint operator-(const Modint& l, const Modint& r) {
