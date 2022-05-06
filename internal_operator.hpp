@@ -23,5 +23,9 @@ namespace internal_operator {
     ll mod3() { return 998244353LL; }
     ll mod7() { return 1000000007LL; }
     ll mod9() { return 1000000009LL; }
+    template <typename T>
+    T default_max(T a, T b) { return max(a, b); }
+    template <typename T>
+    T default_min(T a, T b) { return min(a, b); }
 }
 
