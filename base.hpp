@@ -140,6 +140,27 @@ pair<VI, vector<T>> compress(const vector<T> &a) {
     return make_pair(res, x);
 }
 
+template <typename It>
+auto rle(It begin, It end) {
+    vector<pair<typename It::value_type, int>> res;
+    if(begin == end) return res;
+    auto pre = *begin;
+    int num = 1;
+    for(auto it = begin + 1; it != end; it++) {
+        if(pre != *it) {
+            res.emplace_back(pre, num);
+            pre = *it;
+            num = 1;
+        } else num++;
+    }
+    res.emplace_back(pre, num);
+    return res;
+}
+
+vector<pair<char, int>> rle(string s) {
+    return rle(ALL(s));
+}
+
 template <typename T>
 pair<vector<T>, vector<T>> factorial(int n) {
     vector<T> res(n+1), rev(n+1);
