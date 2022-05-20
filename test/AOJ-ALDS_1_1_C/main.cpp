@@ -8,9 +8,10 @@
 void solve(){
     int n; cin >> n;
     int ans = 0;
+    Prime pn;
     REP(i, n) {
         ll a; cin >> a;
-        if(is_prime(a)) ans++;
+        if(pn.is_prime(a)) ans++;
     }
     print(ans);
 }

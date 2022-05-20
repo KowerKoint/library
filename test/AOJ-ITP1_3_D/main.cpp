@@ -7,7 +7,7 @@
 
 void solve(){
     ll a, b, c; cin >> a >> b >> c;
-    VL div = divisor(c);
+    VL div = Prime{}.divisor(c);
     print(upper_bound(ALL(div), b) - lower_bound(ALL(div), a));
 }
 

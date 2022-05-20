@@ -1,69 +1,114 @@
 #pragma once
 #include "base.hpp"
 
-VL divisor(ll n) {
-    assert(n > 0);
-    VL fow, bck;
-    for(ll i = 1; i * i <= n; i++) {
-        if(n % i == 0) {
-            fow.push_back(i);
-            if(i * i != n) bck.push_back(n / i);
+ll kth_root(ll x, ll k) {
+    if(k == 1) return x;
+    ll res = 0;
+    for(int i = 31; i >= 0; i--) {
+        bool over = false;
+        ll tmp = 1;
+        ll nxt = res | 1LL << i;
+        REP(i, k) {
+            if(tmp > x / nxt) {
+                over = true;
+                break;
+            }
+            tmp *= nxt;
         }
+        if(!over) res = nxt;
     }
-    reverse(ALL(bck));
-    fow.insert(fow.end(), ALL(bck));
-    return fow;
+    return res;
 }
 
-bool is_prime(ll n) {
-    assert(n > 0);
-    for(ll d = 2; d*d <= n; d++) {
-        if(n % d == 0) return false;
-    }
-    return true;
+ll sqrt(ll x) {
+    return kth_root(x, 2);
 }
 
-VL least_prime_factors(ll n) {
-    assert(n > 0);
-    VL lpfs(n+1, -1), primes;
-    FOR(d, 2, n+1) {
-        if(lpfs[d] == -1) {
-            lpfs[d] = d;
-            primes.push_back(d);
-        }
-        for(ll p : primes) {
-            if(p * d > n || p > lpfs[d]) break;
-            lpfs[p*d] = p;
-        }
-    }
-    return lpfs;
-}
-
-VL prime_list(ll n) {
-    assert(n > 0);
+struct Prime {
+    VI sieved;
     VL primes;
-    vector<bool> sieved(n+1);
-    FOR(d, 2, n+1) {
-        if(!sieved[d]) {
-            primes.push_back(d);
-            for(ll i = d*d; i <= n; i += d) sieved[i] = 1;
-        }
-    }
-    return primes;
-}
 
-map<ll, int> prime_factor(ll n) {
-    assert(n > 0);
-    map<ll, int> factor;
-    for(ll d = 2; d*d <= n; d++) {
-        while(n%d == 0) {
-            n /= d;
-            factor[d]++;
+    Prime() {}
+    Prime(ll n) {
+        expand(n);
+    }
+
+    void expand(ll n) {
+        ll sz = (ll)sieved.size() - 1;
+        if(n <= sz) return;
+        sieved.resize(n+1);
+        sieved[0] = sieved[1] = 1;
+        primes.clear();
+        FOR(d, 2, n+1) {
+            if(!sieved[d]) {
+                primes.push_back(d);
+                for(ll i = d*d; i <= n; i += d) sieved[i] = 1;
+            }
         }
     }
-    if(n > 1) factor[n]++;
-    return factor;
-}
+
+    bool is_prime(ll n) {
+        assert(n > 0);
+        if(n <= (ll)sieved.size() - 1) return !sieved[n];
+        for(ll d = 2; d*d <= n; d++) {
+            if(n % d == 0) return false;
+        }
+        return true;
+    }
+
+    VL least_prime_factors(ll n) {
+        assert(n > 0);
+        VL lpfs(n+1, -1), primes;
+        FOR(d, 2, n+1) {
+            if(lpfs[d] == -1) {
+                lpfs[d] = d;
+                primes.push_back(d);
+            }
+            for(ll p : primes) {
+                if(p * d > n || p > lpfs[d]) break;
+                lpfs[p*d] = p;
+            }
+        }
+        return lpfs;
+    }
+
+    VL prime_list(ll n) {
+        assert(n > 0);
+        expand(n);
+        return VL(primes.begin(), upper_bound(ALL(primes), n));
+    }
+
+    vector<pair<ll, int>> prime_factor(ll n) {
+        assert(n > 0);
+        vector<pair<ll, int>> factor;
+        expand(sqrt(n));
+        for(ll prime : primes) {
+            if(prime * prime > n) break;
+            int cnt = 0;
+            while(n % prime == 0) {
+                n /= prime;
+                cnt++;
+            }
+            if(cnt) factor.emplace_back(prime, cnt);
+        }
+        if(n > 1) factor.emplace_back(n, 1);
+        return factor;
+    }
+
+
+    VL divisor(ll n) {
+        assert(n > 0);
+        auto factor = prime_factor(n);
+        VL res = {1};
+        for(auto [prime, cnt] : factor) {
+            int sz = res.size();
+            res.resize(sz * (cnt+1));
+            REP(i, sz*cnt) res[sz+i] = res[i] * prime;
+        }
+        sort(ALL(res));
+        return res;
+    }
+};
 
 ll extgcd(ll a, ll b, ll& x, ll& y) {
     x = 1, y = 0;

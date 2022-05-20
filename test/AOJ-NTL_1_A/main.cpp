@@ -7,7 +7,7 @@
 
 void solve(){
     ll n; cin >> n;
-    auto factor = prime_factor(n);
+    auto factor = Prime{}.prime_factor(n);
     VL ans;
     for(auto [key, val] : factor) REP(i, val) ans.push_back(key);
     cout << n << ": " << ans << '\n';

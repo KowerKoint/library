@@ -7,7 +7,7 @@
 
 void solve(){
     ll n, a, b; cin >> n >> a >> b;
-    VL primes = prime_list(n);
+    VL primes = Prime{}.prime_list(n);
     ll pi = primes.size();
     VL ans;
     while(b < pi) {
