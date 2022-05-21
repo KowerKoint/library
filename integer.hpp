@@ -39,10 +39,12 @@ struct Prime {
         sieved.resize(n+1);
         sieved[0] = sieved[1] = 1;
         primes.clear();
+        primes.push_back(2);
+        for(ll d = 4; d <= n; d += 2) sieved[d] = 1;
         FOR(d, 2, n+1) {
             if(!sieved[d]) {
                 primes.push_back(d);
-                for(ll i = d*d; i <= n; i += d) sieved[i] = 1;
+                for(ll i = d*d; i <= n; i += d*2) sieved[i] = 1;
             }
         }
     }
@@ -104,8 +106,8 @@ struct Prime {
             int sz = res.size();
             res.resize(sz * (cnt+1));
             REP(i, sz*cnt) res[sz+i] = res[i] * prime;
+            REP(i, cnt) inplace_merge(res.begin(), res.begin() + sz*(i+1), res.begin() + sz*(i+2));
         }
-        sort(ALL(res));
         return res;
     }
 };
