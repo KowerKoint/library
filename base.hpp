@@ -1,6 +1,6 @@
 #pragma once
 
-#ifndef ONLINE_JUDGE
+#ifdef DEBUG
 #define _GLIBCXX_DEBUG
 #endif
 
@@ -56,10 +56,7 @@ void print(const Head &head, const Tail &... tail) {
     print(tail...);
 }
 
-#ifdef ONLINE_JUDGE
-template<typename... Args>
-void dbg(const Args &... args) {}
-#else
+#ifdef DEBUG
 void dbg() { cerr << '\n'; }
 template<typename T>
 void dbg(const T &t) { cerr << t << '\n'; }
@@ -68,6 +65,9 @@ void dbg(const Head &head, const Tail &... tail) {
     cerr << head << ' ';
     dbg(tail...);
 }
+#else
+template<typename... Args>
+void dbg(const Args &... args) {}
 #endif
 
 template< typename T1, typename T2 >
