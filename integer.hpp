@@ -41,7 +41,7 @@ struct Prime {
         primes.clear();
         primes.push_back(2);
         for(ll d = 4; d <= n; d += 2) sieved[d] = 1;
-        FOR(d, 2, n+1) {
+        FOR(d, 3, n+1) {
             if(!sieved[d]) {
                 primes.push_back(d);
                 for(ll i = d*d; i <= n; i += d*2) sieved[i] = 1;
