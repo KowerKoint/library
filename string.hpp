@@ -40,17 +40,20 @@ vector<int> kmp_find(string& s, string& t, vector<int>& table) {
     return kmp_find(ALL(s), ALL(t), table);
 }
 
-template <typename T=char, T root_char='_', int hash_size=30>
+template <typename T=char, T begin_char='a', int char_sz=26>
 struct Trie {
     struct Node {
         T c;
-        unordered_map<char, Node*> nxt;
+        int sz = 0;
+        int depth;
+        vector<Node*> nxt;
         Node* failure;
         vector<int> fullmatch_keyword_id;
         vector<int> suffixmatch_keyword_id;
 
-        Node(T _c): c(_c) {
-            nxt.reserve(30);
+        Node(T _c, int _d): c(_c), depth(_d) {
+            nxt.resize(char_sz);
+            fill(ALL(nxt), nullptr);
         }
     };
 
@@ -58,15 +61,18 @@ struct Trie {
     int keyword_id = 0;
 
     Trie() {
-        root = new Node(root_char);
+        root = new Node(begin_char-1, 0);
     }
 
     template <typename It>
-    void add(It begin, It end, int keyword_id_) {
+    void add(It begin, It end, int keyword_id_=-1) {
+        if(keyword_id_ == -1) keyword_id_ = keyword_id++;
         Node* cursor = root;
+        cursor->sz++;
         for(It it = begin; it != end; it++) {
-            if(!cursor->nxt.count(*it)) cursor->nxt[*it] = new Node(*it);
-            cursor = cursor->nxt[*it];
+            if(!cursor->nxt[*it-begin_char]) cursor->nxt[*it-begin_char] = new Node(*it, cursor->depth+1);
+            cursor = cursor->nxt[*it-begin_char];
+            cursor->sz++;
         }
         cursor->fullmatch_keyword_id.push_back(keyword_id_);
     }
@@ -77,7 +83,9 @@ struct Trie {
 
     void build_failure() {
         queue<Node*> que;
-        for(auto [c, to] : root->nxt) {
+        REP(i, char_sz) {
+            Node* to = root->nxt[i];
+            if(!to) continue;
             to->failure = root;
             for(int x : to->fullmatch_keyword_id) {
                 to->suffixmatch_keyword_id.push_back(x);
@@ -86,10 +94,12 @@ struct Trie {
         }
         while(!que.empty()) {
             Node* from = que.front(); que.pop();
-            for(auto [c, to] : from->nxt) {
+            REP(i, char_sz) {
+                Node* to = from->nxt[i];
+                if(!to) continue;
                 Node* cursor = from->failure;
-                while(cursor != root && !cursor->nxt.count(c)) cursor = cursor->failure;
-                if(cursor->nxt.count(c)) to->failure = cursor->nxt[c];
+                while(cursor != root && !cursor->nxt[i]) cursor = cursor->failure;
+                if(cursor->nxt[i]) to->failure = cursor->nxt[i];
                 else to->failure = root;
                 for(int x : to->fullmatch_keyword_id) {
                     to->suffixmatch_keyword_id.push_back(x);
@@ -106,9 +116,9 @@ struct Trie {
     void aho_corasick(It begin, It end, function<void(vector<int>&)>& f) {
         Node* cursor = root;
         for(It it = begin; it != end; it++) {
-            while(cursor != root && !cursor->nxt.count(*it)) cursor = cursor->failure;
-            if(cursor->nxt.count(*it)) {
-                cursor = cursor->nxt[*it];
+            while(cursor != root && !cursor->nxt[*it-begin_char]) cursor = cursor->failure;
+            if(cursor->nxt[*it-begin_char]) {
+                cursor = cursor->nxt[*it-begin_char];
                 f(cursor->suffixmatch_keyword_id);
             }
         }

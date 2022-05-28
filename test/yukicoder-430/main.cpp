@@ -9,7 +9,7 @@ void solve(){
     string s; cin >> s;
     int m; cin >> m;
     ll ans = 0;
-    Trie trie;
+    Trie<char, 'A'> trie;
     REP(i, m) {
         string c; cin >> c;
         trie.add(c);
