@@ -32,7 +32,7 @@ struct LoopDetective {
     template<typename T, typename U>
     T query(int s, ll k, vector<U>& v, T init=0LL,
             function<T(T, U)> add=internal_operator::default_add<T>,
-            function<U(U, ll)> k_times=internal_operator::default_mult<ll>) {
+            function<U(U, ll)> k_times=internal_operator::default_mult<U>) {
         T res = init;
         auto [prepath, looppath] = path(s);
         REP(i, min(k, (ll)prepath.size())) {
