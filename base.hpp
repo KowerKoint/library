@@ -157,8 +157,13 @@ auto rle(It begin, It end) {
     return res;
 }
 
-vector<pair<char, int>> rle(string s) {
-    return rle(ALL(s));
+template <typename It>
+vector<pair<typename It::value_type, int>> rle_sort(It begin, It end) {
+    vector<typename It::value_type> cloned(begin, end);
+    sort(ALL(cloned));
+    auto e = rle(ALL(cloned));
+    sort(ALL(e), [](const auto& l, const auto& r) { return l.second < r.second; });
+    return e;
 }
 
 template <typename T>
