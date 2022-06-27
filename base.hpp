@@ -104,7 +104,7 @@ vector<vector<T>> split(typename vector<T>::const_iterator begin, typename vecto
         if(*it == val) {
             res.push_back(cur);
             cur.clear();
-        } else cur.push_back(val);
+        } else cur.push_back(*it);
     }
     res.push_back(cur);
     return res;
@@ -117,7 +117,7 @@ vector<string> split(typename string::const_iterator begin, typename string::con
         if(*it == val) {
             res.push_back(cur);
             cur.clear();
-        } else cur.push_back(val);
+        } else cur.push_back(*it);
     }
     res.push_back(cur);
     return res;

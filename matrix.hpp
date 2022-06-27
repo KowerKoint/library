@@ -203,22 +203,22 @@ struct Matrix {
         return res;
     }
 
-    Matrix operator^=(ll n) {
-        if(n < 0) {
+    Matrix operator^=(ll k) {
+        if(k < 0) {
             *this = this->inv();
-            n = -n;
+            k = -k;
         }
         Matrix res = Matrix::I(n);
-        while(n) {
-            if(n & 1) res *= *this;
+        while(k) {
+            if(k & 1) res *= *this;
             *this *= *this;
-            n >>= 1LL;
+            k >>= 1LL;
         }
         A.swap(res.A);
         return (*this);
     }
-    Matrix operator^(const ll n) const {
-        return (Matrix(*this) ^= n);
+    Matrix operator^(const ll k) const {
+        return (Matrix(*this) ^= k);
     }
 };
 
