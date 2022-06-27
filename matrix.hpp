@@ -165,7 +165,7 @@ struct Matrix {
     }
 
     Matrix inv() const {
-        Matrix and_i = A | I(n);
+        Matrix and_i = (*this) | I(n);
         auto [i_and, det] = and_i.gaussian_elimination();
         assert(det != zero());
         Matrix res(n, n);
