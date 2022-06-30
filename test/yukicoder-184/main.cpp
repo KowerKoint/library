@@ -1,3 +1,4 @@
+#define PROBLEM "https://yukicoder.me/problems/no/184"
 #include "KowerKoint/matrix.hpp"
 
 int main(void) {

@@ -1,3 +1,4 @@
+#define PROBLEM "https://onlinejudge.u-aizu.ac.jp/problems/ALDS1_14_B"
 #include "KowerKoint/general.hpp"
 
 /* #include <atcoder/all> */

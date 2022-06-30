@@ -1,3 +1,4 @@
+#define PROBLEM "https://onlinejudge.u-aizu.ac.jp/problems/NTL_1_E"
 #include "KowerKoint/base.hpp"
 
 /* #include <atcoder/all> */

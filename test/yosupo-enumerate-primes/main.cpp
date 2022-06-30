@@ -1,3 +1,4 @@
+#define PROBLEM "https://judge.yosupo.jp/problem/enumerate_primes"
 #include "KowerKoint/base.hpp"
 
 /* #include <atcoder/all> */
