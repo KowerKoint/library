@@ -1,11 +1,11 @@
 #define PROBLEM "https://onlinejudge.u-aizu.ac.jp/problems/DPL_5_J"
-#include "KowerKoint/base.hpp"
+#include "base.hpp"
 
 /* #include <atcoder/all> */
 /* using namespace atcoder; */
-/* #include "KowerKoint/expansion/ac-library/all.hpp" */
-#include "KowerKoint/modint.hpp"
-#include "KowerKoint/counting.hpp"
+/* #include "expansion/ac-library/all.hpp" */
+#include "modint.hpp"
+#include "counting.hpp"
 
 void solve(){
     ll n, k; cin >> n >> k;

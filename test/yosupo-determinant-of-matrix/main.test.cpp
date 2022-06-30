@@ -1,9 +1,9 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/matrix_det"
-#include "KowerKoint/base.hpp"
+#include "base.hpp"
 #include <atcoder/all>
 using namespace atcoder;
-#include "KowerKoint/expansion/ac-library/modint.hpp"
-#include "KowerKoint/matrix.hpp"
+#include "expansion/ac-library/modint.hpp"
+#include "matrix.hpp"
 
 int main(void) {
     int n; cin >> n;

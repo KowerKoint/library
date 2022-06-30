@@ -1,10 +1,10 @@
 #define PROBLEM "https://atcoder.jp/contests/practice2/tasks/practice2_j"
-#include "KowerKoint/general.hpp"
+#include "general.hpp"
 
 /* #include <atcoder/all> */
 /* using namespace atcoder; */
-/* #include "KowerKoint/expansion/ac-library/all.hpp" */
-#include "KowerKoint/segtree.hpp"
+/* #include "expansion/ac-library/all.hpp" */
+#include "segtree.hpp"
 
 void solve(){
     int n, q; cin >>  n>> q;

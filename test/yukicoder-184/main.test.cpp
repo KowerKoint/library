@@ -1,5 +1,5 @@
 #define PROBLEM "https://yukicoder.me/problems/no/184"
-#include "KowerKoint/matrix.hpp"
+#include "matrix.hpp"
 
 int main(void) {
     int n; cin >> n;
