@@ -2,10 +2,13 @@
 data:
   _extendedDependsOn: []
   _extendedRequiredBy: []
-  _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _extendedVerifiedWith:
+  - icon: ':x:'
+    path: test/yosupo-determinant-of-matrix/main.test.cpp
+    title: test/yosupo-determinant-of-matrix/main.test.cpp
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':x:'
   attributes:
     links: []
   bundledCode: "#line 1 \"expansion/ac-library/modint.hpp\"\nostream &operator<<(ostream\
@@ -31,8 +34,9 @@ data:
   path: expansion/ac-library/modint.hpp
   requiredBy: []
   timestamp: '2022-05-29 20:46:13+09:00'
-  verificationStatus: LIBRARY_NO_TESTS
-  verifiedWith: []
+  verificationStatus: LIBRARY_ALL_WA
+  verifiedWith:
+  - test/yosupo-determinant-of-matrix/main.test.cpp
 documentation_of: expansion/ac-library/modint.hpp
 layout: document
 redirect_from:

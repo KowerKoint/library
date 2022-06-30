@@ -5,85 +5,33 @@ data:
     path: base.hpp
     title: base.hpp
   - icon: ':question:'
+    path: counting.hpp
+    title: counting.hpp
+  - icon: ':question:'
     path: integer.hpp
     title: integer.hpp
   - icon: ':question:'
     path: internal_operator.hpp
     title: internal_operator.hpp
-  _extendedRequiredBy:
-  - icon: ':x:'
-    path: general.hpp
-    title: general.hpp
-  - icon: ':x:'
-    path: string.hpp
-    title: string.hpp
-  _extendedVerifiedWith:
-  - icon: ':x:'
-    path: test/AOJ-ALDS_1_14_B/main.test.cpp
-    title: test/AOJ-ALDS_1_14_B/main.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: test/AOJ-DPL_5_A/main.test.cpp
-    title: test/AOJ-DPL_5_A/main.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: test/AOJ-DPL_5_B/main.test.cpp
-    title: test/AOJ-DPL_5_B/main.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: test/AOJ-DPL_5_C/main.test.cpp
-    title: test/AOJ-DPL_5_C/main.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: test/AOJ-DPL_5_D/main.test.cpp
-    title: test/AOJ-DPL_5_D/main.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: test/AOJ-DPL_5_E/main.test.cpp
-    title: test/AOJ-DPL_5_E/main.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: test/AOJ-DPL_5_F/main.test.cpp
-    title: test/AOJ-DPL_5_F/main.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: test/AOJ-DPL_5_G/main.test.cpp
-    title: test/AOJ-DPL_5_G/main.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: test/AOJ-DPL_5_I/main.test.cpp
-    title: test/AOJ-DPL_5_I/main.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: test/AOJ-DPL_5_J/main.test.cpp
-    title: test/AOJ-DPL_5_J/main.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: test/AOJ-DPL_5_L/main.test.cpp
-    title: test/AOJ-DPL_5_L/main.test.cpp
-  - icon: ':x:'
-    path: test/AtCoder-abc019_b/main.test.cpp
-    title: test/AtCoder-abc019_b/main.test.cpp
-  - icon: ':x:'
-    path: test/AtCoder-abc110d/main.test.cpp
-    title: test/AtCoder-abc110d/main.test.cpp
-  - icon: ':x:'
-    path: test/AtCoder-abc185_f/main.test.cpp
-    title: test/AtCoder-abc185_f/main.test.cpp
-  - icon: ':x:'
-    path: test/AtCoder-abc241_e/main.test.cpp
-    title: test/AtCoder-abc241_e/main.test.cpp
-  - icon: ':x:'
-    path: test/AtCoder-practice2_j/main.test.cpp
-    title: test/AtCoder-practice2_j/main.test.cpp
-  - icon: ':x:'
-    path: test/yukicoder-391/main.test.cpp
-    title: test/yukicoder-391/main.test.cpp
-  - icon: ':x:'
-    path: test/yukicoder-430/main.test.cpp
-    title: test/yukicoder-430/main.test.cpp
-  - icon: ':x:'
-    path: test/yukicoder-502/main.test.cpp
-    title: test/yukicoder-502/main.test.cpp
-  _isVerificationFailed: true
-  _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  - icon: ':question:'
+    path: modint.hpp
+    title: modint.hpp
+  _extendedRequiredBy: []
+  _extendedVerifiedWith: []
+  _isVerificationFailed: false
+  _pathExtension: cpp
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    links: []
-  bundledCode: "#line 2 \"base.hpp\"\n\n#ifdef DEBUG\n#define _GLIBCXX_DEBUG\n#endif\n\
-    \n#include <bits/stdc++.h>\nusing namespace std;\n\n#define REP(i, n) for(int\
-    \ i = 0; i < (int)(n); i++)\n#define FOR(i, a, b) for(ll i = a; i < (ll)(b); i++)\n\
-    #define ALL(a) (a).begin(),(a).end()\n#define END(...) { print(__VA_ARGS__); return;\
+    '*NOT_SPECIAL_COMMENTS*': ''
+    PROBLEM: https://onlinejudge.u-aizu.ac.jp/problems/DPL_5_J
+    links:
+    - https://github.com/online-judge-tools/template-generator)
+    - https://onlinejudge.u-aizu.ac.jp/problems/DPL_5_J
+  bundledCode: "#line 1 \"test/AOJ-DPL_5_J/main.test.cpp\"\n#define PROBLEM \"https://onlinejudge.u-aizu.ac.jp/problems/DPL_5_J\"\
+    \n#line 2 \"base.hpp\"\n\n#ifdef DEBUG\n#define _GLIBCXX_DEBUG\n#endif\n\n#include\
+    \ <bits/stdc++.h>\nusing namespace std;\n\n#define REP(i, n) for(int i = 0; i\
+    \ < (int)(n); i++)\n#define FOR(i, a, b) for(ll i = a; i < (ll)(b); i++)\n#define\
+    \ ALL(a) (a).begin(),(a).end()\n#define END(...) { print(__VA_ARGS__); return;\
     \ }\n\nusing VI = vector<int>;\nusing VVI = vector<VI>;\nusing VVVI = vector<VVI>;\n\
     using ll = long long;\nusing VL = vector<ll>;\nusing VVL = vector<VL>;\nusing\
     \ VVVL = vector<VVL>;\nusing VD = vector<double>;\nusing VVD = vector<VD>;\nusing\
@@ -141,7 +89,9 @@ data:
     \ {\n    vector<T> res(n+1), rev(n+1);\n    res[0] = 1;\n    REP(i, n) res[i+1]\
     \ = res[i] * (i+1);\n    rev[n] = 1 / res[n];\n    for(int i = n; i > 0; i--)\
     \ {\n        rev[i-1] = rev[i] * i;\n    }\n    return make_pair(res, rev);\n\
-    }\n#line 3 \"internal_operator.hpp\"\n\nnamespace internal_operator {\n    template\
+    }\n#line 3 \"test/AOJ-DPL_5_J/main.test.cpp\"\n\n/* #include <atcoder/all> */\n\
+    /* using namespace atcoder; */\n/* #include \"expansion/ac-library/all.hpp\" */\n\
+    #line 3 \"internal_operator.hpp\"\n\nnamespace internal_operator {\n    template\
     \ <typename T>\n    T default_add(T a, T b) { return a + b; }\n    template <typename\
     \ T>\n    T default_sub(T a, T b) { return a - b; }\n    template <typename T>\n\
     \    T zero() { return T(0); }\n    template <typename T>\n    T default_div(T\
@@ -237,83 +187,68 @@ data:
     using V3 = vector<MI3>;\nusing VV3 = vector<V3>;\nusing VVV3 = vector<VV3>;\n\
     using MI7 = Modint<internal_operator::mod7>;\nusing V7 = vector<MI7>;\nusing VV7\
     \ = vector<V7>;\nusing VVV7 = vector<VV7>;\nusing MI9 = Modint<internal_operator::mod9>;\n\
-    using V9 = vector<MI9>;\nusing VV9 = vector<V9>;\nusing VVV9 = vector<VV9>;\n"
-  code: "#pragma once\n#include \"base.hpp\"\n#include \"internal_operator.hpp\"\n\
-    #include \"integer.hpp\"\n\ntemplate <ll (*mod)()>\nstruct Modint {\n    ll val;\n\
-    \    \n    Modint(): val(0) {}\n\n    Modint(ll x): val(x) {\n        val %= mod();\n\
-    \        if(val < 0) val += mod();\n    }\n\n    Modint& operator+=(const Modint&\
-    \ r) {\n        val += r.val;\n        if(val >= mod()) val -= mod();\n      \
-    \  return *this;\n    }\n    friend Modint operator+(const Modint& l, const Modint&\
-    \ r) {\n        return Modint(l) += r;\n    }\n\n    Modint& operator-=(const\
-    \ Modint& r) {\n        val -= r.val;\n        if(val < 0) val += mod();\n   \
-    \     return *this;\n    }\n    friend Modint operator-(const Modint& l, const\
-    \ Modint& r) {\n        return Modint(l) -= r;\n    }\n\n    Modint& operator*=(const\
-    \ Modint& r) {\n        val *= r.val;\n        val %= mod();\n        return *this;\n\
-    \    }\n    Modint operator*(const Modint& r) {\n        return (Modint(*this)\
-    \ *= r);\n    }\n    friend Modint operator*(const Modint& l, const Modint& r)\
-    \ {\n        return Modint(l) *= r;\n    }\n\n    Modint pow(ll n) const {\n \
-    \       return Modint(pow_mod(val, n, mod()));\n    }\n\n    Modint inv() const\
-    \ {\n        return Modint(inv_mod(val, mod()));\n    }\n\n    Modint& operator/=(const\
-    \ Modint& r) {\n        return (*this *= r.inv());\n    }\n    friend Modint operator/(const\
-    \ Modint& l, const Modint& r) {\n        return Modint(l) /= r;\n    }\n\n   \
-    \ Modint& operator^=(const ll n) {\n        val = pow_mod(val, n, mod());\n  \
-    \      return *this;\n    }\n    Modint operator^(const ll n) {\n        return\
-    \ this->pow(n);\n    }\n\n    Modint operator+() const { return *this; }\n   \
-    \ Modint operator-() const { return Modint() - *this; }\n\n    Modint& operator++()\
-    \ {\n        val++;\n        if(val == mod()) val = 0LL;\n        return *this;\n\
-    \    }\n    Modint& operator++(int) {\n        Modint res(*this);\n        ++*this;\n\
-    \        return res;\n    }\n\n    Modint& operator--() {\n        if(val == 0LL)\
-    \ val = mod();\n        val--;\n        return *this;\n    }\n    Modint& operator--(int)\
-    \ {\n        Modint res(*this);\n        --*this;\n        return res;\n    }\n\
-    \n    friend bool operator==(const Modint& l, const Modint& r) {\n        return\
-    \ l.val == r.val;\n    }\n    friend bool operator!=(const Modint& l, const Modint&\
-    \ r) {\n        return l.val != r.val;\n    }\n\n    static pair<vector<Modint>,\
-    \ vector<Modint>> factorial(int n) {\n        vector<Modint> fact(n+1), rfact(n+1);\n\
-    \        fact[0] = 1;\n        REP(i, n) fact[i+1] = fact[i] * (i+1);\n      \
-    \  rfact[n] = 1 / fact[n];\n        for(int i = n-1; i >= 0; i--) rfact[i] = rfact[i+1]\
-    \ * (i+1);\n        return {fact, rfact};\n    }\n\n    friend istream& operator>>(istream&\
-    \ is, Modint& mi) {\n        is >> mi.val;\n        return is;\n    }\n\n    friend\
-    \ ostream& operator<<(ostream& os, const Modint& mi) {\n        os << mi.val;\n\
-    \        return os;\n    }\n};\n\nusing MI3 = Modint<internal_operator::mod3>;\n\
-    using V3 = vector<MI3>;\nusing VV3 = vector<V3>;\nusing VVV3 = vector<VV3>;\n\
-    using MI7 = Modint<internal_operator::mod7>;\nusing V7 = vector<MI7>;\nusing VV7\
-    \ = vector<V7>;\nusing VVV7 = vector<VV7>;\nusing MI9 = Modint<internal_operator::mod9>;\n\
-    using V9 = vector<MI9>;\nusing VV9 = vector<V9>;\nusing VVV9 = vector<VV9>;\n"
+    using V9 = vector<MI9>;\nusing VV9 = vector<V9>;\nusing VVV9 = vector<VV9>;\n\
+    #line 3 \"counting.hpp\"\n\ntemplate <typename T>\nstruct Counting {\n    vector<T>\
+    \ fact, ifact;\n\n    Counting() {}\n    Counting(ll n) {\n        expand(n);\n\
+    \    }\n\n    void expand(ll n) {\n        ll sz = (ll)fact.size();\n        if(sz\
+    \ > n) return;\n        fact.resize(n+1);\n        ifact.resize(n+1);\n      \
+    \  fact[0] = 1;\n        FOR(i, max(1LL, sz), n+1) fact[i] = fact[i-1] * i;\n\
+    \        ifact[n] = 1 / fact[n];\n        for(ll i = n-1; i >= sz; i--) ifact[i]\
+    \ = ifact[i+1] * (i+1);\n    }\n\n    T permutation(ll n, ll r) {\n        assert(n\
+    \ >= r);\n        assert(r >= 0);\n        expand(n);\n        return fact[n]\
+    \ * ifact[n-r];\n    }\n\n    T combination(ll n, ll r) {\n        assert(n >=\
+    \ r);\n        assert(r >= 0);\n        expand(n);\n        return fact[n] * ifact[r]\
+    \ * ifact[n-r];\n    }\n\n    T stirling(ll n, ll k) {\n        assert(n >= k);\n\
+    \        assert(k >= 0);\n        if(n == 0) return 1;\n        T res = 0;\n \
+    \       int sign = k%2? -1 : 1;\n        expand(k);\n        REP(i, k+1) {\n \
+    \           res += sign * ifact[i] * ifact[k-i] * T(i).pow(n);\n            sign\
+    \ *= -1;\n        }\n        return res;\n    }\n\n    vector<vector<T>> stirling_table(ll\
+    \ n, ll k) {\n        assert(n >= 0 && k >= 0);\n        vector<vector<T>> res(n+1,\
+    \ vector<T>(k+1));\n        res[0][0] = 1;\n        FOR(i, 1, n+1) FOR(j, 1, k+1)\
+    \ {\n            res[i][j] = res[i-1][j-1] + j * res[i-1][j];\n        }\n   \
+    \     return res;\n    }\n\n    T bell(ll n, ll k) {\n        assert(n >= 0 &&\
+    \ k >= 0);\n        expand(k);\n        vector<T> tmp(k+1);\n        int sign\
+    \ = 1;\n        tmp[0] = 1;\n        FOR(i, 1, k+1) {\n            sign *= -1;\n\
+    \            tmp[i] = tmp[i-1] + sign * ifact[i];\n        }\n        T res =\
+    \ 0;\n        REP(i, k+1) {\n            res += T(i).pow(n) * ifact[i] * tmp[k-i];\n\
+    \        }\n        return res;\n    }\n\n    vector<vector<T>> partition_table(ll\
+    \ n) {\n        assert(n >= 0);\n        vector<vector<T>> res(n+1, vector<T>(n+1));\n\
+    \        REP(i, n+1) res[0][i] = 1;\n        FOR(i, 1, n+1) FOR(j, 1, n+1) {\n\
+    \            res[i][j] = res[i][j-1] + (i<j? 0 : res[i-j][j]);\n        }\n  \
+    \      return res;\n    }\n};\n#line 9 \"test/AOJ-DPL_5_J/main.test.cpp\"\n\n\
+    void solve(){\n    ll n, k; cin >> n >> k;\n    print(Counting<MI7>().partition_table(max(n,\
+    \ k))[n][k]);\n}\n\n// generated by oj-template v4.7.2 (https://github.com/online-judge-tools/template-generator)\n\
+    int main() {\n    // Fasterize input/output script\n    ios::sync_with_stdio(false);\n\
+    \    cin.tie(nullptr);\n    cout << fixed << setprecision(100);\n    // scanf/printf\
+    \ user should delete this fasterize input/output script\n\n    int t = 1;\n  \
+    \  //cin >> t; // comment out if solving multi testcase\n    for(int testCase\
+    \ = 1;testCase <= t;++testCase){\n        solve();\n    }\n    return 0;\n}\n"
+  code: "#define PROBLEM \"https://onlinejudge.u-aizu.ac.jp/problems/DPL_5_J\"\n#include\
+    \ \"base.hpp\"\n\n/* #include <atcoder/all> */\n/* using namespace atcoder; */\n\
+    /* #include \"expansion/ac-library/all.hpp\" */\n#include \"modint.hpp\"\n#include\
+    \ \"counting.hpp\"\n\nvoid solve(){\n    ll n, k; cin >> n >> k;\n    print(Counting<MI7>().partition_table(max(n,\
+    \ k))[n][k]);\n}\n\n// generated by oj-template v4.7.2 (https://github.com/online-judge-tools/template-generator)\n\
+    int main() {\n    // Fasterize input/output script\n    ios::sync_with_stdio(false);\n\
+    \    cin.tie(nullptr);\n    cout << fixed << setprecision(100);\n    // scanf/printf\
+    \ user should delete this fasterize input/output script\n\n    int t = 1;\n  \
+    \  //cin >> t; // comment out if solving multi testcase\n    for(int testCase\
+    \ = 1;testCase <= t;++testCase){\n        solve();\n    }\n    return 0;\n}\n"
   dependsOn:
   - base.hpp
+  - modint.hpp
   - internal_operator.hpp
   - integer.hpp
-  isVerificationFile: false
-  path: modint.hpp
-  requiredBy:
-  - string.hpp
-  - general.hpp
-  timestamp: '2022-06-21 20:28:59+09:00'
-  verificationStatus: LIBRARY_SOME_WA
-  verifiedWith:
-  - test/AOJ-DPL_5_C/main.test.cpp
-  - test/AOJ-ALDS_1_14_B/main.test.cpp
-  - test/AOJ-DPL_5_D/main.test.cpp
-  - test/AOJ-DPL_5_F/main.test.cpp
-  - test/AOJ-DPL_5_L/main.test.cpp
-  - test/AtCoder-abc185_f/main.test.cpp
-  - test/yukicoder-502/main.test.cpp
-  - test/yukicoder-391/main.test.cpp
-  - test/AtCoder-abc110d/main.test.cpp
-  - test/AOJ-DPL_5_A/main.test.cpp
-  - test/AOJ-DPL_5_B/main.test.cpp
-  - test/AtCoder-abc019_b/main.test.cpp
-  - test/AOJ-DPL_5_G/main.test.cpp
-  - test/AtCoder-abc241_e/main.test.cpp
-  - test/yukicoder-430/main.test.cpp
-  - test/AtCoder-practice2_j/main.test.cpp
-  - test/AOJ-DPL_5_J/main.test.cpp
-  - test/AOJ-DPL_5_I/main.test.cpp
-  - test/AOJ-DPL_5_E/main.test.cpp
-documentation_of: modint.hpp
+  - counting.hpp
+  isVerificationFile: true
+  path: test/AOJ-DPL_5_J/main.test.cpp
+  requiredBy: []
+  timestamp: '2022-06-30 20:37:00+09:00'
+  verificationStatus: TEST_ACCEPTED
+  verifiedWith: []
+documentation_of: test/AOJ-DPL_5_J/main.test.cpp
 layout: document
 redirect_from:
-- /library/modint.hpp
-- /library/modint.hpp.html
-title: modint.hpp
+- /verify/test/AOJ-DPL_5_J/main.test.cpp
+- /verify/test/AOJ-DPL_5_J/main.test.cpp.html
+title: test/AOJ-DPL_5_J/main.test.cpp
 ---

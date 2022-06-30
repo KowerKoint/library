@@ -7,6 +7,9 @@ data:
   - icon: ':question:'
     path: counting.hpp
     title: counting.hpp
+  - icon: ':x:'
+    path: general.hpp
+    title: general.hpp
   - icon: ':question:'
     path: integer.hpp
     title: integer.hpp
@@ -16,44 +19,38 @@ data:
   - icon: ':question:'
     path: modint.hpp
     title: modint.hpp
+  - icon: ':x:'
+    path: string.hpp
+    title: string.hpp
   _extendedRequiredBy: []
-  _extendedVerifiedWith:
-  - icon: ':x:'
-    path: test/AOJ-ALDS_1_14_B/main.test.cpp
-    title: test/AOJ-ALDS_1_14_B/main.test.cpp
-  - icon: ':x:'
-    path: test/AtCoder-abc019_b/main.test.cpp
-    title: test/AtCoder-abc019_b/main.test.cpp
-  - icon: ':x:'
-    path: test/AtCoder-abc185_f/main.test.cpp
-    title: test/AtCoder-abc185_f/main.test.cpp
-  - icon: ':x:'
-    path: test/AtCoder-abc241_e/main.test.cpp
-    title: test/AtCoder-abc241_e/main.test.cpp
-  - icon: ':x:'
-    path: test/AtCoder-practice2_j/main.test.cpp
-    title: test/AtCoder-practice2_j/main.test.cpp
+  _extendedVerifiedWith: []
   _isVerificationFailed: true
-  _pathExtension: hpp
+  _pathExtension: cpp
   _verificationStatusIcon: ':x:'
   attributes:
-    links: []
-  bundledCode: "#line 2 \"base.hpp\"\n\n#ifdef DEBUG\n#define _GLIBCXX_DEBUG\n#endif\n\
-    \n#include <bits/stdc++.h>\nusing namespace std;\n\n#define REP(i, n) for(int\
-    \ i = 0; i < (int)(n); i++)\n#define FOR(i, a, b) for(ll i = a; i < (ll)(b); i++)\n\
-    #define ALL(a) (a).begin(),(a).end()\n#define END(...) { print(__VA_ARGS__); return;\
-    \ }\n\nusing VI = vector<int>;\nusing VVI = vector<VI>;\nusing VVVI = vector<VVI>;\n\
-    using ll = long long;\nusing VL = vector<ll>;\nusing VVL = vector<VL>;\nusing\
-    \ VVVL = vector<VVL>;\nusing VD = vector<double>;\nusing VVD = vector<VD>;\nusing\
-    \ VVVD = vector<VVD>;\nusing VS = vector<string>;\nusing VVS = vector<VS>;\nusing\
-    \ VVVS = vector<VVS>;\nusing VC = vector<char>;\nusing VVC = vector<VC>;\nusing\
-    \ VVVC = vector<VVC>;\nusing P = pair<int, int>;\nusing VP = vector<P>;\nusing\
-    \ VVP = vector<VP>;\nusing VVVP = vector<VVP>;\nusing LP = pair<ll, ll>;\nusing\
-    \ VLP = vector<LP>;\nusing VVLP = vector<VLP>;\nusing VVVLP = vector<VVLP>;\n\n\
-    template <typename T>\nusing PQ = priority_queue<T>;\ntemplate <typename T>\n\
-    using GPQ = priority_queue<T, vector<T>, greater<T>>;\n\nconstexpr int INF = 1001001001;\n\
-    constexpr ll LINF = 1001001001001001001ll;\nconstexpr int DX[] = {1, 0, -1, 0};\n\
-    constexpr int DY[] = {0, 1, 0, -1};\n\nvoid print() { cout << '\\n'; }\ntemplate<typename\
+    '*NOT_SPECIAL_COMMENTS*': ''
+    PROBLEM: https://onlinejudge.u-aizu.ac.jp/problems/ALDS1_14_B
+    links:
+    - https://github.com/online-judge-tools/template-generator)
+    - https://onlinejudge.u-aizu.ac.jp/problems/ALDS1_14_B
+  bundledCode: "#line 1 \"test/AOJ-ALDS_1_14_B/main.test.cpp\"\n#define PROBLEM \"\
+    https://onlinejudge.u-aizu.ac.jp/problems/ALDS1_14_B\"\n#line 2 \"base.hpp\"\n\
+    \n#ifdef DEBUG\n#define _GLIBCXX_DEBUG\n#endif\n\n#include <bits/stdc++.h>\nusing\
+    \ namespace std;\n\n#define REP(i, n) for(int i = 0; i < (int)(n); i++)\n#define\
+    \ FOR(i, a, b) for(ll i = a; i < (ll)(b); i++)\n#define ALL(a) (a).begin(),(a).end()\n\
+    #define END(...) { print(__VA_ARGS__); return; }\n\nusing VI = vector<int>;\n\
+    using VVI = vector<VI>;\nusing VVVI = vector<VVI>;\nusing ll = long long;\nusing\
+    \ VL = vector<ll>;\nusing VVL = vector<VL>;\nusing VVVL = vector<VVL>;\nusing\
+    \ VD = vector<double>;\nusing VVD = vector<VD>;\nusing VVVD = vector<VVD>;\nusing\
+    \ VS = vector<string>;\nusing VVS = vector<VS>;\nusing VVVS = vector<VVS>;\nusing\
+    \ VC = vector<char>;\nusing VVC = vector<VC>;\nusing VVVC = vector<VVC>;\nusing\
+    \ P = pair<int, int>;\nusing VP = vector<P>;\nusing VVP = vector<VP>;\nusing VVVP\
+    \ = vector<VVP>;\nusing LP = pair<ll, ll>;\nusing VLP = vector<LP>;\nusing VVLP\
+    \ = vector<VLP>;\nusing VVVLP = vector<VVLP>;\n\ntemplate <typename T>\nusing\
+    \ PQ = priority_queue<T>;\ntemplate <typename T>\nusing GPQ = priority_queue<T,\
+    \ vector<T>, greater<T>>;\n\nconstexpr int INF = 1001001001;\nconstexpr ll LINF\
+    \ = 1001001001001001001ll;\nconstexpr int DX[] = {1, 0, -1, 0};\nconstexpr int\
+    \ DY[] = {0, 1, 0, -1};\n\nvoid print() { cout << '\\n'; }\ntemplate<typename\
     \ T>\nvoid print(const T &t) { cout << t << '\\n'; }\ntemplate<typename Head,\
     \ typename... Tail>\nvoid print(const Head &head, const Tail &... tail) {\n  \
     \  cout << head << ' ';\n    print(tail...);\n}\n\n#ifdef DEBUG\nvoid dbg() {\
@@ -223,35 +220,119 @@ data:
     \ n) {\n        assert(n >= 0);\n        vector<vector<T>> res(n+1, vector<T>(n+1));\n\
     \        REP(i, n+1) res[0][i] = 1;\n        FOR(i, 1, n+1) FOR(j, 1, n+1) {\n\
     \            res[i][j] = res[i][j-1] + (i<j? 0 : res[i-j][j]);\n        }\n  \
-    \      return res;\n    }\n};\n#line 4 \"general.hpp\"\n"
-  code: '#pragma once
-
-    #include "modint.hpp"
-
-    #include "counting.hpp"
-
-    '
+    \      return res;\n    }\n};\n#line 3 \"test/AOJ-ALDS_1_14_B/main.test.cpp\"\n\
+    \n/* #include <atcoder/all> */\n/* using namespace atcoder; */\n/* #include \"\
+    expansion/ac-library/all.hpp\" */\n#line 2 \"string.hpp\"\n\n#line 4 \"string.hpp\"\
+    \n\ntemplate <typename It>\nvector<int> kmp_table(It begin, It end) {\n    int\
+    \ m = end - begin;\n    vector<int> table(m);\n    int j = 0;\n    FOR(i, 1, m)\
+    \ {\n        while(j > 0 && *(begin+i) != *(begin+j)) j = table[j-1];\n      \
+    \  if(*(begin+i) == *(begin+j)) table[i] = ++j;\n    }\n    return table;\n}\n\
+    \nvector<int> kmp_table(string& t) {\n    return kmp_table(ALL(t));\n}\n\ntemplate\
+    \ <typename It>\nvector<int> kmp_find(It s_begin, It s_end, It t_begin, It t_end,\
+    \ vector<int>& table) {\n    int n = s_end - s_begin;\n    int m = t_end - t_begin;\n\
+    \    vector<int> res;\n    int j = 0;\n    REP(i, n) {\n        while(j > 0 &&\
+    \ *(s_begin+i) != *(t_begin+j)) j = table[j-1];\n        if(*(s_begin+i) == *(t_begin+j))\
+    \ {\n            if(++j == m) {\n                res.push_back(i - (m-1));\n \
+    \               j = table[m-1];\n            }\n        }\n    }\n    return res;\n\
+    }\n\nvector<int> kmp_find(string& s, string& t, vector<int>& table) {\n    return\
+    \ kmp_find(ALL(s), ALL(t), table);\n}\n\ntemplate <typename T=char, T begin_char='a',\
+    \ int char_sz=26>\nstruct Trie {\n    struct Node {\n        T c;\n        int\
+    \ sz = 0;\n        int depth;\n        vector<Node*> nxt;\n        Node* failure;\n\
+    \        vector<int> fullmatch_keyword_id;\n        vector<int> suffixmatch_keyword_id;\n\
+    \n        Node(T _c, int _d): c(_c), depth(_d) {\n            nxt.resize(char_sz);\n\
+    \            fill(ALL(nxt), nullptr);\n        }\n    };\n\n    Node* root;\n\
+    \    int keyword_id = 0;\n\n    Trie() {\n        root = new Node(begin_char-1,\
+    \ 0);\n    }\n\n    template <typename It>\n    void add(It begin, It end, int\
+    \ keyword_id_=-1) {\n        if(keyword_id_ == -1) keyword_id_ = keyword_id++;\n\
+    \        Node* cursor = root;\n        cursor->sz++;\n        for(It it = begin;\
+    \ it != end; it++) {\n            if(!cursor->nxt[*it-begin_char]) cursor->nxt[*it-begin_char]\
+    \ = new Node(*it, cursor->depth+1);\n            cursor = cursor->nxt[*it-begin_char];\n\
+    \            cursor->sz++;\n        }\n        cursor->fullmatch_keyword_id.push_back(keyword_id_);\n\
+    \    }\n\n    void add(const string& str, int keyword_id_=-1) {\n        add(ALL(str),\
+    \ keyword_id_ == -1? keyword_id++ : keyword_id_);\n    }\n\n    void build_failure()\
+    \ {\n        queue<Node*> que;\n        REP(i, char_sz) {\n            Node* to\
+    \ = root->nxt[i];\n            if(!to) continue;\n            to->failure = root;\n\
+    \            for(int x : to->fullmatch_keyword_id) {\n                to->suffixmatch_keyword_id.push_back(x);\n\
+    \            }\n            que.push(to);\n        }\n        while(!que.empty())\
+    \ {\n            Node* from = que.front(); que.pop();\n            REP(i, char_sz)\
+    \ {\n                Node* to = from->nxt[i];\n                if(!to) continue;\n\
+    \                Node* cursor = from->failure;\n                while(cursor !=\
+    \ root && !cursor->nxt[i]) cursor = cursor->failure;\n                if(cursor->nxt[i])\
+    \ to->failure = cursor->nxt[i];\n                else to->failure = root;\n  \
+    \              for(int x : to->fullmatch_keyword_id) {\n                    to->suffixmatch_keyword_id.push_back(x);\n\
+    \                }\n                for(int x : to->failure->suffixmatch_keyword_id)\
+    \ {\n                    to->suffixmatch_keyword_id.push_back(x);\n          \
+    \      }\n                que.push(to);\n            }\n        }\n    }\n\n \
+    \   template <typename It>\n    void aho_corasick(It begin, It end, function<void(vector<int>&)>&\
+    \ f) {\n        Node* cursor = root;\n        for(It it = begin; it != end; it++)\
+    \ {\n            while(cursor != root && !cursor->nxt[*it-begin_char]) cursor\
+    \ = cursor->failure;\n            if(cursor->nxt[*it-begin_char]) {\n        \
+    \        cursor = cursor->nxt[*it-begin_char];\n                f(cursor->suffixmatch_keyword_id);\n\
+    \            }\n        }\n    }\n\n    template <typename It>\n    ll aho_corasick(It\
+    \ begin, It end) {\n        ll res = 0;\n        function<void(vector<int>&)>\
+    \ f = [&](vector<int>& v) {\n            res += v.size();\n        };\n      \
+    \  aho_corasick(begin, end, f);\n        return res;\n    }\n\n    void aho_corasick(string\
+    \ &s, function<void(vector<int>&)>& f) {\n        aho_corasick(ALL(s), f);\n \
+    \   }\n\n    ll aho_corasick(string &s) {\n        return aho_corasick(ALL(s));\n\
+    \    }\n};\n\ntemplate <typename T>\nstruct RollingHash {\n    int num;\n    vector<T>\
+    \ base;\n    vector<vector<T>> power;\n\n    RollingHash(vector<T> base_) : num(base_.size()),\
+    \ base(base_) {\n        power = vector<vector<T>>(num, vector<T>(1, 1));\n  \
+    \  }\n\n    RollingHash(int num_=3) : num(num_) {\n        assert(num_ > 0);\n\
+    \        power = vector<vector<T>>(num, vector<T>(1, 1));\n        mt19937 engine((random_device){}());\n\
+    \        REP(i, num) base.push_back(engine());\n    }\n\n    void expand(int n)\
+    \ {\n        int m = power[0].size();\n        if(m > n) return;\n        REP(i,\
+    \ num) {\n            power[i].resize(n+1);\n            FOR(j, m, n+1) power[i][j]\
+    \ = power[i][j-1] * base[i];\n        }\n    }\n\n    template<typename It>\n\
+    \    vector<vector<T>> build(It begin, It end) {\n        int n = end - begin;\n\
+    \        vector<vector<T>> res(num, vector<T>(n+1));\n        REP(i, num) REP(j,\
+    \ n) {\n            res[i][j+1] = res[i][j] * base[i] + *(begin+j);\n        }\n\
+    \        return res;\n    }\n\n    vector<vector<T>> build(const string& s) {\n\
+    \        return build(ALL(s));\n    }\n\n    vector<T> query(const vector<vector<T>>&\
+    \ hash, int l, int r) {\n        assert(hash.size() == num);\n        assert(0\
+    \ <= l && l <= r && r < hash[0].size());\n        expand(r - l);\n        vector<T>\
+    \ res(num);\n        REP(i, num) res[i] = hash[i][r] - hash[i][l] * power[i][r-l];\n\
+    \        return res;\n    }\n};\n#line 8 \"test/AOJ-ALDS_1_14_B/main.test.cpp\"\
+    \n\nvoid solve(){\n    string t, p; cin >> t >> p;\n    RollingHash<MI3> rh;\n\
+    \    auto hash_t = rh.build(t);\n    auto hash_p = rh.build(p);\n    int n = t.length(),\
+    \ m = p.length();\n    REP(i, n-m+1) {\n        if(rh.query(hash_t, i, i+m) ==\
+    \ rh.query(hash_p, 0, m)) print(i);\n    }\n}\n\n// generated by oj-template v4.7.2\
+    \ (https://github.com/online-judge-tools/template-generator)\nint main() {\n \
+    \   // Fasterize input/output script\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\
+    \    cout << fixed << setprecision(100);\n    // scanf/printf user should delete\
+    \ this fasterize input/output script\n\n    int t = 1;\n    //cin >> t; // comment\
+    \ out if solving multi testcase\n    for(int testCase = 1;testCase <= t;++testCase){\n\
+    \        solve();\n    }\n    return 0;\n}\n"
+  code: "#define PROBLEM \"https://onlinejudge.u-aizu.ac.jp/problems/ALDS1_14_B\"\n\
+    #include \"general.hpp\"\n\n/* #include <atcoder/all> */\n/* using namespace atcoder;\
+    \ */\n/* #include \"expansion/ac-library/all.hpp\" */\n#include \"string.hpp\"\
+    \n\nvoid solve(){\n    string t, p; cin >> t >> p;\n    RollingHash<MI3> rh;\n\
+    \    auto hash_t = rh.build(t);\n    auto hash_p = rh.build(p);\n    int n = t.length(),\
+    \ m = p.length();\n    REP(i, n-m+1) {\n        if(rh.query(hash_t, i, i+m) ==\
+    \ rh.query(hash_p, 0, m)) print(i);\n    }\n}\n\n// generated by oj-template v4.7.2\
+    \ (https://github.com/online-judge-tools/template-generator)\nint main() {\n \
+    \   // Fasterize input/output script\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\
+    \    cout << fixed << setprecision(100);\n    // scanf/printf user should delete\
+    \ this fasterize input/output script\n\n    int t = 1;\n    //cin >> t; // comment\
+    \ out if solving multi testcase\n    for(int testCase = 1;testCase <= t;++testCase){\n\
+    \        solve();\n    }\n    return 0;\n}\n"
   dependsOn:
+  - general.hpp
   - modint.hpp
   - base.hpp
   - internal_operator.hpp
   - integer.hpp
   - counting.hpp
-  isVerificationFile: false
-  path: general.hpp
+  - string.hpp
+  isVerificationFile: true
+  path: test/AOJ-ALDS_1_14_B/main.test.cpp
   requiredBy: []
-  timestamp: '2022-06-21 20:28:59+09:00'
-  verificationStatus: LIBRARY_ALL_WA
-  verifiedWith:
-  - test/AOJ-ALDS_1_14_B/main.test.cpp
-  - test/AtCoder-abc185_f/main.test.cpp
-  - test/AtCoder-abc019_b/main.test.cpp
-  - test/AtCoder-abc241_e/main.test.cpp
-  - test/AtCoder-practice2_j/main.test.cpp
-documentation_of: general.hpp
+  timestamp: '2022-06-30 20:37:00+09:00'
+  verificationStatus: TEST_WRONG_ANSWER
+  verifiedWith: []
+documentation_of: test/AOJ-ALDS_1_14_B/main.test.cpp
 layout: document
 redirect_from:
-- /library/general.hpp
-- /library/general.hpp.html
-title: general.hpp
+- /verify/test/AOJ-ALDS_1_14_B/main.test.cpp
+- /verify/test/AOJ-ALDS_1_14_B/main.test.cpp.html
+title: test/AOJ-ALDS_1_14_B/main.test.cpp
 ---

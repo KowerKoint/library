@@ -1,17 +1,68 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':warning:'
+  - icon: ':question:'
     path: base.hpp
     title: base.hpp
   _extendedRequiredBy:
-  - icon: ':warning:'
+  - icon: ':x:'
     path: general.hpp
     title: general.hpp
-  _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _extendedVerifiedWith:
+  - icon: ':x:'
+    path: test/AOJ-ALDS_1_14_B/main.test.cpp
+    title: test/AOJ-ALDS_1_14_B/main.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: test/AOJ-DPL_5_A/main.test.cpp
+    title: test/AOJ-DPL_5_A/main.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: test/AOJ-DPL_5_B/main.test.cpp
+    title: test/AOJ-DPL_5_B/main.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: test/AOJ-DPL_5_C/main.test.cpp
+    title: test/AOJ-DPL_5_C/main.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: test/AOJ-DPL_5_D/main.test.cpp
+    title: test/AOJ-DPL_5_D/main.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: test/AOJ-DPL_5_E/main.test.cpp
+    title: test/AOJ-DPL_5_E/main.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: test/AOJ-DPL_5_F/main.test.cpp
+    title: test/AOJ-DPL_5_F/main.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: test/AOJ-DPL_5_G/main.test.cpp
+    title: test/AOJ-DPL_5_G/main.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: test/AOJ-DPL_5_I/main.test.cpp
+    title: test/AOJ-DPL_5_I/main.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: test/AOJ-DPL_5_J/main.test.cpp
+    title: test/AOJ-DPL_5_J/main.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: test/AOJ-DPL_5_L/main.test.cpp
+    title: test/AOJ-DPL_5_L/main.test.cpp
+  - icon: ':x:'
+    path: test/AtCoder-abc019_b/main.test.cpp
+    title: test/AtCoder-abc019_b/main.test.cpp
+  - icon: ':x:'
+    path: test/AtCoder-abc110d/main.test.cpp
+    title: test/AtCoder-abc110d/main.test.cpp
+  - icon: ':x:'
+    path: test/AtCoder-abc185_f/main.test.cpp
+    title: test/AtCoder-abc185_f/main.test.cpp
+  - icon: ':x:'
+    path: test/AtCoder-abc241_e/main.test.cpp
+    title: test/AtCoder-abc241_e/main.test.cpp
+  - icon: ':x:'
+    path: test/AtCoder-practice2_j/main.test.cpp
+    title: test/AtCoder-practice2_j/main.test.cpp
+  - icon: ':x:'
+    path: test/yukicoder-391/main.test.cpp
+    title: test/yukicoder-391/main.test.cpp
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':question:'
   attributes:
     links: []
   bundledCode: "#line 2 \"base.hpp\"\n\n#ifdef DEBUG\n#define _GLIBCXX_DEBUG\n#endif\n\
@@ -138,8 +189,25 @@ data:
   requiredBy:
   - general.hpp
   timestamp: '2022-06-21 20:28:59+09:00'
-  verificationStatus: LIBRARY_NO_TESTS
-  verifiedWith: []
+  verificationStatus: LIBRARY_SOME_WA
+  verifiedWith:
+  - test/AOJ-DPL_5_C/main.test.cpp
+  - test/AOJ-ALDS_1_14_B/main.test.cpp
+  - test/AOJ-DPL_5_D/main.test.cpp
+  - test/AOJ-DPL_5_F/main.test.cpp
+  - test/AOJ-DPL_5_L/main.test.cpp
+  - test/AtCoder-abc185_f/main.test.cpp
+  - test/yukicoder-391/main.test.cpp
+  - test/AtCoder-abc110d/main.test.cpp
+  - test/AOJ-DPL_5_A/main.test.cpp
+  - test/AOJ-DPL_5_B/main.test.cpp
+  - test/AtCoder-abc019_b/main.test.cpp
+  - test/AOJ-DPL_5_G/main.test.cpp
+  - test/AtCoder-abc241_e/main.test.cpp
+  - test/AtCoder-practice2_j/main.test.cpp
+  - test/AOJ-DPL_5_J/main.test.cpp
+  - test/AOJ-DPL_5_I/main.test.cpp
+  - test/AOJ-DPL_5_E/main.test.cpp
 documentation_of: counting.hpp
 layout: document
 redirect_from:

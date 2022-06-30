@@ -3,31 +3,31 @@ data:
   libraryCategories:
   - name: .
     pages:
-    - icon: ':warning:'
+    - icon: ':question:'
       path: base.hpp
       title: base.hpp
-    - icon: ':warning:'
+    - icon: ':question:'
       path: counting.hpp
       title: counting.hpp
-    - icon: ':warning:'
+    - icon: ':x:'
       path: general.hpp
       title: general.hpp
-    - icon: ':warning:'
+    - icon: ':question:'
       path: integer.hpp
       title: integer.hpp
-    - icon: ':warning:'
+    - icon: ':question:'
       path: internal_operator.hpp
       title: internal_operator.hpp
-    - icon: ':warning:'
+    - icon: ':x:'
       path: matrix.hpp
       title: matrix.hpp
-    - icon: ':warning:'
+    - icon: ':question:'
       path: modint.hpp
       title: modint.hpp
-    - icon: ':warning:'
+    - icon: ':x:'
       path: segtree.hpp
       title: segtree.hpp
-    - icon: ':warning:'
+    - icon: ':x:'
       path: string.hpp
       title: string.hpp
   - name: expansion/ac-library
@@ -35,163 +35,160 @@ data:
     - icon: ':warning:'
       path: expansion/ac-library/all.hpp
       title: expansion/ac-library/all.hpp
-    - icon: ':warning:'
+    - icon: ':x:'
       path: expansion/ac-library/modint.hpp
       title: expansion/ac-library/modint.hpp
-    - icon: ':warning:'
+    - icon: ':x:'
       path: expansion/ac-library/scc.hpp
       title: expansion/ac-library/scc.hpp
     - icon: ':warning:'
       path: expansion/ac-library/segtree.hpp
       title: expansion/ac-library/segtree.hpp
-  - name: test/AOJ-ALDS_1_14_B
-    pages:
-    - icon: ':warning:'
-      path: test/AOJ-ALDS_1_14_B/main.cpp
-      title: test/AOJ-ALDS_1_14_B/main.cpp
-  - name: test/AOJ-ALDS_1_1_C
-    pages:
-    - icon: ':warning:'
-      path: test/AOJ-ALDS_1_1_C/main.cpp
-      title: test/AOJ-ALDS_1_1_C/main.cpp
-  - name: test/AOJ-DPL_5_A
-    pages:
-    - icon: ':warning:'
-      path: test/AOJ-DPL_5_A/main.cpp
-      title: test/AOJ-DPL_5_A/main.cpp
-  - name: test/AOJ-DPL_5_B
-    pages:
-    - icon: ':warning:'
-      path: test/AOJ-DPL_5_B/main.cpp
-      title: test/AOJ-DPL_5_B/main.cpp
-  - name: test/AOJ-DPL_5_C
-    pages:
-    - icon: ':warning:'
-      path: test/AOJ-DPL_5_C/main.cpp
-      title: test/AOJ-DPL_5_C/main.cpp
-  - name: test/AOJ-DPL_5_D
-    pages:
-    - icon: ':warning:'
-      path: test/AOJ-DPL_5_D/main.cpp
-      title: test/AOJ-DPL_5_D/main.cpp
-  - name: test/AOJ-DPL_5_E
-    pages:
-    - icon: ':warning:'
-      path: test/AOJ-DPL_5_E/main.cpp
-      title: test/AOJ-DPL_5_E/main.cpp
-  - name: test/AOJ-DPL_5_F
-    pages:
-    - icon: ':warning:'
-      path: test/AOJ-DPL_5_F/main.cpp
-      title: test/AOJ-DPL_5_F/main.cpp
-  - name: test/AOJ-DPL_5_G
-    pages:
-    - icon: ':warning:'
-      path: test/AOJ-DPL_5_G/main.cpp
-      title: test/AOJ-DPL_5_G/main.cpp
-  - name: test/AOJ-DPL_5_H
-    pages:
-    - icon: ':warning:'
-      path: test/AOJ-DPL_5_H/main.cpp
-      title: test/AOJ-DPL_5_H/main.cpp
-  - name: test/AOJ-DPL_5_I
-    pages:
-    - icon: ':warning:'
-      path: test/AOJ-DPL_5_I/main.cpp
-      title: test/AOJ-DPL_5_I/main.cpp
-  - name: test/AOJ-DPL_5_J
-    pages:
-    - icon: ':warning:'
-      path: test/AOJ-DPL_5_J/main.cpp
-      title: test/AOJ-DPL_5_J/main.cpp
-  - name: test/AOJ-DPL_5_K
-    pages:
-    - icon: ':warning:'
-      path: test/AOJ-DPL_5_K/main.cpp
-      title: test/AOJ-DPL_5_K/main.cpp
-  - name: test/AOJ-DPL_5_L
-    pages:
-    - icon: ':warning:'
-      path: test/AOJ-DPL_5_L/main.cpp
-      title: test/AOJ-DPL_5_L/main.cpp
-  - name: test/AOJ-ITP1_3_D
-    pages:
-    - icon: ':warning:'
-      path: test/AOJ-ITP1_3_D/main.cpp
-      title: test/AOJ-ITP1_3_D/main.cpp
-  - name: test/AOJ-NTL_1_A
-    pages:
-    - icon: ':warning:'
-      path: test/AOJ-NTL_1_A/main.cpp
-      title: test/AOJ-NTL_1_A/main.cpp
-  - name: test/AOJ-NTL_1_E
-    pages:
-    - icon: ':warning:'
-      path: test/AOJ-NTL_1_E/main.cpp
-      title: test/AOJ-NTL_1_E/main.cpp
-  - name: test/AtCoder-abc019_b
-    pages:
-    - icon: ':warning:'
-      path: test/AtCoder-abc019_b/main.cpp
-      title: test/AtCoder-abc019_b/main.cpp
-  - name: test/AtCoder-abc110d
-    pages:
-    - icon: ':warning:'
-      path: test/AtCoder-abc110d/main.cpp
-      title: test/AtCoder-abc110d/main.cpp
-  - name: test/AtCoder-abc185_f
-    pages:
-    - icon: ':warning:'
-      path: test/AtCoder-abc185_f/main.cpp
-      title: test/AtCoder-abc185_f/main.cpp
-  - name: test/AtCoder-abc241_e
-    pages:
-    - icon: ':warning:'
-      path: test/AtCoder-abc241_e/main.cpp
-      title: test/AtCoder-abc241_e/main.cpp
-  - name: test/AtCoder-practice2_j
-    pages:
-    - icon: ':warning:'
-      path: test/AtCoder-practice2_j/main.cpp
-      title: test/AtCoder-practice2_j/main.cpp
-  - name: test/Codeforces-ecr25-f
-    pages:
-    - icon: ':warning:'
-      path: test/Codeforces-ecr25-f/main.cpp
-      title: test/Codeforces-ecr25-f/main.cpp
-  - name: test/yosupo-determinant-of-matrix
-    pages:
-    - icon: ':warning:'
-      path: test/yosupo-determinant-of-matrix/main.cpp
-      title: test/yosupo-determinant-of-matrix/main.cpp
-  - name: test/yosupo-enumerate-primes
-    pages:
-    - icon: ':warning:'
-      path: test/yosupo-enumerate-primes/main.cpp
-      title: test/yosupo-enumerate-primes/main.cpp
-  - name: test/yukicoder-184
-    pages:
-    - icon: ':warning:'
-      path: test/yukicoder-184/main.cpp
-      title: test/yukicoder-184/main.cpp
-  - name: test/yukicoder-391
-    pages:
-    - icon: ':warning:'
-      path: test/yukicoder-391/main.cpp
-      title: test/yukicoder-391/main.cpp
   - name: test/yukicoder-430
     pages:
     - icon: ':warning:'
-      path: test/yukicoder-430/main.cpp
-      title: test/yukicoder-430/main.cpp
-    - icon: ':warning:'
       path: test/yukicoder-430/main_expanded_expanded.cpp
       title: test/yukicoder-430/main_expanded_expanded.cpp
+  verificationCategories:
+  - name: test/AOJ-ALDS_1_14_B
+    pages:
+    - icon: ':x:'
+      path: test/AOJ-ALDS_1_14_B/main.test.cpp
+      title: test/AOJ-ALDS_1_14_B/main.test.cpp
+  - name: test/AOJ-ALDS_1_1_C
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: test/AOJ-ALDS_1_1_C/main.test.cpp
+      title: test/AOJ-ALDS_1_1_C/main.test.cpp
+  - name: test/AOJ-DPL_5_A
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: test/AOJ-DPL_5_A/main.test.cpp
+      title: test/AOJ-DPL_5_A/main.test.cpp
+  - name: test/AOJ-DPL_5_B
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: test/AOJ-DPL_5_B/main.test.cpp
+      title: test/AOJ-DPL_5_B/main.test.cpp
+  - name: test/AOJ-DPL_5_C
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: test/AOJ-DPL_5_C/main.test.cpp
+      title: test/AOJ-DPL_5_C/main.test.cpp
+  - name: test/AOJ-DPL_5_D
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: test/AOJ-DPL_5_D/main.test.cpp
+      title: test/AOJ-DPL_5_D/main.test.cpp
+  - name: test/AOJ-DPL_5_E
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: test/AOJ-DPL_5_E/main.test.cpp
+      title: test/AOJ-DPL_5_E/main.test.cpp
+  - name: test/AOJ-DPL_5_F
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: test/AOJ-DPL_5_F/main.test.cpp
+      title: test/AOJ-DPL_5_F/main.test.cpp
+  - name: test/AOJ-DPL_5_G
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: test/AOJ-DPL_5_G/main.test.cpp
+      title: test/AOJ-DPL_5_G/main.test.cpp
+  - name: test/AOJ-DPL_5_H
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: test/AOJ-DPL_5_H/main.test.cpp
+      title: test/AOJ-DPL_5_H/main.test.cpp
+  - name: test/AOJ-DPL_5_I
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: test/AOJ-DPL_5_I/main.test.cpp
+      title: test/AOJ-DPL_5_I/main.test.cpp
+  - name: test/AOJ-DPL_5_J
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: test/AOJ-DPL_5_J/main.test.cpp
+      title: test/AOJ-DPL_5_J/main.test.cpp
+  - name: test/AOJ-DPL_5_K
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: test/AOJ-DPL_5_K/main.test.cpp
+      title: test/AOJ-DPL_5_K/main.test.cpp
+  - name: test/AOJ-DPL_5_L
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: test/AOJ-DPL_5_L/main.test.cpp
+      title: test/AOJ-DPL_5_L/main.test.cpp
+  - name: test/AOJ-ITP1_3_D
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: test/AOJ-ITP1_3_D/main.test.cpp
+      title: test/AOJ-ITP1_3_D/main.test.cpp
+  - name: test/AOJ-NTL_1_A
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: test/AOJ-NTL_1_A/main.test.cpp
+      title: test/AOJ-NTL_1_A/main.test.cpp
+  - name: test/AOJ-NTL_1_E
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: test/AOJ-NTL_1_E/main.test.cpp
+      title: test/AOJ-NTL_1_E/main.test.cpp
+  - name: test/AtCoder-abc019_b
+    pages:
+    - icon: ':x:'
+      path: test/AtCoder-abc019_b/main.test.cpp
+      title: test/AtCoder-abc019_b/main.test.cpp
+  - name: test/AtCoder-abc110d
+    pages:
+    - icon: ':x:'
+      path: test/AtCoder-abc110d/main.test.cpp
+      title: test/AtCoder-abc110d/main.test.cpp
+  - name: test/AtCoder-abc185_f
+    pages:
+    - icon: ':x:'
+      path: test/AtCoder-abc185_f/main.test.cpp
+      title: test/AtCoder-abc185_f/main.test.cpp
+  - name: test/AtCoder-abc241_e
+    pages:
+    - icon: ':x:'
+      path: test/AtCoder-abc241_e/main.test.cpp
+      title: test/AtCoder-abc241_e/main.test.cpp
+  - name: test/AtCoder-practice2_j
+    pages:
+    - icon: ':x:'
+      path: test/AtCoder-practice2_j/main.test.cpp
+      title: test/AtCoder-practice2_j/main.test.cpp
+  - name: test/yosupo-determinant-of-matrix
+    pages:
+    - icon: ':x:'
+      path: test/yosupo-determinant-of-matrix/main.test.cpp
+      title: test/yosupo-determinant-of-matrix/main.test.cpp
+  - name: test/yosupo-enumerate-primes
+    pages:
+    - icon: ':x:'
+      path: test/yosupo-enumerate-primes/main.test.cpp
+      title: test/yosupo-enumerate-primes/main.test.cpp
+  - name: test/yukicoder-184
+    pages:
+    - icon: ':x:'
+      path: test/yukicoder-184/main.test.cpp
+      title: test/yukicoder-184/main.test.cpp
+  - name: test/yukicoder-391
+    pages:
+    - icon: ':x:'
+      path: test/yukicoder-391/main.test.cpp
+      title: test/yukicoder-391/main.test.cpp
+  - name: test/yukicoder-430
+    pages:
+    - icon: ':x:'
+      path: test/yukicoder-430/main.test.cpp
+      title: test/yukicoder-430/main.test.cpp
   - name: test/yukicoder-502
     pages:
-    - icon: ':warning:'
-      path: test/yukicoder-502/main.cpp
-      title: test/yukicoder-502/main.cpp
-  verificationCategories: []
+    - icon: ':x:'
+      path: test/yukicoder-502/main.test.cpp
+      title: test/yukicoder-502/main.test.cpp
 layout: toppage
 ---

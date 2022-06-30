@@ -5,97 +5,52 @@ data:
     path: base.hpp
     title: base.hpp
   - icon: ':question:'
+    path: counting.hpp
+    title: counting.hpp
+  - icon: ':x:'
+    path: general.hpp
+    title: general.hpp
+  - icon: ':question:'
     path: integer.hpp
     title: integer.hpp
   - icon: ':question:'
     path: internal_operator.hpp
     title: internal_operator.hpp
-  _extendedRequiredBy:
+  - icon: ':question:'
+    path: modint.hpp
+    title: modint.hpp
   - icon: ':x:'
-    path: general.hpp
-    title: general.hpp
-  - icon: ':x:'
-    path: string.hpp
-    title: string.hpp
-  _extendedVerifiedWith:
-  - icon: ':x:'
-    path: test/AOJ-ALDS_1_14_B/main.test.cpp
-    title: test/AOJ-ALDS_1_14_B/main.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: test/AOJ-DPL_5_A/main.test.cpp
-    title: test/AOJ-DPL_5_A/main.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: test/AOJ-DPL_5_B/main.test.cpp
-    title: test/AOJ-DPL_5_B/main.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: test/AOJ-DPL_5_C/main.test.cpp
-    title: test/AOJ-DPL_5_C/main.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: test/AOJ-DPL_5_D/main.test.cpp
-    title: test/AOJ-DPL_5_D/main.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: test/AOJ-DPL_5_E/main.test.cpp
-    title: test/AOJ-DPL_5_E/main.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: test/AOJ-DPL_5_F/main.test.cpp
-    title: test/AOJ-DPL_5_F/main.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: test/AOJ-DPL_5_G/main.test.cpp
-    title: test/AOJ-DPL_5_G/main.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: test/AOJ-DPL_5_I/main.test.cpp
-    title: test/AOJ-DPL_5_I/main.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: test/AOJ-DPL_5_J/main.test.cpp
-    title: test/AOJ-DPL_5_J/main.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: test/AOJ-DPL_5_L/main.test.cpp
-    title: test/AOJ-DPL_5_L/main.test.cpp
-  - icon: ':x:'
-    path: test/AtCoder-abc019_b/main.test.cpp
-    title: test/AtCoder-abc019_b/main.test.cpp
-  - icon: ':x:'
-    path: test/AtCoder-abc110d/main.test.cpp
-    title: test/AtCoder-abc110d/main.test.cpp
-  - icon: ':x:'
-    path: test/AtCoder-abc185_f/main.test.cpp
-    title: test/AtCoder-abc185_f/main.test.cpp
-  - icon: ':x:'
-    path: test/AtCoder-abc241_e/main.test.cpp
-    title: test/AtCoder-abc241_e/main.test.cpp
-  - icon: ':x:'
-    path: test/AtCoder-practice2_j/main.test.cpp
-    title: test/AtCoder-practice2_j/main.test.cpp
-  - icon: ':x:'
-    path: test/yukicoder-391/main.test.cpp
-    title: test/yukicoder-391/main.test.cpp
-  - icon: ':x:'
-    path: test/yukicoder-430/main.test.cpp
-    title: test/yukicoder-430/main.test.cpp
-  - icon: ':x:'
-    path: test/yukicoder-502/main.test.cpp
-    title: test/yukicoder-502/main.test.cpp
+    path: segtree.hpp
+    title: segtree.hpp
+  _extendedRequiredBy: []
+  _extendedVerifiedWith: []
   _isVerificationFailed: true
-  _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _pathExtension: cpp
+  _verificationStatusIcon: ':x:'
   attributes:
-    links: []
-  bundledCode: "#line 2 \"base.hpp\"\n\n#ifdef DEBUG\n#define _GLIBCXX_DEBUG\n#endif\n\
-    \n#include <bits/stdc++.h>\nusing namespace std;\n\n#define REP(i, n) for(int\
-    \ i = 0; i < (int)(n); i++)\n#define FOR(i, a, b) for(ll i = a; i < (ll)(b); i++)\n\
-    #define ALL(a) (a).begin(),(a).end()\n#define END(...) { print(__VA_ARGS__); return;\
-    \ }\n\nusing VI = vector<int>;\nusing VVI = vector<VI>;\nusing VVVI = vector<VVI>;\n\
-    using ll = long long;\nusing VL = vector<ll>;\nusing VVL = vector<VL>;\nusing\
-    \ VVVL = vector<VVL>;\nusing VD = vector<double>;\nusing VVD = vector<VD>;\nusing\
-    \ VVVD = vector<VVD>;\nusing VS = vector<string>;\nusing VVS = vector<VS>;\nusing\
-    \ VVVS = vector<VVS>;\nusing VC = vector<char>;\nusing VVC = vector<VC>;\nusing\
-    \ VVVC = vector<VVC>;\nusing P = pair<int, int>;\nusing VP = vector<P>;\nusing\
-    \ VVP = vector<VP>;\nusing VVVP = vector<VVP>;\nusing LP = pair<ll, ll>;\nusing\
-    \ VLP = vector<LP>;\nusing VVLP = vector<VLP>;\nusing VVVLP = vector<VVLP>;\n\n\
-    template <typename T>\nusing PQ = priority_queue<T>;\ntemplate <typename T>\n\
-    using GPQ = priority_queue<T, vector<T>, greater<T>>;\n\nconstexpr int INF = 1001001001;\n\
-    constexpr ll LINF = 1001001001001001001ll;\nconstexpr int DX[] = {1, 0, -1, 0};\n\
-    constexpr int DY[] = {0, 1, 0, -1};\n\nvoid print() { cout << '\\n'; }\ntemplate<typename\
+    '*NOT_SPECIAL_COMMENTS*': ''
+    PROBLEM: https://atcoder.jp/contests/abc185/tasks/abc185_f
+    links:
+    - https://atcoder.jp/contests/abc185/tasks/abc185_f
+    - https://github.com/online-judge-tools/template-generator)
+  bundledCode: "#line 1 \"test/AtCoder-abc185_f/main.test.cpp\"\n#define PROBLEM \"\
+    https://atcoder.jp/contests/abc185/tasks/abc185_f\"\n#line 2 \"base.hpp\"\n\n\
+    #ifdef DEBUG\n#define _GLIBCXX_DEBUG\n#endif\n\n#include <bits/stdc++.h>\nusing\
+    \ namespace std;\n\n#define REP(i, n) for(int i = 0; i < (int)(n); i++)\n#define\
+    \ FOR(i, a, b) for(ll i = a; i < (ll)(b); i++)\n#define ALL(a) (a).begin(),(a).end()\n\
+    #define END(...) { print(__VA_ARGS__); return; }\n\nusing VI = vector<int>;\n\
+    using VVI = vector<VI>;\nusing VVVI = vector<VVI>;\nusing ll = long long;\nusing\
+    \ VL = vector<ll>;\nusing VVL = vector<VL>;\nusing VVVL = vector<VVL>;\nusing\
+    \ VD = vector<double>;\nusing VVD = vector<VD>;\nusing VVVD = vector<VVD>;\nusing\
+    \ VS = vector<string>;\nusing VVS = vector<VS>;\nusing VVVS = vector<VVS>;\nusing\
+    \ VC = vector<char>;\nusing VVC = vector<VC>;\nusing VVVC = vector<VVC>;\nusing\
+    \ P = pair<int, int>;\nusing VP = vector<P>;\nusing VVP = vector<VP>;\nusing VVVP\
+    \ = vector<VVP>;\nusing LP = pair<ll, ll>;\nusing VLP = vector<LP>;\nusing VVLP\
+    \ = vector<VLP>;\nusing VVVLP = vector<VVLP>;\n\ntemplate <typename T>\nusing\
+    \ PQ = priority_queue<T>;\ntemplate <typename T>\nusing GPQ = priority_queue<T,\
+    \ vector<T>, greater<T>>;\n\nconstexpr int INF = 1001001001;\nconstexpr ll LINF\
+    \ = 1001001001001001001ll;\nconstexpr int DX[] = {1, 0, -1, 0};\nconstexpr int\
+    \ DY[] = {0, 1, 0, -1};\n\nvoid print() { cout << '\\n'; }\ntemplate<typename\
     \ T>\nvoid print(const T &t) { cout << t << '\\n'; }\ntemplate<typename Head,\
     \ typename... Tail>\nvoid print(const Head &head, const Tail &... tail) {\n  \
     \  cout << head << ' ';\n    print(tail...);\n}\n\n#ifdef DEBUG\nvoid dbg() {\
@@ -237,83 +192,109 @@ data:
     using V3 = vector<MI3>;\nusing VV3 = vector<V3>;\nusing VVV3 = vector<VV3>;\n\
     using MI7 = Modint<internal_operator::mod7>;\nusing V7 = vector<MI7>;\nusing VV7\
     \ = vector<V7>;\nusing VVV7 = vector<VV7>;\nusing MI9 = Modint<internal_operator::mod9>;\n\
-    using V9 = vector<MI9>;\nusing VV9 = vector<V9>;\nusing VVV9 = vector<VV9>;\n"
-  code: "#pragma once\n#include \"base.hpp\"\n#include \"internal_operator.hpp\"\n\
-    #include \"integer.hpp\"\n\ntemplate <ll (*mod)()>\nstruct Modint {\n    ll val;\n\
-    \    \n    Modint(): val(0) {}\n\n    Modint(ll x): val(x) {\n        val %= mod();\n\
-    \        if(val < 0) val += mod();\n    }\n\n    Modint& operator+=(const Modint&\
-    \ r) {\n        val += r.val;\n        if(val >= mod()) val -= mod();\n      \
-    \  return *this;\n    }\n    friend Modint operator+(const Modint& l, const Modint&\
-    \ r) {\n        return Modint(l) += r;\n    }\n\n    Modint& operator-=(const\
-    \ Modint& r) {\n        val -= r.val;\n        if(val < 0) val += mod();\n   \
-    \     return *this;\n    }\n    friend Modint operator-(const Modint& l, const\
-    \ Modint& r) {\n        return Modint(l) -= r;\n    }\n\n    Modint& operator*=(const\
-    \ Modint& r) {\n        val *= r.val;\n        val %= mod();\n        return *this;\n\
-    \    }\n    Modint operator*(const Modint& r) {\n        return (Modint(*this)\
-    \ *= r);\n    }\n    friend Modint operator*(const Modint& l, const Modint& r)\
-    \ {\n        return Modint(l) *= r;\n    }\n\n    Modint pow(ll n) const {\n \
-    \       return Modint(pow_mod(val, n, mod()));\n    }\n\n    Modint inv() const\
-    \ {\n        return Modint(inv_mod(val, mod()));\n    }\n\n    Modint& operator/=(const\
-    \ Modint& r) {\n        return (*this *= r.inv());\n    }\n    friend Modint operator/(const\
-    \ Modint& l, const Modint& r) {\n        return Modint(l) /= r;\n    }\n\n   \
-    \ Modint& operator^=(const ll n) {\n        val = pow_mod(val, n, mod());\n  \
-    \      return *this;\n    }\n    Modint operator^(const ll n) {\n        return\
-    \ this->pow(n);\n    }\n\n    Modint operator+() const { return *this; }\n   \
-    \ Modint operator-() const { return Modint() - *this; }\n\n    Modint& operator++()\
-    \ {\n        val++;\n        if(val == mod()) val = 0LL;\n        return *this;\n\
-    \    }\n    Modint& operator++(int) {\n        Modint res(*this);\n        ++*this;\n\
-    \        return res;\n    }\n\n    Modint& operator--() {\n        if(val == 0LL)\
-    \ val = mod();\n        val--;\n        return *this;\n    }\n    Modint& operator--(int)\
-    \ {\n        Modint res(*this);\n        --*this;\n        return res;\n    }\n\
-    \n    friend bool operator==(const Modint& l, const Modint& r) {\n        return\
-    \ l.val == r.val;\n    }\n    friend bool operator!=(const Modint& l, const Modint&\
-    \ r) {\n        return l.val != r.val;\n    }\n\n    static pair<vector<Modint>,\
-    \ vector<Modint>> factorial(int n) {\n        vector<Modint> fact(n+1), rfact(n+1);\n\
-    \        fact[0] = 1;\n        REP(i, n) fact[i+1] = fact[i] * (i+1);\n      \
-    \  rfact[n] = 1 / fact[n];\n        for(int i = n-1; i >= 0; i--) rfact[i] = rfact[i+1]\
-    \ * (i+1);\n        return {fact, rfact};\n    }\n\n    friend istream& operator>>(istream&\
-    \ is, Modint& mi) {\n        is >> mi.val;\n        return is;\n    }\n\n    friend\
-    \ ostream& operator<<(ostream& os, const Modint& mi) {\n        os << mi.val;\n\
-    \        return os;\n    }\n};\n\nusing MI3 = Modint<internal_operator::mod3>;\n\
-    using V3 = vector<MI3>;\nusing VV3 = vector<V3>;\nusing VVV3 = vector<VV3>;\n\
-    using MI7 = Modint<internal_operator::mod7>;\nusing V7 = vector<MI7>;\nusing VV7\
-    \ = vector<V7>;\nusing VVV7 = vector<VV7>;\nusing MI9 = Modint<internal_operator::mod9>;\n\
-    using V9 = vector<MI9>;\nusing VV9 = vector<V9>;\nusing VVV9 = vector<VV9>;\n"
+    using V9 = vector<MI9>;\nusing VV9 = vector<V9>;\nusing VVV9 = vector<VV9>;\n\
+    #line 3 \"counting.hpp\"\n\ntemplate <typename T>\nstruct Counting {\n    vector<T>\
+    \ fact, ifact;\n\n    Counting() {}\n    Counting(ll n) {\n        expand(n);\n\
+    \    }\n\n    void expand(ll n) {\n        ll sz = (ll)fact.size();\n        if(sz\
+    \ > n) return;\n        fact.resize(n+1);\n        ifact.resize(n+1);\n      \
+    \  fact[0] = 1;\n        FOR(i, max(1LL, sz), n+1) fact[i] = fact[i-1] * i;\n\
+    \        ifact[n] = 1 / fact[n];\n        for(ll i = n-1; i >= sz; i--) ifact[i]\
+    \ = ifact[i+1] * (i+1);\n    }\n\n    T permutation(ll n, ll r) {\n        assert(n\
+    \ >= r);\n        assert(r >= 0);\n        expand(n);\n        return fact[n]\
+    \ * ifact[n-r];\n    }\n\n    T combination(ll n, ll r) {\n        assert(n >=\
+    \ r);\n        assert(r >= 0);\n        expand(n);\n        return fact[n] * ifact[r]\
+    \ * ifact[n-r];\n    }\n\n    T stirling(ll n, ll k) {\n        assert(n >= k);\n\
+    \        assert(k >= 0);\n        if(n == 0) return 1;\n        T res = 0;\n \
+    \       int sign = k%2? -1 : 1;\n        expand(k);\n        REP(i, k+1) {\n \
+    \           res += sign * ifact[i] * ifact[k-i] * T(i).pow(n);\n            sign\
+    \ *= -1;\n        }\n        return res;\n    }\n\n    vector<vector<T>> stirling_table(ll\
+    \ n, ll k) {\n        assert(n >= 0 && k >= 0);\n        vector<vector<T>> res(n+1,\
+    \ vector<T>(k+1));\n        res[0][0] = 1;\n        FOR(i, 1, n+1) FOR(j, 1, k+1)\
+    \ {\n            res[i][j] = res[i-1][j-1] + j * res[i-1][j];\n        }\n   \
+    \     return res;\n    }\n\n    T bell(ll n, ll k) {\n        assert(n >= 0 &&\
+    \ k >= 0);\n        expand(k);\n        vector<T> tmp(k+1);\n        int sign\
+    \ = 1;\n        tmp[0] = 1;\n        FOR(i, 1, k+1) {\n            sign *= -1;\n\
+    \            tmp[i] = tmp[i-1] + sign * ifact[i];\n        }\n        T res =\
+    \ 0;\n        REP(i, k+1) {\n            res += T(i).pow(n) * ifact[i] * tmp[k-i];\n\
+    \        }\n        return res;\n    }\n\n    vector<vector<T>> partition_table(ll\
+    \ n) {\n        assert(n >= 0);\n        vector<vector<T>> res(n+1, vector<T>(n+1));\n\
+    \        REP(i, n+1) res[0][i] = 1;\n        FOR(i, 1, n+1) FOR(j, 1, n+1) {\n\
+    \            res[i][j] = res[i][j-1] + (i<j? 0 : res[i-j][j]);\n        }\n  \
+    \      return res;\n    }\n};\n#line 3 \"test/AtCoder-abc185_f/main.test.cpp\"\
+    \n\n/* #include <atcoder/all> */\n/* using namespace atcoder; */\n/* #include\
+    \ \"expansion/ac-library/all.hpp\" */\n#line 2 \"segtree.hpp\"\n\ntemplate <typename\
+    \ T, T (*func)(const T, const T), T (*e)()>\nstruct SegTree {\n    int n, sz;\n\
+    \    vector<T> state;\n\n    SegTree(int n_): n(n_) {\n        sz = 1;\n     \
+    \   while(sz < n) sz <<= 1;\n        state = vector<T>(sz*2, e());\n    }\n  \
+    \  SegTree(vector<T> v): n(v.size()) {\n        sz = 1;\n        while(sz < n)\
+    \ sz <<= 1;\n        state = vector<T>(sz*2, e());\n        REP(i, v.size()) state[sz+i]\
+    \ = v[i];\n        for(int i = sz-1; i > 0; i--) state[i] = func(state[i*2], state[i*2+1]);\n\
+    \    }\n\n    T operator[](int i) const {\n        assert(0 <= i && i < n);\n\
+    \        return state[sz+i];\n    }\n    T get(int i) const {\n        assert(0\
+    \ <= i && i < n);\n        return state[sz+i];\n    }\n\n    void set(int i, const\
+    \ T &x) {\n        assert(0 <= i && i < n);\n        i += sz;\n        state[i]\
+    \ = x;\n        while(i >>= 1) {\n            state[i] = func(state[i*2], state[i*2+1]);\n\
+    \        }\n    }\n    void apply(int i, const T &x) {\n        set(i, x);\n \
+    \   }\n\n    T prod(int l, int r) const {\n        assert(0 <= l && l <= r &&\
+    \ r <= n);\n        T left_prod = e(), right_prod = e();\n        l += sz, r +=\
+    \ sz;\n        while(l < r) {\n            if(l & 1) left_prod = func(left_prod,\
+    \ state[l++]);\n            if(r & 1) right_prod = func(state[--r], right_prod);\n\
+    \            l >>= 1;\n            r >>= 1;\n        }\n        return func(left_prod,\
+    \ right_prod);\n    }\n    \n    T all_prod() const {\n        return state[1];\n\
+    \    }\n\n    template <typename F>\n    int max_right(int l, F f) {\n       \
+    \ assert(0 <= l && l <= n);\n        assert(f(e()));\n        if(l == n) return\
+    \ n;\n        l += sz;\n        while(l % 2 == 0) l >>= 1;\n        T sum = e();\n\
+    \        while(f(func(sum, state[l]))) {\n            if(__builtin_clz(l) != __builtin_clz(l+1))\
+    \ return n;\n            sum = func(sum, state[l]);\n            l++;\n      \
+    \      while(l % 2 == 0) l >>= 1;\n        }\n        while(l < sz) {\n      \
+    \      if(!f(func(sum, state[l*2]))) l *= 2;\n            else {\n           \
+    \     sum = func(sum, state[l*2]);\n                l = l*2 + 1;\n           \
+    \ }\n        }\n        return min(n, l - sz);\n    }\n};\n\ntemplate <typename\
+    \ T>\nusing RMaxQ = SegTree<T, internal_operator::default_max<T>, numeric_limits<T>::min>;\n\
+    template <typename T>\nusing RMinQ = SegTree<T, internal_operator::default_min<T>,\
+    \ numeric_limits<T>::max>;\ntemplate <typename T>\nusing RSumQ = SegTree<T, internal_operator::default_add<T>,\
+    \ internal_operator::zero<T>>;\n#line 8 \"test/AtCoder-abc185_f/main.test.cpp\"\
+    \n\nvoid solve(){\n    int n, q; cin >> n >> q;\n    VI a(n); cin >> a;\n    SegTree<int,\
+    \ internal_operator::default_xor, internal_operator::zero> seg(a);\n    REP(i,\
+    \ q) {\n        int t, x, y; cin >> t >> x >> y;\n        if(t == 1) seg.set(x-1,\
+    \ seg[x-1] ^ y);\n        else print(seg.prod(x-1, y));\n    }\n}\n\n// generated\
+    \ by oj-template v4.7.2 (https://github.com/online-judge-tools/template-generator)\n\
+    int main() {\n    // Fasterize input/output script\n    ios::sync_with_stdio(false);\n\
+    \    cin.tie(nullptr);\n    cout << fixed << setprecision(100);\n    // scanf/printf\
+    \ user should delete this fasterize input/output script\n\n    int t = 1;\n  \
+    \  //cin >> t; // comment out if solving multi testcase\n    for(int testCase\
+    \ = 1;testCase <= t;++testCase){\n        solve();\n    }\n    return 0;\n}\n"
+  code: "#define PROBLEM \"https://atcoder.jp/contests/abc185/tasks/abc185_f\"\n#include\
+    \ \"general.hpp\"\n\n/* #include <atcoder/all> */\n/* using namespace atcoder;\
+    \ */\n/* #include \"expansion/ac-library/all.hpp\" */\n#include \"segtree.hpp\"\
+    \n\nvoid solve(){\n    int n, q; cin >> n >> q;\n    VI a(n); cin >> a;\n    SegTree<int,\
+    \ internal_operator::default_xor, internal_operator::zero> seg(a);\n    REP(i,\
+    \ q) {\n        int t, x, y; cin >> t >> x >> y;\n        if(t == 1) seg.set(x-1,\
+    \ seg[x-1] ^ y);\n        else print(seg.prod(x-1, y));\n    }\n}\n\n// generated\
+    \ by oj-template v4.7.2 (https://github.com/online-judge-tools/template-generator)\n\
+    int main() {\n    // Fasterize input/output script\n    ios::sync_with_stdio(false);\n\
+    \    cin.tie(nullptr);\n    cout << fixed << setprecision(100);\n    // scanf/printf\
+    \ user should delete this fasterize input/output script\n\n    int t = 1;\n  \
+    \  //cin >> t; // comment out if solving multi testcase\n    for(int testCase\
+    \ = 1;testCase <= t;++testCase){\n        solve();\n    }\n    return 0;\n}\n"
   dependsOn:
+  - general.hpp
+  - modint.hpp
   - base.hpp
   - internal_operator.hpp
   - integer.hpp
-  isVerificationFile: false
-  path: modint.hpp
-  requiredBy:
-  - string.hpp
-  - general.hpp
-  timestamp: '2022-06-21 20:28:59+09:00'
-  verificationStatus: LIBRARY_SOME_WA
-  verifiedWith:
-  - test/AOJ-DPL_5_C/main.test.cpp
-  - test/AOJ-ALDS_1_14_B/main.test.cpp
-  - test/AOJ-DPL_5_D/main.test.cpp
-  - test/AOJ-DPL_5_F/main.test.cpp
-  - test/AOJ-DPL_5_L/main.test.cpp
-  - test/AtCoder-abc185_f/main.test.cpp
-  - test/yukicoder-502/main.test.cpp
-  - test/yukicoder-391/main.test.cpp
-  - test/AtCoder-abc110d/main.test.cpp
-  - test/AOJ-DPL_5_A/main.test.cpp
-  - test/AOJ-DPL_5_B/main.test.cpp
-  - test/AtCoder-abc019_b/main.test.cpp
-  - test/AOJ-DPL_5_G/main.test.cpp
-  - test/AtCoder-abc241_e/main.test.cpp
-  - test/yukicoder-430/main.test.cpp
-  - test/AtCoder-practice2_j/main.test.cpp
-  - test/AOJ-DPL_5_J/main.test.cpp
-  - test/AOJ-DPL_5_I/main.test.cpp
-  - test/AOJ-DPL_5_E/main.test.cpp
-documentation_of: modint.hpp
+  - counting.hpp
+  - segtree.hpp
+  isVerificationFile: true
+  path: test/AtCoder-abc185_f/main.test.cpp
+  requiredBy: []
+  timestamp: '2022-06-30 20:37:00+09:00'
+  verificationStatus: TEST_WRONG_ANSWER
+  verifiedWith: []
+documentation_of: test/AtCoder-abc185_f/main.test.cpp
 layout: document
 redirect_from:
-- /library/modint.hpp
-- /library/modint.hpp.html
-title: modint.hpp
+- /verify/test/AtCoder-abc185_f/main.test.cpp
+- /verify/test/AtCoder-abc185_f/main.test.cpp.html
+title: test/AtCoder-abc185_f/main.test.cpp
 ---

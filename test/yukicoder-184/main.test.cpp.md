@@ -7,23 +7,24 @@ data:
   - icon: ':question:'
     path: internal_operator.hpp
     title: internal_operator.hpp
+  - icon: ':x:'
+    path: matrix.hpp
+    title: matrix.hpp
   _extendedRequiredBy: []
-  _extendedVerifiedWith:
-  - icon: ':x:'
-    path: test/yosupo-determinant-of-matrix/main.test.cpp
-    title: test/yosupo-determinant-of-matrix/main.test.cpp
-  - icon: ':x:'
-    path: test/yukicoder-184/main.test.cpp
-    title: test/yukicoder-184/main.test.cpp
+  _extendedVerifiedWith: []
   _isVerificationFailed: true
-  _pathExtension: hpp
+  _pathExtension: cpp
   _verificationStatusIcon: ':x:'
   attributes:
-    links: []
-  bundledCode: "#line 2 \"base.hpp\"\n\n#ifdef DEBUG\n#define _GLIBCXX_DEBUG\n#endif\n\
-    \n#include <bits/stdc++.h>\nusing namespace std;\n\n#define REP(i, n) for(int\
-    \ i = 0; i < (int)(n); i++)\n#define FOR(i, a, b) for(ll i = a; i < (ll)(b); i++)\n\
-    #define ALL(a) (a).begin(),(a).end()\n#define END(...) { print(__VA_ARGS__); return;\
+    '*NOT_SPECIAL_COMMENTS*': ''
+    PROBLEM: https://yukicoder.me/problems/no/184
+    links:
+    - https://yukicoder.me/problems/no/184
+  bundledCode: "#line 1 \"test/yukicoder-184/main.test.cpp\"\n#define PROBLEM \"https://yukicoder.me/problems/no/184\"\
+    \n#line 2 \"base.hpp\"\n\n#ifdef DEBUG\n#define _GLIBCXX_DEBUG\n#endif\n\n#include\
+    \ <bits/stdc++.h>\nusing namespace std;\n\n#define REP(i, n) for(int i = 0; i\
+    \ < (int)(n); i++)\n#define FOR(i, a, b) for(ll i = a; i < (ll)(b); i++)\n#define\
+    \ ALL(a) (a).begin(),(a).end()\n#define END(...) { print(__VA_ARGS__); return;\
     \ }\n\nusing VI = vector<int>;\nusing VVI = vector<VI>;\nusing VVVI = vector<VVI>;\n\
     using ll = long long;\nusing VL = vector<ll>;\nusing VVL = vector<VL>;\nusing\
     \ VVVL = vector<VVL>;\nusing VD = vector<double>;\nusing VVD = vector<VD>;\nusing\
@@ -170,100 +171,32 @@ data:
     \ ^= k);\n    }\n};\n\nusing XorMatrix = Matrix<\n    int,\n    internal_operator::default_xor<int>,\n\
     \    internal_operator::zero<int>,\n    internal_operator::default_and<int>,\n\
     \    internal_operator::one<int>,\n    internal_operator::default_xor<int>,\n\
-    \    internal_operator::default_and<int>\n>;\n"
-  code: "#pragma once\n#include \"base.hpp\"\n#include \"internal_operator.hpp\"\n\
-    \ntemplate <\n    typename T,\n    T (*add)(const T, const T)=internal_operator::default_add,\n\
-    \    T (*zero)()=internal_operator::zero,\n    T (*mult)(const T, const T)=internal_operator::default_mult,\n\
-    \    T (*one)()=internal_operator::one,\n    T (*sub)(const T, const T)=internal_operator::default_sub,\n\
-    \    T (*div)(const T, const T)=internal_operator::default_div\n>\nstruct Matrix\
-    \ {\n    int n, m;\n    vector<vector<T>> A;\n\n    Matrix() : n(0), m(0), A(vector<vector<T>>(0))\
-    \ {}\n    Matrix(size_t _n, size_t _m) : n(_n), m(_m), A(_n, vector<T>(_m, zero()))\
-    \ {}\n    Matrix(vector<vector<T>> _A) : n(_A.size()), m(_A[0].size()), A(_A)\
-    \ {}\n\n    vector<T> &operator[](int i) { return A.at(i); }\n    const vector<T>\
-    \ &operator[](int i) const { return A.at(i); }\n\n    static Matrix I(size_t n)\
-    \ {\n        Matrix ret(n, n);\n        REP(i, n) ret[i][i] = one();\n       \
-    \ return ret;\n    }\n\n    Matrix &operator+=(const Matrix &B) {\n        assert(n\
-    \ == B.n && m == B.m);\n        REP(i, n) REP(j, m) A[i][j] = add(A[i][j], B[i][j]);\n\
-    \        return *this;\n    }\n    Matrix operator+(const Matrix &B) const {\n\
-    \        return (Matrix(*this) += B);\n    }\n\n    Matrix &operator-=(const Matrix\
-    \ &B) {\n        assert(n == B.n && m == B.m);\n        REP(i, n) REP(j, m) A[i][j]\
-    \ = sub(A[i][j], B[i][j]);\n        return *this;\n    }\n    Matrix operator-(const\
-    \ Matrix &B) const {\n        return (Matrix(*this) -= B);\n    }\n\n    Matrix\
-    \ &operator*=(const Matrix &B) {\n        assert(m == B.n);\n        vector<vector<T>>\
-    \ res(n, vector<T>(B.m, zero()));\n        REP(i, n) REP(j, m) REP(k, B.m) res[i][k]\
-    \ = add(res[i][k], mult(A[i][j], B[j][k]));\n        A.swap(res);\n        m =\
-    \ B.m;\n        return (*this);\n    }\n    Matrix operator*(const Matrix &B)\
-    \ const {\n        return (Matrix(*this) *= B);\n    }\n\n    Matrix &operator|=(const\
-    \ Matrix &B) {\n        assert(B.n == n);\n        REP(i, n) {\n            A[i].resize(m+B.m);\n\
-    \            REP(j, B.m) A[i][m+j] = B[i][j];\n        }\n        m += B.m;\n\
-    \        return (*this);\n    }\n    Matrix operator|(const Matrix &B) const {\n\
-    \        return (Matrix(*this) |= B);\n    }\n\n    Matrix &operator|=(const vector<T>\
-    \ &B) {\n        assert(B.size() == n);\n        REP(i, n) {\n            A[i].push_back(B[i]);\n\
-    \        }\n        m++;\n        return (*this);\n    }\n    Matrix operator|(const\
-    \ vector<T> &B) const {\n        return (Matrix(*this) |= B);\n    }\n\n    Matrix\
-    \ &operator&=(const Matrix &B) {\n        assert(B.m == m);\n        A.resize(n+B.n);\n\
-    \        REP(i, B.n) {\n            A[n+i] = B[i];\n        }\n        n += B.n;\n\
-    \        return (*this);\n    }\n    Matrix operator&(const Matrix &B) const {\n\
-    \        return (Matrix(*this) &= B);\n    }\n\n    Matrix &operator&=(const vector<T>\
-    \ &B) {\n        assert(B.size() == m);\n        A.push_back(B);\n        n++;\n\
-    \        return (*this);\n    }\n    Matrix operator&(const vector<T> &B) const\
-    \ {\n        return (Matrix(*this) &= B);\n    }\n\n    friend istream &operator>>(istream\
-    \ &is, Matrix &mat) {\n        REP(i, mat.n) REP(j, mat.m) is >> mat[i][j];\n\
-    \        return is;\n    }\n\n    friend ostream &operator<<(ostream &os, const\
-    \ Matrix &mat) {\n        REP(i, mat.n) {\n            REP(j, mat.m) os << mat[i][j]\
-    \ << (j==mat.m-1? '\\n' : ' ');\n        }\n        return os;\n    }\n\n    pair<Matrix,\
-    \ T> gaussian_elimination() const {\n        Matrix mat(*this);\n        T det\
-    \ = one();\n        VI columns;\n        int i = 0;\n        int j = 0;\n    \
-    \    while(i < n && j < m) {\n            int idx = -1;\n            FOR(k, i,\
-    \ n) if(mat[k][j] != zero()) idx = k;\n            if(idx == -1) {\n         \
-    \       det = zero();\n                j++;\n                continue;\n     \
-    \       }\n            if(i != idx) {\n                det *= sub(zero(), one());\n\
-    \                swap(mat[i], mat[idx]);\n            }\n            det *= mat[i][j];\n\
-    \            T scale = mat[i][j];\n            REP(l, m) mat[i][l] = div(mat[i][l],\
-    \ scale);\n            FOR(k, i+1, n) {\n                T scale = mat[k][j];\n\
-    \                REP(l, m) mat[k][l] = sub(mat[k][l], mult(mat[i][l], scale));\n\
-    \            }\n            columns.push_back(j);\n            i++;\n        \
-    \    j++;\n        }\n        REP(i, columns.size()) {\n            int j = columns[i];\n\
-    \            REP(k, i) {\n                T scale = mat[k][j];\n             \
-    \   FOR(l, j, m) {\n                    mat[k][l] = sub(mat[k][l], mult(mat[i][l],\
-    \ scale));\n                }\n            }\n        }\n        return make_pair(mat,\
-    \ det);\n    }\n\n    void make_basis() {\n        *this = gaussian_elimination().first;\n\
-    \        while(n && get_bra(n-1) == vector<T>(m, zero())) pop_bra();\n    }\n\n\
-    \    Matrix inv() const {\n        Matrix and_i = (*this) | I(n);\n        auto\
-    \ [i_and, det] = and_i.gaussian_elimination();\n        assert(det != zero());\n\
-    \        Matrix res(n, n);\n        REP(i, n) REP(j, n) res[i][j] = i_and[i][n+i];\n\
-    \        return res;\n    }\n\n    vector<T> get_bra(int i) const {\n        assert(0\
-    \ <= i && i < n);\n        return A[i];\n    }\n\n    vector<T> get_ket(int i)\
-    \ const {\n        assert(0 <= i && i < m);\n        vector<T> res(n);\n     \
-    \   REP(i, n) res[i] = A[i][i];\n        return res;\n    }\n\n    void pop_bra()\
-    \ {\n        assert(n > 0);\n        A.pop_back();\n        n--;\n    }\n\n  \
-    \  void pop_ket() {\n        assert(m > 0);\n        REP(i, n) A[i].pop_back();\n\
-    \        m--;\n    }\n\n    Matrix transpose() const {\n        Matrix res(m,\
-    \ n);\n        REP(i, n) REP(j, m) res[j][i] = A[i][j];\n        return res;\n\
-    \    }\n\n    Matrix operator^=(ll k) {\n        if(k < 0) {\n            *this\
-    \ = this->inv();\n            k = -k;\n        }\n        Matrix res = Matrix::I(n);\n\
-    \        while(k) {\n            if(k & 1) res *= *this;\n            *this *=\
-    \ *this;\n            k >>= 1LL;\n        }\n        A.swap(res.A);\n        return\
-    \ (*this);\n    }\n    Matrix operator^(const ll k) const {\n        return (Matrix(*this)\
-    \ ^= k);\n    }\n};\n\nusing XorMatrix = Matrix<\n    int,\n    internal_operator::default_xor<int>,\n\
-    \    internal_operator::zero<int>,\n    internal_operator::default_and<int>,\n\
-    \    internal_operator::one<int>,\n    internal_operator::default_xor<int>,\n\
-    \    internal_operator::default_and<int>\n>;\n"
+    \    internal_operator::default_and<int>\n>;\n#line 3 \"test/yukicoder-184/main.test.cpp\"\
+    \n\nint main(void) {\n    int n; cin >> n;\n    VL a(n); cin >> a;\n    XorMatrix\
+    \ mat(61, n);\n    REP(i, 61) REP(j, n) mat[i][j] = a[j] >> i & 1LL;\n    auto\
+    \ basis = mat.gaussian_elimination().first;\n    ll ans = 1;\n    REP(i, 61) {\n\
+    \        REP(j, n) if(basis[i][j]) {\n            ans <<= 1LL;\n            break;\n\
+    \        }\n    }\n    print(ans);\n}\n"
+  code: "#define PROBLEM \"https://yukicoder.me/problems/no/184\"\n#include \"matrix.hpp\"\
+    \n\nint main(void) {\n    int n; cin >> n;\n    VL a(n); cin >> a;\n    XorMatrix\
+    \ mat(61, n);\n    REP(i, 61) REP(j, n) mat[i][j] = a[j] >> i & 1LL;\n    auto\
+    \ basis = mat.gaussian_elimination().first;\n    ll ans = 1;\n    REP(i, 61) {\n\
+    \        REP(j, n) if(basis[i][j]) {\n            ans <<= 1LL;\n            break;\n\
+    \        }\n    }\n    print(ans);\n}\n"
   dependsOn:
+  - matrix.hpp
   - base.hpp
   - internal_operator.hpp
-  isVerificationFile: false
-  path: matrix.hpp
+  isVerificationFile: true
+  path: test/yukicoder-184/main.test.cpp
   requiredBy: []
-  timestamp: '2022-06-21 20:29:27+09:00'
-  verificationStatus: LIBRARY_ALL_WA
-  verifiedWith:
-  - test/yosupo-determinant-of-matrix/main.test.cpp
-  - test/yukicoder-184/main.test.cpp
-documentation_of: matrix.hpp
+  timestamp: '2022-06-30 20:37:00+09:00'
+  verificationStatus: TEST_WRONG_ANSWER
+  verifiedWith: []
+documentation_of: test/yukicoder-184/main.test.cpp
 layout: document
 redirect_from:
-- /library/matrix.hpp
-- /library/matrix.hpp.html
-title: matrix.hpp
+- /verify/test/yukicoder-184/main.test.cpp
+- /verify/test/yukicoder-184/main.test.cpp.html
+title: test/yukicoder-184/main.test.cpp
 ---

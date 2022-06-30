@@ -1,23 +1,29 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':warning:'
+  - icon: ':question:'
     path: base.hpp
     title: base.hpp
-  - icon: ':warning:'
+  - icon: ':question:'
     path: integer.hpp
     title: integer.hpp
-  - icon: ':warning:'
+  - icon: ':question:'
     path: internal_operator.hpp
     title: internal_operator.hpp
-  - icon: ':warning:'
+  - icon: ':question:'
     path: modint.hpp
     title: modint.hpp
   _extendedRequiredBy: []
-  _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _extendedVerifiedWith:
+  - icon: ':x:'
+    path: test/AOJ-ALDS_1_14_B/main.test.cpp
+    title: test/AOJ-ALDS_1_14_B/main.test.cpp
+  - icon: ':x:'
+    path: test/yukicoder-430/main.test.cpp
+    title: test/yukicoder-430/main.test.cpp
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':x:'
   attributes:
     links: []
   bundledCode: "#line 2 \"string.hpp\"\n\n#line 2 \"base.hpp\"\n\n#ifdef DEBUG\n#define\
@@ -327,8 +333,10 @@ data:
   path: string.hpp
   requiredBy: []
   timestamp: '2022-06-21 20:28:59+09:00'
-  verificationStatus: LIBRARY_NO_TESTS
-  verifiedWith: []
+  verificationStatus: LIBRARY_ALL_WA
+  verifiedWith:
+  - test/AOJ-ALDS_1_14_B/main.test.cpp
+  - test/yukicoder-430/main.test.cpp
 documentation_of: string.hpp
 layout: document
 redirect_from:

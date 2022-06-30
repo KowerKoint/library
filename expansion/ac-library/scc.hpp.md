@@ -1,17 +1,20 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':warning:'
+  - icon: ':question:'
     path: base.hpp
     title: base.hpp
-  - icon: ':warning:'
+  - icon: ':question:'
     path: internal_operator.hpp
     title: internal_operator.hpp
   _extendedRequiredBy: []
-  _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _extendedVerifiedWith:
+  - icon: ':x:'
+    path: test/AtCoder-abc241_e/main.test.cpp
+    title: test/AtCoder-abc241_e/main.test.cpp
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':x:'
   attributes:
     links: []
   bundledCode: "#line 2 \"base.hpp\"\n\n#ifdef DEBUG\n#define _GLIBCXX_DEBUG\n#endif\n\
@@ -132,8 +135,9 @@ data:
   path: expansion/ac-library/scc.hpp
   requiredBy: []
   timestamp: '2022-06-21 20:28:59+09:00'
-  verificationStatus: LIBRARY_NO_TESTS
-  verifiedWith: []
+  verificationStatus: LIBRARY_ALL_WA
+  verifiedWith:
+  - test/AtCoder-abc241_e/main.test.cpp
 documentation_of: expansion/ac-library/scc.hpp
 layout: document
 redirect_from:
