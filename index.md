@@ -12,6 +12,9 @@ data:
     - icon: ':x:'
       path: general.hpp
       title: general.hpp
+    - icon: ':warning:'
+      path: geometry.hpp
+      title: geometry.hpp
     - icon: ':question:'
       path: integer.hpp
       title: integer.hpp
