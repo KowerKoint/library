@@ -1,4 +1,6 @@
-#pragma once
+#line 1 "test/aoj-ntl-1-e.test.cpp"
+#define PROBLEM "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=NTL_1_E"
+#line 2 "base.hpp"
 
 #ifdef DEBUG
 #define _GLIBCXX_DEBUG
@@ -180,4 +182,25 @@ pair<vector<T>, vector<T>> factorial(int n) {
         rev[i-1] = rev[i] * i;
     }
     return make_pair(res, rev);
+}
+#line 2 "integer/extgcd.hpp"
+
+ll extgcd(ll a, ll b, ll& x, ll& y) {
+    x = 1, y = 0;
+    ll nx = 0, ny = 1;
+    while(b) {
+        ll q = a / b;
+        tie(a, b) = LP(b, a % b);
+        tie(x, nx) = LP(nx, x - nx*q);
+        tie(y, ny) = LP(ny, y - ny*q);
+    }
+    return a;
+}
+#line 3 "test/aoj-ntl-1-e.test.cpp"
+
+int main() {
+    ll a, b; cin >> a >> b;
+    ll x, y;
+    extgcd(a, b, x, y);
+    print(x, y);
 }

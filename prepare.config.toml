@@ -1,0 +1,2 @@
+problem_directory = "Contests/{service_name}_{contest_id}/{problem_id}"
+contest_directory = "."

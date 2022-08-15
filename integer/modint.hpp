@@ -1,7 +1,6 @@
 #pragma once
-#include "base.hpp"
-#include "internal_operator.hpp"
-#include "integer.hpp"
+#include "../internal_operator.hpp"
+#include "pow-mod.hpp"
 
 template <ll (*mod)()>
 struct Modint {
@@ -119,15 +118,15 @@ struct Modint {
     }
 };
 
-using MI3 = Modint<internal_operator::mod3>;
+using MI3 = Modint<kowerkoint::mod3>;
 using V3 = vector<MI3>;
 using VV3 = vector<V3>;
 using VVV3 = vector<VV3>;
-using MI7 = Modint<internal_operator::mod7>;
+using MI7 = Modint<kowerkoint::mod7>;
 using V7 = vector<MI7>;
 using VV7 = vector<V7>;
 using VVV7 = vector<VV7>;
-using MI9 = Modint<internal_operator::mod9>;
+using MI9 = Modint<kowerkoint::mod9>;
 using V9 = vector<MI9>;
 using VV9 = vector<V9>;
 using VVV9 = vector<VV9>;

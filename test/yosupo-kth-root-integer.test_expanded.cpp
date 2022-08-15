@@ -1,4 +1,7 @@
-#pragma once
+#line 1 "test/yosupo-kth-root-integer.test.cpp"
+#define PROBLEM "https://judge.yosupo.jp/problem/kth_root_integer"
+
+#line 2 "base.hpp"
 
 #ifdef DEBUG
 #define _GLIBCXX_DEBUG
@@ -16,13 +19,10 @@ using VI = vector<int>;
 using VVI = vector<VI>;
 using VVVI = vector<VVI>;
 using ll = long long;
+using ull = unsigned long long;
 using VL = vector<ll>;
 using VVL = vector<VL>;
 using VVVL = vector<VVL>;
-using ull = unsigned long long;
-using VUL = vector<ull>;
-using VVUL = vector<VUL>;
-using VVVUL = vector<VVUL>;
 using VD = vector<double>;
 using VVD = vector<VD>;
 using VVVD = vector<VVD>;
@@ -51,6 +51,29 @@ constexpr ll LINF = 1001001001001001001ll;
 constexpr int DX[] = {1, 0, -1, 0};
 constexpr int DY[] = {0, 1, 0, -1};
 
+void print() { cout << '\n'; }
+template<typename T>
+void print(const T &t) { cout << t << '\n'; }
+template<typename Head, typename... Tail>
+void print(const Head &head, const Tail &... tail) {
+    cout << head << ' ';
+    print(tail...);
+}
+
+#ifdef DEBUG
+void dbg() { cerr << '\n'; }
+template<typename T>
+void dbg(const T &t) { cerr << t << '\n'; }
+template<typename Head, typename... Tail>
+void dbg(const Head &head, const Tail &... tail) {
+    cerr << head << ' ';
+    dbg(tail...);
+}
+#else
+template<typename... Args>
+void dbg(const Args &... args) {}
+#endif
+
 template< typename T1, typename T2 >
 ostream &operator<<(ostream &os, const pair< T1, T2 >& p) {
     os << p.first << " " << p.second;
@@ -76,29 +99,6 @@ istream &operator>>(istream &is, vector< T > &v) {
     for(T &in : v) is >> in;
     return is;
 }
-
-void print() { cout << '\n'; }
-template<typename T>
-void print(const T &t) { cout << t << '\n'; }
-template<typename Head, typename... Tail>
-void print(const Head &head, const Tail &... tail) {
-    cout << head << ' ';
-    print(tail...);
-}
-
-#ifdef DEBUG
-void dbg() { cerr << '\n'; }
-template<typename T>
-void dbg(const T &t) { cerr << t << '\n'; }
-template<typename Head, typename... Tail>
-void dbg(const Head &head, const Tail &... tail) {
-    cerr << head << ' ';
-    dbg(tail...);
-}
-#else
-template<typename... Args>
-void dbg(const Args &... args) {}
-#endif
 
 template<typename T>
 vector<vector<T>> split(typename vector<T>::const_iterator begin, typename vector<T>::const_iterator end, T val) {
@@ -180,4 +180,34 @@ pair<vector<T>, vector<T>> factorial(int n) {
         rev[i-1] = rev[i] * i;
     }
     return make_pair(res, rev);
+}
+#line 3 "integer/kth-root.hpp"
+
+ull kth_root(ull x, ull k) {
+    if(k == 1) return x;
+    ll res = 0;
+    for(int i = 31; i >= 0; i--) {
+        bool over = false;
+        ull tmp = 1;
+        ull nxt = res | 1ULL << i;
+        REP(i, k) {
+            if(tmp > x / nxt) {
+                over = true;
+                break;
+            }
+            tmp *= nxt;
+        }
+        if(!over) res = nxt;
+    }
+    return res;
+}
+
+#line 4 "test/yosupo-kth-root-integer.test.cpp"
+
+int main() {
+    int t; cin >> t;
+    while(t--) {
+        uint64_t a, k; cin >> a >> k;
+        print(kth_root(a, k));
+    }
 }
