@@ -82,8 +82,8 @@ struct SegTree {
 };
 
 template <typename T>
-using RMaxQ = SegTree<T, internal_operator::default_max<T>, numeric_limits<T>::min>;
+using RMaxQ = SegTree<T, kowerkoint::max<T>, numeric_limits<T>::min>;
 template <typename T>
-using RMinQ = SegTree<T, internal_operator::default_min<T>, numeric_limits<T>::max>;
+using RMinQ = SegTree<T, kowerkoint::min<T>, numeric_limits<T>::max>;
 template <typename T>
-using RSumQ = SegTree<T, internal_operator::default_add<T>, internal_operator::zero<T>>;
+using RSumQ = SegTree<T, kowerkoint::add<T>, kowerkoint::zero<T>>;
