@@ -1,4 +1,4 @@
-#include "internal_operator.hpp"
+#include "operator.hpp"
 
 template <typename T, T (*func)(const T, const T), T (*e)()>
 struct SegTree {
@@ -82,8 +82,8 @@ struct SegTree {
 };
 
 template <typename T>
-using RMaxQ = SegTree<T, kowerkoint::max<T>, numeric_limits<T>::min>;
+using RMaxQ = SegTree<T, max_op<T>, min_e<T>>;
 template <typename T>
-using RMinQ = SegTree<T, kowerkoint::min<T>, numeric_limits<T>::max>;
+using RMinQ = SegTree<T, min_op<T>, max_e<T>>;
 template <typename T>
-using RSumQ = SegTree<T, kowerkoint::add<T>, kowerkoint::zero<T>>;
+using RSumQ = SegTree<T, add_op<T>, zero_e<T>>;

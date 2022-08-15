@@ -1,15 +1,15 @@
 #pragma once
 #include "base.hpp"
-#include "internal_operator.hpp"
+#include "operator.hpp"
 
 template <
     typename T,
-    T (*add)(const T, const T)=internal_operator::default_add,
-    T (*zero)()=internal_operator::zero,
-    T (*mult)(const T, const T)=internal_operator::default_mult,
-    T (*one)()=internal_operator::one,
-    T (*sub)(const T, const T)=internal_operator::default_sub,
-    T (*div)(const T, const T)=internal_operator::default_div
+    T (*add)(const T, const T)=add_op,
+    T (*zero)()=zero_e,
+    T (*mult)(const T, const T)=mult_op,
+    T (*one)()=one_e,
+    T (*sub)(const T, const T)=sub_op,
+    T (*div)(const T, const T)=div_op
 >
 struct Matrix {
     int n, m;
@@ -224,10 +224,10 @@ struct Matrix {
 
 using XorMatrix = Matrix<
     int,
-    internal_operator::default_xor<int>,
-    internal_operator::zero<int>,
-    internal_operator::default_and<int>,
-    internal_operator::one<int>,
-    internal_operator::default_xor<int>,
-    internal_operator::default_and<int>
+    xor_op<int>,
+    zero_e<int>,
+    and_op<int>,
+    one_e<int>,
+    xor_op<int>,
+    and_op<int>
 >;
