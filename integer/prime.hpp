@@ -28,7 +28,7 @@ struct Prime {
 
     bool is_prime(ull n) {
         assert(n > 0);
-        if(n <= (int)sieved.size() - 1) return !sieved[n];
+        if(n <= (ll)sieved.size() - 1) return !sieved[n];
         for(ull d = 2; d*d <= n; d++) {
             if(n % d == 0) return false;
         }
