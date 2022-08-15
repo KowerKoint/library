@@ -1,4 +1,6 @@
-#pragma once
+#line 1 "test/aoj-ntl-1-a.test.cpp"
+#define PROBLEM "http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=NTL_1_A"
+#line 2 "base.hpp"
 
 #ifdef DEBUG
 #define _GLIBCXX_DEBUG
@@ -180,4 +182,125 @@ pair<vector<T>, vector<T>> factorial(int n) {
         rev[i-1] = rev[i] * i;
     }
     return make_pair(res, rev);
+}
+#line 3 "integer/kth-root-integer.hpp"
+
+ull kth_root_integer(ull x, ull k) {
+    if(k == 1) return x;
+    ll res = 0;
+    for(int i = 31; i >= 0; i--) {
+        bool over = false;
+        ull tmp = 1;
+        ull nxt = res | 1ULL << i;
+        REP(i, k) {
+            if(tmp > x / nxt) {
+                over = true;
+                break;
+            }
+            tmp *= nxt;
+        }
+        if(!over) res = nxt;
+    }
+    return res;
+}
+
+#line 3 "integer/prime.hpp"
+
+struct Prime {
+    VI sieved;
+    VL primes;
+
+    Prime() {}
+    Prime(ll n) {
+        expand(n);
+    }
+
+    void expand(ll n) {
+        ll sz = (ll)sieved.size() - 1;
+        if(n <= sz) return;
+        sieved.resize(n+1);
+        sieved[0] = sieved[1] = 1;
+        primes.clear();
+        primes.push_back(2);
+        for(ll d = 4; d <= n; d += 2) sieved[d] = 1;
+        FOR(d, 3, n+1) {
+            if(!sieved[d]) {
+                primes.push_back(d);
+                for(ll i = d*d; i <= n; i += d*2) sieved[i] = 1;
+            }
+        }
+    }
+
+    bool is_prime(ull n) {
+        assert(n > 0);
+        if(n <= (ll)sieved.size() - 1) return !sieved[n];
+        for(ull d = 2; d*d <= n; d++) {
+            if(n % d == 0) return false;
+        }
+        return true;
+    }
+
+    VUL least_prime_factors(ll n) {
+        assert(n > 0);
+        VUL lpfs(n+1, -1), primes;
+        FOR(d, 2, n+1) {
+            if(lpfs[d] == -1) {
+                lpfs[d] = d;
+                primes.push_back(d);
+            }
+            for(ll p : primes) {
+                if(p * d > n || p > lpfs[d]) break;
+                lpfs[p*d] = p;
+            }
+        }
+        return lpfs;
+    }
+
+    VUL prime_list(ll n) {
+        assert(n > 0);
+        expand(n);
+        return VUL(primes.begin(), upper_bound(ALL(primes), n));
+    }
+
+    vector<pair<ull, int>> prime_factor(ull n) {
+        assert(n > 0);
+        vector<pair<ull, int>> factor;
+        expand(kth_root_integer(n, 2));
+        for(ull prime : primes) {
+            if(prime * prime > n) break;
+            int cnt = 0;
+            while(n % prime == 0) {
+                n /= prime;
+                cnt++;
+            }
+            if(cnt) factor.emplace_back(prime, cnt);
+        }
+        if(n > 1) factor.emplace_back(n, 1);
+        return factor;
+    }
+
+
+    VUL divisor(ull n) {
+        assert(n > 0);
+        auto factor = prime_factor(n);
+        VUL res = {1};
+        for(auto [prime, cnt] : factor) {
+            int sz = res.size();
+            res.resize(sz * (cnt+1));
+            REP(i, sz*cnt) res[sz+i] = res[i] * prime;
+            REP(i, cnt) inplace_merge(res.begin(), res.begin() + sz*(i+1), res.begin() + sz*(i+2));
+        }
+        return res;
+    }
+};
+#line 3 "test/aoj-ntl-1-a.test.cpp"
+
+int main() {
+    ll n; cin >> n;
+    Prime pr;
+    cout << n << ':';
+    for(auto [p, c] : pr.prime_factor(n)) {
+        REP(i, c) cout << ' ' << p;
+    }
+    print();
 }
