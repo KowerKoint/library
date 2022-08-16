@@ -21,18 +21,24 @@ struct Counting {
         for(ll i = n-1; i >= sz; i--) ifact[i] = ifact[i+1] * (i+1);
     }
 
-    T permutation(ll n, ll r) {
+    T p(ll n, ll r) {
         assert(n >= r);
         assert(r >= 0);
         expand(n);
         return fact[n] * ifact[n-r];
     }
 
-    T combination(ll n, ll r) {
+    T c(ll n, ll r) {
         assert(n >= r);
         assert(r >= 0);
         expand(n);
         return fact[n] * ifact[r] * ifact[n-r];
+    }
+
+    T h(ll n, ll r) {
+        assert(n >= 0);
+        assert(r >= 0);
+        return c(n+r-1, r);
     }
 
     T stirling(ll n, ll k) {
