@@ -1,7 +1,7 @@
 #include "../base.hpp"
 
 template<typename T>
-T permutation(T n, T k) {
+T permutation(ll n, ll k) {
     assert(n >= k);
     assert(k >= 0);
     T res(1);
