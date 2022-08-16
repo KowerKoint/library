@@ -82,11 +82,11 @@ struct Counting {
         return res;
     }
 
-    vector<vector<T>> partition_table(ll n) {
+    vector<vector<T>> partition_table(ll n, ll k) {
         assert(n >= 0);
-        vector<vector<T>> res(n+1, vector<T>(n+1));
-        REP(i, n+1) res[0][i] = 1;
-        FOR(i, 1, n+1) FOR(j, 1, n+1) {
+        vector<vector<T>> res(n+1, vector<T>(k+1));
+        REP(i, k+1) res[0][i] = 1;
+        FOR(i, 1, n+1) FOR(j, 1, k+1) {
             res[i][j] = res[i][j-1] + (i<j? 0 : res[i-j][j]);
         }
         return res;
