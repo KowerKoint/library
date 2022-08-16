@@ -10,6 +10,7 @@
 "test/aoj-ntl-1-a.test.cpp": "2022-08-15 21:59:26 +0900",
 "test/aoj-ntl-1-b.test.cpp": "2022-08-15 21:56:12 +0900",
 "test/aoj-ntl-1-e.test.cpp": "2022-08-15 20:19:22 +0900",
+"test/yosupo-determinant-of-matrix.test.cpp": "2022-08-16 17:57:58 +0900",
 "test/yosupo-enumerate-primes.test.cpp": "2022-08-15 21:59:26 +0900",
 "test/yosupo-kth-root-integer.test.cpp": "2022-08-15 20:19:22 +0900"
 }
