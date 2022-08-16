@@ -1,6 +1,6 @@
 #pragma once
-#include "base.hpp"
-#include "operator.hpp"
+#include "../base.hpp"
+#include "../operator.hpp"
 
 template <
     typename T,
