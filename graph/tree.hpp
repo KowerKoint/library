@@ -35,7 +35,7 @@ struct Tree : Graph<T> {
         while(!stk.empty()) {
             int from = stk.top(); stk.pop();
             if(from >= 0) {
-                for(auto& e : this[from]) {
+                for(auto& e : this->g[from]) {
                     if(e.to == par[from]) continue;
                     par[e.to] = {e.to, from, e.cost, e.id};
                     child[from].push_back(e);
