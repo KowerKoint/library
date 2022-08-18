@@ -18,7 +18,6 @@ struct Tree : Graph<T> {
     }
     void read(int padding=-1, bool weighted=false) {
         Graph<T>::read(this->n-1, padding, weighted, false);
-        Graph<T>::read(this->n-1, padding, weighted, false);
     }
     void build(int root_) {
         root = root_;
