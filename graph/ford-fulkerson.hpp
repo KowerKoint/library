@@ -33,47 +33,37 @@ struct FordFulkersonGraph {
         while (true) {
             VI seen(n);
             VI processed(n);
-            VVI child_edge(n);
-            vector<T> flow(n);
+            VI pre(n);
             stack<pair<int, T>> stk;
-            stk.emplace(~s, -1);
+            seen[s] = 1;
             stk.emplace(s, numeric_limits<T>::max());
-            T d = 0;
+            T flow = 0;
             while(!stk.empty()) {
                 auto [from, f] = stk.top(); stk.pop();
-                if(from >= 0) {
-                    seen[from] = 1;
-                    if(from == t) {
-                        flow[from] = f;
-                        continue;
-                    }
-                    for(int i = 0; i < g[from].size(); i++) {
-                        auto& e = g[from][i];
-                        if(seen[e.to]) continue;
-                        if(e.cap - e.flow == 0) continue;
-                        child_edge[from].push_back(i);
-                        stk.emplace(~e.to, 0);
-                        stk.emplace(e.to, min(f, e.cap - e.flow));
-                    }
-                } else {
-                    from = ~from;
-                    pair<T, int> mx = {0, -1};
-                    for(int i : child_edge[from]) {
-                        int to = g[from][i].to;
-                        if(processed[to]) continue;
-                        processed[to] = 1;
-                        chmax(mx, make_pair(flow[to], i));
-                    }
-                    if(mx.first == 0) continue;
-                    flow[from] = mx.first;
-                    auto& e = g[from][mx.second];
-                    e.flow += mx.first;
-                    g[e.to][e.rev].flow -= mx.first;
-                    if(from == s) d = mx.first;
+                seen[from] = 1;
+                if(from == t) {
+                    flow = f;
+                    continue;
+                }
+                for(int i = 0; i < g[from].size(); i++) {
+                    auto& e = g[from][i];
+                    if(seen[e.to]) continue;
+                    if(e.cap - e.flow == 0) continue;
+                    seen[e.to] = 1;
+                    pre[e.to] = e.rev;
+                    stk.emplace(e.to, min(f, e.cap - e.flow));
                 }
             }
-            if(d == 0) break;
-            res += d;
+            if(flow == 0) break;
+            int cur = t;
+            while(cur != s) {
+                auto& re = g[cur][pre[cur]];
+                auto& e = g[re.to][re.rev];
+                e.flow += flow;
+                re.flow -= flow;
+                cur = re.to;
+            }
+            res += flow;
         }
         return res;
     }
