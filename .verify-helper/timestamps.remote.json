@@ -13,5 +13,6 @@
 "test/yosupo-determinant-of-matrix.test.cpp": "2022-08-16 17:57:58 +0900",
 "test/yosupo-enumerate-primes.test.cpp": "2022-08-15 21:59:26 +0900",
 "test/yosupo-kth-root-integer.test.cpp": "2022-08-15 20:19:22 +0900",
-"test/yosupo-montmort-number.test.cpp": "2022-08-16 18:21:53 +0900"
+"test/yosupo-montmort-number.test.cpp": "2022-08-16 18:21:53 +0900",
+"test/yosupo-shortest-path.test.cpp": "2022-08-18 10:48:21 +0900"
 }
