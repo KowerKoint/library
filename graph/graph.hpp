@@ -35,7 +35,6 @@ struct Graph {
     }
     vector<Edge<T>>& operator[](int u) { return g[u]; }
     const vector<Edge<T>>& operator[](int u) const { return g[u]; }
-
     pair<vector<T>, vector<Edge<T>>> dijkstra(int st) {
         T inf = numeric_limits<T>::max();
         vector<T> dist(n, inf);
@@ -50,6 +49,24 @@ struct Graph {
                 if(chmin(dist[e.to], d + e.cost)) {
                     pre[e.to] = e;
                     pq.emplace(dist[e.to], e.to);
+                }
+            }
+        }
+        return {dist, pre};
+    }
+    pair<vector<T>, vector<Edge<T>>> bfs(int st) {
+        T inf = numeric_limits<T>::max();
+        vector<T> dist(n, inf);
+        vector<Edge<T>> pre(n);
+        queue<int> que;
+        dist[st] = 0;
+        que.emplace(st);
+        while(!que.empty()) {
+            int from = que.front(); que.pop();
+            for(auto& e : g[from]) {
+                if(chmin(dist[e.to], dist[e.from] + 1)) {
+                    pre[e.to] = e;
+                    que.emplace(e.to);
                 }
             }
         }
