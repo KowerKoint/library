@@ -1,5 +1,5 @@
 #define PROBLEM "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_6_A"
-#include "../graph/ford-fullkerson.hpp"
+#include "../graph/ford-fulkerson.hpp"
 
 int main() {
     int v, e; cin >> v >> e;
