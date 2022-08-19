@@ -27,6 +27,9 @@ struct UnionFind {
     Potential diff(int x, int y) {
         return potential(y) - potential(x);
     }
+    int size(int x) {
+        return -par[root(x)];
+    }
     bool merge(int x, int y, Potential p=0) {
         p += potential(x);
         p -= potential(y);
