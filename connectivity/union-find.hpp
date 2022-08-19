@@ -49,7 +49,7 @@ struct UnionFind {
         return root(x) == root(y);
     }
     VVI groups() {
-        VVI res;
+        VVI res(n);
         REP(i, n) {
             res[root(i)].push_back(i);
         }
