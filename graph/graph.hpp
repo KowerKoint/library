@@ -1,5 +1,6 @@
 #pragma once
 #include "../base.hpp"
+#include "../connectivity/union-find.hpp"
 
 template <typename T=int>
 struct Edge {
@@ -35,7 +36,7 @@ struct Graph {
     }
     vector<Edge<T>>& operator[](int u) { return g[u]; }
     const vector<Edge<T>>& operator[](int u) const { return g[u]; }
-    pair<vector<T>, vector<Edge<T>>> dijkstra(int st) {
+    pair<vector<T>, vector<Edge<T>>> dijkstra(int st) const {
         T inf = numeric_limits<T>::max();
         vector<T> dist(n, inf);
         vector<Edge<T>> pre(n);
@@ -54,7 +55,7 @@ struct Graph {
         }
         return {dist, pre};
     }
-    pair<vector<T>, vector<Edge<T>>> bfs(int st) {
+    pair<vector<T>, vector<Edge<T>>> bfs(int st) const {
         T inf = numeric_limits<T>::max();
         vector<T> dist(n, inf);
         vector<Edge<T>> pre(n);
@@ -71,5 +72,28 @@ struct Graph {
             }
         }
         return {dist, pre};
+    }
+    vector<Edge<T>> edges() const {
+        vector<Edge<T>> res;
+        REP(i, n) for(auto& e : g[i]) res.emplace_back(e);
+        sort(res.begin(), res.end(), [](const Edge<T>& a, const Edge<T>& b) {
+            return a.id < b.id;
+        });
+        res.erase(unique(ALL(res), [](const Edge<T>& a, const Edge<T>& b) {
+            return a.id == b.id;
+        }), res.end());
+        return res;
+    }
+    vector<Edge<T>> kruskal() const {
+        vector<Edge<T>> res;
+        vector<Edge<T>> es = edges();
+        UnionFind uf(n);
+        sort(ALL(es), [](const Edge<T>& a, const Edge<T>& b) {
+            return a.cost < b.cost;
+        });
+        for(auto& e : edges()) {
+            if(uf.merge(e.from, e.to)) res.emplace_back(e);
+        }
+        return res;
     }
 };
