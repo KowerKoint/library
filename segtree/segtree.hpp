@@ -1,4 +1,4 @@
-#include "operator.hpp"
+#include "../operator.hpp"
 
 template <typename T, T (*func)(const T, const T), T (*e)()>
 struct SegTree {
@@ -35,8 +35,8 @@ struct SegTree {
             state[i] = func(state[i*2], state[i*2+1]);
         }
     }
-    void apply(int i, const T &x) {
-        set(i, x);
+    void update(int i, const T &x) {
+        set(i, func(get(i), x));
     }
 
     T prod(int l, int r) const {
