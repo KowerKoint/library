@@ -17,6 +17,7 @@
 "test/yosupo-enumerate-primes.test.cpp": "2022-08-15 21:59:26 +0900",
 "test/yosupo-kth-root-integer.test.cpp": "2022-08-15 20:19:22 +0900",
 "test/yosupo-montmort-number.test.cpp": "2022-08-16 18:21:53 +0900",
-"test/yosupo-range-affine-range-sum.test.cpp": "2022-08-24 07:56:23 +0900",
+"test/yosupo-range-affine-range-sum.test.cpp": "2022-08-24 08:22:17 +0900",
+"test/yosupo-range-chmin-chmax-add-range-sum.test.cpp": "2022-08-24 11:48:53 +0900",
 "test/yosupo-shortest-path.test.cpp": "2022-08-20 20:23:29 +0900"
 }
