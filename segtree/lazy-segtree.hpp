@@ -135,15 +135,15 @@ public:
         assert(0 <= r && r <= n);
         assert(f(e()));
         if(r == 0) return 0;
-        r += sz;
+        r += sz-1;
         for(int k = height; k > 0; k--) push(r >> k);
-        while(r % 2 == 0) r >>= 1;
+        while(r % 2 == 1) r >>= 1;
         S sum = e();
         while(f(op(state[r], sum))) {
-            if(__builtin_clz(r) != __builtin_clz(r+1)) return 0;
+            if(__builtin_clz(r) != __builtin_clz(r-1)) return 0;
             sum = op(state[r], sum);
             r--;
-            while(r % 2 == 0) r >>= 1;
+            while(r % 2 == 1) r >>= 1;
         }
         while(r < sz) {
             push(r);
@@ -153,7 +153,7 @@ public:
                 r = r*2;
             }
         }
-        return r+1 - sz;
+        return r - sz + 1;
     }
 };
 
