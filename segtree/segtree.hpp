@@ -88,7 +88,7 @@ public:
     template <typename F>
     int min_left(int r, F f) const {
         assert(0 <= r && r <= n);
-        assert(f(e));
+        assert(f(e()));
         if(r == 0) return 0;
         r += sz;
         while(r % 2 == 0) r >>= 1;

@@ -138,7 +138,7 @@ public:
     template <typename Judge>
     int min_left(int r, Judge f) {
         assert(0 <= r && r <= n);
-        assert(f(e));
+        assert(f(e()));
         if(r == 0) return 0;
         r += sz;
         for(int k = height; k > 0; k--) push(r >> k);
