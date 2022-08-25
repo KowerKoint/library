@@ -10,7 +10,7 @@ protected:
         state[k] = op(state[k*2], state[k*2+1]);
     }
 public:
-    SegTree(int n_): n(n_) {
+    SegTree(int n_ = 0): n(n_) {
         sz = 1;
         height = 0;
         while(sz < n) {
