@@ -11,7 +11,7 @@ struct Bitset {
     vector<ull> v;
     int n, bnum;
     Bitset(int n_ = 0) : n(n_) {
-        int bnum = (n+63) / 64;
+        bnum = (n+63) / 64;
         v.resize(bnum);
     }
     int operator[](int i) {
