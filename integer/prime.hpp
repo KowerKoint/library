@@ -16,8 +16,7 @@ struct Prime {
         sieved.resize(n+1);
         sieved[0] = sieved[1] = 1;
         primes.clear();
-        primes.push_back(2);
-        for(int d = 4; d <= n; d += 2) sieved[d] = 1;
+        if(n >= 2) primes.push_back(2);
         FOR(d, 3, n+1) {
             if(!sieved[d]) {
                 primes.push_back(d);
@@ -28,6 +27,8 @@ struct Prime {
 
     bool is_prime(ull n) {
         assert(n > 0);
+        if(n == 2) return true;
+        if(!(n & 1)) return false;
         if(n <= (ll)sieved.size() - 1) return !sieved[n];
         for(ull d = 2; d*d <= n; d++) {
             if(n % d == 0) return false;
