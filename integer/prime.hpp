@@ -17,7 +17,7 @@ struct Prime {
         sieved[0] = sieved[1] = 1;
         primes.clear();
         if(n >= 2) primes.push_back(2);
-        for(int i = 3; i <= n; i += 2) {
+        for(int d = 3; d <= n; d += 2) {
             if(!sieved[d]) {
                 primes.push_back(d);
                 for(ll i = (ll)d*d; i <= n; i += d*2) sieved[i] = 1;
