@@ -57,7 +57,7 @@ struct Tree : Graph<T> {
     void lca_build() {
         int n = this->n;
         int height = 0;
-        while(1 << height < n - 1) height++;
+        while(1 << height < n) height++;
         doubling_par.assign(height, VI(n, -1));
         REP(i, n) doubling_par[0][i] = par[i];
         REP(i, height-1) {
