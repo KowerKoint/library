@@ -8,11 +8,10 @@ struct Tree : Graph<T> {
     vector<vector<Edge<T>>> child;
     vector<T> depth;
     vector<int> sz;
-    vector<int> preorder, postorder;
+    vector<int> preorder, postorder, eulertour;
     Tree(int n_=0) : Graph<T>(n_) {}
     Tree(const Graph<T>& g) : Graph<T>(g) {}
-    Tree(const vector<int>& par_, int padding = -1) {
-        this->n = par_.size() + 1;
+    Tree(const vector<int>& par_, int padding = -1) : Graph<T>(par_.size()+1) {
         REP(i, par_.size()) {
             this->add_edge(i+1, par_[i] + padding);
         }
@@ -36,6 +35,7 @@ struct Tree : Graph<T> {
             int from = stk.top(); stk.pop();
             if(from >= 0) {
                 preorder.push_back(from);
+                eulertour.push_back(from);
                 for(auto& e : this->g[from]) {
                     if(e.to == par[from]) continue;
                     par[e.to] = {e.to, from, e.cost, e.id};
@@ -47,6 +47,7 @@ struct Tree : Graph<T> {
             } else {
                 from = ~from;
                 postorder.push_back(from);
+                eulertour.push_back(~from);
                 sz[from] = 1;
                 for(auto& e : child[from]) {
                     sz[from] += sz[e.to];
