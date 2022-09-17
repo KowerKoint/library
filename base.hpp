@@ -100,6 +100,20 @@ template<typename... Args>
 void dbg(const Args &... args) {}
 #endif
 
+namespace std {
+    template<typename T1, typename T2>
+    struct hash<pair<T1, T2>> {
+        size_t operator()(const pair<T1, T2> &p) const {
+            auto hash1 = hash<T1>()(p.first);
+            auto hash2 = hash<T2>()(p.second);
+            size_t seed = 0;
+            seed ^= hash1 + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+            seed ^= hash2 + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+            return seed;
+        }
+    };
+}
+
 template<typename T>
 vector<vector<T>> split(typename vector<T>::const_iterator begin, typename vector<T>::const_iterator end, T val) {
     vector<vector<T>> res;

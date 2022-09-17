@@ -118,6 +118,15 @@ struct Modint {
     }
 };
 
+namespace std {
+    template<ll (*mod)()>
+    struct hash<Modint<mod>> {
+        size_t operator()(const Modint<mod> &p) const {
+            return hash<ll>()(p.val);
+        }
+    };
+}
+
 using MI3 = Modint<mod3>;
 using V3 = vector<MI3>;
 using VV3 = vector<V3>;
