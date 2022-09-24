@@ -10,6 +10,7 @@ using namespace std;
 #define REP(i, n) for(int i = 0; i < (int)(n); i++)
 #define FOR(i, a, b) for(ll i = a; i < (ll)(b); i++)
 #define ALL(a) (a).begin(),(a).end()
+#define RALL(a) (a).rbegin(),(a).rend()
 #define END(...) { print(__VA_ARGS__); return; }
 
 using VI = vector<int>;
