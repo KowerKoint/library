@@ -20,5 +20,6 @@
 "test/yosupo-montmort-number.test.cpp": "2022-09-24 15:30:23 +0900",
 "test/yosupo-range-affine-range-sum.test.cpp": "2022-09-24 15:30:23 +0900",
 "test/yosupo-range-chmin-chmax-add-range-sum.test.cpp": "2022-09-24 15:30:23 +0900",
-"test/yosupo-shortest-path.test.cpp": "2022-09-24 15:30:23 +0900"
+"test/yosupo-shortest-path.test.cpp": "2022-09-24 15:30:23 +0900",
+"test/yosupo-static-range-frequency.test.cpp": "2022-09-30 00:45:53 +0900"
 }
