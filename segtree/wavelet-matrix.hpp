@@ -2,11 +2,11 @@
 #include "../base.hpp"
 #include "../bit/bitset.hpp"
 
-template <typename T = ll, int NUMBITS = 63>
+template <typename T = unsigned long long, int NUMBITS = 64>
 struct WaveletMatrix {
     int n;
     int numzero[NUMBITS];
-    vector<Bitset> bs[NUMBITS];
+    Bitset bs[NUMBITS];
     VI sumone[NUMBITS];
     map<T, int> start_idx;
 
@@ -15,12 +15,8 @@ struct WaveletMatrix {
         VI indices(n);
         iota(indices.begin(), indices.end(), 0);
         for(int i = NUMBITS-1; i >= 0; i--) {
-            if(i < NUMBITS-1) {
-                stable_sort(ALL(indices), [&](T a, T b) {
-                    return bs[i+1][a] < bs[i+1][b];
-                });
-            }
             bs[i].resize(n);
+            sumone[i].resize(n+1);
             REP(j, n) {
                 sumone[i][j+1] = sumone[i][j];
                 if(v[indices[j]] >> i & 1) {
@@ -29,6 +25,11 @@ struct WaveletMatrix {
                 }
             }
             numzero[i] = n - bs[i].count();
+            VI iindices(n);
+            REP(j, n) iindices[indices[j]] = j;
+            stable_sort(ALL(indices), [&](int a, int b) {
+                return bs[i][iindices[a]] < bs[i][iindices[b]];
+            });
         }
         REP(i, n) {
             int idx = indices[i];
@@ -38,7 +39,7 @@ struct WaveletMatrix {
         }
     }
 
-    T access(int k) {
+    T access(int k) const {
         T ret = 0;
         for(int i = NUMBITS-1; i >= 0; i--) {
             ret <<= 1;
@@ -52,14 +53,46 @@ struct WaveletMatrix {
         return ret;
     }
 
-    int rank(T x, int k) {
+    T operator[](int k) const {
+        return access(k);
+    }
+
+    int rank(T x, int r) const {
+        auto it = start_idx.find(x);
+        if(it == start_idx.end()) return 0;
         for(int i = NUMBITS-1; i >= 0; i--) {
             if(x >> i & 1) {
-                k = numzero[i] + sumone[i][k];
+                r = numzero[i] + sumone[i][r];
             } else {
-                k = k - sumone[i][k];
+                r = r - sumone[i][r];
             }
         }
-        return k - start_idx[x];
+        return r - it->second;
+    }
+
+    int select(T x, int c) const {
+        auto it = start_idx.find(x);
+        assert(it != start_idx.end());
+        int k = it->second + c + 1;
+        REP(i, NUMBITS) {
+            if(x >> i & 1) {
+                int ok = 1, ng = n+1;
+                while(ng - ok > 1) {
+                    int mid = (ok + ng) / 2;
+                    if(numzero[i] + sumone[i][mid] <= k) ok = mid;
+                    else ng = mid;
+                }
+                k = ok;
+            } else {
+                int ok = n, ng = 0;
+                while(ok - ng > 1) {
+                    int mid = (ok + ng) / 2;
+                    if(mid - sumone[i][mid] < k) ng = mid;
+                    else ok = mid;
+                }
+                k = ok;
+            }
+        }
+        return k - 1;
     }
 };
