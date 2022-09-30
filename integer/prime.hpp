@@ -29,7 +29,7 @@ struct Prime {
         assert(n > 0);
         if(n == 2) return true;
         if(!(n & 1)) return false;
-        if(n <= (ll)sieved.size() - 1) return !sieved[n];
+        if(n+1 <= (ull)sieved.size()) return !sieved[n];
         for(ull d = 2; d*d <= n; d++) {
             if(n % d == 0) return false;
         }
