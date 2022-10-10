@@ -17,7 +17,7 @@ struct Graph {
     int n;
     int m;
     vector<vector<Edge<T>>> g;
-    Graph(int n_=0) : n(n_), g(n_), m(0) {}
+    Graph(int n_=0) : n(n_), m(0), g(n_) {}
     void add_edge(int u, int v, T w=1) {
         g[u].push_back({u, v, w, m});
         g[v].push_back({v, u, w, m++});
