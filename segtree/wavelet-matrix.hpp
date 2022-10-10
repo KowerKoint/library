@@ -70,6 +70,7 @@ struct WaveletMatrix {
         return r - it->second;
     }
 
+    // not tested
     int select(T x, int c) const {
         auto it = start_idx.find(x);
         assert(it != start_idx.end());
