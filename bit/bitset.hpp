@@ -82,7 +82,8 @@ struct Bitset {
     }
     void resize(int n_) {
         n = n_;
-        v.resize((n+63) / 64);
+        bnum = (n+63) / 64;
+        v.resize(bnum);
         correct();
     }
     void all_set() {
