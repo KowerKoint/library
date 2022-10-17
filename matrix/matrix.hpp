@@ -169,7 +169,7 @@ struct Matrix {
         auto [i_and, det] = and_i.gaussian_elimination();
         assert(det != zero());
         Matrix res(n, n);
-        REP(i, n) REP(j, n) res[i][j] = i_and[i][n+i];
+        REP(i, n) REP(j, n) res[i][j] = i_and[i][n+j];
         return res;
     }
 
