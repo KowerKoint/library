@@ -56,6 +56,7 @@ vector<complex<double>> sum_convolution(const vector<complex<double>>& v1, const
         f1[i] *= f2[i];
     }
     ifft(f1);
+    f1.resize(v1.size() + v2.size() - 1);
     return f1;
 }
 vector<double> sum_convolution(const vector<double>& v1, const vector<double>& v2) {

@@ -26,7 +26,6 @@ void ntt(vector<Modint<mod>>& v) {
         v.swap(nv);
     }
 }
-
 template <ll (*mod)()>
 void intt(vector<Modint<mod>>& v) {
     assert(mod() == 998244353);
@@ -53,7 +52,6 @@ void intt(vector<Modint<mod>>& v) {
     }
     for(int i = 0; i < n; i++) v[i] /= n;
 }
-
 template <ll (*mod)()>
 vector<Modint<mod>> sum_convolution(const vector<Modint<mod>>& v1, const vector<Modint<mod>>& v2) {
     assert(mod() == 998244353);
@@ -66,5 +64,6 @@ vector<Modint<mod>> sum_convolution(const vector<Modint<mod>>& v1, const vector<
         f1[i] *= f2[i];
     }
     intt(f1);
+    f1.resize(v1.size() + v2.size() - 1);
     return f1;
 }
