@@ -98,8 +98,8 @@ struct Modint {
         return l.val != r.val;
     }
 
-    static pair<vector<Modint>, vector<Modint>> factorial(int n) {
-        vector<Modint> fact(n+1), rfact(n+1);
+    static Pair<Vector<Modint>, Vector<Modint>> factorial(int n) {
+        Vector<Modint> fact(n+1), rfact(n+1);
         fact[0] = 1;
         REP(i, n) fact[i+1] = fact[i] * (i+1);
         rfact[n] = 1 / fact[n];
@@ -128,14 +128,14 @@ namespace std {
 }
 
 using MI3 = Modint<mod3>;
-using V3 = vector<MI3>;
-using VV3 = vector<V3>;
-using VVV3 = vector<VV3>;
+using V3 = Vector<MI3>;
+using VV3 = Vector<V3>;
+using VVV3 = Vector<VV3>;
 using MI7 = Modint<mod7>;
-using V7 = vector<MI7>;
-using VV7 = vector<V7>;
-using VVV7 = vector<VV7>;
+using V7 = Vector<MI7>;
+using VV7 = Vector<V7>;
+using VVV7 = Vector<VV7>;
 using MI9 = Modint<mod9>;
-using V9 = vector<MI9>;
-using VV9 = vector<V9>;
-using VVV9 = vector<VV9>;
+using V9 = Vector<MI9>;
+using VV9 = Vector<V9>;
+using VVV9 = Vector<VV9>;
