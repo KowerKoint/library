@@ -16,16 +16,23 @@ template <typename T=int>
 struct Graph {
     int n;
     int m;
-    vector<vector<Edge<T>>> g;
-    Graph(int n_=0) : n(n_), m(0), g(n_) {}
+    Vector<Vector<Edge<T>>> g;
+    Graph(int n_=0) : n(n_), m(0), g(n_) {
+        assert(n_ >= 0);
+    }
     void add_edge(int u, int v, T w=1) {
+        assert(0 <= u && u < n);
+        assert(0 <= v && v < n);
         g[u].push_back({u, v, w, m});
         g[v].push_back({v, u, w, m++});
     }
     void add_directed_edge(int u, int v, T w=1) {
+        assert(0 <= u && u < n);
+        assert(0 <= v && v < n);
         g[u].push_back({u, v, w, m++});
     }
     void read(int m_, int padding=-1, bool weighted=false, bool directed=false) {
+        assert(m_ >= 0);
         REP(i, m_) {
             int u, v; cin >> u >> v; u += padding, v += padding;
             T c(1);
@@ -34,13 +41,20 @@ struct Graph {
             else add_edge(u, v, c);
         }
     }
-    vector<Edge<T>>& operator[](int u) { return g[u]; }
-    const vector<Edge<T>>& operator[](int u) const { return g[u]; }
-    pair<vector<T>, vector<Edge<T>>> dijkstra(int st) const {
+    Vector<Edge<T>>& operator[](int u) {
+        assert(0 <= u && u < n);
+        return g[u];
+    }
+    const Vector<Edge<T>>& operator[](int u) const {
+        assert(0 <= u && u < n);
+        return g[u];
+    }
+    Pair<Vector<T>, Vector<Edge<T>>> dijkstra(int st) const {
+        assert(0 <= st && st < n);
         T inf = numeric_limits<T>::max();
-        vector<T> dist(n, inf);
-        vector<Edge<T>> pre(n);
-        GPQ<pair<T, int>> pq;
+        Vector<T> dist(n, inf);
+        Vector<Edge<T>> pre(n);
+        GPQ<Pair<T, int>> pq;
         dist[st] = 0;
         pq.emplace(0, st);
         while(!pq.empty()) {
@@ -55,10 +69,11 @@ struct Graph {
         }
         return {dist, pre};
     }
-    pair<vector<T>, vector<Edge<T>>> bfs(int st) const {
+    Pair<Vector<T>, Vector<Edge<T>>> bfs(int st) const {
+        assert(0 <= st && st < n);
         T inf = numeric_limits<T>::max();
-        vector<T> dist(n, inf);
-        vector<Edge<T>> pre(n);
+        Vector<T> dist(n, inf);
+        Vector<Edge<T>> pre(n);
         queue<int> que;
         dist[st] = 0;
         que.emplace(st);
@@ -73,8 +88,8 @@ struct Graph {
         }
         return {dist, pre};
     }
-    vector<Edge<T>> edges() const {
-        vector<Edge<T>> res;
+    Vector<Edge<T>> edges() const {
+        Vector<Edge<T>> res;
         REP(i, n) for(auto& e : g[i]) res.emplace_back(e);
         sort(res.begin(), res.end(), [](const Edge<T>& a, const Edge<T>& b) {
             return a.id < b.id;
@@ -84,9 +99,9 @@ struct Graph {
         }), res.end());
         return res;
     }
-    vector<Edge<T>> kruskal() const {
-        vector<Edge<T>> res;
-        vector<Edge<T>> es = edges();
+    Vector<Edge<T>> kruskal() const {
+        Vector<Edge<T>> res;
+        Vector<Edge<T>> es = edges();
         UnionFind uf(n);
         sort(ALL(es), [](const Edge<T>& a, const Edge<T>& b) {
             return a.cost < b.cost;

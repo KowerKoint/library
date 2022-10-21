@@ -3,9 +3,9 @@
 #include "integer/modint.hpp"
 
 template <typename It>
-vector<int> kmp_table(It begin, It end) {
+Vector<int> kmp_table(It begin, It end) {
     int m = end - begin;
-    vector<int> table(m);
+    Vector<int> table(m);
     int j = 0;
     FOR(i, 1, m) {
         while(j > 0 && *(begin+i) != *(begin+j)) j = table[j-1];
@@ -14,15 +14,15 @@ vector<int> kmp_table(It begin, It end) {
     return table;
 }
 
-vector<int> kmp_table(string& t) {
+Vector<int> kmp_table(string& t) {
     return kmp_table(ALL(t));
 }
 
 template <typename It>
-vector<int> kmp_find(It s_begin, It s_end, It t_begin, It t_end, vector<int>& table) {
+Vector<int> kmp_find(It s_begin, It s_end, It t_begin, It t_end, Vector<int>& table) {
     int n = s_end - s_begin;
     int m = t_end - t_begin;
-    vector<int> res;
+    Vector<int> res;
     int j = 0;
     REP(i, n) {
         while(j > 0 && *(s_begin+i) != *(t_begin+j)) j = table[j-1];
@@ -36,7 +36,7 @@ vector<int> kmp_find(It s_begin, It s_end, It t_begin, It t_end, vector<int>& ta
     return res;
 }
 
-vector<int> kmp_find(string& s, string& t, vector<int>& table) {
+Vector<int> kmp_find(string& s, string& t, Vector<int>& table) {
     return kmp_find(ALL(s), ALL(t), table);
 }
 
@@ -46,14 +46,17 @@ struct Trie {
         T c;
         int sz = 0;
         int depth;
-        vector<Node*> nxt;
+        Vector<Node*> nxt;
         Node* failure;
-        vector<int> fullmatch_keyword_id;
-        vector<int> suffixmatch_keyword_id;
+        Vector<int> fullmatch_keyword_id;
+        Vector<int> suffixmatch_keyword_id;
 
         Node(T _c, int _d): c(_c), depth(_d) {
             nxt.resize(char_sz);
             fill(ALL(nxt), nullptr);
+        }
+        ~Node() {
+            for(auto& p: nxt) if(p) delete p;
         }
     };
 
@@ -62,6 +65,9 @@ struct Trie {
 
     Trie() {
         root = new Node(begin_char-1, 0);
+    }
+    ~Trie() {
+        delete root;
     }
 
     template <typename It>
@@ -113,7 +119,7 @@ struct Trie {
     }
 
     template <typename It>
-    void aho_corasick(It begin, It end, function<void(vector<int>&)>& f) {
+    void aho_corasick(It begin, It end, function<void(Vector<int>&)>& f) {
         Node* cursor = root;
         for(It it = begin; it != end; it++) {
             while(cursor != root && !cursor->nxt[*it-begin_char]) cursor = cursor->failure;
@@ -127,14 +133,14 @@ struct Trie {
     template <typename It>
     ll aho_corasick(It begin, It end) {
         ll res = 0;
-        function<void(vector<int>&)> f = [&](vector<int>& v) {
+        function<void(Vector<int>&)> f = [&](Vector<int>& v) {
             res += v.size();
         };
         aho_corasick(begin, end, f);
         return res;
     }
 
-    void aho_corasick(string &s, function<void(vector<int>&)>& f) {
+    void aho_corasick(string &s, function<void(Vector<int>&)>& f) {
         aho_corasick(ALL(s), f);
     }
 
@@ -146,16 +152,16 @@ struct Trie {
 template <typename T>
 struct RollingHash {
     int num;
-    vector<T> base;
-    vector<vector<T>> power;
+    Vector<T> base;
+    Vector<Vector<T>> power;
 
-    RollingHash(vector<T> base_) : num(base_.size()), base(base_) {
-        power = vector<vector<T>>(num, vector<T>(1, 1));
+    RollingHash(const vector<T>& base_) : num(base_.size()), base(base_) {
+        power = Vector<Vector<T>>(num, Vector<T>(1, 1));
     }
 
     RollingHash(int num_=3) : num(num_) {
         assert(num_ > 0);
-        power = vector<vector<T>>(num, vector<T>(1, 1));
+        power = Vector<Vector<T>>(num, Vector<T>(1, 1));
         mt19937 engine((random_device){}());
         REP(i, num) base.push_back(engine());
     }
@@ -170,24 +176,24 @@ struct RollingHash {
     }
 
     template<typename It>
-    vector<vector<T>> build(It begin, It end) {
+    Vector<Vector<T>> build(It begin, It end) {
         int n = end - begin;
-        vector<vector<T>> res(num, vector<T>(n+1));
+        Vector<Vector<T>> res(num, Vector<T>(n+1));
         REP(i, num) REP(j, n) {
             res[i][j+1] = res[i][j] * base[i] + *(begin+j);
         }
         return res;
     }
 
-    vector<vector<T>> build(const string& s) {
+    Vector<Vector<T>> build(const string& s) {
         return build(ALL(s));
     }
 
-    vector<T> query(const vector<vector<T>>& hash, int l, int r) {
+    Vector<T> query(const Vector<Vector<T>>& hash, int l, int r) {
         assert(hash.size() == num);
         assert(0 <= l && l <= r && r < hash[0].size());
         expand(r - l);
-        vector<T> res(num);
+        Vector<T> res(num);
         REP(i, num) res[i] = hash[i][r] - hash[i][l] * power[i][r-l];
         return res;
     }

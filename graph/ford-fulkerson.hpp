@@ -13,8 +13,10 @@ struct FordFulkersonEdge {
 template <typename T=int>
 struct FordFulkersonGraph {
     int n;
-    vector<vector<FordFulkersonEdge<T>>> g;
-    FordFulkersonGraph(int n_ = 0) : n(n_), g(n_) {}
+    Vector<Vector<FordFulkersonEdge<T>>> g;
+    FordFulkersonGraph(int n_ = 0) : n(n_), g(n_) {
+        assert(n_ >= 0);
+    }
     void add_edge(int from, int to, T cap) {
         assert(0 <= from && from < n);
         assert(0 <= to && to < n);

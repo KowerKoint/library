@@ -149,11 +149,12 @@ double dist_ss(Point<T> p0, Point<T> p1, Point<T> p2, Point<T> p3) {
 
 template<typename T=double>
 struct Polygon {
-    vector<Point<T>> points;
+    Vector<Point<T>> points;
     Polygon(int n) {
+        assert(n >= 1);
         points.resize(n);
     }
-    Polygon(vector<Point<T>> points) : points(points) {}
+    Polygon(Vector<Point<T>> points) : points(points) {}
     friend istream& operator>>(istream& is, Polygon& polygon) {
         for(int i = 0; i < polygon.points.size(); i++) is >> polygon.points[i];
         return is;

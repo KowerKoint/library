@@ -10,5 +10,5 @@ ll mod() {
 int main() {
     ll n; cin >> n >> m;
     auto res = montmort<Modint<mod>>(n);
-    print(vector<Modint<mod>>(res.begin()+1, res.end()));
+    print(Vector<Modint<mod>>(res.begin()+1, res.end()));
 }

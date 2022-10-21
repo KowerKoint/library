@@ -8,7 +8,7 @@ struct WaveletMatrix {
     int numzero[NUMBITS];
     Bitset bs[NUMBITS];
     VI sumone[NUMBITS];
-    map<T, int> start_idx;
+    Map<T, int> start_idx;
 
     WaveletMatrix(const vector<T>& v) {
         n = v.size();
@@ -40,6 +40,7 @@ struct WaveletMatrix {
     }
 
     T access(int k) const {
+        assert(0 <= k && k < n);
         T ret = 0;
         for(int i = NUMBITS-1; i >= 0; i--) {
             ret <<= 1;
@@ -54,10 +55,12 @@ struct WaveletMatrix {
     }
 
     T operator[](int k) const {
+        assert(0 <= k && k < n);
         return access(k);
     }
 
     int rank(T x, int r) const {
+        assert(0 <= r && r <= n);
         auto it = start_idx.find(x);
         if(it == start_idx.end()) return 0;
         for(int i = NUMBITS-1; i >= 0; i--) {
@@ -72,6 +75,7 @@ struct WaveletMatrix {
 
     // not tested
     int select(T x, int c) const {
+        assert(0 <= c && c < n);
         auto it = start_idx.find(x);
         assert(it != start_idx.end());
         int k = it->second + c + 1;
