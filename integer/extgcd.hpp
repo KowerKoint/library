@@ -1,3 +1,4 @@
+#pragma once
 #include "../base.hpp"
 
 ll extgcd(ll a, ll b, ll& x, ll& y) {
