@@ -4,12 +4,12 @@
 template <typename T=int>
 struct Tree : Graph<T> {
     int root = -1;
-    vector<Edge<T>> par;
-    vector<vector<Edge<T>>> child;
-    vector<T> depth;
-    vector<int> sz;
-    vector<int> preorder, postorder, eulertour;
-    vector<vector<int>> doubling_par;
+    Vector<Edge<T>> par;
+    Vector<Vector<Edge<T>>> child;
+    Vector<T> depth;
+    Vector<int> sz;
+    Vector<int> preorder, postorder, eulertour;
+    Vector<Vector<int>> doubling_par;
     Tree(int n_=0) : Graph<T>(n_) {}
     Tree(const Graph<T>& g) : Graph<T>(g) {}
     Tree(const vector<int>& par_, int padding = -1) : Graph<T>(par_.size()+1) {
@@ -21,12 +21,13 @@ struct Tree : Graph<T> {
         Graph<T>::read(this->n-1, padding, weighted, false);
     }
     void build(int root_) {
+        assert(0 <= root_ && root_ < this->n);
         root = root_;
         int n = this->n;
-        par = vector<Edge<T>>(n);
-        child = vector<vector<Edge<T>>>(n);
-        depth = vector<T>(n);
-        sz = vector<int>(n);
+        par = Vector<Edge<T>>(n);
+        child = Vector<Vector<Edge<T>>>(n);
+        depth = Vector<T>(n);
+        sz = Vector<int>(n);
         stack<int> stk;
         stk.push(~root);
         stk.push(root);
@@ -71,6 +72,7 @@ struct Tree : Graph<T> {
         }
     }
     int climb(int i, int k) {
+        assert(0 <= i && i < this->n);
         int height = doubling_par.size();
         REP(j, height) {
             if(k >> j & 1) {
@@ -81,6 +83,8 @@ struct Tree : Graph<T> {
         return i;
     }
     int lca(int i, int j) {
+        assert(0 <= i && i < this->n);
+        assert(0 <= j && j < this->n);
         if(depth[i] < depth[j]) j = climb(j, depth[j] - depth[i]);
         if(depth[i] > depth[j]) i = climb(i, depth[i] - depth[j]);
         if(i == j) return i;
@@ -95,6 +99,8 @@ struct Tree : Graph<T> {
         return par[i];
     }
     int dist(int i, int j) {
+        assert(0 <= i && i < this->n);
+        assert(0 <= j && j < this->n);
         return depth[i] + depth[j] - depth[lca(i, j)] * 2;
     }
 };

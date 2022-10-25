@@ -5,32 +5,43 @@ template <typename Value=nullptr_t, Value (*merge_value)(Value, Value)=nullptr, 
 struct UnionFind {
     int n;
     VI par; // size if value is negative
-    vector<Value> val;
-    vector<Potential> pot;
-    UnionFind(int n=0) : n(n), par(n, -1), val(n), pot(n) {}
+    Vector<Value> val;
+    Vector<Potential> pot;
+    UnionFind(int n=0) : n(n), par(n, -1), val(n), pot(n) {
+        assert(n >= 0);
+    }
     int root(int x) {
+        assert(0 <= x && x < n);
         if(par[x] < 0) return x;
         int rt = root(par[x]);
         pot[x] += pot[par[x]];
         return par[x] = rt;
     }
     Value get_value(int x) {
+        assert(0 <= x && x < n);
         return val[root(x)];
     }
     void set_value(int x, Value v) {
+        assert(0 <= x && x < n);
         val[root(x)] = v;
     }
     Potential potential(int x) {
+        assert(0 <= x && x < n);
         root(x);
         return pot[x];
     }
     Potential diff(int x, int y) {
+        assert(0 <= x && x < n);
+        assert(0 <= y && y < n);
         return potential(y) - potential(x);
     }
     int size(int x) {
+        assert(0 <= x && x < n);
         return -par[root(x)];
     }
     bool merge(int x, int y, Potential p=0) {
+        assert(0 <= x && x < n);
+        assert(0 <= y && y < n);
         p += potential(x);
         p -= potential(y);
         x = root(x), y = root(y);
@@ -46,6 +57,8 @@ struct UnionFind {
         return true;
     }
     bool same(int x, int y) {
+        assert(0 <= x && x < n);
+        assert(0 <= y && y < n);
         return root(x) == root(y);
     }
     VVI groups() {

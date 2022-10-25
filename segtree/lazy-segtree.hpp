@@ -5,22 +5,26 @@ template <typename S, S (*op)(S, S), S (*e)(), typename F, S (*mapping)(F, S), F
 struct LazySegTree {
 protected:
     int n, sz, height;
-    vector<S> state;
-    vector<F> lazy;
+    Vector<S> state;
+    Vector<F> lazy;
     void update(int k) {
+        assert(0 <= k && k < sz);
         state[k] = op(state[k*2], state[k*2+1]);
     }
     void all_apply(int k, const F& f) {
+        assert(0 <= k && k < sz*2);
         state[k] = mapping(f, state[k]);
         if(k < sz) lazy[k] = composition(f, lazy[k]);
     }
     void push(int k) {
+        assert(0 <= k && k < sz);
         all_apply(k*2, lazy[k]);
         all_apply(k*2+1, lazy[k]);
         lazy[k] = id();
     }
 public:
     LazySegTree(int n = 0): n(n) {
+        assert(0 <= n);
         sz = 1;
         height = 0;
         while(sz < n) {

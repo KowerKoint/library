@@ -3,14 +3,16 @@
 
 template <typename T>
 struct Counting {
-    vector<T> fact, ifact;
+    Vector<T> fact, ifact;
 
     Counting() {}
     Counting(ll n) {
+        assert(n >= 0);
         expand(n);
     }
 
     void expand(ll n) {
+        assert(n >= 0);
         ll sz = (ll)fact.size();
         if(sz > n) return;
         fact.resize(n+1);
@@ -22,14 +24,14 @@ struct Counting {
     }
 
     T p(ll n, ll r) {
-        assert(n >= r);
+        if(n < r) return 0;
         assert(r >= 0);
         expand(n);
         return fact[n] * ifact[n-r];
     }
 
     T c(ll n, ll r) {
-        assert(n >= r);
+        if(n < r) return 0;
         assert(r >= 0);
         expand(n);
         return fact[n] * ifact[r] * ifact[n-r];
@@ -42,7 +44,7 @@ struct Counting {
     }
 
     T stirling(ll n, ll k) {
-        assert(n >= k);
+        if(n < k) return 0;
         assert(k >= 0);
         if(n == 0) return 1;
         T res = 0;
@@ -55,9 +57,9 @@ struct Counting {
         return res;
     }
 
-    vector<vector<T>> stirling_table(ll n, ll k) {
+    Vector<Vector<T>> stirling_table(ll n, ll k) {
         assert(n >= 0 && k >= 0);
-        vector<vector<T>> res(n+1, vector<T>(k+1));
+        Vector<Vector<T>> res(n+1, Vector<T>(k+1));
         res[0][0] = 1;
         FOR(i, 1, n+1) FOR(j, 1, k+1) {
             res[i][j] = res[i-1][j-1] + j * res[i-1][j];
@@ -68,7 +70,7 @@ struct Counting {
     T bell(ll n, ll k) {
         assert(n >= 0 && k >= 0);
         expand(k);
-        vector<T> tmp(k+1);
+        Vector<T> tmp(k+1);
         int sign = 1;
         tmp[0] = 1;
         FOR(i, 1, k+1) {
@@ -82,9 +84,9 @@ struct Counting {
         return res;
     }
 
-    vector<vector<T>> partition_table(ll n, ll k) {
-        assert(n >= 0);
-        vector<vector<T>> res(n+1, vector<T>(k+1));
+    Vector<Vector<T>> partition_table(ll n, ll k) {
+        assert(n >= 0 && k >= 0);
+        Vector<Vector<T>> res(n+1, Vector<T>(k+1));
         REP(i, k+1) res[0][i] = 1;
         FOR(i, 1, n+1) FOR(j, 1, k+1) {
             res[i][j] = res[i][j-1] + (i<j? 0 : res[i-j][j]);

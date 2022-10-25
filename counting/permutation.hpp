@@ -2,7 +2,7 @@
 
 template<typename T>
 T permutation(ll n, ll k) {
-    assert(n >= k);
+    if(n < k) return 0;
     assert(k >= 0);
     T res(1);
     REP(i, k) {

@@ -3,40 +3,42 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+#include "stl-wrapper/all.hpp"
+
 #define REP(i, n) for(int i = 0; i < (int)(n); i++)
 #define FOR(i, a, b) for(ll i = a; i < (ll)(b); i++)
 #define ALL(a) (a).begin(),(a).end()
 #define RALL(a) (a).rbegin(),(a).rend()
 #define END(...) { print(__VA_ARGS__); return; }
 
-using VI = vector<int>;
-using VVI = vector<VI>;
-using VVVI = vector<VVI>;
+using VI = Vector<int>;
+using VVI = Vector<VI>;
+using VVVI = Vector<VVI>;
 using ll = long long;
-using VL = vector<ll>;
-using VVL = vector<VL>;
-using VVVL = vector<VVL>;
+using VL = Vector<ll>;
+using VVL = Vector<VL>;
+using VVVL = Vector<VVL>;
 using ull = unsigned long long;
-using VUL = vector<ull>;
-using VVUL = vector<VUL>;
-using VVVUL = vector<VVUL>;
-using VD = vector<double>;
-using VVD = vector<VD>;
-using VVVD = vector<VVD>;
-using VS = vector<string>;
-using VVS = vector<VS>;
-using VVVS = vector<VVS>;
-using VC = vector<char>;
-using VVC = vector<VC>;
-using VVVC = vector<VVC>;
-using P = pair<int, int>;
-using VP = vector<P>;
-using VVP = vector<VP>;
-using VVVP = vector<VVP>;
-using LP = pair<ll, ll>;
-using VLP = vector<LP>;
-using VVLP = vector<VLP>;
-using VVVLP = vector<VVLP>;
+using VUL = Vector<ull>;
+using VVUL = Vector<VUL>;
+using VVVUL = Vector<VVUL>;
+using VD = Vector<double>;
+using VVD = Vector<VD>;
+using VVVD = Vector<VVD>;
+using VS = Vector<string>;
+using VVS = Vector<VS>;
+using VVVS = Vector<VVS>;
+using VC = Vector<char>;
+using VVC = Vector<VC>;
+using VVVC = Vector<VVC>;
+using P = Pair<int, int>;
+using VP = Vector<P>;
+using VVP = Vector<VP>;
+using VVVP = Vector<VVP>;
+using LP = Pair<ll, ll>;
+using VLP = Vector<LP>;
+using VVLP = Vector<VLP>;
+using VVVLP = Vector<VVLP>;
 
 template <typename T>
 using PQ = priority_queue<T>;
@@ -47,32 +49,6 @@ constexpr int INF = 1001001001;
 constexpr ll LINF = 1001001001001001001ll;
 constexpr int DX[] = {1, 0, -1, 0};
 constexpr int DY[] = {0, 1, 0, -1};
-
-template< typename T1, typename T2 >
-ostream &operator<<(ostream &os, const pair< T1, T2 >& p) {
-    os << p.first << " " << p.second;
-    return os;
-}
-
-template< typename T1, typename T2 >
-istream &operator>>(istream &is, pair< T1, T2 > &p) {
-    is >> p.first >> p.second;
-    return is;
-}
-
-template< typename T >
-ostream &operator<<(ostream &os, const vector< T > &v) {
-    for(int i = 0; i < (int) v.size(); i++) {
-        os << v[i] << (i + 1 != (int) v.size() ? " " : "");
-    }
-    return os;
-}
-
-template< typename T >
-istream &operator>>(istream &is, vector< T > &v) {
-    for(T &in : v) is >> in;
-    return is;
-}
 
 void print() { cout << '\n'; }
 template<typename T>
@@ -97,24 +73,10 @@ template<typename... Args>
 void dbg(const Args &... args) {}
 #endif
 
-namespace std {
-    template<typename T1, typename T2>
-    struct hash<pair<T1, T2>> {
-        size_t operator()(const pair<T1, T2> &p) const {
-            auto hash1 = hash<T1>()(p.first);
-            auto hash2 = hash<T2>()(p.second);
-            size_t seed = 0;
-            seed ^= hash1 + 0x9e3779b9 + (seed << 6) + (seed >> 2);
-            seed ^= hash2 + 0x9e3779b9 + (seed << 6) + (seed >> 2);
-            return seed;
-        }
-    };
-}
-
 template<typename T>
-vector<vector<T>> split(typename vector<T>::const_iterator begin, typename vector<T>::const_iterator end, T val) {
-    vector<vector<T>> res;
-    vector<T> cur;
+Vector<Vector<T>> split(typename vector<T>::const_iterator begin, typename vector<T>::const_iterator end, T val) {
+    Vector<Vector<T>> res;
+    Vector<T> cur;
     for(auto it = begin; it != end; it++) {
         if(*it == val) {
             res.push_back(cur);
@@ -125,8 +87,8 @@ vector<vector<T>> split(typename vector<T>::const_iterator begin, typename vecto
     return res;
 }
 
-vector<string> split(typename string::const_iterator begin, typename string::const_iterator end, char val) {
-    vector<string> res;
+Vector<string> split(typename string::const_iterator begin, typename string::const_iterator end, char val) {
+    Vector<string> res;
     string cur = "";
     for(auto it = begin; it != end; it++) {
         if(*it == val) {
@@ -145,9 +107,9 @@ template< typename T1, typename T2 >
 inline bool chmin(T1 &a, T2 b) { return a > b && (a = b, true); }
 
 template <typename T>
-pair<VI, vector<T>> compress(const vector<T> &a) {
+pair<VI, Vector<T>> compress(const vector<T> &a) {
     int n = a.size();
-    vector<T> x;
+    Vector<T> x;
     REP(i, n) x.push_back(a[i]);
     sort(ALL(x)); x.erase(unique(ALL(x)), x.end());
     VI res(n);
@@ -157,7 +119,7 @@ pair<VI, vector<T>> compress(const vector<T> &a) {
 
 template <typename It>
 auto rle(It begin, It end) {
-    vector<pair<typename It::value_type, int>> res;
+    Vector<pair<typename It::value_type, int>> res;
     if(begin == end) return res;
     auto pre = *begin;
     int num = 1;
@@ -173,8 +135,8 @@ auto rle(It begin, It end) {
 }
 
 template <typename It>
-vector<pair<typename It::value_type, int>> rle_sort(It begin, It end) {
-    vector<typename It::value_type> cloned(begin, end);
+Vector<pair<typename It::value_type, int>> rle_sort(It begin, It end) {
+    Vector<typename It::value_type> cloned(begin, end);
     sort(ALL(cloned));
     auto e = rle(ALL(cloned));
     sort(ALL(e), [](const auto& l, const auto& r) { return l.second < r.second; });
@@ -182,8 +144,8 @@ vector<pair<typename It::value_type, int>> rle_sort(It begin, It end) {
 }
 
 template <typename T>
-pair<vector<T>, vector<T>> factorial(int n) {
-    vector<T> res(n+1), rev(n+1);
+Pair<Vector<T>, Vector<T>> factorial(int n) {
+    Vector<T> res(n+1), rev(n+1);
     res[0] = 1;
     REP(i, n) res[i+1] = res[i] * (i+1);
     rev[n] = 1 / res[n];

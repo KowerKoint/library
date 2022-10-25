@@ -13,16 +13,23 @@ template <
 >
 struct Matrix {
     int n, m;
-    vector<vector<T>> A;
+    Vector<Vector<T>> A;
 
-    Matrix() : n(0), m(0), A(vector<vector<T>>(0)) {}
-    Matrix(size_t _n, size_t _m) : n(_n), m(_m), A(_n, vector<T>(_m, zero())) {}
-    Matrix(vector<vector<T>> _A) : n(_A.size()), m(_A[0].size()), A(_A) {}
+    Matrix() : n(0), m(0), A(Vector<Vector<T>>(0)) {}
+    Matrix(size_t _n, size_t _m) : n(_n), m(_m), A(_n, Vector<T>(_m, zero())) {}
+    Matrix(const vector<vector<T>>& _A) : n(_A.size()), m(_A[0].size()), A(_A) {}
 
-    vector<T> &operator[](int i) { return A.at(i); }
-    const vector<T> &operator[](int i) const { return A.at(i); }
+    Vector<T> &operator[](int i) {
+        assert(0 <= i && i < n);
+        return A.at(i);
+    }
+    const Vector<T> &operator[](int i) const {
+        assert(0 <= i && i < n);
+        return A.at(i);
+    }
 
     static Matrix I(size_t n) {
+        assert(n >= 0);
         Matrix ret(n, n);
         REP(i, n) ret[i][i] = one();
         return ret;
@@ -34,6 +41,7 @@ struct Matrix {
         return *this;
     }
     Matrix operator+(const Matrix &B) const {
+        assert(n == B.n && m == B.m);
         return (Matrix(*this) += B);
     }
 
@@ -43,18 +51,20 @@ struct Matrix {
         return *this;
     }
     Matrix operator-(const Matrix &B) const {
+        assert(n == B.n && m == B.m);
         return (Matrix(*this) -= B);
     }
 
     Matrix &operator*=(const Matrix &B) {
         assert(m == B.n);
-        vector<vector<T>> res(n, vector<T>(B.m, zero()));
+        Vector<Vector<T>> res(n, Vector<T>(B.m, zero()));
         REP(i, n) REP(j, m) REP(k, B.m) res[i][k] = add(res[i][k], mult(A[i][j], B[j][k]));
         A.swap(res);
         m = B.m;
         return (*this);
     }
     Matrix operator*(const Matrix &B) const {
+        assert(m == B.n);
         return (Matrix(*this) *= B);
     }
 
@@ -68,6 +78,7 @@ struct Matrix {
         return (*this);
     }
     Matrix operator|(const Matrix &B) const {
+        assert(B.n == n);
         return (Matrix(*this) |= B);
     }
 
@@ -80,6 +91,7 @@ struct Matrix {
         return (*this);
     }
     Matrix operator|(const vector<T> &B) const {
+        assert(B.size() == n);
         return (Matrix(*this) |= B);
     }
 
@@ -93,6 +105,7 @@ struct Matrix {
         return (*this);
     }
     Matrix operator&(const Matrix &B) const {
+        assert(B.m == m);
         return (Matrix(*this) &= B);
     }
 
@@ -103,6 +116,7 @@ struct Matrix {
         return (*this);
     }
     Matrix operator&(const vector<T> &B) const {
+        assert(B.size() == m);
         return (Matrix(*this) &= B);
     }
 
@@ -118,7 +132,7 @@ struct Matrix {
         return os;
     }
 
-    pair<Matrix, T> gaussian_elimination() const {
+    Pair<Matrix, T> gaussian_elimination() const {
         Matrix mat(*this);
         T det = one();
         VI columns;
@@ -156,12 +170,12 @@ struct Matrix {
                 }
             }
         }
-        return make_pair(mat, det);
+        return {mat, det};
     }
 
     void make_basis() {
         *this = gaussian_elimination().first;
-        while(n && get_bra(n-1) == vector<T>(m, zero())) pop_bra();
+        while(n && get_bra(n-1) == Vector<T>(m, zero())) pop_bra();
     }
 
     Matrix inv() const {
@@ -173,14 +187,14 @@ struct Matrix {
         return res;
     }
 
-    vector<T> get_bra(int i) const {
+    Vector<T> get_bra(int i) const {
         assert(0 <= i && i < n);
         return A[i];
     }
 
-    vector<T> get_ket(int i) const {
+    Vector<T> get_ket(int i) const {
         assert(0 <= i && i < m);
-        vector<T> res(n);
+        Vector<T> res(n);
         REP(i, n) res[i] = A[i][i];
         return res;
     }

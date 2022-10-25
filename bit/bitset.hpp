@@ -25,9 +25,10 @@ struct Bitset {
         if(n % 64) v[bnum-1] &= mask[n % 64];
     }
     public:
-    vector<ull> v;
+    Vector<ull> v;
     int n, bnum;
     Bitset(int n_ = 0) : n(n_) {
+        assert(n_ >= 0);
         bnum = (n+63) / 64;
         v.resize(bnum);
     }
@@ -81,6 +82,7 @@ struct Bitset {
         v[i / 64] ^= 1ull << (i % 64);
     }
     void resize(int n_) {
+        assert(n_ >= 0);
         n = n_;
         bnum = (n+63) / 64;
         v.resize(bnum);
@@ -148,6 +150,7 @@ struct Bitset {
         return v != b.v;
     }
     Bitset& operator<<=(int sz) {
+        assert(sz >= 0);
         for(int i = bnum-1; i >= 0; i--) {
             if(i-sz/64 < 0) v[i] = 0;
             else if(i-sz/64-1 < 0 || sz%64 == 0) v[i] = v[i-sz/64] << (sz%64);
@@ -157,9 +160,11 @@ struct Bitset {
         return *this;
     }
     Bitset operator<<(int sz) const {
+        assert(sz >= 0);
         return Bitset(*this) <<= sz;
     }
     Bitset& operator>>=(int sz) {
+        assert(sz >= 0);
         for(int i = 0; i < bnum; i++) {
             if(i+sz/64 < bnum) v[i] = v[i+sz/64] >> (sz%64);
             if(i+sz/64+1 < bnum) v[i] |= v[i+sz/64+1] << (64-sz%64);
@@ -167,6 +172,7 @@ struct Bitset {
         return *this;
     }
     Bitset operator>>(int sz) const {
+        assert(sz >= 0);
         return Bitset(*this) >>= sz;
     }
 };
