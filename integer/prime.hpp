@@ -1,6 +1,6 @@
 #pragma once
 #include "./kth-root-integer.hpp"
-#include "bit/bitset.hpp"
+#include "../bit/bitset.hpp"
 
 struct Prime {
     Bitset sieved;
