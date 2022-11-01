@@ -1,4 +1,7 @@
-#include "field.hpp"
+#pragma once
+
+#include "ring.hpp"
+#include "ordinal_operator.hpp"
 
 namespace _nimber_precalc {
     static ull small_product[256][256];
@@ -48,4 +51,4 @@ ull nim_product(ull x, ull y) {
     return ret;
 }
 
-using Nimber = Field<ull, ordinal_xor<ull>, ordinal_zero<ull>, nim_product, ordinal_one<ull>>;
+using Nimber = Ring<ull, nim_product, ordinal_one, ordinal_xor, ordinal_zero, ordinal_identity>;
