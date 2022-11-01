@@ -40,3 +40,11 @@ struct Monoid {
         return os << r.val;
     }
 };
+namespace std {
+    template <typename T, T (*mult)(const T, const T), T (*one)()>
+    struct hash<Monoid<T, mult, one>> {
+        size_t operator()(const Monoid<T, mult, one>& r) const {
+            return hash<T>()(r.val);
+        }
+    };
+}
