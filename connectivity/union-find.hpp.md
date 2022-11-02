@@ -472,7 +472,7 @@ data:
   requiredBy:
   - graph/graph.hpp
   - graph/tree.hpp
-  timestamp: '2022-11-03 01:40:11+09:00'
+  timestamp: '2022-11-03 02:21:27+09:00'
   verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - test/yosupo-shortest-path.test.cpp

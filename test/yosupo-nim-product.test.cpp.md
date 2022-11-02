@@ -491,7 +491,7 @@ data:
   isVerificationFile: true
   path: test/yosupo-nim-product.test.cpp
   requiredBy: []
-  timestamp: '2022-11-03 01:40:11+09:00'
+  timestamp: '2022-11-03 02:21:27+09:00'
   verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: test/yosupo-nim-product.test.cpp

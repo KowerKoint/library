@@ -642,7 +642,7 @@ data:
   - operator.hpp
   - geometry.hpp
   - string.hpp
-  timestamp: '2022-11-03 01:40:11+09:00'
+  timestamp: '2022-11-03 02:21:27+09:00'
   verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - test/aoj-dpl-5-j.test.cpp
