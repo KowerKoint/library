@@ -1,10 +1,10 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':question:'
     path: algebra/field.hpp
     title: algebra/field.hpp
-  - icon: ':x:'
+  - icon: ':question:'
     path: algebra/modint.hpp
     title: algebra/modint.hpp
   - icon: ':question:'
@@ -13,13 +13,13 @@ data:
   - icon: ':question:'
     path: base.hpp
     title: base.hpp
-  - icon: ':x:'
+  - icon: ':question:'
     path: counting/counting.hpp
     title: counting/counting.hpp
   - icon: ':question:'
     path: integer/extgcd.hpp
     title: integer/extgcd.hpp
-  - icon: ':x:'
+  - icon: ':question:'
     path: integer/pow-mod.hpp
     title: integer/pow-mod.hpp
   - icon: ':question:'
@@ -434,24 +434,34 @@ data:
     \ {}\n    Field(const R& r) : val(rtot(r)) {}\n    operator R() const { return\
     \ ttor(val); }\n    Field& operator*=(const Field& other) {\n        val = mult(val,\
     \ other.val);\n        return *this;\n    }\n    Field operator*(const Field&\
-    \ other) const {\n        return Field(*this) *= other;\n    }\n    Field inv()\
-    \ const {\n        return Field(multinv(val));\n    }\n    Field& operator/= (const\
-    \ Field& other) {\n        return *this *= other.inv();\n    }\n    Field operator/\
-    \ (const Field& other) const {\n        return Field(*this) /= other;\n    }\n\
-    \    Field& operator+=(const Field& other) {\n        val = plus(val, other.val);\n\
-    \        return *this;\n    }\n    Field operator+(const Field& other) const {\n\
-    \        return Field(*this) += other;\n    }\n    Field operator-() const {\n\
-    \        return Field(plusinv(val));\n    }\n    Field& operator-=(const Field&\
-    \ other) {\n        return *this += -other;\n    }\n    Field operator-(const\
-    \ Field& other) const {\n        return Field(*this) -= other;\n    }\n    Field\
+    \ other) const {\n        return Field(*this) *= other;\n    }\n    Field operator*(const\
+    \ R& other) const {\n        return Field(*this) *= Field(other);\n    }\n   \
+    \ friend Field operator*(const R& other, const Field& field) {\n        return\
+    \ field * other;\n    }\n    Field inv() const {\n        return Field(multinv(val));\n\
+    \    }\n    Field& operator/=(const Field& other) {\n        return *this *= other.inv();\n\
+    \    }\n    Field operator/(const Field& other) const {\n        return Field(*this)\
+    \ /= other;\n    }\n    Field operator/(const R& other) const {\n        return\
+    \ Field(*this) /= Field(other);\n    }\n    friend Field operator/(const R& other,\
+    \ const Field& field) {\n        return Field(other) / field;\n    }\n    Field&\
+    \ operator+=(const Field& other) {\n        val = plus(val, other.val);\n    \
+    \    return *this;\n    }\n    Field operator+(const Field& other) const {\n \
+    \       return Field(*this) += other;\n    }\n    Field operator+(const R& other)\
+    \ const {\n        return Field(*this) += Field(other);\n    }\n    friend Field\
+    \ operator+(const R& other, const Field& field) {\n        return field + other;\n\
+    \    }\n    Field operator-() const {\n        return Field(plusinv(val));\n \
+    \   }\n    Field& operator-=(const Field& other) {\n        return *this += -other;\n\
+    \    }\n    Field operator-(const Field& other) const {\n        return Field(*this)\
+    \ -= other;\n    }\n    Field operator-(const R& other) const {\n        return\
+    \ Field(*this) -= Field(other);\n    }\n    friend Field operator-(const R& other,\
+    \ const Field& field) {\n        return Field(other) - field;\n    }\n    Field\
     \ pow(ll n) const {\n        if(n < 0) {\n            return inv().pow(-n);\n\
     \        }\n        Field res = one();\n        Field a = *this;\n        while(n\
     \ > 0) {\n            if(n & 1) res *= a;\n            a *= a;\n            n\
     \ >>= 1;\n        }\n        return res;\n    }\n    friend istream& operator>>(istream&\
     \ is, Field& f) {\n        R r; is >> r;\n        f = Field(r);\n        return\
     \ is;\n    }\n    friend ostream& operator<<(ostream& os, const Field& f) {\n\
-    \        return os << (R)f.val;\n    }\n};\nnamespace std {\n    template <\n\
-    \        typename T,\n        T (*mult)(const T, const T),\n        T (*one)(),\n\
+    \        return os << (R)f;\n    }\n};\nnamespace std {\n    template <\n    \
+    \    typename T,\n        T (*mult)(const T, const T),\n        T (*one)(),\n\
     \        T (*multinv)(const T),\n        T (*plus)(const T, const T),\n      \
     \  T (*zero)(),\n        T (*plusinv)(const T),\n        typename R,\n       \
     \ T (*rtot)(const R),\n        R (*ttor)(const T)\n    >\n    struct hash<Field<T,\
@@ -477,30 +487,31 @@ data:
     \    }\n\n    void expand(ll n) {\n        assert(n >= 0);\n        ll sz = (ll)fact.size();\n\
     \        if(sz > n) return;\n        fact.resize(n+1);\n        ifact.resize(n+1);\n\
     \        fact[0] = 1;\n        FOR(i, max(1LL, sz), n+1) fact[i] = fact[i-1] *\
-    \ i;\n        ifact[n] = 1 / fact[n];\n        for(ll i = n-1; i >= sz; i--) ifact[i]\
-    \ = ifact[i+1] * (i+1);\n    }\n\n    T p(ll n, ll r) {\n        if(n < r) return\
-    \ 0;\n        assert(r >= 0);\n        expand(n);\n        return fact[n] * ifact[n-r];\n\
-    \    }\n\n    T c(ll n, ll r) {\n        if(n < r) return 0;\n        assert(r\
-    \ >= 0);\n        expand(n);\n        return fact[n] * ifact[r] * ifact[n-r];\n\
-    \    }\n\n    T h(ll n, ll r) {\n        assert(n >= 0);\n        assert(r >=\
-    \ 0);\n        return c(n+r-1, r);\n    }\n\n    T stirling(ll n, ll k) {\n  \
-    \      if(n < k) return 0;\n        assert(k >= 0);\n        if(n == 0) return\
-    \ 1;\n        T res = 0;\n        int sign = k%2? -1 : 1;\n        expand(k);\n\
-    \        REP(i, k+1) {\n            res += sign * ifact[i] * ifact[k-i] * T(i).pow(n);\n\
-    \            sign *= -1;\n        }\n        return res;\n    }\n\n    Vector<Vector<T>>\
-    \ stirling_table(ll n, ll k) {\n        assert(n >= 0 && k >= 0);\n        Vector<Vector<T>>\
-    \ res(n+1, Vector<T>(k+1));\n        res[0][0] = 1;\n        FOR(i, 1, n+1) FOR(j,\
-    \ 1, k+1) {\n            res[i][j] = res[i-1][j-1] + j * res[i-1][j];\n      \
-    \  }\n        return res;\n    }\n\n    T bell(ll n, ll k) {\n        assert(n\
-    \ >= 0 && k >= 0);\n        expand(k);\n        Vector<T> tmp(k+1);\n        int\
-    \ sign = 1;\n        tmp[0] = 1;\n        FOR(i, 1, k+1) {\n            sign *=\
-    \ -1;\n            tmp[i] = tmp[i-1] + sign * ifact[i];\n        }\n        T\
-    \ res = 0;\n        REP(i, k+1) {\n            res += T(i).pow(n) * ifact[i] *\
-    \ tmp[k-i];\n        }\n        return res;\n    }\n\n    Vector<Vector<T>> partition_table(ll\
-    \ n, ll k) {\n        assert(n >= 0 && k >= 0);\n        Vector<Vector<T>> res(n+1,\
-    \ Vector<T>(k+1));\n        REP(i, k+1) res[0][i] = 1;\n        FOR(i, 1, n+1)\
-    \ FOR(j, 1, k+1) {\n            res[i][j] = res[i][j-1] + (i<j? 0 : res[i-j][j]);\n\
-    \        }\n        return res;\n    }\n};\n#line 4 \"general.hpp\"\n"
+    \ i;\n        ifact[n] = fact[n].inv();\n        for(ll i = n-1; i >= sz; i--)\
+    \ ifact[i] = ifact[i+1] * (i+1);\n    }\n\n    T p(ll n, ll r) {\n        if(n\
+    \ < r) return 0;\n        assert(r >= 0);\n        expand(n);\n        return\
+    \ fact[n] * ifact[n-r];\n    }\n\n    T c(ll n, ll r) {\n        if(n < r) return\
+    \ 0;\n        assert(r >= 0);\n        expand(n);\n        return fact[n] * ifact[r]\
+    \ * ifact[n-r];\n    }\n\n    T h(ll n, ll r) {\n        assert(n >= 0);\n   \
+    \     assert(r >= 0);\n        return c(n+r-1, r);\n    }\n\n    T stirling(ll\
+    \ n, ll k) {\n        if(n < k) return 0;\n        assert(k >= 0);\n        if(n\
+    \ == 0) return 1;\n        T res = 0;\n        int sign = k%2? -1 : 1;\n     \
+    \   expand(k);\n        REP(i, k+1) {\n            res += sign * ifact[i] * ifact[k-i]\
+    \ * T(i).pow(n);\n            sign *= -1;\n        }\n        return res;\n  \
+    \  }\n\n    Vector<Vector<T>> stirling_table(ll n, ll k) {\n        assert(n >=\
+    \ 0 && k >= 0);\n        Vector<Vector<T>> res(n+1, Vector<T>(k+1));\n       \
+    \ res[0][0] = 1;\n        FOR(i, 1, n+1) FOR(j, 1, k+1) {\n            res[i][j]\
+    \ = res[i-1][j-1] + j * res[i-1][j];\n        }\n        return res;\n    }\n\n\
+    \    T bell(ll n, ll k) {\n        assert(n >= 0 && k >= 0);\n        expand(k);\n\
+    \        Vector<T> tmp(k+1);\n        int sign = 1;\n        tmp[0] = 1;\n   \
+    \     FOR(i, 1, k+1) {\n            sign *= -1;\n            tmp[i] = tmp[i-1]\
+    \ + sign * ifact[i];\n        }\n        T res = 0;\n        REP(i, k+1) {\n \
+    \           res += T(i).pow(n) * ifact[i] * tmp[k-i];\n        }\n        return\
+    \ res;\n    }\n\n    Vector<Vector<T>> partition_table(ll n, ll k) {\n       \
+    \ assert(n >= 0 && k >= 0);\n        Vector<Vector<T>> res(n+1, Vector<T>(k+1));\n\
+    \        REP(i, k+1) res[0][i] = 1;\n        FOR(i, 1, n+1) FOR(j, 1, k+1) {\n\
+    \            res[i][j] = res[i][j-1] + (i<j? 0 : res[i-j][j]);\n        }\n  \
+    \      return res;\n    }\n};\n#line 4 \"general.hpp\"\n"
   code: '#pragma once
 
     #include "algebra/modint.hpp"
@@ -526,7 +537,7 @@ data:
   isVerificationFile: false
   path: general.hpp
   requiredBy: []
-  timestamp: '2022-11-03 00:18:24+09:00'
+  timestamp: '2022-11-03 00:55:39+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: general.hpp

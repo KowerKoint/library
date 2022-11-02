@@ -7,7 +7,7 @@ data:
   - icon: ':question:'
     path: connectivity/union-find.hpp
     title: connectivity/union-find.hpp
-  - icon: ':question:'
+  - icon: ':x:'
     path: graph/graph.hpp
     title: graph/graph.hpp
   - icon: ':question:'
@@ -499,7 +499,7 @@ data:
   isVerificationFile: true
   path: test/yosupo-shortest-path.test.cpp
   requiredBy: []
-  timestamp: '2022-11-03 00:18:24+09:00'
+  timestamp: '2022-11-03 00:55:39+09:00'
   verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: test/yosupo-shortest-path.test.cpp

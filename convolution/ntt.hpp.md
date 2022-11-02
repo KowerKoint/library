@@ -1,10 +1,10 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':question:'
     path: algebra/field.hpp
     title: algebra/field.hpp
-  - icon: ':x:'
+  - icon: ':question:'
     path: algebra/modint.hpp
     title: algebra/modint.hpp
   - icon: ':question:'
@@ -16,7 +16,7 @@ data:
   - icon: ':question:'
     path: integer/extgcd.hpp
     title: integer/extgcd.hpp
-  - icon: ':x:'
+  - icon: ':question:'
     path: integer/pow-mod.hpp
     title: integer/pow-mod.hpp
   - icon: ':question:'
@@ -42,12 +42,12 @@ data:
     title: stl-wrapper/vector.hpp
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: test/yosupo-convolution.test.cpp
     title: test/yosupo-convolution.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"base.hpp\"\n\n#include <bits/stdc++.h>\nusing namespace\
@@ -434,24 +434,34 @@ data:
     \ {}\n    Field(const R& r) : val(rtot(r)) {}\n    operator R() const { return\
     \ ttor(val); }\n    Field& operator*=(const Field& other) {\n        val = mult(val,\
     \ other.val);\n        return *this;\n    }\n    Field operator*(const Field&\
-    \ other) const {\n        return Field(*this) *= other;\n    }\n    Field inv()\
-    \ const {\n        return Field(multinv(val));\n    }\n    Field& operator/= (const\
-    \ Field& other) {\n        return *this *= other.inv();\n    }\n    Field operator/\
-    \ (const Field& other) const {\n        return Field(*this) /= other;\n    }\n\
-    \    Field& operator+=(const Field& other) {\n        val = plus(val, other.val);\n\
-    \        return *this;\n    }\n    Field operator+(const Field& other) const {\n\
-    \        return Field(*this) += other;\n    }\n    Field operator-() const {\n\
-    \        return Field(plusinv(val));\n    }\n    Field& operator-=(const Field&\
-    \ other) {\n        return *this += -other;\n    }\n    Field operator-(const\
-    \ Field& other) const {\n        return Field(*this) -= other;\n    }\n    Field\
+    \ other) const {\n        return Field(*this) *= other;\n    }\n    Field operator*(const\
+    \ R& other) const {\n        return Field(*this) *= Field(other);\n    }\n   \
+    \ friend Field operator*(const R& other, const Field& field) {\n        return\
+    \ field * other;\n    }\n    Field inv() const {\n        return Field(multinv(val));\n\
+    \    }\n    Field& operator/=(const Field& other) {\n        return *this *= other.inv();\n\
+    \    }\n    Field operator/(const Field& other) const {\n        return Field(*this)\
+    \ /= other;\n    }\n    Field operator/(const R& other) const {\n        return\
+    \ Field(*this) /= Field(other);\n    }\n    friend Field operator/(const R& other,\
+    \ const Field& field) {\n        return Field(other) / field;\n    }\n    Field&\
+    \ operator+=(const Field& other) {\n        val = plus(val, other.val);\n    \
+    \    return *this;\n    }\n    Field operator+(const Field& other) const {\n \
+    \       return Field(*this) += other;\n    }\n    Field operator+(const R& other)\
+    \ const {\n        return Field(*this) += Field(other);\n    }\n    friend Field\
+    \ operator+(const R& other, const Field& field) {\n        return field + other;\n\
+    \    }\n    Field operator-() const {\n        return Field(plusinv(val));\n \
+    \   }\n    Field& operator-=(const Field& other) {\n        return *this += -other;\n\
+    \    }\n    Field operator-(const Field& other) const {\n        return Field(*this)\
+    \ -= other;\n    }\n    Field operator-(const R& other) const {\n        return\
+    \ Field(*this) -= Field(other);\n    }\n    friend Field operator-(const R& other,\
+    \ const Field& field) {\n        return Field(other) - field;\n    }\n    Field\
     \ pow(ll n) const {\n        if(n < 0) {\n            return inv().pow(-n);\n\
     \        }\n        Field res = one();\n        Field a = *this;\n        while(n\
     \ > 0) {\n            if(n & 1) res *= a;\n            a *= a;\n            n\
     \ >>= 1;\n        }\n        return res;\n    }\n    friend istream& operator>>(istream&\
     \ is, Field& f) {\n        R r; is >> r;\n        f = Field(r);\n        return\
     \ is;\n    }\n    friend ostream& operator<<(ostream& os, const Field& f) {\n\
-    \        return os << (R)f.val;\n    }\n};\nnamespace std {\n    template <\n\
-    \        typename T,\n        T (*mult)(const T, const T),\n        T (*one)(),\n\
+    \        return os << (R)f;\n    }\n};\nnamespace std {\n    template <\n    \
+    \    typename T,\n        T (*mult)(const T, const T),\n        T (*one)(),\n\
     \        T (*multinv)(const T),\n        T (*plus)(const T, const T),\n      \
     \  T (*zero)(),\n        T (*plusinv)(const T),\n        typename R,\n       \
     \ T (*rtot)(const R),\n        R (*ttor)(const T)\n    >\n    struct hash<Field<T,\
@@ -498,9 +508,9 @@ data:
     \ sum_convolution(const vector<Modint<mod>>& v1, const vector<Modint<mod>>& v2)\
     \ {\n    assert(mod() == 998244353);\n    int n = 1;\n    while(n < (int)v1.size()\
     \ + (int)v2.size() - 1) n <<= 1;\n    Vector<Modint<mod>> f1(v1), f2(v2);\n  \
-    \  f1.resize(n); f2.resize(n);\n    ntt(f1); ntt(f2);\n    for(int i = 0; i <\
-    \ n; i++) {\n        f1[i] *= f2[i];\n    }\n    intt(f1);\n    f1.resize(v1.size()\
-    \ + v2.size() - 1);\n    return f1;\n}\n"
+    \  f1.resize(n); f2.resize(n);\n    ntt<mod>(f1); ntt<mod>(f2);\n    for(int i\
+    \ = 0; i < n; i++) {\n        f1[i] *= f2[i];\n    }\n    intt<mod>(f1);\n   \
+    \ f1.resize(v1.size() + v2.size() - 1);\n    return f1;\n}\n"
   code: "#pragma once\n#include \"../algebra/modint.hpp\"\n\ntemplate <ll (*mod)()>\n\
     void ntt(vector<Modint<mod>>& v) {\n    assert(mod() == 998244353);\n    constexpr\
     \ ll g = 3;\n    int n = v.size();\n    assert((n & (n - 1)) == 0);\n    int m\
@@ -527,9 +537,9 @@ data:
     Vector<Modint<mod>> sum_convolution(const vector<Modint<mod>>& v1, const vector<Modint<mod>>&\
     \ v2) {\n    assert(mod() == 998244353);\n    int n = 1;\n    while(n < (int)v1.size()\
     \ + (int)v2.size() - 1) n <<= 1;\n    Vector<Modint<mod>> f1(v1), f2(v2);\n  \
-    \  f1.resize(n); f2.resize(n);\n    ntt(f1); ntt(f2);\n    for(int i = 0; i <\
-    \ n; i++) {\n        f1[i] *= f2[i];\n    }\n    intt(f1);\n    f1.resize(v1.size()\
-    \ + v2.size() - 1);\n    return f1;\n}\n"
+    \  f1.resize(n); f2.resize(n);\n    ntt<mod>(f1); ntt<mod>(f2);\n    for(int i\
+    \ = 0; i < n; i++) {\n        f1[i] *= f2[i];\n    }\n    intt<mod>(f1);\n   \
+    \ f1.resize(v1.size() + v2.size() - 1);\n    return f1;\n}\n"
   dependsOn:
   - algebra/modint.hpp
   - integer/pow-mod.hpp
@@ -547,8 +557,8 @@ data:
   isVerificationFile: false
   path: convolution/ntt.hpp
   requiredBy: []
-  timestamp: '2022-11-03 00:18:24+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2022-11-03 00:55:39+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/yosupo-convolution.test.cpp
 documentation_of: convolution/ntt.hpp

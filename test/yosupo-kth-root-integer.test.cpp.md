@@ -4,7 +4,7 @@ data:
   - icon: ':question:'
     path: base.hpp
     title: base.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: integer/kth-root-integer.hpp
     title: integer/kth-root-integer.hpp
   - icon: ':question:'
@@ -30,9 +30,9 @@ data:
     title: stl-wrapper/vector.hpp
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: cpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/kth_root_integer
@@ -421,8 +421,8 @@ data:
   isVerificationFile: true
   path: test/yosupo-kth-root-integer.test.cpp
   requiredBy: []
-  timestamp: '2022-11-03 00:18:24+09:00'
-  verificationStatus: TEST_ACCEPTED
+  timestamp: '2022-11-03 00:55:39+09:00'
+  verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: test/yosupo-kth-root-integer.test.cpp
 layout: document

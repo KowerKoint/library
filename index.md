@@ -3,22 +3,22 @@ data:
   libraryCategories:
   - name: algebra
     pages:
-    - icon: ':x:'
+    - icon: ':question:'
       path: algebra/field.hpp
       title: algebra/field.hpp
-    - icon: ':x:'
+    - icon: ':question:'
       path: algebra/modint.hpp
       title: algebra/modint.hpp
     - icon: ':warning:'
       path: algebra/monoid.hpp
       title: algebra/monoid.hpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: algebra/nimber.hpp
       title: algebra/nimber.hpp
     - icon: ':question:'
       path: algebra/ordinal_operator.hpp
       title: algebra/ordinal_operator.hpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: algebra/ring.hpp
       title: algebra/ring.hpp
   - name: .
@@ -53,12 +53,12 @@ data:
     - icon: ':warning:'
       path: convolution/fft.hpp
       title: convolution/fft.hpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: convolution/ntt.hpp
       title: convolution/ntt.hpp
   - name: counting
     pages:
-    - icon: ':x:'
+    - icon: ':question:'
       path: counting/counting.hpp
       title: counting/counting.hpp
     - icon: ':x:'
@@ -72,10 +72,10 @@ data:
     - icon: ':heavy_check_mark:'
       path: graph/ford-fulkerson.hpp
       title: graph/ford-fulkerson.hpp
-    - icon: ':question:'
+    - icon: ':x:'
       path: graph/graph.hpp
       title: graph/graph.hpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: graph/tree.hpp
       title: graph/tree.hpp
   - name: integer
@@ -83,21 +83,21 @@ data:
     - icon: ':question:'
       path: integer/extgcd.hpp
       title: integer/extgcd.hpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: integer/kth-root-integer.hpp
       title: integer/kth-root-integer.hpp
     - icon: ':warning:'
       path: integer/least-prime-factors.hpp
       title: integer/least-prime-factors.hpp
-    - icon: ':x:'
+    - icon: ':question:'
       path: integer/pow-mod.hpp
       title: integer/pow-mod.hpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: integer/prime.hpp
       title: integer/prime.hpp
   - name: matrix
     pages:
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: matrix/matrix.hpp
       title: matrix/matrix.hpp
   - name: segtree
@@ -143,19 +143,19 @@ data:
     - icon: ':heavy_check_mark:'
       path: test/aoj-alds-1-1-c.test.cpp
       title: test/aoj-alds-1-1-c.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: test/aoj-dpl-5-b.test.cpp
       title: test/aoj-dpl-5-b.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: test/aoj-dpl-5-d.test.cpp
       title: test/aoj-dpl-5-d.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: test/aoj-dpl-5-e.test.cpp
       title: test/aoj-dpl-5-e.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: test/aoj-dpl-5-g.test.cpp
       title: test/aoj-dpl-5-g.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: test/aoj-dpl-5-i.test.cpp
       title: test/aoj-dpl-5-i.test.cpp
     - icon: ':x:'
@@ -176,7 +176,7 @@ data:
     - icon: ':heavy_check_mark:'
       path: test/aoj-ntl-1-a.test.cpp
       title: test/aoj-ntl-1-a.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: test/aoj-ntl-1-b.test.cpp
       title: test/aoj-ntl-1-b.test.cpp
     - icon: ':heavy_check_mark:'
@@ -185,25 +185,25 @@ data:
     - icon: ':heavy_check_mark:'
       path: test/yosupo-associative-array.test.cpp
       title: test/yosupo-associative-array.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: test/yosupo-convolution.test.cpp
       title: test/yosupo-convolution.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: test/yosupo-determinant-of-matrix.test.cpp
       title: test/yosupo-determinant-of-matrix.test.cpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: test/yosupo-enumerate-primes.test.cpp
       title: test/yosupo-enumerate-primes.test.cpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: test/yosupo-kth-root-integer.test.cpp
       title: test/yosupo-kth-root-integer.test.cpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: test/yosupo-lowest-common-ancestor.test.cpp
       title: test/yosupo-lowest-common-ancestor.test.cpp
     - icon: ':x:'
       path: test/yosupo-montmort-number.test.cpp
       title: test/yosupo-montmort-number.test.cpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: test/yosupo-nim-product.test.cpp
       title: test/yosupo-nim-product.test.cpp
     - icon: ':x:'

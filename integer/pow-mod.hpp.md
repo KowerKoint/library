@@ -29,41 +29,41 @@ data:
     path: stl-wrapper/vector.hpp
     title: stl-wrapper/vector.hpp
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':question:'
     path: algebra/modint.hpp
     title: algebra/modint.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: convolution/ntt.hpp
     title: convolution/ntt.hpp
   - icon: ':warning:'
     path: general.hpp
     title: general.hpp
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: test/aoj-dpl-5-b.test.cpp
     title: test/aoj-dpl-5-b.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: test/aoj-dpl-5-d.test.cpp
     title: test/aoj-dpl-5-d.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: test/aoj-dpl-5-e.test.cpp
     title: test/aoj-dpl-5-e.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: test/aoj-dpl-5-g.test.cpp
     title: test/aoj-dpl-5-g.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: test/aoj-dpl-5-i.test.cpp
     title: test/aoj-dpl-5-i.test.cpp
   - icon: ':x:'
     path: test/aoj-dpl-5-j.test.cpp
     title: test/aoj-dpl-5-j.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: test/aoj-ntl-1-b.test.cpp
     title: test/aoj-ntl-1-b.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: test/yosupo-convolution.test.cpp
     title: test/yosupo-convolution.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: test/yosupo-determinant-of-matrix.test.cpp
     title: test/yosupo-determinant-of-matrix.test.cpp
   - icon: ':x:'
@@ -74,7 +74,7 @@ data:
     title: test/yosupo-range-affine-range-sum.test.cpp
   _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':question:'
   attributes:
     links: []
   bundledCode: "#line 2 \"base.hpp\"\n\n#include <bits/stdc++.h>\nusing namespace\
@@ -467,8 +467,8 @@ data:
   - convolution/ntt.hpp
   - general.hpp
   - algebra/modint.hpp
-  timestamp: '2022-11-03 00:18:24+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2022-11-03 00:55:39+09:00'
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - test/aoj-dpl-5-j.test.cpp
   - test/aoj-dpl-5-e.test.cpp

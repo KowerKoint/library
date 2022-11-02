@@ -443,7 +443,7 @@ data:
   isVerificationFile: true
   path: test/aoj-grl-6-a.test.cpp
   requiredBy: []
-  timestamp: '2022-11-03 00:18:24+09:00'
+  timestamp: '2022-11-03 00:55:39+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/aoj-grl-6-a.test.cpp

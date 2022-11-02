@@ -30,12 +30,12 @@ data:
     title: stl-wrapper/vector.hpp
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: test/yosupo-determinant-of-matrix.test.cpp
     title: test/yosupo-determinant-of-matrix.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"base.hpp\"\n\n#include <bits/stdc++.h>\nusing namespace\
@@ -580,8 +580,8 @@ data:
   isVerificationFile: false
   path: matrix/matrix.hpp
   requiredBy: []
-  timestamp: '2022-11-03 00:18:24+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2022-11-03 00:55:39+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/yosupo-determinant-of-matrix.test.cpp
 documentation_of: matrix/matrix.hpp

@@ -7,10 +7,10 @@ data:
   - icon: ':question:'
     path: bit/bitset.hpp
     title: bit/bitset.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: integer/kth-root-integer.hpp
     title: integer/kth-root-integer.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: integer/prime.hpp
     title: integer/prime.hpp
   - icon: ':question:'
@@ -36,9 +36,9 @@ data:
     title: stl-wrapper/vector.hpp
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: cpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/enumerate_primes
@@ -531,8 +531,8 @@ data:
   isVerificationFile: true
   path: test/yosupo-enumerate-primes.test.cpp
   requiredBy: []
-  timestamp: '2022-11-03 00:18:24+09:00'
-  verificationStatus: TEST_ACCEPTED
+  timestamp: '2022-11-03 00:55:39+09:00'
+  verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: test/yosupo-enumerate-primes.test.cpp
 layout: document

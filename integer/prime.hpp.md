@@ -7,7 +7,7 @@ data:
   - icon: ':question:'
     path: bit/bitset.hpp
     title: bit/bitset.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: integer/kth-root-integer.hpp
     title: integer/kth-root-integer.hpp
   - icon: ':question:'
@@ -42,12 +42,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: test/aoj-ntl-1-a.test.cpp
     title: test/aoj-ntl-1-a.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/yosupo-enumerate-primes.test.cpp
     title: test/yosupo-enumerate-primes.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':question:'
   attributes:
     links: []
   bundledCode: "#line 2 \"base.hpp\"\n\n#include <bits/stdc++.h>\nusing namespace\
@@ -551,8 +551,8 @@ data:
   isVerificationFile: false
   path: integer/prime.hpp
   requiredBy: []
-  timestamp: '2022-11-03 00:18:24+09:00'
-  verificationStatus: LIBRARY_ALL_AC
+  timestamp: '2022-11-03 00:55:39+09:00'
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - test/aoj-itp-1-3-d.test.cpp
   - test/aoj-ntl-1-a.test.cpp

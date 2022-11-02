@@ -7,10 +7,10 @@ data:
   - icon: ':question:'
     path: bit/bitset.hpp
     title: bit/bitset.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: integer/kth-root-integer.hpp
     title: integer/kth-root-integer.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: integer/prime.hpp
     title: integer/prime.hpp
   - icon: ':question:'
@@ -528,7 +528,7 @@ data:
   isVerificationFile: true
   path: test/aoj-ntl-1-a.test.cpp
   requiredBy: []
-  timestamp: '2022-11-03 00:18:24+09:00'
+  timestamp: '2022-11-03 00:55:39+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/aoj-ntl-1-a.test.cpp

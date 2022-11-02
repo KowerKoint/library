@@ -29,41 +29,41 @@ data:
     path: stl-wrapper/vector.hpp
     title: stl-wrapper/vector.hpp
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':question:'
     path: algebra/modint.hpp
     title: algebra/modint.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: convolution/ntt.hpp
     title: convolution/ntt.hpp
   - icon: ':warning:'
     path: general.hpp
     title: general.hpp
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: test/aoj-dpl-5-b.test.cpp
     title: test/aoj-dpl-5-b.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: test/aoj-dpl-5-d.test.cpp
     title: test/aoj-dpl-5-d.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: test/aoj-dpl-5-e.test.cpp
     title: test/aoj-dpl-5-e.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: test/aoj-dpl-5-g.test.cpp
     title: test/aoj-dpl-5-g.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: test/aoj-dpl-5-i.test.cpp
     title: test/aoj-dpl-5-i.test.cpp
   - icon: ':x:'
     path: test/aoj-dpl-5-j.test.cpp
     title: test/aoj-dpl-5-j.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: test/aoj-ntl-1-b.test.cpp
     title: test/aoj-ntl-1-b.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: test/yosupo-convolution.test.cpp
     title: test/yosupo-convolution.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: test/yosupo-determinant-of-matrix.test.cpp
     title: test/yosupo-determinant-of-matrix.test.cpp
   - icon: ':x:'
@@ -74,7 +74,7 @@ data:
     title: test/yosupo-range-affine-range-sum.test.cpp
   _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':question:'
   attributes:
     links: []
   bundledCode: "#line 2 \"base.hpp\"\n\n#include <bits/stdc++.h>\nusing namespace\
@@ -451,29 +451,39 @@ data:
     \ R() const { return ttor(val); }\n    Field& operator*=(const Field& other) {\n\
     \        val = mult(val, other.val);\n        return *this;\n    }\n    Field\
     \ operator*(const Field& other) const {\n        return Field(*this) *= other;\n\
-    \    }\n    Field inv() const {\n        return Field(multinv(val));\n    }\n\
-    \    Field& operator/= (const Field& other) {\n        return *this *= other.inv();\n\
-    \    }\n    Field operator/ (const Field& other) const {\n        return Field(*this)\
-    \ /= other;\n    }\n    Field& operator+=(const Field& other) {\n        val =\
-    \ plus(val, other.val);\n        return *this;\n    }\n    Field operator+(const\
-    \ Field& other) const {\n        return Field(*this) += other;\n    }\n    Field\
-    \ operator-() const {\n        return Field(plusinv(val));\n    }\n    Field&\
-    \ operator-=(const Field& other) {\n        return *this += -other;\n    }\n \
-    \   Field operator-(const Field& other) const {\n        return Field(*this) -=\
-    \ other;\n    }\n    Field pow(ll n) const {\n        if(n < 0) {\n          \
-    \  return inv().pow(-n);\n        }\n        Field res = one();\n        Field\
-    \ a = *this;\n        while(n > 0) {\n            if(n & 1) res *= a;\n      \
-    \      a *= a;\n            n >>= 1;\n        }\n        return res;\n    }\n\
-    \    friend istream& operator>>(istream& is, Field& f) {\n        R r; is >> r;\n\
-    \        f = Field(r);\n        return is;\n    }\n    friend ostream& operator<<(ostream&\
-    \ os, const Field& f) {\n        return os << (R)f.val;\n    }\n};\nnamespace\
-    \ std {\n    template <\n        typename T,\n        T (*mult)(const T, const\
-    \ T),\n        T (*one)(),\n        T (*multinv)(const T),\n        T (*plus)(const\
-    \ T, const T),\n        T (*zero)(),\n        T (*plusinv)(const T),\n       \
-    \ typename R,\n        T (*rtot)(const R),\n        R (*ttor)(const T)\n    >\n\
-    \    struct hash<Field<T, mult, one, multinv, plus, zero, plusinv, R, rtot, ttor>>\
-    \ {\n        size_t operator()(const Field<T, mult, one, multinv, plus, zero,\
-    \ plusinv, R, rtot, ttor>& f) const {\n            return hash<T>()((R)f.val);\n\
+    \    }\n    Field operator*(const R& other) const {\n        return Field(*this)\
+    \ *= Field(other);\n    }\n    friend Field operator*(const R& other, const Field&\
+    \ field) {\n        return field * other;\n    }\n    Field inv() const {\n  \
+    \      return Field(multinv(val));\n    }\n    Field& operator/=(const Field&\
+    \ other) {\n        return *this *= other.inv();\n    }\n    Field operator/(const\
+    \ Field& other) const {\n        return Field(*this) /= other;\n    }\n    Field\
+    \ operator/(const R& other) const {\n        return Field(*this) /= Field(other);\n\
+    \    }\n    friend Field operator/(const R& other, const Field& field) {\n   \
+    \     return Field(other) / field;\n    }\n    Field& operator+=(const Field&\
+    \ other) {\n        val = plus(val, other.val);\n        return *this;\n    }\n\
+    \    Field operator+(const Field& other) const {\n        return Field(*this)\
+    \ += other;\n    }\n    Field operator+(const R& other) const {\n        return\
+    \ Field(*this) += Field(other);\n    }\n    friend Field operator+(const R& other,\
+    \ const Field& field) {\n        return field + other;\n    }\n    Field operator-()\
+    \ const {\n        return Field(plusinv(val));\n    }\n    Field& operator-=(const\
+    \ Field& other) {\n        return *this += -other;\n    }\n    Field operator-(const\
+    \ Field& other) const {\n        return Field(*this) -= other;\n    }\n    Field\
+    \ operator-(const R& other) const {\n        return Field(*this) -= Field(other);\n\
+    \    }\n    friend Field operator-(const R& other, const Field& field) {\n   \
+    \     return Field(other) - field;\n    }\n    Field pow(ll n) const {\n     \
+    \   if(n < 0) {\n            return inv().pow(-n);\n        }\n        Field res\
+    \ = one();\n        Field a = *this;\n        while(n > 0) {\n            if(n\
+    \ & 1) res *= a;\n            a *= a;\n            n >>= 1;\n        }\n     \
+    \   return res;\n    }\n    friend istream& operator>>(istream& is, Field& f)\
+    \ {\n        R r; is >> r;\n        f = Field(r);\n        return is;\n    }\n\
+    \    friend ostream& operator<<(ostream& os, const Field& f) {\n        return\
+    \ os << (R)f;\n    }\n};\nnamespace std {\n    template <\n        typename T,\n\
+    \        T (*mult)(const T, const T),\n        T (*one)(),\n        T (*multinv)(const\
+    \ T),\n        T (*plus)(const T, const T),\n        T (*zero)(),\n        T (*plusinv)(const\
+    \ T),\n        typename R,\n        T (*rtot)(const R),\n        R (*ttor)(const\
+    \ T)\n    >\n    struct hash<Field<T, mult, one, multinv, plus, zero, plusinv,\
+    \ R, rtot, ttor>> {\n        size_t operator()(const Field<T, mult, one, multinv,\
+    \ plus, zero, plusinv, R, rtot, ttor>& f) const {\n            return hash<T>()((R)f.val);\n\
     \        }\n    };\n}\n"
   code: "#pragma once\n#include \"../base.hpp\"\n#include \"ordinal_operator.hpp\"\
     \n\ntemplate <\n    typename T,\n    T (*mult)(const T&, const T&),\n    T (*one)(),\n\
@@ -484,29 +494,39 @@ data:
     \ R() const { return ttor(val); }\n    Field& operator*=(const Field& other) {\n\
     \        val = mult(val, other.val);\n        return *this;\n    }\n    Field\
     \ operator*(const Field& other) const {\n        return Field(*this) *= other;\n\
-    \    }\n    Field inv() const {\n        return Field(multinv(val));\n    }\n\
-    \    Field& operator/= (const Field& other) {\n        return *this *= other.inv();\n\
-    \    }\n    Field operator/ (const Field& other) const {\n        return Field(*this)\
-    \ /= other;\n    }\n    Field& operator+=(const Field& other) {\n        val =\
-    \ plus(val, other.val);\n        return *this;\n    }\n    Field operator+(const\
-    \ Field& other) const {\n        return Field(*this) += other;\n    }\n    Field\
-    \ operator-() const {\n        return Field(plusinv(val));\n    }\n    Field&\
-    \ operator-=(const Field& other) {\n        return *this += -other;\n    }\n \
-    \   Field operator-(const Field& other) const {\n        return Field(*this) -=\
-    \ other;\n    }\n    Field pow(ll n) const {\n        if(n < 0) {\n          \
-    \  return inv().pow(-n);\n        }\n        Field res = one();\n        Field\
-    \ a = *this;\n        while(n > 0) {\n            if(n & 1) res *= a;\n      \
-    \      a *= a;\n            n >>= 1;\n        }\n        return res;\n    }\n\
-    \    friend istream& operator>>(istream& is, Field& f) {\n        R r; is >> r;\n\
-    \        f = Field(r);\n        return is;\n    }\n    friend ostream& operator<<(ostream&\
-    \ os, const Field& f) {\n        return os << (R)f.val;\n    }\n};\nnamespace\
-    \ std {\n    template <\n        typename T,\n        T (*mult)(const T, const\
-    \ T),\n        T (*one)(),\n        T (*multinv)(const T),\n        T (*plus)(const\
-    \ T, const T),\n        T (*zero)(),\n        T (*plusinv)(const T),\n       \
-    \ typename R,\n        T (*rtot)(const R),\n        R (*ttor)(const T)\n    >\n\
-    \    struct hash<Field<T, mult, one, multinv, plus, zero, plusinv, R, rtot, ttor>>\
-    \ {\n        size_t operator()(const Field<T, mult, one, multinv, plus, zero,\
-    \ plusinv, R, rtot, ttor>& f) const {\n            return hash<T>()((R)f.val);\n\
+    \    }\n    Field operator*(const R& other) const {\n        return Field(*this)\
+    \ *= Field(other);\n    }\n    friend Field operator*(const R& other, const Field&\
+    \ field) {\n        return field * other;\n    }\n    Field inv() const {\n  \
+    \      return Field(multinv(val));\n    }\n    Field& operator/=(const Field&\
+    \ other) {\n        return *this *= other.inv();\n    }\n    Field operator/(const\
+    \ Field& other) const {\n        return Field(*this) /= other;\n    }\n    Field\
+    \ operator/(const R& other) const {\n        return Field(*this) /= Field(other);\n\
+    \    }\n    friend Field operator/(const R& other, const Field& field) {\n   \
+    \     return Field(other) / field;\n    }\n    Field& operator+=(const Field&\
+    \ other) {\n        val = plus(val, other.val);\n        return *this;\n    }\n\
+    \    Field operator+(const Field& other) const {\n        return Field(*this)\
+    \ += other;\n    }\n    Field operator+(const R& other) const {\n        return\
+    \ Field(*this) += Field(other);\n    }\n    friend Field operator+(const R& other,\
+    \ const Field& field) {\n        return field + other;\n    }\n    Field operator-()\
+    \ const {\n        return Field(plusinv(val));\n    }\n    Field& operator-=(const\
+    \ Field& other) {\n        return *this += -other;\n    }\n    Field operator-(const\
+    \ Field& other) const {\n        return Field(*this) -= other;\n    }\n    Field\
+    \ operator-(const R& other) const {\n        return Field(*this) -= Field(other);\n\
+    \    }\n    friend Field operator-(const R& other, const Field& field) {\n   \
+    \     return Field(other) - field;\n    }\n    Field pow(ll n) const {\n     \
+    \   if(n < 0) {\n            return inv().pow(-n);\n        }\n        Field res\
+    \ = one();\n        Field a = *this;\n        while(n > 0) {\n            if(n\
+    \ & 1) res *= a;\n            a *= a;\n            n >>= 1;\n        }\n     \
+    \   return res;\n    }\n    friend istream& operator>>(istream& is, Field& f)\
+    \ {\n        R r; is >> r;\n        f = Field(r);\n        return is;\n    }\n\
+    \    friend ostream& operator<<(ostream& os, const Field& f) {\n        return\
+    \ os << (R)f;\n    }\n};\nnamespace std {\n    template <\n        typename T,\n\
+    \        T (*mult)(const T, const T),\n        T (*one)(),\n        T (*multinv)(const\
+    \ T),\n        T (*plus)(const T, const T),\n        T (*zero)(),\n        T (*plusinv)(const\
+    \ T),\n        typename R,\n        T (*rtot)(const R),\n        R (*ttor)(const\
+    \ T)\n    >\n    struct hash<Field<T, mult, one, multinv, plus, zero, plusinv,\
+    \ R, rtot, ttor>> {\n        size_t operator()(const Field<T, mult, one, multinv,\
+    \ plus, zero, plusinv, R, rtot, ttor>& f) const {\n            return hash<T>()((R)f.val);\n\
     \        }\n    };\n}\n"
   dependsOn:
   - base.hpp
@@ -524,8 +544,8 @@ data:
   - convolution/ntt.hpp
   - general.hpp
   - algebra/modint.hpp
-  timestamp: '2022-11-03 00:18:24+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2022-11-03 00:55:39+09:00'
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - test/aoj-dpl-5-j.test.cpp
   - test/aoj-dpl-5-e.test.cpp

@@ -1,10 +1,10 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':question:'
     path: algebra/field.hpp
     title: algebra/field.hpp
-  - icon: ':x:'
+  - icon: ':question:'
     path: algebra/modint.hpp
     title: algebra/modint.hpp
   - icon: ':question:'
@@ -16,7 +16,7 @@ data:
   - icon: ':question:'
     path: integer/extgcd.hpp
     title: integer/extgcd.hpp
-  - icon: ':x:'
+  - icon: ':question:'
     path: integer/pow-mod.hpp
     title: integer/pow-mod.hpp
   - icon: ':question:'
@@ -42,9 +42,9 @@ data:
     title: stl-wrapper/vector.hpp
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=NTL_1_B
@@ -435,24 +435,34 @@ data:
     \ {}\n    Field(const R& r) : val(rtot(r)) {}\n    operator R() const { return\
     \ ttor(val); }\n    Field& operator*=(const Field& other) {\n        val = mult(val,\
     \ other.val);\n        return *this;\n    }\n    Field operator*(const Field&\
-    \ other) const {\n        return Field(*this) *= other;\n    }\n    Field inv()\
-    \ const {\n        return Field(multinv(val));\n    }\n    Field& operator/= (const\
-    \ Field& other) {\n        return *this *= other.inv();\n    }\n    Field operator/\
-    \ (const Field& other) const {\n        return Field(*this) /= other;\n    }\n\
-    \    Field& operator+=(const Field& other) {\n        val = plus(val, other.val);\n\
-    \        return *this;\n    }\n    Field operator+(const Field& other) const {\n\
-    \        return Field(*this) += other;\n    }\n    Field operator-() const {\n\
-    \        return Field(plusinv(val));\n    }\n    Field& operator-=(const Field&\
-    \ other) {\n        return *this += -other;\n    }\n    Field operator-(const\
-    \ Field& other) const {\n        return Field(*this) -= other;\n    }\n    Field\
+    \ other) const {\n        return Field(*this) *= other;\n    }\n    Field operator*(const\
+    \ R& other) const {\n        return Field(*this) *= Field(other);\n    }\n   \
+    \ friend Field operator*(const R& other, const Field& field) {\n        return\
+    \ field * other;\n    }\n    Field inv() const {\n        return Field(multinv(val));\n\
+    \    }\n    Field& operator/=(const Field& other) {\n        return *this *= other.inv();\n\
+    \    }\n    Field operator/(const Field& other) const {\n        return Field(*this)\
+    \ /= other;\n    }\n    Field operator/(const R& other) const {\n        return\
+    \ Field(*this) /= Field(other);\n    }\n    friend Field operator/(const R& other,\
+    \ const Field& field) {\n        return Field(other) / field;\n    }\n    Field&\
+    \ operator+=(const Field& other) {\n        val = plus(val, other.val);\n    \
+    \    return *this;\n    }\n    Field operator+(const Field& other) const {\n \
+    \       return Field(*this) += other;\n    }\n    Field operator+(const R& other)\
+    \ const {\n        return Field(*this) += Field(other);\n    }\n    friend Field\
+    \ operator+(const R& other, const Field& field) {\n        return field + other;\n\
+    \    }\n    Field operator-() const {\n        return Field(plusinv(val));\n \
+    \   }\n    Field& operator-=(const Field& other) {\n        return *this += -other;\n\
+    \    }\n    Field operator-(const Field& other) const {\n        return Field(*this)\
+    \ -= other;\n    }\n    Field operator-(const R& other) const {\n        return\
+    \ Field(*this) -= Field(other);\n    }\n    friend Field operator-(const R& other,\
+    \ const Field& field) {\n        return Field(other) - field;\n    }\n    Field\
     \ pow(ll n) const {\n        if(n < 0) {\n            return inv().pow(-n);\n\
     \        }\n        Field res = one();\n        Field a = *this;\n        while(n\
     \ > 0) {\n            if(n & 1) res *= a;\n            a *= a;\n            n\
     \ >>= 1;\n        }\n        return res;\n    }\n    friend istream& operator>>(istream&\
     \ is, Field& f) {\n        R r; is >> r;\n        f = Field(r);\n        return\
     \ is;\n    }\n    friend ostream& operator<<(ostream& os, const Field& f) {\n\
-    \        return os << (R)f.val;\n    }\n};\nnamespace std {\n    template <\n\
-    \        typename T,\n        T (*mult)(const T, const T),\n        T (*one)(),\n\
+    \        return os << (R)f;\n    }\n};\nnamespace std {\n    template <\n    \
+    \    typename T,\n        T (*mult)(const T, const T),\n        T (*one)(),\n\
     \        T (*multinv)(const T),\n        T (*plus)(const T, const T),\n      \
     \  T (*zero)(),\n        T (*plusinv)(const T),\n        typename R,\n       \
     \ T (*rtot)(const R),\n        R (*ttor)(const T)\n    >\n    struct hash<Field<T,\
@@ -494,8 +504,8 @@ data:
   isVerificationFile: true
   path: test/aoj-ntl-1-b.test.cpp
   requiredBy: []
-  timestamp: '2022-11-03 00:18:24+09:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  timestamp: '2022-11-03 00:55:39+09:00'
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/aoj-ntl-1-b.test.cpp
 layout: document

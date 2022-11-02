@@ -30,19 +30,19 @@ data:
     path: general.hpp
     title: general.hpp
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: test/aoj-dpl-5-b.test.cpp
     title: test/aoj-dpl-5-b.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: test/aoj-dpl-5-d.test.cpp
     title: test/aoj-dpl-5-d.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: test/aoj-dpl-5-e.test.cpp
     title: test/aoj-dpl-5-e.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: test/aoj-dpl-5-g.test.cpp
     title: test/aoj-dpl-5-g.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: test/aoj-dpl-5-i.test.cpp
     title: test/aoj-dpl-5-i.test.cpp
   - icon: ':x:'
@@ -50,7 +50,7 @@ data:
     title: test/aoj-dpl-5-j.test.cpp
   _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':question:'
   attributes:
     links: []
   bundledCode: "#line 2 \"base.hpp\"\n\n#include <bits/stdc++.h>\nusing namespace\
@@ -414,7 +414,7 @@ data:
     \        assert(n >= 0);\n        ll sz = (ll)fact.size();\n        if(sz > n)\
     \ return;\n        fact.resize(n+1);\n        ifact.resize(n+1);\n        fact[0]\
     \ = 1;\n        FOR(i, max(1LL, sz), n+1) fact[i] = fact[i-1] * i;\n        ifact[n]\
-    \ = 1 / fact[n];\n        for(ll i = n-1; i >= sz; i--) ifact[i] = ifact[i+1]\
+    \ = fact[n].inv();\n        for(ll i = n-1; i >= sz; i--) ifact[i] = ifact[i+1]\
     \ * (i+1);\n    }\n\n    T p(ll n, ll r) {\n        if(n < r) return 0;\n    \
     \    assert(r >= 0);\n        expand(n);\n        return fact[n] * ifact[n-r];\n\
     \    }\n\n    T c(ll n, ll r) {\n        if(n < r) return 0;\n        assert(r\
@@ -444,7 +444,7 @@ data:
     \        assert(n >= 0);\n        ll sz = (ll)fact.size();\n        if(sz > n)\
     \ return;\n        fact.resize(n+1);\n        ifact.resize(n+1);\n        fact[0]\
     \ = 1;\n        FOR(i, max(1LL, sz), n+1) fact[i] = fact[i-1] * i;\n        ifact[n]\
-    \ = 1 / fact[n];\n        for(ll i = n-1; i >= sz; i--) ifact[i] = ifact[i+1]\
+    \ = fact[n].inv();\n        for(ll i = n-1; i >= sz; i--) ifact[i] = ifact[i+1]\
     \ * (i+1);\n    }\n\n    T p(ll n, ll r) {\n        if(n < r) return 0;\n    \
     \    assert(r >= 0);\n        expand(n);\n        return fact[n] * ifact[n-r];\n\
     \    }\n\n    T c(ll n, ll r) {\n        if(n < r) return 0;\n        assert(r\
@@ -481,8 +481,8 @@ data:
   path: counting/counting.hpp
   requiredBy:
   - general.hpp
-  timestamp: '2022-11-03 00:18:24+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2022-11-03 00:55:39+09:00'
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - test/aoj-dpl-5-j.test.cpp
   - test/aoj-dpl-5-e.test.cpp

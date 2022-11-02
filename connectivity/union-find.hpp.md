@@ -26,17 +26,17 @@ data:
     path: stl-wrapper/vector.hpp
     title: stl-wrapper/vector.hpp
   _extendedRequiredBy:
-  - icon: ':question:'
+  - icon: ':x:'
     path: graph/graph.hpp
     title: graph/graph.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: graph/tree.hpp
     title: graph/tree.hpp
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: test/aoj-dsl-1-b.test.cpp
     title: test/aoj-dsl-1-b.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/yosupo-lowest-common-ancestor.test.cpp
     title: test/yosupo-lowest-common-ancestor.test.cpp
   - icon: ':x:'
@@ -472,7 +472,7 @@ data:
   requiredBy:
   - graph/graph.hpp
   - graph/tree.hpp
-  timestamp: '2022-11-03 00:18:24+09:00'
+  timestamp: '2022-11-03 00:55:39+09:00'
   verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - test/yosupo-shortest-path.test.cpp

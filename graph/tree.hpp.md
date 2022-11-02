@@ -7,7 +7,7 @@ data:
   - icon: ':question:'
     path: connectivity/union-find.hpp
     title: connectivity/union-find.hpp
-  - icon: ':question:'
+  - icon: ':x:'
     path: graph/graph.hpp
     title: graph/graph.hpp
   - icon: ':question:'
@@ -33,12 +33,12 @@ data:
     title: stl-wrapper/vector.hpp
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/yosupo-lowest-common-ancestor.test.cpp
     title: test/yosupo-lowest-common-ancestor.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     links: []
   bundledCode: "#line 2 \"base.hpp\"\n\n#include <bits/stdc++.h>\nusing namespace\
@@ -572,8 +572,8 @@ data:
   isVerificationFile: false
   path: graph/tree.hpp
   requiredBy: []
-  timestamp: '2022-11-03 00:18:24+09:00'
-  verificationStatus: LIBRARY_ALL_AC
+  timestamp: '2022-11-03 00:55:39+09:00'
+  verificationStatus: LIBRARY_ALL_WA
   verifiedWith:
   - test/yosupo-lowest-common-ancestor.test.cpp
 documentation_of: graph/tree.hpp

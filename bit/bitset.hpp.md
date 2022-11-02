@@ -26,7 +26,7 @@ data:
     path: stl-wrapper/vector.hpp
     title: stl-wrapper/vector.hpp
   _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: integer/prime.hpp
     title: integer/prime.hpp
   - icon: ':x:'
@@ -42,7 +42,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: test/aoj-ntl-1-a.test.cpp
     title: test/aoj-ntl-1-a.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/yosupo-enumerate-primes.test.cpp
     title: test/yosupo-enumerate-primes.test.cpp
   - icon: ':x:'
@@ -572,7 +572,7 @@ data:
   requiredBy:
   - integer/prime.hpp
   - segtree/wavelet-matrix.hpp
-  timestamp: '2022-11-03 00:18:24+09:00'
+  timestamp: '2022-11-03 00:55:39+09:00'
   verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - test/aoj-itp-1-3-d.test.cpp

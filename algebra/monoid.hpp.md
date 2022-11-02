@@ -408,11 +408,10 @@ data:
     \ {}\n    Monoid(const R& r) : val(rtot(r)) {}\n    operator R() const { return\
     \ ttor(val); }\n    Monoid& operator*=(const Monoid& other) {\n        val = mult(val,\
     \ other.val);\n        return *this;\n    }\n    Monoid operator*(const Monoid&\
-    \ other) const {\n        return Monoid(*this) *= other;\n    }\n    Monoid inv()\
-    \ const {\n        return Monoid(multinv(val));\n    }\n    Monoid& operator/=\
-    \ (const Monoid& other) {\n        return *this *= other.inv();\n    }\n    Monoid\
-    \ operator/ (const Monoid& other) const {\n        return Monoid(*this) /= other;\n\
-    \    }\n    Monoid pow(ll n) const {\n        assert(n >= 0);\n        Monoid\
+    \ other) const {\n        return Monoid(*this) *= other;\n    }\n    Monoid operator*(const\
+    \ R& r) const {\n        return Monoid(*this) *= Monoid(r);\n    }\n    friend\
+    \ Monoid operator*(const R& r, const Monoid& m) {\n        return Monoid(r) *=\
+    \ m;\n    }\n    Monoid pow(ll n) const {\n        assert(n >= 0);\n        Monoid\
     \ res = one();\n        Monoid a = *this;\n        while(n > 0) {\n          \
     \  if(n & 1) res *= a;\n            a *= a;\n            n >>= 1;\n        }\n\
     \        return res;\n    }\n    friend istream& operator>>(istream& is, Monoid&\
@@ -431,11 +430,10 @@ data:
     \ {}\n    Monoid(const R& r) : val(rtot(r)) {}\n    operator R() const { return\
     \ ttor(val); }\n    Monoid& operator*=(const Monoid& other) {\n        val = mult(val,\
     \ other.val);\n        return *this;\n    }\n    Monoid operator*(const Monoid&\
-    \ other) const {\n        return Monoid(*this) *= other;\n    }\n    Monoid inv()\
-    \ const {\n        return Monoid(multinv(val));\n    }\n    Monoid& operator/=\
-    \ (const Monoid& other) {\n        return *this *= other.inv();\n    }\n    Monoid\
-    \ operator/ (const Monoid& other) const {\n        return Monoid(*this) /= other;\n\
-    \    }\n    Monoid pow(ll n) const {\n        assert(n >= 0);\n        Monoid\
+    \ other) const {\n        return Monoid(*this) *= other;\n    }\n    Monoid operator*(const\
+    \ R& r) const {\n        return Monoid(*this) *= Monoid(r);\n    }\n    friend\
+    \ Monoid operator*(const R& r, const Monoid& m) {\n        return Monoid(r) *=\
+    \ m;\n    }\n    Monoid pow(ll n) const {\n        assert(n >= 0);\n        Monoid\
     \ res = one();\n        Monoid a = *this;\n        while(n > 0) {\n          \
     \  if(n & 1) res *= a;\n            a *= a;\n            n >>= 1;\n        }\n\
     \        return res;\n    }\n    friend istream& operator>>(istream& is, Monoid&\
@@ -460,7 +458,7 @@ data:
   isVerificationFile: false
   path: algebra/monoid.hpp
   requiredBy: []
-  timestamp: '2022-11-03 00:18:24+09:00'
+  timestamp: '2022-11-03 00:55:39+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: algebra/monoid.hpp

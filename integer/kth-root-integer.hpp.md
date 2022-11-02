@@ -26,7 +26,7 @@ data:
     path: stl-wrapper/vector.hpp
     title: stl-wrapper/vector.hpp
   _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: integer/prime.hpp
     title: integer/prime.hpp
   _extendedVerifiedWith:
@@ -39,15 +39,15 @@ data:
   - icon: ':heavy_check_mark:'
     path: test/aoj-ntl-1-a.test.cpp
     title: test/aoj-ntl-1-a.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/yosupo-enumerate-primes.test.cpp
     title: test/yosupo-enumerate-primes.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/yosupo-kth-root-integer.test.cpp
     title: test/yosupo-kth-root-integer.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':question:'
   attributes:
     links: []
   bundledCode: "#line 2 \"base.hpp\"\n\n#include <bits/stdc++.h>\nusing namespace\
@@ -432,8 +432,8 @@ data:
   path: integer/kth-root-integer.hpp
   requiredBy:
   - integer/prime.hpp
-  timestamp: '2022-11-03 00:18:24+09:00'
-  verificationStatus: LIBRARY_ALL_AC
+  timestamp: '2022-11-03 00:55:39+09:00'
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - test/aoj-itp-1-3-d.test.cpp
   - test/yosupo-kth-root-integer.test.cpp

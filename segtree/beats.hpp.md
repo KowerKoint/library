@@ -526,7 +526,7 @@ data:
   isVerificationFile: false
   path: segtree/beats.hpp
   requiredBy: []
-  timestamp: '2022-11-03 00:18:24+09:00'
+  timestamp: '2022-11-03 00:55:39+09:00'
   verificationStatus: LIBRARY_ALL_WA
   verifiedWith:
   - test/yosupo-range-chmin-chmax-add-range-sum.test.cpp
