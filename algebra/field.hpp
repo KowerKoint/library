@@ -1,20 +1,24 @@
 #pragma once
 #include "../base.hpp"
+#include "ordinal_operator.hpp"
 
 template <
     typename T,
-    T (*mult)(const T, const T),
+    T (*mult)(const T&, const T&),
     T (*one)(),
-    T (*multinv)(const T),
-    T (*plus)(const T, const T),
+    T (*multinv)(const T&),
+    T (*plus)(const T&, const T&),
     T (*zero)(),
-    T (*plusinv)(const T)
+    T (*plusinv)(const T&),
+    typename R = T,
+    T (*rtot)(const R&) = ordinal_identity<R>,
+    R (*ttor)(const T&) = ordinal_identity<T>
 >
 struct Field {
     T val;
-
-    Field(T val=zero()) : val(val) {}
-    operator T() const { return val; }
+    Field() : val(zero()) {}
+    Field(const R& r) : val(rtot(r)) {}
+    operator R() const { return ttor(val); }
     Field& operator*=(const Field& other) {
         val = mult(val, other.val);
         return *this;
@@ -61,17 +65,30 @@ struct Field {
         return res;
     }
     friend istream& operator>>(istream& is, Field& f) {
-        return is >> f.val;
+        R r; is >> r;
+        f = Field(r);
+        return is;
     }
     friend ostream& operator<<(ostream& os, const Field& f) {
-        return os << f.val;
+        return os << (R)f.val;
     }
 };
 namespace std {
-    template <typename T, T (*mult)(const T, const T), T (*one)(), T (*multinv)(const T), T (*plus)(const T, const T), T (*zero)(), T (*plusinv)(const T)>
-    struct hash<Field<T, mult, one, multinv, plus, zero, plusinv>> {
-        size_t operator()(const Field<T, mult, one, multinv, plus, zero, plusinv>& f) const {
-            return hash<T>()(f.val);
+    template <
+        typename T,
+        T (*mult)(const T, const T),
+        T (*one)(),
+        T (*multinv)(const T),
+        T (*plus)(const T, const T),
+        T (*zero)(),
+        T (*plusinv)(const T),
+        typename R,
+        T (*rtot)(const R),
+        R (*ttor)(const T)
+    >
+    struct hash<Field<T, mult, one, multinv, plus, zero, plusinv, R, rtot, ttor>> {
+        size_t operator()(const Field<T, mult, one, multinv, plus, zero, plusinv, R, rtot, ttor>& f) const {
+            return hash<T>()((R)f.val);
         }
     };
 }

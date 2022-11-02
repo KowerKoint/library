@@ -1,6 +1,6 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/montmort_number_mod"
 #include "../counting/montmort.hpp"
-#include "../integer/modint.hpp"
+#include "../algebra/modint.hpp"
 
 ll m;
 ll mod() {

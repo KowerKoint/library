@@ -1,6 +1,6 @@
 #define PROBLEM "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_5_J"
 #include "../counting/counting.hpp"
-#include "../integer/modint.hpp"
+#include "../algebra/modint.hpp"
 
 int main() {
     int n, k; cin >> n >> k;

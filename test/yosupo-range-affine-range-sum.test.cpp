@@ -1,5 +1,5 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/range_affine_range_sum"
-#include "../integer/modint.hpp"
+#include "../algebra/modint.hpp"
 #include "../segtree/lazy-segtree.hpp"
 
 int main() {

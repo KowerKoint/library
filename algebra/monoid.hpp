@@ -1,26 +1,36 @@
 #pragma once
 
 #include "../base.hpp"
+#include "ordinal_operator.hpp"
 
 template <
     typename T,
-    T (*mult)(const T, const T),
-    T (*one)()
+    T (*mult)(const T&, const T&),
+    T (*one)(),
+    typename R = T,
+    T (*rtot)(const R&) = ordinal_identity<R>,
+    R (*ttor)(const T&) = ordinal_identity<T>
 >
 struct Monoid {
     T val;
-
-    Monoid(T val=one()) : val(val) {
-    }
-    operator T() const {
-        return val;
-    }
-    Monoid& operator*=(const Monoid& r) {
-        val = mult(val, r.val);
+    Monoid() : val(one()) {}
+    Monoid(const R& r) : val(rtot(r)) {}
+    operator R() const { return ttor(val); }
+    Monoid& operator*=(const Monoid& other) {
+        val = mult(val, other.val);
         return *this;
     }
-    Monoid operator*(const Monoid& r) const {
-        return Monoid(*this) *= r;
+    Monoid operator*(const Monoid& other) const {
+        return Monoid(*this) *= other;
+    }
+    Monoid inv() const {
+        return Monoid(multinv(val));
+    }
+    Monoid& operator/= (const Monoid& other) {
+        return *this *= other.inv();
+    }
+    Monoid operator/ (const Monoid& other) const {
+        return Monoid(*this) /= other;
     }
     Monoid pow(ll n) const {
         assert(n >= 0);
@@ -33,18 +43,27 @@ struct Monoid {
         }
         return res;
     }
-    friend istream& operator>>(istream& is, Monoid& r) {
-        return is >> r.val;
+    friend istream& operator>>(istream& is, Monoid& f) {
+        R r; is >> r;
+        f = Monoid(r);
+        return is;
     }
-    friend ostream& operator<<(ostream& os, const Monoid& r) {
-        return os << r.val;
+    friend ostream& operator<<(ostream& os, const Monoid& f) {
+        return os << (R)f.val;
     }
 };
 namespace std {
-    template <typename T, T (*mult)(const T, const T), T (*one)()>
-    struct hash<Monoid<T, mult, one>> {
-        size_t operator()(const Monoid<T, mult, one>& r) const {
-            return hash<T>()(r.val);
+    template <
+        typename T,
+        T (*mult)(const T, const T),
+        T (*one)(),
+        typename R,
+        T (*rtot)(const R),
+        R (*ttor)(const T)
+    >
+    struct hash<Monoid<T, mult, one, R, rtot, ttor>> {
+        size_t operator()(const Monoid<T, mult, one, R, rtot, ttor>& f) const {
+            return hash<T>()((R)f.val);
         }
     };
 }

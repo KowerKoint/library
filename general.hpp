@@ -1,3 +1,3 @@
 #pragma once
-#include "integer/modint.hpp"
+#include "algebra/modint.hpp"
 #include "counting/counting.hpp"

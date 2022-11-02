@@ -1,5 +1,5 @@
 #pragma once
-#include "integer/modint.hpp"
+#include "../algebra/modint.hpp"
 
 template <ll (*mod)()>
 void ntt(vector<Modint<mod>>& v) {

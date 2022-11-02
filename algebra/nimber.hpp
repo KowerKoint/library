@@ -42,7 +42,7 @@ namespace _nimber_precalc {
 
 }
 
-ull nim_product(ull x, ull y) {
+ull nim_product(const ull& x, const ull& y) {
     if(!_nimber_precalc::built) _nimber_precalc::precalc();
     ull ret = 0;
     REP(i, 8) REP(j, 8) {
@@ -51,4 +51,4 @@ ull nim_product(ull x, ull y) {
     return ret;
 }
 
-using Nimber = Ring<ull, nim_product, ordinal_one, ordinal_xor, ordinal_zero, ordinal_identity>;
+using Nimber = Ring<ull, nim_product, ordinal_one<ull>, ordinal_xor<ull>, ordinal_zero<ull>, ordinal_identity<ull>>;

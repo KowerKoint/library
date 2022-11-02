@@ -1,6 +1,6 @@
 #pragma once
 
-#include "integer/modint.hpp"
+#include "base.hpp"
 
 template <typename It>
 Vector<int> kmp_table(It begin, It end) {
