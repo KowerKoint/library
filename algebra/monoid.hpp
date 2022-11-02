@@ -16,7 +16,6 @@ private:
     T _val;
 public:
     Monoid() : _val(one()) {}
-    Monoid(const T& t) : _val(t) {}
     Monoid(const R& r) : _val(rtot(r)) {}
     R val() const { return ttor(_val); }
     Monoid& operator*=(const Monoid& other) {

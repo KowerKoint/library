@@ -18,7 +18,6 @@ private:
     T _val;
 public:
     Ring() : _val(zero()) {}
-    Ring(const T& t) : _val(t) {}
     Ring(const R& r) : _val(rtot(r)) {}
     R val() const { return ttor(_val); }
     Ring& operator*=(const Ring& other) {

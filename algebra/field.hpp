@@ -20,7 +20,6 @@ private:
 public:
     Field() : _val(zero()) {}
     Field(const R& r) : _val(rtot(r)) {}
-    Field(const T& t) : _val(t) {}
     R val() const { return ttor(_val); }
     Field& operator*=(const Field& other) {
         _val = mult(_val, other._val);
