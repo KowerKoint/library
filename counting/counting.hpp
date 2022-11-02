@@ -19,7 +19,7 @@ struct Counting {
         ifact.resize(n+1);
         fact[0] = 1;
         FOR(i, max(1LL, sz), n+1) fact[i] = fact[i-1] * i;
-        ifact[n] = 1 / fact[n];
+        ifact[n] = fact[n].inv();
         for(ll i = n-1; i >= sz; i--) ifact[i] = ifact[i+1] * (i+1);
     }
 
