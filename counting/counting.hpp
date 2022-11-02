@@ -48,7 +48,7 @@ struct Counting {
         assert(k >= 0);
         if(n == 0) return 1;
         T res = 0;
-        int sign = k%2? -1 : 1;
+        T sign = k%2? -1 : 1;
         expand(k);
         REP(i, k+1) {
             res += sign * ifact[i] * ifact[k-i] * T(i).pow(n);
@@ -71,7 +71,7 @@ struct Counting {
         assert(n >= 0 && k >= 0);
         expand(k);
         Vector<T> tmp(k+1);
-        int sign = 1;
+        T sign = 1;
         tmp[0] = 1;
         FOR(i, 1, k+1) {
             sign *= -1;
