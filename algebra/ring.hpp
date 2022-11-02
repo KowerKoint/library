@@ -25,12 +25,24 @@ struct Ring {
     Ring operator*(const Ring& other) const {
         return Ring(*this) *= other;
     }
+    Ring operator*(const R& other) const {
+        return Ring(*this) *= Ring(other);
+    }
+    friend Ring operator*(const R& other, const Ring& r) {
+        return Ring(other) *= r;
+    }
     Ring& operator+=(const Ring& other) {
         val = plus(val, other.val);
         return *this;
     }
     Ring operator+(const Ring& other) const {
         return Ring(*this) += other;
+    }
+    Ring operator+(const R& other) const {
+        return Ring(*this) += Ring(other);
+    }
+    friend Ring operator+(const R& other, const Ring& r) {
+        return Ring(other) += r;
     }
     Ring operator-() const {
         return Ring(plusinv(val));
@@ -40,6 +52,12 @@ struct Ring {
     }
     Ring operator-(const Ring& other) const {
         return Ring(*this) -= other;
+    }
+    Ring operator-(const R& other) const {
+        return Ring(*this) -= Ring(other);
+    }
+    friend Ring operator-(const R& other, const Ring& r) {
+        return Ring(other) -= r;
     }
     Ring pow(ll n) const {
         assert(n >= 0);

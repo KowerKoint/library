@@ -26,14 +26,26 @@ struct Field {
     Field operator*(const Field& other) const {
         return Field(*this) *= other;
     }
+    Field operator*(const R& other) const {
+        return Field(*this) *= Field(other);
+    }
+    friend Field operator*(const R& other, const Field& field) {
+        return field * other;
+    }
     Field inv() const {
         return Field(multinv(val));
     }
-    Field& operator/= (const Field& other) {
+    Field& operator/=(const Field& other) {
         return *this *= other.inv();
     }
-    Field operator/ (const Field& other) const {
+    Field operator/(const Field& other) const {
         return Field(*this) /= other;
+    }
+    Field operator/(const R& other) const {
+        return Field(*this) /= Field(other);
+    }
+    friend Field operator/(const R& other, const Field& field) {
+        return Field(other) / field;
     }
     Field& operator+=(const Field& other) {
         val = plus(val, other.val);
@@ -41,6 +53,12 @@ struct Field {
     }
     Field operator+(const Field& other) const {
         return Field(*this) += other;
+    }
+    Field operator+(const R& other) const {
+        return Field(*this) += Field(other);
+    }
+    friend Field operator+(const R& other, const Field& field) {
+        return field + other;
     }
     Field operator-() const {
         return Field(plusinv(val));
@@ -50,6 +68,12 @@ struct Field {
     }
     Field operator-(const Field& other) const {
         return Field(*this) -= other;
+    }
+    Field operator-(const R& other) const {
+        return Field(*this) -= Field(other);
+    }
+    friend Field operator-(const R& other, const Field& field) {
+        return Field(other) - field;
     }
     Field pow(ll n) const {
         if(n < 0) {
@@ -70,7 +94,7 @@ struct Field {
         return is;
     }
     friend ostream& operator<<(ostream& os, const Field& f) {
-        return os << (R)f.val;
+        return os << (R)f;
     }
 };
 namespace std {

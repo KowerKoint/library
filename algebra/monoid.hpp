@@ -23,14 +23,11 @@ struct Monoid {
     Monoid operator*(const Monoid& other) const {
         return Monoid(*this) *= other;
     }
-    Monoid inv() const {
-        return Monoid(multinv(val));
+    Monoid operator*(const R& r) const {
+        return Monoid(*this) *= Monoid(r);
     }
-    Monoid& operator/= (const Monoid& other) {
-        return *this *= other.inv();
-    }
-    Monoid operator/ (const Monoid& other) const {
-        return Monoid(*this) /= other;
+    friend Monoid operator*(const R& r, const Monoid& m) {
+        return Monoid(r) *= m;
     }
     Monoid pow(ll n) const {
         assert(n >= 0);
