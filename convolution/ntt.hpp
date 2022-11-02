@@ -59,11 +59,11 @@ Vector<Modint<mod>> sum_convolution(const vector<Modint<mod>>& v1, const vector<
     while(n < (int)v1.size() + (int)v2.size() - 1) n <<= 1;
     Vector<Modint<mod>> f1(v1), f2(v2);
     f1.resize(n); f2.resize(n);
-    ntt(f1); ntt(f2);
+    ntt<mod>(f1); ntt<mod>(f2);
     for(int i = 0; i < n; i++) {
         f1[i] *= f2[i];
     }
-    intt(f1);
+    intt<mod>(f1);
     f1.resize(v1.size() + v2.size() - 1);
     return f1;
 }
