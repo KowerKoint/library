@@ -14,50 +14,19 @@ template <
     R (*ttor)(const T&) = ordinal_identity<T>
 >
 struct Ring {
-    T val;
-    Ring() : val(zero()) {}
-    Ring(const R& r) : val(rtot(r)) {}
-    operator R() const { return ttor(val); }
+private:
+    T _val;
+public:
+    Ring() : _val(zero()) {}
+    Ring(const T& t) : _val(t) {}
+    Ring(const R& r) : _val(rtot(r)) {}
+    R val() const { return ttor(_val); }
     Ring& operator*=(const Ring& other) {
-        val = mult(val, other.val);
+        _val = mult(_val, other._val);
         return *this;
     }
     Ring operator*(const Ring& other) const {
         return Ring(*this) *= other;
-    }
-    Ring operator*(const R& other) const {
-        return Ring(*this) *= Ring(other);
-    }
-    friend Ring operator*(const R& other, const Ring& r) {
-        return Ring(other) *= r;
-    }
-    Ring& operator+=(const Ring& other) {
-        val = plus(val, other.val);
-        return *this;
-    }
-    Ring operator+(const Ring& other) const {
-        return Ring(*this) += other;
-    }
-    Ring operator+(const R& other) const {
-        return Ring(*this) += Ring(other);
-    }
-    friend Ring operator+(const R& other, const Ring& r) {
-        return Ring(other) += r;
-    }
-    Ring operator-() const {
-        return Ring(plusinv(val));
-    }
-    Ring& operator-=(const Ring& other) {
-        return *this += -other;
-    }
-    Ring operator-(const Ring& other) const {
-        return Ring(*this) -= other;
-    }
-    Ring operator-(const R& other) const {
-        return Ring(*this) -= Ring(other);
-    }
-    friend Ring operator-(const R& other, const Ring& r) {
-        return Ring(other) -= r;
     }
     Ring pow(ll n) const {
         assert(n >= 0);
@@ -70,13 +39,50 @@ struct Ring {
         }
         return res;
     }
+    Ring operator+() const {
+        return *this;
+    }
+    Ring& operator+=(const Ring& other) {
+        _val = plus(_val, other._val);
+        return *this;
+    }
+    Ring operator+(const Ring& other) const {
+        return Ring(*this) += other;
+    }
+    Ring operator-() const {
+        return Ring(plusinv(_val));
+    }
+    Ring& operator-=(const Ring& other) {
+        return *this += -other;
+    }
+    Ring operator-(const Ring& other) const {
+        return Ring(*this) -= other;
+    }
+    bool operator==(const Ring& other) const {
+        return val() == other.val();
+    }
+    bool operator!=(const Ring& other) const {
+        return !(*this == other);
+    }
+    bool operator<(const Ring& other) const {
+        return val() < other.val();
+    }
+    bool operator>(const Ring& other) const {
+        return other < *this;
+    }
+    bool operator<=(const Ring& other) const {
+        return !(other < *this);
+    }
+    bool operator>=(const Ring& other) const {
+        return !(*this < other);
+    }
     friend istream& operator>>(istream& is, Ring& f) {
         R r; is >> r;
         f = Ring(r);
         return is;
     }
     friend ostream& operator<<(ostream& os, const Ring& f) {
-        return os << (R)f.val;
+        return os << f.val();
     }
 };
 namespace std {
@@ -93,7 +99,7 @@ namespace std {
     >
     struct hash<Ring<T, mult, one, plus, zero, plusinv, R, rtot, ttor>> {
         size_t operator()(const Ring<T, mult, one, plus, zero, plusinv, R, rtot, ttor>& f) const {
-            return hash<T>()((R)f.val);
+            return hash<R>()(f.val());
         }
     };
 }

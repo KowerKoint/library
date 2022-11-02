@@ -15,65 +15,28 @@ template <
     R (*ttor)(const T&) = ordinal_identity<T>
 >
 struct Field {
-    T val;
-    Field() : val(zero()) {}
-    Field(const R& r) : val(rtot(r)) {}
-    operator R() const { return ttor(val); }
+private:
+    T _val;
+public:
+    Field() : _val(zero()) {}
+    Field(const R& r) : _val(rtot(r)) {}
+    Field(const T& t) : _val(t) {}
+    R val() const { return ttor(_val); }
     Field& operator*=(const Field& other) {
-        val = mult(val, other.val);
+        _val = mult(_val, other._val);
         return *this;
     }
     Field operator*(const Field& other) const {
         return Field(*this) *= other;
     }
-    Field operator*(const R& other) const {
-        return Field(*this) *= Field(other);
-    }
-    friend Field operator*(const R& other, const Field& field) {
-        return field * other;
-    }
     Field inv() const {
-        return Field(multinv(val));
+        return Field(multinv(_val));
     }
     Field& operator/=(const Field& other) {
         return *this *= other.inv();
     }
     Field operator/(const Field& other) const {
         return Field(*this) /= other;
-    }
-    Field operator/(const R& other) const {
-        return Field(*this) /= Field(other);
-    }
-    friend Field operator/(const R& other, const Field& field) {
-        return Field(other) / field;
-    }
-    Field& operator+=(const Field& other) {
-        val = plus(val, other.val);
-        return *this;
-    }
-    Field operator+(const Field& other) const {
-        return Field(*this) += other;
-    }
-    Field operator+(const R& other) const {
-        return Field(*this) += Field(other);
-    }
-    friend Field operator+(const R& other, const Field& field) {
-        return field + other;
-    }
-    Field operator-() const {
-        return Field(plusinv(val));
-    }
-    Field& operator-=(const Field& other) {
-        return *this += -other;
-    }
-    Field operator-(const Field& other) const {
-        return Field(*this) -= other;
-    }
-    Field operator-(const R& other) const {
-        return Field(*this) -= Field(other);
-    }
-    friend Field operator-(const R& other, const Field& field) {
-        return Field(other) - field;
     }
     Field pow(ll n) const {
         if(n < 0) {
@@ -88,13 +51,66 @@ struct Field {
         }
         return res;
     }
+    Field operator+() const {
+        return *this;
+    }
+    Field& operator+=(const Field& other) {
+        _val = plus(_val, other._val);
+        return *this;
+    }
+    Field operator+(const Field& other) const {
+        return Field(*this) += other;
+    }
+    Field operator-() const {
+        return Field(plusinv(_val));
+    }
+    Field& operator-=(const Field& other) {
+        return *this += -other;
+    }
+    Field operator-(const Field& other) const {
+        return Field(*this) -= other;
+    }
+    Field& operator++() {
+        return *this += Field(one());
+    }
+    Field operator++(int) {
+        Field ret = *this;
+        ++*this;
+        return ret;
+    }
+    Field& operator--() {
+        return *this -= Field(one());
+    }
+    Field operator--(int) {
+        Field ret = *this;
+        --*this;
+        return ret;
+    }
+    bool operator==(const Field& other) const {
+        return val() == other.val();
+    }
+    bool operator!=(const Field& other) const {
+        return !(*this == other);
+    }
+    bool operator<(const Field& other) const {
+        return val() < other.val();
+    }
+    bool operator>(const Field& other) const {
+        return other < *this;
+    }
+    bool operator<=(const Field& other) const {
+        return !(other < *this);
+    }
+    bool operator>=(const Field& other) const {
+        return !(*this < other);
+    }
     friend istream& operator>>(istream& is, Field& f) {
         R r; is >> r;
         f = Field(r);
         return is;
     }
     friend ostream& operator<<(ostream& os, const Field& f) {
-        return os << (R)f;
+        return os << f.val();
     }
 };
 namespace std {
@@ -112,7 +128,7 @@ namespace std {
     >
     struct hash<Field<T, mult, one, multinv, plus, zero, plusinv, R, rtot, ttor>> {
         size_t operator()(const Field<T, mult, one, multinv, plus, zero, plusinv, R, rtot, ttor>& f) const {
-            return hash<T>()((R)f.val);
+            return hash<R>()(f.val());
         }
     };
 }

@@ -12,22 +12,19 @@ template <
     R (*ttor)(const T&) = ordinal_identity<T>
 >
 struct Monoid {
-    T val;
-    Monoid() : val(one()) {}
-    Monoid(const R& r) : val(rtot(r)) {}
-    operator R() const { return ttor(val); }
+private:
+    T _val;
+public:
+    Monoid() : _val(one()) {}
+    Monoid(const T& t) : _val(t) {}
+    Monoid(const R& r) : _val(rtot(r)) {}
+    R val() const { return ttor(_val); }
     Monoid& operator*=(const Monoid& other) {
-        val = mult(val, other.val);
+        _val = mult(_val, other._val);
         return *this;
     }
     Monoid operator*(const Monoid& other) const {
         return Monoid(*this) *= other;
-    }
-    Monoid operator*(const R& r) const {
-        return Monoid(*this) *= Monoid(r);
-    }
-    friend Monoid operator*(const R& r, const Monoid& m) {
-        return Monoid(r) *= m;
     }
     Monoid pow(ll n) const {
         assert(n >= 0);
@@ -40,13 +37,31 @@ struct Monoid {
         }
         return res;
     }
+    bool operator==(const Monoid& other) const {
+        return val() == other.val();
+    }
+    bool operator!=(const Monoid& other) const {
+        return !(*this == other);
+    }
+    bool operator<(const Monoid& other) const {
+        return val() < other.val();
+    }
+    bool operator>(const Monoid& other) const {
+        return other < *this;
+    }
+    bool operator<=(const Monoid& other) const {
+        return !(other < *this);
+    }
+    bool operator>=(const Monoid& other) const {
+        return !(*this < other);
+    }
     friend istream& operator>>(istream& is, Monoid& f) {
         R r; is >> r;
         f = Monoid(r);
         return is;
     }
     friend ostream& operator<<(ostream& os, const Monoid& f) {
-        return os << (R)f.val;
+        return os << f.val();
     }
 };
 namespace std {
@@ -60,7 +75,7 @@ namespace std {
     >
     struct hash<Monoid<T, mult, one, R, rtot, ttor>> {
         size_t operator()(const Monoid<T, mult, one, R, rtot, ttor>& f) const {
-            return hash<T>()((R)f.val);
+            return hash<R>()(f.val());
         }
     };
 }
