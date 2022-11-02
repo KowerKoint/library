@@ -58,7 +58,7 @@ data:
       title: convolution/ntt.hpp
   - name: counting
     pages:
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: counting/counting.hpp
       title: counting/counting.hpp
     - icon: ':x:'
@@ -158,7 +158,7 @@ data:
     - icon: ':heavy_check_mark:'
       path: test/aoj-dpl-5-i.test.cpp
       title: test/aoj-dpl-5-i.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: test/aoj-dpl-5-j.test.cpp
       title: test/aoj-dpl-5-j.test.cpp
     - icon: ':heavy_check_mark:'

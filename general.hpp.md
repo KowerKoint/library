@@ -13,7 +13,7 @@ data:
   - icon: ':question:'
     path: base.hpp
     title: base.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: counting/counting.hpp
     title: counting/counting.hpp
   - icon: ':question:'
@@ -430,61 +430,63 @@ data:
     \ T&, const T&),\n    T (*one)(),\n    T (*multinv)(const T&),\n    T (*plus)(const\
     \ T&, const T&),\n    T (*zero)(),\n    T (*plusinv)(const T&),\n    typename\
     \ R = T,\n    T (*rtot)(const R&) = ordinal_identity<R>,\n    R (*ttor)(const\
-    \ T&) = ordinal_identity<T>\n>\nstruct Field {\n    T val;\n    Field() : val(zero())\
-    \ {}\n    Field(const R& r) : val(rtot(r)) {}\n    operator R() const { return\
-    \ ttor(val); }\n    Field& operator*=(const Field& other) {\n        val = mult(val,\
-    \ other.val);\n        return *this;\n    }\n    Field operator*(const Field&\
-    \ other) const {\n        return Field(*this) *= other;\n    }\n    Field operator*(const\
-    \ R& other) const {\n        return Field(*this) *= Field(other);\n    }\n   \
-    \ friend Field operator*(const R& other, const Field& field) {\n        return\
-    \ field * other;\n    }\n    Field inv() const {\n        return Field(multinv(val));\n\
+    \ T&) = ordinal_identity<T>\n>\nstruct Field {\nprivate:\n    T _val;\npublic:\n\
+    \    Field() : _val(zero()) {}\n    Field(const R& r) : _val(rtot(r)) {}\n   \
+    \ R val() const { return ttor(_val); }\n    Field& operator*=(const Field& other)\
+    \ {\n        _val = mult(_val, other._val);\n        return *this;\n    }\n  \
+    \  Field operator*(const Field& other) const {\n        return Field(*this) *=\
+    \ other;\n    }\n    Field inv() const {\n        return Field(multinv(_val));\n\
     \    }\n    Field& operator/=(const Field& other) {\n        return *this *= other.inv();\n\
     \    }\n    Field operator/(const Field& other) const {\n        return Field(*this)\
-    \ /= other;\n    }\n    Field operator/(const R& other) const {\n        return\
-    \ Field(*this) /= Field(other);\n    }\n    friend Field operator/(const R& other,\
-    \ const Field& field) {\n        return Field(other) / field;\n    }\n    Field&\
-    \ operator+=(const Field& other) {\n        val = plus(val, other.val);\n    \
-    \    return *this;\n    }\n    Field operator+(const Field& other) const {\n \
-    \       return Field(*this) += other;\n    }\n    Field operator+(const R& other)\
-    \ const {\n        return Field(*this) += Field(other);\n    }\n    friend Field\
-    \ operator+(const R& other, const Field& field) {\n        return field + other;\n\
-    \    }\n    Field operator-() const {\n        return Field(plusinv(val));\n \
-    \   }\n    Field& operator-=(const Field& other) {\n        return *this += -other;\n\
+    \ /= other;\n    }\n    Field pow(ll n) const {\n        if(n < 0) {\n       \
+    \     return inv().pow(-n);\n        }\n        Field res = one();\n        Field\
+    \ a = *this;\n        while(n > 0) {\n            if(n & 1) res *= a;\n      \
+    \      a *= a;\n            n >>= 1;\n        }\n        return res;\n    }\n\
+    \    Field operator+() const {\n        return *this;\n    }\n    Field& operator+=(const\
+    \ Field& other) {\n        _val = plus(_val, other._val);\n        return *this;\n\
+    \    }\n    Field operator+(const Field& other) const {\n        return Field(*this)\
+    \ += other;\n    }\n    Field operator-() const {\n        return Field(plusinv(_val));\n\
+    \    }\n    Field& operator-=(const Field& other) {\n        return *this += -other;\n\
     \    }\n    Field operator-(const Field& other) const {\n        return Field(*this)\
-    \ -= other;\n    }\n    Field operator-(const R& other) const {\n        return\
-    \ Field(*this) -= Field(other);\n    }\n    friend Field operator-(const R& other,\
-    \ const Field& field) {\n        return Field(other) - field;\n    }\n    Field\
-    \ pow(ll n) const {\n        if(n < 0) {\n            return inv().pow(-n);\n\
-    \        }\n        Field res = one();\n        Field a = *this;\n        while(n\
-    \ > 0) {\n            if(n & 1) res *= a;\n            a *= a;\n            n\
-    \ >>= 1;\n        }\n        return res;\n    }\n    friend istream& operator>>(istream&\
-    \ is, Field& f) {\n        R r; is >> r;\n        f = Field(r);\n        return\
-    \ is;\n    }\n    friend ostream& operator<<(ostream& os, const Field& f) {\n\
-    \        return os << (R)f;\n    }\n};\nnamespace std {\n    template <\n    \
-    \    typename T,\n        T (*mult)(const T, const T),\n        T (*one)(),\n\
-    \        T (*multinv)(const T),\n        T (*plus)(const T, const T),\n      \
-    \  T (*zero)(),\n        T (*plusinv)(const T),\n        typename R,\n       \
-    \ T (*rtot)(const R),\n        R (*ttor)(const T)\n    >\n    struct hash<Field<T,\
-    \ mult, one, multinv, plus, zero, plusinv, R, rtot, ttor>> {\n        size_t operator()(const\
-    \ Field<T, mult, one, multinv, plus, zero, plusinv, R, rtot, ttor>& f) const {\n\
-    \            return hash<T>()((R)f.val);\n        }\n    };\n}\n#line 5 \"algebra/modint.hpp\"\
-    \n\ntemplate <ll (*mod)()>\nll mod_plus(const ll& a, const ll& b) {\n    ll res;\n\
-    \    if(__builtin_add_overflow(a, b, &res)) {\n        return a % mod() + b %\
-    \ mod();\n    }\n    return res;\n}\ntemplate <ll (*mod)()>\nll mod_mult(const\
-    \ ll& a, const ll& b) {\n    ll res;\n    if(__builtin_mul_overflow(a, b, &res))\
-    \ {\n        return (a % mod()) * (b % mod());\n    }\n    return res;\n}\ntemplate\
-    \ <ll (*mod)()>\nll mod_inv(const ll& a) {\n    return inv_mod(a, mod());\n}\n\
-    ll mod998244353() { return 998244353; }\nll mod1000000007() { return 1000000007;\
-    \ }\ntemplate <ll (*mod)()>\nll make_representative(const ll& a) {\n    ll b =\
-    \ a % mod();\n    if(b < 0) b += mod();\n    return b;\n}\n\ntemplate <ll (*mod)()>\n\
-    using Modint = Field<ll, mod_mult<mod>, ordinal_one<ll>, mod_inv<mod>, mod_plus<mod>,\
-    \ ordinal_zero<ll>, ordinal_plusinv<ll>, ll, ordinal_identity<ll>, make_representative<mod>>;\n\
-    \nusing MI3 = Modint<mod998244353>;\nusing V3 = Vector<MI3>;\nusing VV3 = Vector<V3>;\n\
-    using VVV3 = Vector<VV3>;\nusing MI7 = Modint<mod1000000007>;\nusing V7 = Vector<MI7>;\n\
-    using VV7 = Vector<V7>;\nusing VVV7 = Vector<VV7>;\n#line 3 \"counting/counting.hpp\"\
-    \n\ntemplate <typename T>\nstruct Counting {\n    Vector<T> fact, ifact;\n\n \
-    \   Counting() {}\n    Counting(ll n) {\n        assert(n >= 0);\n        expand(n);\n\
-    \    }\n\n    void expand(ll n) {\n        assert(n >= 0);\n        ll sz = (ll)fact.size();\n\
+    \ -= other;\n    }\n    Field& operator++() {\n        return *this += Field(one());\n\
+    \    }\n    Field operator++(int) {\n        Field ret = *this;\n        ++*this;\n\
+    \        return ret;\n    }\n    Field& operator--() {\n        return *this -=\
+    \ Field(one());\n    }\n    Field operator--(int) {\n        Field ret = *this;\n\
+    \        --*this;\n        return ret;\n    }\n    bool operator==(const Field&\
+    \ other) const {\n        return val() == other.val();\n    }\n    bool operator!=(const\
+    \ Field& other) const {\n        return !(*this == other);\n    }\n    bool operator<(const\
+    \ Field& other) const {\n        return val() < other.val();\n    }\n    bool\
+    \ operator>(const Field& other) const {\n        return other < *this;\n    }\n\
+    \    bool operator<=(const Field& other) const {\n        return !(other < *this);\n\
+    \    }\n    bool operator>=(const Field& other) const {\n        return !(*this\
+    \ < other);\n    }\n    friend istream& operator>>(istream& is, Field& f) {\n\
+    \        R r; is >> r;\n        f = Field(r);\n        return is;\n    }\n   \
+    \ friend ostream& operator<<(ostream& os, const Field& f) {\n        return os\
+    \ << f.val();\n    }\n};\nnamespace std {\n    template <\n        typename T,\n\
+    \        T (*mult)(const T, const T),\n        T (*one)(),\n        T (*multinv)(const\
+    \ T),\n        T (*plus)(const T, const T),\n        T (*zero)(),\n        T (*plusinv)(const\
+    \ T),\n        typename R,\n        T (*rtot)(const R),\n        R (*ttor)(const\
+    \ T)\n    >\n    struct hash<Field<T, mult, one, multinv, plus, zero, plusinv,\
+    \ R, rtot, ttor>> {\n        size_t operator()(const Field<T, mult, one, multinv,\
+    \ plus, zero, plusinv, R, rtot, ttor>& f) const {\n            return hash<R>()(f.val());\n\
+    \        }\n    };\n}\n#line 5 \"algebra/modint.hpp\"\n\ntemplate <ll (*mod)()>\n\
+    ll mod_plus(const ll& a, const ll& b) {\n    ll res;\n    if(__builtin_add_overflow(a,\
+    \ b, &res)) {\n        return a % mod() + b % mod();\n    }\n    return res;\n\
+    }\ntemplate <ll (*mod)()>\nll mod_mult(const ll& a, const ll& b) {\n    ll res;\n\
+    \    if(__builtin_mul_overflow(a, b, &res)) {\n        return (a % mod()) * (b\
+    \ % mod());\n    }\n    return res;\n}\ntemplate <ll (*mod)()>\nll mod_inv(const\
+    \ ll& a) {\n    return inv_mod(a, mod());\n}\nll mod998244353() { return 998244353;\
+    \ }\nll mod1000000007() { return 1000000007; }\ntemplate <ll (*mod)()>\nll make_representative(const\
+    \ ll& a) {\n    ll b = a % mod();\n    if(b < 0) b += mod();\n    return b;\n\
+    }\n\ntemplate <ll (*mod)()>\nusing Modint = Field<ll, mod_mult<mod>, ordinal_one<ll>,\
+    \ mod_inv<mod>, mod_plus<mod>, ordinal_zero<ll>, ordinal_plusinv<ll>, ll, ordinal_identity<ll>,\
+    \ make_representative<mod>>;\n\nusing MI3 = Modint<mod998244353>;\nusing V3 =\
+    \ Vector<MI3>;\nusing VV3 = Vector<V3>;\nusing VVV3 = Vector<VV3>;\nusing MI7\
+    \ = Modint<mod1000000007>;\nusing V7 = Vector<MI7>;\nusing VV7 = Vector<V7>;\n\
+    using VVV7 = Vector<VV7>;\n#line 3 \"counting/counting.hpp\"\n\ntemplate <typename\
+    \ T>\nstruct Counting {\n    Vector<T> fact, ifact;\n\n    Counting() {}\n   \
+    \ Counting(ll n) {\n        assert(n >= 0);\n        expand(n);\n    }\n\n   \
+    \ void expand(ll n) {\n        assert(n >= 0);\n        ll sz = (ll)fact.size();\n\
     \        if(sz > n) return;\n        fact.resize(n+1);\n        ifact.resize(n+1);\n\
     \        fact[0] = 1;\n        FOR(i, max(1LL, sz), n+1) fact[i] = fact[i-1] *\
     \ i;\n        ifact[n] = fact[n].inv();\n        for(ll i = n-1; i >= sz; i--)\
@@ -495,18 +497,18 @@ data:
     \ * ifact[n-r];\n    }\n\n    T h(ll n, ll r) {\n        assert(n >= 0);\n   \
     \     assert(r >= 0);\n        return c(n+r-1, r);\n    }\n\n    T stirling(ll\
     \ n, ll k) {\n        if(n < k) return 0;\n        assert(k >= 0);\n        if(n\
-    \ == 0) return 1;\n        T res = 0;\n        int sign = k%2? -1 : 1;\n     \
-    \   expand(k);\n        REP(i, k+1) {\n            res += sign * ifact[i] * ifact[k-i]\
+    \ == 0) return 1;\n        T res = 0;\n        T sign = k%2? -1 : 1;\n       \
+    \ expand(k);\n        REP(i, k+1) {\n            res += sign * ifact[i] * ifact[k-i]\
     \ * T(i).pow(n);\n            sign *= -1;\n        }\n        return res;\n  \
     \  }\n\n    Vector<Vector<T>> stirling_table(ll n, ll k) {\n        assert(n >=\
     \ 0 && k >= 0);\n        Vector<Vector<T>> res(n+1, Vector<T>(k+1));\n       \
     \ res[0][0] = 1;\n        FOR(i, 1, n+1) FOR(j, 1, k+1) {\n            res[i][j]\
     \ = res[i-1][j-1] + j * res[i-1][j];\n        }\n        return res;\n    }\n\n\
     \    T bell(ll n, ll k) {\n        assert(n >= 0 && k >= 0);\n        expand(k);\n\
-    \        Vector<T> tmp(k+1);\n        int sign = 1;\n        tmp[0] = 1;\n   \
-    \     FOR(i, 1, k+1) {\n            sign *= -1;\n            tmp[i] = tmp[i-1]\
-    \ + sign * ifact[i];\n        }\n        T res = 0;\n        REP(i, k+1) {\n \
-    \           res += T(i).pow(n) * ifact[i] * tmp[k-i];\n        }\n        return\
+    \        Vector<T> tmp(k+1);\n        T sign = 1;\n        tmp[0] = 1;\n     \
+    \   FOR(i, 1, k+1) {\n            sign *= -1;\n            tmp[i] = tmp[i-1] +\
+    \ sign * ifact[i];\n        }\n        T res = 0;\n        REP(i, k+1) {\n   \
+    \         res += T(i).pow(n) * ifact[i] * tmp[k-i];\n        }\n        return\
     \ res;\n    }\n\n    Vector<Vector<T>> partition_table(ll n, ll k) {\n       \
     \ assert(n >= 0 && k >= 0);\n        Vector<Vector<T>> res(n+1, Vector<T>(k+1));\n\
     \        REP(i, k+1) res[0][i] = 1;\n        FOR(i, 1, n+1) FOR(j, 1, k+1) {\n\
@@ -537,7 +539,7 @@ data:
   isVerificationFile: false
   path: general.hpp
   requiredBy: []
-  timestamp: '2022-11-03 00:55:39+09:00'
+  timestamp: '2022-11-03 01:40:11+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: general.hpp

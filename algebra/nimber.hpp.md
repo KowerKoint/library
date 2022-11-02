@@ -411,38 +411,39 @@ data:
     template <\n    typename T,\n    T (*mult)(const T&, const T&),\n    T (*one)(),\n\
     \    T (*plus)(const T&, const T&),\n    T (*zero)(),\n    T (*plusinv)(const\
     \ T&),\n    typename R = T,\n    T (*rtot)(const R&) = ordinal_identity<R>,\n\
-    \    R (*ttor)(const T&) = ordinal_identity<T>\n>\nstruct Ring {\n    T val;\n\
-    \    Ring() : val(zero()) {}\n    Ring(const R& r) : val(rtot(r)) {}\n    operator\
-    \ R() const { return ttor(val); }\n    Ring& operator*=(const Ring& other) {\n\
-    \        val = mult(val, other.val);\n        return *this;\n    }\n    Ring operator*(const\
-    \ Ring& other) const {\n        return Ring(*this) *= other;\n    }\n    Ring\
-    \ operator*(const R& other) const {\n        return Ring(*this) *= Ring(other);\n\
-    \    }\n    friend Ring operator*(const R& other, const Ring& r) {\n        return\
-    \ Ring(other) *= r;\n    }\n    Ring& operator+=(const Ring& other) {\n      \
-    \  val = plus(val, other.val);\n        return *this;\n    }\n    Ring operator+(const\
-    \ Ring& other) const {\n        return Ring(*this) += other;\n    }\n    Ring\
-    \ operator+(const R& other) const {\n        return Ring(*this) += Ring(other);\n\
-    \    }\n    friend Ring operator+(const R& other, const Ring& r) {\n        return\
-    \ Ring(other) += r;\n    }\n    Ring operator-() const {\n        return Ring(plusinv(val));\n\
-    \    }\n    Ring& operator-=(const Ring& other) {\n        return *this += -other;\n\
-    \    }\n    Ring operator-(const Ring& other) const {\n        return Ring(*this)\
-    \ -= other;\n    }\n    Ring operator-(const R& other) const {\n        return\
-    \ Ring(*this) -= Ring(other);\n    }\n    friend Ring operator-(const R& other,\
-    \ const Ring& r) {\n        return Ring(other) -= r;\n    }\n    Ring pow(ll n)\
-    \ const {\n        assert(n >= 0);\n        Ring res = one();\n        Ring a\
-    \ = *this;\n        while(n > 0) {\n            if(n & 1) res *= a;\n        \
-    \    a *= a;\n            n >>= 1;\n        }\n        return res;\n    }\n  \
-    \  friend istream& operator>>(istream& is, Ring& f) {\n        R r; is >> r;\n\
-    \        f = Ring(r);\n        return is;\n    }\n    friend ostream& operator<<(ostream&\
-    \ os, const Ring& f) {\n        return os << (R)f.val;\n    }\n};\nnamespace std\
-    \ {\n    template <\n        typename T,\n        T (*mult)(const T, const T),\n\
-    \        T (*one)(),\n        T (*plus)(const T, const T),\n        T (*zero)(),\n\
-    \        T (*plusinv)(const T),\n        typename R,\n        T (*rtot)(const\
-    \ R),\n        R (*ttor)(const T)\n    >\n    struct hash<Ring<T, mult, one, plus,\
-    \ zero, plusinv, R, rtot, ttor>> {\n        size_t operator()(const Ring<T, mult,\
-    \ one, plus, zero, plusinv, R, rtot, ttor>& f) const {\n            return hash<T>()((R)f.val);\n\
-    \        }\n    };\n}\n#line 5 \"algebra/nimber.hpp\"\n\nnamespace _nimber_precalc\
-    \ {\n    static ull small_product[256][256];\n    static ull pow64_product[8][8][256];\n\
+    \    R (*ttor)(const T&) = ordinal_identity<T>\n>\nstruct Ring {\nprivate:\n \
+    \   T _val;\npublic:\n    Ring() : _val(zero()) {}\n    Ring(const R& r) : _val(rtot(r))\
+    \ {}\n    R val() const { return ttor(_val); }\n    Ring& operator*=(const Ring&\
+    \ other) {\n        _val = mult(_val, other._val);\n        return *this;\n  \
+    \  }\n    Ring operator*(const Ring& other) const {\n        return Ring(*this)\
+    \ *= other;\n    }\n    Ring pow(ll n) const {\n        assert(n >= 0);\n    \
+    \    Ring res = one();\n        Ring a = *this;\n        while(n > 0) {\n    \
+    \        if(n & 1) res *= a;\n            a *= a;\n            n >>= 1;\n    \
+    \    }\n        return res;\n    }\n    Ring operator+() const {\n        return\
+    \ *this;\n    }\n    Ring& operator+=(const Ring& other) {\n        _val = plus(_val,\
+    \ other._val);\n        return *this;\n    }\n    Ring operator+(const Ring& other)\
+    \ const {\n        return Ring(*this) += other;\n    }\n    Ring operator-() const\
+    \ {\n        return Ring(plusinv(_val));\n    }\n    Ring& operator-=(const Ring&\
+    \ other) {\n        return *this += -other;\n    }\n    Ring operator-(const Ring&\
+    \ other) const {\n        return Ring(*this) -= other;\n    }\n    bool operator==(const\
+    \ Ring& other) const {\n        return val() == other.val();\n    }\n    bool\
+    \ operator!=(const Ring& other) const {\n        return !(*this == other);\n \
+    \   }\n    bool operator<(const Ring& other) const {\n        return val() < other.val();\n\
+    \    }\n    bool operator>(const Ring& other) const {\n        return other <\
+    \ *this;\n    }\n    bool operator<=(const Ring& other) const {\n        return\
+    \ !(other < *this);\n    }\n    bool operator>=(const Ring& other) const {\n \
+    \       return !(*this < other);\n    }\n    friend istream& operator>>(istream&\
+    \ is, Ring& f) {\n        R r; is >> r;\n        f = Ring(r);\n        return\
+    \ is;\n    }\n    friend ostream& operator<<(ostream& os, const Ring& f) {\n \
+    \       return os << f.val();\n    }\n};\nnamespace std {\n    template <\n  \
+    \      typename T,\n        T (*mult)(const T, const T),\n        T (*one)(),\n\
+    \        T (*plus)(const T, const T),\n        T (*zero)(),\n        T (*plusinv)(const\
+    \ T),\n        typename R,\n        T (*rtot)(const R),\n        R (*ttor)(const\
+    \ T)\n    >\n    struct hash<Ring<T, mult, one, plus, zero, plusinv, R, rtot,\
+    \ ttor>> {\n        size_t operator()(const Ring<T, mult, one, plus, zero, plusinv,\
+    \ R, rtot, ttor>& f) const {\n            return hash<R>()(f.val());\n       \
+    \ }\n    };\n}\n#line 5 \"algebra/nimber.hpp\"\n\nnamespace _nimber_precalc {\n\
+    \    static ull small_product[256][256];\n    static ull pow64_product[8][8][256];\n\
     \    static bool built = false;\n\n    ull nim_product_rec(ull x, ull y, int numbits)\
     \ {\n        if(x < 256 && y < 256) return small_product[x][y];\n        int nnumbits\
     \ = numbits >> 1;\n        ull x1 = x >> numbits, x0 = x ^ (x1 << numbits);\n\
@@ -505,7 +506,7 @@ data:
   isVerificationFile: false
   path: algebra/nimber.hpp
   requiredBy: []
-  timestamp: '2022-11-03 00:55:39+09:00'
+  timestamp: '2022-11-03 01:40:11+09:00'
   verificationStatus: LIBRARY_ALL_WA
   verifiedWith:
   - test/yosupo-nim-product.test.cpp

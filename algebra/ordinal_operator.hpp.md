@@ -39,7 +39,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: test/aoj-dpl-5-i.test.cpp
     title: test/aoj-dpl-5-i.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: test/aoj-dpl-5-j.test.cpp
     title: test/aoj-dpl-5-j.test.cpp
   - icon: ':heavy_check_mark:'
@@ -98,7 +98,7 @@ data:
   - algebra/ring.hpp
   - algebra/modint.hpp
   - algebra/nimber.hpp
-  timestamp: '2022-11-03 00:55:39+09:00'
+  timestamp: '2022-11-03 01:40:11+09:00'
   verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - test/aoj-dpl-5-j.test.cpp

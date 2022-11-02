@@ -572,7 +572,7 @@ data:
   requiredBy:
   - integer/prime.hpp
   - segtree/wavelet-matrix.hpp
-  timestamp: '2022-11-03 00:55:39+09:00'
+  timestamp: '2022-11-03 01:40:11+09:00'
   verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - test/aoj-itp-1-3-d.test.cpp

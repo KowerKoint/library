@@ -45,12 +45,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: test/aoj-dpl-5-i.test.cpp
     title: test/aoj-dpl-5-i.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: test/aoj-dpl-5-j.test.cpp
     title: test/aoj-dpl-5-j.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"base.hpp\"\n\n#include <bits/stdc++.h>\nusing namespace\
@@ -422,14 +422,14 @@ data:
     \    }\n\n    T h(ll n, ll r) {\n        assert(n >= 0);\n        assert(r >=\
     \ 0);\n        return c(n+r-1, r);\n    }\n\n    T stirling(ll n, ll k) {\n  \
     \      if(n < k) return 0;\n        assert(k >= 0);\n        if(n == 0) return\
-    \ 1;\n        T res = 0;\n        int sign = k%2? -1 : 1;\n        expand(k);\n\
+    \ 1;\n        T res = 0;\n        T sign = k%2? -1 : 1;\n        expand(k);\n\
     \        REP(i, k+1) {\n            res += sign * ifact[i] * ifact[k-i] * T(i).pow(n);\n\
     \            sign *= -1;\n        }\n        return res;\n    }\n\n    Vector<Vector<T>>\
     \ stirling_table(ll n, ll k) {\n        assert(n >= 0 && k >= 0);\n        Vector<Vector<T>>\
     \ res(n+1, Vector<T>(k+1));\n        res[0][0] = 1;\n        FOR(i, 1, n+1) FOR(j,\
     \ 1, k+1) {\n            res[i][j] = res[i-1][j-1] + j * res[i-1][j];\n      \
     \  }\n        return res;\n    }\n\n    T bell(ll n, ll k) {\n        assert(n\
-    \ >= 0 && k >= 0);\n        expand(k);\n        Vector<T> tmp(k+1);\n        int\
+    \ >= 0 && k >= 0);\n        expand(k);\n        Vector<T> tmp(k+1);\n        T\
     \ sign = 1;\n        tmp[0] = 1;\n        FOR(i, 1, k+1) {\n            sign *=\
     \ -1;\n            tmp[i] = tmp[i-1] + sign * ifact[i];\n        }\n        T\
     \ res = 0;\n        REP(i, k+1) {\n            res += T(i).pow(n) * ifact[i] *\
@@ -452,14 +452,14 @@ data:
     \    }\n\n    T h(ll n, ll r) {\n        assert(n >= 0);\n        assert(r >=\
     \ 0);\n        return c(n+r-1, r);\n    }\n\n    T stirling(ll n, ll k) {\n  \
     \      if(n < k) return 0;\n        assert(k >= 0);\n        if(n == 0) return\
-    \ 1;\n        T res = 0;\n        int sign = k%2? -1 : 1;\n        expand(k);\n\
+    \ 1;\n        T res = 0;\n        T sign = k%2? -1 : 1;\n        expand(k);\n\
     \        REP(i, k+1) {\n            res += sign * ifact[i] * ifact[k-i] * T(i).pow(n);\n\
     \            sign *= -1;\n        }\n        return res;\n    }\n\n    Vector<Vector<T>>\
     \ stirling_table(ll n, ll k) {\n        assert(n >= 0 && k >= 0);\n        Vector<Vector<T>>\
     \ res(n+1, Vector<T>(k+1));\n        res[0][0] = 1;\n        FOR(i, 1, n+1) FOR(j,\
     \ 1, k+1) {\n            res[i][j] = res[i-1][j-1] + j * res[i-1][j];\n      \
     \  }\n        return res;\n    }\n\n    T bell(ll n, ll k) {\n        assert(n\
-    \ >= 0 && k >= 0);\n        expand(k);\n        Vector<T> tmp(k+1);\n        int\
+    \ >= 0 && k >= 0);\n        expand(k);\n        Vector<T> tmp(k+1);\n        T\
     \ sign = 1;\n        tmp[0] = 1;\n        FOR(i, 1, k+1) {\n            sign *=\
     \ -1;\n            tmp[i] = tmp[i-1] + sign * ifact[i];\n        }\n        T\
     \ res = 0;\n        REP(i, k+1) {\n            res += T(i).pow(n) * ifact[i] *\
@@ -481,8 +481,8 @@ data:
   path: counting/counting.hpp
   requiredBy:
   - general.hpp
-  timestamp: '2022-11-03 00:55:39+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  timestamp: '2022-11-03 01:40:11+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/aoj-dpl-5-j.test.cpp
   - test/aoj-dpl-5-e.test.cpp

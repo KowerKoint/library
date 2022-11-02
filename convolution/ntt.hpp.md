@@ -430,83 +430,84 @@ data:
     \ T&, const T&),\n    T (*one)(),\n    T (*multinv)(const T&),\n    T (*plus)(const\
     \ T&, const T&),\n    T (*zero)(),\n    T (*plusinv)(const T&),\n    typename\
     \ R = T,\n    T (*rtot)(const R&) = ordinal_identity<R>,\n    R (*ttor)(const\
-    \ T&) = ordinal_identity<T>\n>\nstruct Field {\n    T val;\n    Field() : val(zero())\
-    \ {}\n    Field(const R& r) : val(rtot(r)) {}\n    operator R() const { return\
-    \ ttor(val); }\n    Field& operator*=(const Field& other) {\n        val = mult(val,\
-    \ other.val);\n        return *this;\n    }\n    Field operator*(const Field&\
-    \ other) const {\n        return Field(*this) *= other;\n    }\n    Field operator*(const\
-    \ R& other) const {\n        return Field(*this) *= Field(other);\n    }\n   \
-    \ friend Field operator*(const R& other, const Field& field) {\n        return\
-    \ field * other;\n    }\n    Field inv() const {\n        return Field(multinv(val));\n\
+    \ T&) = ordinal_identity<T>\n>\nstruct Field {\nprivate:\n    T _val;\npublic:\n\
+    \    Field() : _val(zero()) {}\n    Field(const R& r) : _val(rtot(r)) {}\n   \
+    \ R val() const { return ttor(_val); }\n    Field& operator*=(const Field& other)\
+    \ {\n        _val = mult(_val, other._val);\n        return *this;\n    }\n  \
+    \  Field operator*(const Field& other) const {\n        return Field(*this) *=\
+    \ other;\n    }\n    Field inv() const {\n        return Field(multinv(_val));\n\
     \    }\n    Field& operator/=(const Field& other) {\n        return *this *= other.inv();\n\
     \    }\n    Field operator/(const Field& other) const {\n        return Field(*this)\
-    \ /= other;\n    }\n    Field operator/(const R& other) const {\n        return\
-    \ Field(*this) /= Field(other);\n    }\n    friend Field operator/(const R& other,\
-    \ const Field& field) {\n        return Field(other) / field;\n    }\n    Field&\
-    \ operator+=(const Field& other) {\n        val = plus(val, other.val);\n    \
-    \    return *this;\n    }\n    Field operator+(const Field& other) const {\n \
-    \       return Field(*this) += other;\n    }\n    Field operator+(const R& other)\
-    \ const {\n        return Field(*this) += Field(other);\n    }\n    friend Field\
-    \ operator+(const R& other, const Field& field) {\n        return field + other;\n\
-    \    }\n    Field operator-() const {\n        return Field(plusinv(val));\n \
-    \   }\n    Field& operator-=(const Field& other) {\n        return *this += -other;\n\
+    \ /= other;\n    }\n    Field pow(ll n) const {\n        if(n < 0) {\n       \
+    \     return inv().pow(-n);\n        }\n        Field res = one();\n        Field\
+    \ a = *this;\n        while(n > 0) {\n            if(n & 1) res *= a;\n      \
+    \      a *= a;\n            n >>= 1;\n        }\n        return res;\n    }\n\
+    \    Field operator+() const {\n        return *this;\n    }\n    Field& operator+=(const\
+    \ Field& other) {\n        _val = plus(_val, other._val);\n        return *this;\n\
+    \    }\n    Field operator+(const Field& other) const {\n        return Field(*this)\
+    \ += other;\n    }\n    Field operator-() const {\n        return Field(plusinv(_val));\n\
+    \    }\n    Field& operator-=(const Field& other) {\n        return *this += -other;\n\
     \    }\n    Field operator-(const Field& other) const {\n        return Field(*this)\
-    \ -= other;\n    }\n    Field operator-(const R& other) const {\n        return\
-    \ Field(*this) -= Field(other);\n    }\n    friend Field operator-(const R& other,\
-    \ const Field& field) {\n        return Field(other) - field;\n    }\n    Field\
-    \ pow(ll n) const {\n        if(n < 0) {\n            return inv().pow(-n);\n\
-    \        }\n        Field res = one();\n        Field a = *this;\n        while(n\
-    \ > 0) {\n            if(n & 1) res *= a;\n            a *= a;\n            n\
-    \ >>= 1;\n        }\n        return res;\n    }\n    friend istream& operator>>(istream&\
-    \ is, Field& f) {\n        R r; is >> r;\n        f = Field(r);\n        return\
-    \ is;\n    }\n    friend ostream& operator<<(ostream& os, const Field& f) {\n\
-    \        return os << (R)f;\n    }\n};\nnamespace std {\n    template <\n    \
-    \    typename T,\n        T (*mult)(const T, const T),\n        T (*one)(),\n\
-    \        T (*multinv)(const T),\n        T (*plus)(const T, const T),\n      \
-    \  T (*zero)(),\n        T (*plusinv)(const T),\n        typename R,\n       \
-    \ T (*rtot)(const R),\n        R (*ttor)(const T)\n    >\n    struct hash<Field<T,\
-    \ mult, one, multinv, plus, zero, plusinv, R, rtot, ttor>> {\n        size_t operator()(const\
-    \ Field<T, mult, one, multinv, plus, zero, plusinv, R, rtot, ttor>& f) const {\n\
-    \            return hash<T>()((R)f.val);\n        }\n    };\n}\n#line 5 \"algebra/modint.hpp\"\
-    \n\ntemplate <ll (*mod)()>\nll mod_plus(const ll& a, const ll& b) {\n    ll res;\n\
-    \    if(__builtin_add_overflow(a, b, &res)) {\n        return a % mod() + b %\
-    \ mod();\n    }\n    return res;\n}\ntemplate <ll (*mod)()>\nll mod_mult(const\
-    \ ll& a, const ll& b) {\n    ll res;\n    if(__builtin_mul_overflow(a, b, &res))\
-    \ {\n        return (a % mod()) * (b % mod());\n    }\n    return res;\n}\ntemplate\
-    \ <ll (*mod)()>\nll mod_inv(const ll& a) {\n    return inv_mod(a, mod());\n}\n\
-    ll mod998244353() { return 998244353; }\nll mod1000000007() { return 1000000007;\
-    \ }\ntemplate <ll (*mod)()>\nll make_representative(const ll& a) {\n    ll b =\
-    \ a % mod();\n    if(b < 0) b += mod();\n    return b;\n}\n\ntemplate <ll (*mod)()>\n\
-    using Modint = Field<ll, mod_mult<mod>, ordinal_one<ll>, mod_inv<mod>, mod_plus<mod>,\
-    \ ordinal_zero<ll>, ordinal_plusinv<ll>, ll, ordinal_identity<ll>, make_representative<mod>>;\n\
-    \nusing MI3 = Modint<mod998244353>;\nusing V3 = Vector<MI3>;\nusing VV3 = Vector<V3>;\n\
-    using VVV3 = Vector<VV3>;\nusing MI7 = Modint<mod1000000007>;\nusing V7 = Vector<MI7>;\n\
-    using VV7 = Vector<V7>;\nusing VVV7 = Vector<VV7>;\n#line 3 \"convolution/ntt.hpp\"\
-    \n\ntemplate <ll (*mod)()>\nvoid ntt(vector<Modint<mod>>& v) {\n    assert(mod()\
-    \ == 998244353);\n    constexpr ll g = 3;\n    int n = v.size();\n    assert((n\
-    \ & (n - 1)) == 0);\n    int m = __builtin_ctz(n);\n    assert(m <= 23);\n   \
-    \ Vector<Modint<mod>> zeta(n);\n    zeta[0] = 1;\n    Modint<mod> gn = Modint<mod>(g).pow((mod()\
-    \ - 1) >> m);\n    for(int i = 0; i < n-1; i++) zeta[i+1] = zeta[i] * gn;\n  \
-    \  int array_idx_mask = 0;\n    int array_id_mask = n-1;\n    for(int i = 0; i\
-    \ < m; i++) {\n        array_idx_mask ^= 1 << (m-i-1);\n        array_id_mask\
-    \ ^= 1 << (m-i-1);\n        Vector<Modint<mod>> nv(n);\n        for(int j = 0;\
-    \ j < n; j++) {\n            int k = (((j & array_idx_mask) << 1) & array_idx_mask)\
-    \ | (j & array_id_mask);\n            nv[j] = v[k] + zeta[j & array_idx_mask]\
-    \ * v[k | (1 << (m-i-1))];\n        }\n        v.swap(nv);\n    }\n}\ntemplate\
-    \ <ll (*mod)()>\nvoid intt(vector<Modint<mod>>& v) {\n    assert(mod() == 998244353);\n\
-    \    constexpr ll ig = 332748118;\n    int n = v.size();\n    assert((n & (n -\
-    \ 1)) == 0);\n    int m = __builtin_ctz(n);\n    assert(m <= 23);\n    Vector<Modint<mod>>\
-    \ izeta(n);\n    izeta[0] = 1;\n    Modint<mod> ign = Modint<mod>(ig).pow((mod()\
-    \ - 1) >> m);\n    for(int i = 0; i < n-1; i++) izeta[i+1] = izeta[i] * ign;\n\
-    \    int array_idx_mask = 0;\n    int array_id_mask = n-1;\n    for(int i = 0;\
-    \ i < m; i++) {\n        array_idx_mask ^= 1 << (m-i-1);\n        array_id_mask\
-    \ ^= 1 << (m-i-1);\n        Vector<Modint<mod>> nv(n);\n        for(int j = 0;\
-    \ j < n; j++) {\n            int k = (((j & array_idx_mask) << 1) & array_idx_mask)\
-    \ | (j & array_id_mask);\n            nv[j] = v[k] + izeta[j & array_idx_mask]\
-    \ * v[k | (1 << (m-i-1))];\n        }\n        v.swap(nv);\n    }\n    for(int\
-    \ i = 0; i < n; i++) v[i] /= n;\n}\ntemplate <ll (*mod)()>\nVector<Modint<mod>>\
-    \ sum_convolution(const vector<Modint<mod>>& v1, const vector<Modint<mod>>& v2)\
-    \ {\n    assert(mod() == 998244353);\n    int n = 1;\n    while(n < (int)v1.size()\
+    \ -= other;\n    }\n    Field& operator++() {\n        return *this += Field(one());\n\
+    \    }\n    Field operator++(int) {\n        Field ret = *this;\n        ++*this;\n\
+    \        return ret;\n    }\n    Field& operator--() {\n        return *this -=\
+    \ Field(one());\n    }\n    Field operator--(int) {\n        Field ret = *this;\n\
+    \        --*this;\n        return ret;\n    }\n    bool operator==(const Field&\
+    \ other) const {\n        return val() == other.val();\n    }\n    bool operator!=(const\
+    \ Field& other) const {\n        return !(*this == other);\n    }\n    bool operator<(const\
+    \ Field& other) const {\n        return val() < other.val();\n    }\n    bool\
+    \ operator>(const Field& other) const {\n        return other < *this;\n    }\n\
+    \    bool operator<=(const Field& other) const {\n        return !(other < *this);\n\
+    \    }\n    bool operator>=(const Field& other) const {\n        return !(*this\
+    \ < other);\n    }\n    friend istream& operator>>(istream& is, Field& f) {\n\
+    \        R r; is >> r;\n        f = Field(r);\n        return is;\n    }\n   \
+    \ friend ostream& operator<<(ostream& os, const Field& f) {\n        return os\
+    \ << f.val();\n    }\n};\nnamespace std {\n    template <\n        typename T,\n\
+    \        T (*mult)(const T, const T),\n        T (*one)(),\n        T (*multinv)(const\
+    \ T),\n        T (*plus)(const T, const T),\n        T (*zero)(),\n        T (*plusinv)(const\
+    \ T),\n        typename R,\n        T (*rtot)(const R),\n        R (*ttor)(const\
+    \ T)\n    >\n    struct hash<Field<T, mult, one, multinv, plus, zero, plusinv,\
+    \ R, rtot, ttor>> {\n        size_t operator()(const Field<T, mult, one, multinv,\
+    \ plus, zero, plusinv, R, rtot, ttor>& f) const {\n            return hash<R>()(f.val());\n\
+    \        }\n    };\n}\n#line 5 \"algebra/modint.hpp\"\n\ntemplate <ll (*mod)()>\n\
+    ll mod_plus(const ll& a, const ll& b) {\n    ll res;\n    if(__builtin_add_overflow(a,\
+    \ b, &res)) {\n        return a % mod() + b % mod();\n    }\n    return res;\n\
+    }\ntemplate <ll (*mod)()>\nll mod_mult(const ll& a, const ll& b) {\n    ll res;\n\
+    \    if(__builtin_mul_overflow(a, b, &res)) {\n        return (a % mod()) * (b\
+    \ % mod());\n    }\n    return res;\n}\ntemplate <ll (*mod)()>\nll mod_inv(const\
+    \ ll& a) {\n    return inv_mod(a, mod());\n}\nll mod998244353() { return 998244353;\
+    \ }\nll mod1000000007() { return 1000000007; }\ntemplate <ll (*mod)()>\nll make_representative(const\
+    \ ll& a) {\n    ll b = a % mod();\n    if(b < 0) b += mod();\n    return b;\n\
+    }\n\ntemplate <ll (*mod)()>\nusing Modint = Field<ll, mod_mult<mod>, ordinal_one<ll>,\
+    \ mod_inv<mod>, mod_plus<mod>, ordinal_zero<ll>, ordinal_plusinv<ll>, ll, ordinal_identity<ll>,\
+    \ make_representative<mod>>;\n\nusing MI3 = Modint<mod998244353>;\nusing V3 =\
+    \ Vector<MI3>;\nusing VV3 = Vector<V3>;\nusing VVV3 = Vector<VV3>;\nusing MI7\
+    \ = Modint<mod1000000007>;\nusing V7 = Vector<MI7>;\nusing VV7 = Vector<V7>;\n\
+    using VVV7 = Vector<VV7>;\n#line 3 \"convolution/ntt.hpp\"\n\ntemplate <ll (*mod)()>\n\
+    void ntt(vector<Modint<mod>>& v) {\n    assert(mod() == 998244353);\n    constexpr\
+    \ ll g = 3;\n    int n = v.size();\n    assert((n & (n - 1)) == 0);\n    int m\
+    \ = __builtin_ctz(n);\n    assert(m <= 23);\n    Vector<Modint<mod>> zeta(n);\n\
+    \    zeta[0] = 1;\n    Modint<mod> gn = Modint<mod>(g).pow((mod() - 1) >> m);\n\
+    \    for(int i = 0; i < n-1; i++) zeta[i+1] = zeta[i] * gn;\n    int array_idx_mask\
+    \ = 0;\n    int array_id_mask = n-1;\n    for(int i = 0; i < m; i++) {\n     \
+    \   array_idx_mask ^= 1 << (m-i-1);\n        array_id_mask ^= 1 << (m-i-1);\n\
+    \        Vector<Modint<mod>> nv(n);\n        for(int j = 0; j < n; j++) {\n  \
+    \          int k = (((j & array_idx_mask) << 1) & array_idx_mask) | (j & array_id_mask);\n\
+    \            nv[j] = v[k] + zeta[j & array_idx_mask] * v[k | (1 << (m-i-1))];\n\
+    \        }\n        v.swap(nv);\n    }\n}\ntemplate <ll (*mod)()>\nvoid intt(vector<Modint<mod>>&\
+    \ v) {\n    assert(mod() == 998244353);\n    constexpr ll ig = 332748118;\n  \
+    \  int n = v.size();\n    assert((n & (n - 1)) == 0);\n    int m = __builtin_ctz(n);\n\
+    \    assert(m <= 23);\n    Vector<Modint<mod>> izeta(n);\n    izeta[0] = 1;\n\
+    \    Modint<mod> ign = Modint<mod>(ig).pow((mod() - 1) >> m);\n    for(int i =\
+    \ 0; i < n-1; i++) izeta[i+1] = izeta[i] * ign;\n    int array_idx_mask = 0;\n\
+    \    int array_id_mask = n-1;\n    for(int i = 0; i < m; i++) {\n        array_idx_mask\
+    \ ^= 1 << (m-i-1);\n        array_id_mask ^= 1 << (m-i-1);\n        Vector<Modint<mod>>\
+    \ nv(n);\n        for(int j = 0; j < n; j++) {\n            int k = (((j & array_idx_mask)\
+    \ << 1) & array_idx_mask) | (j & array_id_mask);\n            nv[j] = v[k] + izeta[j\
+    \ & array_idx_mask] * v[k | (1 << (m-i-1))];\n        }\n        v.swap(nv);\n\
+    \    }\n    for(int i = 0; i < n; i++) v[i] /= n;\n}\ntemplate <ll (*mod)()>\n\
+    Vector<Modint<mod>> sum_convolution(const vector<Modint<mod>>& v1, const vector<Modint<mod>>&\
+    \ v2) {\n    assert(mod() == 998244353);\n    int n = 1;\n    while(n < (int)v1.size()\
     \ + (int)v2.size() - 1) n <<= 1;\n    Vector<Modint<mod>> f1(v1), f2(v2);\n  \
     \  f1.resize(n); f2.resize(n);\n    ntt<mod>(f1); ntt<mod>(f2);\n    for(int i\
     \ = 0; i < n; i++) {\n        f1[i] *= f2[i];\n    }\n    intt<mod>(f1);\n   \
@@ -557,7 +558,7 @@ data:
   isVerificationFile: false
   path: convolution/ntt.hpp
   requiredBy: []
-  timestamp: '2022-11-03 00:55:39+09:00'
+  timestamp: '2022-11-03 01:40:11+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/yosupo-convolution.test.cpp

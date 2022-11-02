@@ -530,7 +530,7 @@ data:
   path: graph/graph.hpp
   requiredBy:
   - graph/tree.hpp
-  timestamp: '2022-11-03 00:55:39+09:00'
+  timestamp: '2022-11-03 01:40:11+09:00'
   verificationStatus: LIBRARY_ALL_WA
   verifiedWith:
   - test/yosupo-shortest-path.test.cpp
