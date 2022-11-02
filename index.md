@@ -3,19 +3,22 @@ data:
   libraryCategories:
   - name: algebra
     pages:
-    - icon: ':warning:'
+    - icon: ':x:'
       path: algebra/field.hpp
       title: algebra/field.hpp
+    - icon: ':x:'
+      path: algebra/modint.hpp
+      title: algebra/modint.hpp
     - icon: ':warning:'
       path: algebra/monoid.hpp
       title: algebra/monoid.hpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: algebra/nimber.hpp
       title: algebra/nimber.hpp
-    - icon: ':x:'
+    - icon: ':question:'
       path: algebra/ordinal_operator.hpp
       title: algebra/ordinal_operator.hpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: algebra/ring.hpp
       title: algebra/ring.hpp
   - name: .
@@ -50,15 +53,15 @@ data:
     - icon: ':warning:'
       path: convolution/fft.hpp
       title: convolution/fft.hpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: convolution/ntt.hpp
       title: convolution/ntt.hpp
   - name: counting
     pages:
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: counting/counting.hpp
       title: counting/counting.hpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: counting/montmort.hpp
       title: counting/montmort.hpp
     - icon: ':warning:'
@@ -86,10 +89,7 @@ data:
     - icon: ':warning:'
       path: integer/least-prime-factors.hpp
       title: integer/least-prime-factors.hpp
-    - icon: ':question:'
-      path: integer/modint.hpp
-      title: integer/modint.hpp
-    - icon: ':question:'
+    - icon: ':x:'
       path: integer/pow-mod.hpp
       title: integer/pow-mod.hpp
     - icon: ':heavy_check_mark:'
@@ -97,7 +97,7 @@ data:
       title: integer/prime.hpp
   - name: matrix
     pages:
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: matrix/matrix.hpp
       title: matrix/matrix.hpp
   - name: segtree
@@ -143,22 +143,22 @@ data:
     - icon: ':heavy_check_mark:'
       path: test/aoj-alds-1-1-c.test.cpp
       title: test/aoj-alds-1-1-c.test.cpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: test/aoj-dpl-5-b.test.cpp
       title: test/aoj-dpl-5-b.test.cpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: test/aoj-dpl-5-d.test.cpp
       title: test/aoj-dpl-5-d.test.cpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: test/aoj-dpl-5-e.test.cpp
       title: test/aoj-dpl-5-e.test.cpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: test/aoj-dpl-5-g.test.cpp
       title: test/aoj-dpl-5-g.test.cpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: test/aoj-dpl-5-i.test.cpp
       title: test/aoj-dpl-5-i.test.cpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: test/aoj-dpl-5-j.test.cpp
       title: test/aoj-dpl-5-j.test.cpp
     - icon: ':heavy_check_mark:'
@@ -176,7 +176,7 @@ data:
     - icon: ':heavy_check_mark:'
       path: test/aoj-ntl-1-a.test.cpp
       title: test/aoj-ntl-1-a.test.cpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: test/aoj-ntl-1-b.test.cpp
       title: test/aoj-ntl-1-b.test.cpp
     - icon: ':heavy_check_mark:'
@@ -185,10 +185,10 @@ data:
     - icon: ':heavy_check_mark:'
       path: test/yosupo-associative-array.test.cpp
       title: test/yosupo-associative-array.test.cpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: test/yosupo-convolution.test.cpp
       title: test/yosupo-convolution.test.cpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: test/yosupo-determinant-of-matrix.test.cpp
       title: test/yosupo-determinant-of-matrix.test.cpp
     - icon: ':heavy_check_mark:'
@@ -200,10 +200,10 @@ data:
     - icon: ':heavy_check_mark:'
       path: test/yosupo-lowest-common-ancestor.test.cpp
       title: test/yosupo-lowest-common-ancestor.test.cpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: test/yosupo-montmort-number.test.cpp
       title: test/yosupo-montmort-number.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: test/yosupo-nim-product.test.cpp
       title: test/yosupo-nim-product.test.cpp
     - icon: ':x:'

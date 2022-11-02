@@ -1,18 +1,21 @@
 ---
 data:
   _extendedDependsOn:
+  - icon: ':x:'
+    path: algebra/field.hpp
+    title: algebra/field.hpp
+  - icon: ':question:'
+    path: algebra/ordinal_operator.hpp
+    title: algebra/ordinal_operator.hpp
   - icon: ':question:'
     path: base.hpp
     title: base.hpp
   - icon: ':question:'
     path: integer/extgcd.hpp
     title: integer/extgcd.hpp
-  - icon: ':question:'
+  - icon: ':x:'
     path: integer/pow-mod.hpp
     title: integer/pow-mod.hpp
-  - icon: ':question:'
-    path: operator.hpp
-    title: operator.hpp
   - icon: ':question:'
     path: stl-wrapper/all.hpp
     title: stl-wrapper/all.hpp
@@ -35,44 +38,41 @@ data:
     path: stl-wrapper/vector.hpp
     title: stl-wrapper/vector.hpp
   _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: convolution/ntt.hpp
     title: convolution/ntt.hpp
   - icon: ':warning:'
     path: general.hpp
     title: general.hpp
-  - icon: ':warning:'
-    path: string.hpp
-    title: string.hpp
   _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/aoj-dpl-5-b.test.cpp
     title: test/aoj-dpl-5-b.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/aoj-dpl-5-d.test.cpp
     title: test/aoj-dpl-5-d.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/aoj-dpl-5-e.test.cpp
     title: test/aoj-dpl-5-e.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/aoj-dpl-5-g.test.cpp
     title: test/aoj-dpl-5-g.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/aoj-dpl-5-i.test.cpp
     title: test/aoj-dpl-5-i.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/aoj-dpl-5-j.test.cpp
     title: test/aoj-dpl-5-j.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/aoj-ntl-1-b.test.cpp
     title: test/aoj-ntl-1-b.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/yosupo-convolution.test.cpp
     title: test/yosupo-convolution.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/yosupo-determinant-of-matrix.test.cpp
     title: test/yosupo-determinant-of-matrix.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/yosupo-montmort-number.test.cpp
     title: test/yosupo-montmort-number.test.cpp
   - icon: ':x:'
@@ -80,7 +80,7 @@ data:
     title: test/yosupo-range-affine-range-sum.test.cpp
   _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':x:'
   attributes:
     links: []
   bundledCode: "#line 2 \"base.hpp\"\n\n#include <bits/stdc++.h>\nusing namespace\
@@ -438,116 +438,91 @@ data:
     \ {\n    Vector<T> res(n+1), rev(n+1);\n    res[0] = 1;\n    REP(i, n) res[i+1]\
     \ = res[i] * (i+1);\n    rev[n] = 1 / res[n];\n    for(int i = n; i > 0; i--)\
     \ {\n        rev[i-1] = rev[i] * i;\n    }\n    return make_pair(res, rev);\n\
-    }\n#line 3 \"operator.hpp\"\n\ntemplate <typename T>\nT add_op(T a, T b) { return\
-    \ a + b; }\ntemplate <typename T>\nT sub_op(T a, T b) { return a - b; }\ntemplate\
-    \ <typename T>\nT zero_e() { return T(0); }\ntemplate <typename T>\nT div_op(T\
-    \ a, T b) { return a / b; }\ntemplate <typename T>\nT mult_op(T a, T b) { return\
-    \ a * b; }\ntemplate <typename T>\nT one_e() { return T(1); }\ntemplate <typename\
-    \ T>\nT xor_op(T a, T b) { return a ^ b; }\ntemplate <typename T>\nT and_op(T\
-    \ a, T b) { return a & b; }\ntemplate <typename T>\nT or_op(T a, T b) { return\
-    \ a | b; }\nll mod3() { return 998244353LL; }\nll mod7() { return 1000000007LL;\
-    \ }\nll mod9() { return 1000000009LL; }\ntemplate <typename T>\nT max_op(T a,\
-    \ T b) { return max(a, b); }\ntemplate <typename T>\nT min_op(T a, T b) { return\
-    \ min(a, b); }\n\ntemplate <typename T>\nT max_e() { return numeric_limits<T>::max();\
-    \ }\ntemplate <typename T>\nT min_e() { return numeric_limits<T>::min(); }\n#line\
-    \ 3 \"integer/extgcd.hpp\"\n\nll extgcd(ll a, ll b, ll& x, ll& y) {\n    x = 1,\
-    \ y = 0;\n    ll nx = 0, ny = 1;\n    while(b) {\n        ll q = a / b;\n    \
-    \    tie(a, b) = LP(b, a % b);\n        tie(x, nx) = LP(nx, x - nx*q);\n     \
-    \   tie(y, ny) = LP(ny, y - ny*q);\n    }\n    return a;\n}\n#line 2 \"integer/pow-mod.hpp\"\
+    }\n#line 3 \"integer/extgcd.hpp\"\n\nll extgcd(ll a, ll b, ll& x, ll& y) {\n \
+    \   x = 1, y = 0;\n    ll nx = 0, ny = 1;\n    while(b) {\n        ll q = a /\
+    \ b;\n        tie(a, b) = LP(b, a % b);\n        tie(x, nx) = LP(nx, x - nx*q);\n\
+    \        tie(y, ny) = LP(ny, y - ny*q);\n    }\n    return a;\n}\n#line 2 \"integer/pow-mod.hpp\"\
     \n\nll inv_mod(ll n, ll m) {\n    n %= m;\n    if (n < 0) n += m;\n    ll x, y;\n\
     \    assert(extgcd(n, m, x, y) == 1);\n    x %= m;\n    if(x < 0) x += m;\n  \
     \  return x;\n}\n\nll pow_mod(ll a, ll n, ll m) {\n    if(n == 0) return 1LL;\n\
     \    if(n < 0) return inv_mod(pow_mod(a, -n, m), m);\n    a %= m;\n    if (a <\
     \ 0) n += m;\n    ll res = 1;\n    while(n) {\n        if(n & 1) {\n         \
     \   res *= a;\n            res %= m;\n        }\n        n >>= 1;\n        a *=\
-    \ a;\n        a %= m;\n    }\n    return res;\n}\n#line 4 \"integer/modint.hpp\"\
-    \n\ntemplate <ll (*mod)()>\nstruct Modint {\n    ll val;\n    \n    Modint():\
-    \ val(0) {}\n\n    Modint(ll x): val(x) {\n        val %= mod();\n        if(val\
-    \ < 0) val += mod();\n    }\n\n    Modint& operator+=(const Modint& r) {\n   \
-    \     val += r.val;\n        if(val >= mod()) val -= mod();\n        return *this;\n\
-    \    }\n    friend Modint operator+(const Modint& l, const Modint& r) {\n    \
-    \    return Modint(l) += r;\n    }\n\n    Modint& operator-=(const Modint& r)\
-    \ {\n        val -= r.val;\n        if(val < 0) val += mod();\n        return\
-    \ *this;\n    }\n    friend Modint operator-(const Modint& l, const Modint& r)\
-    \ {\n        return Modint(l) -= r;\n    }\n\n    Modint& operator*=(const Modint&\
-    \ r) {\n        val *= r.val;\n        val %= mod();\n        return *this;\n\
-    \    }\n    Modint operator*(const Modint& r) {\n        return (Modint(*this)\
-    \ *= r);\n    }\n    friend Modint operator*(const Modint& l, const Modint& r)\
-    \ {\n        return Modint(l) *= r;\n    }\n\n    Modint pow(ll n) const {\n \
-    \       return Modint(pow_mod(val, n, mod()));\n    }\n\n    Modint inv() const\
-    \ {\n        return Modint(inv_mod(val, mod()));\n    }\n\n    Modint& operator/=(const\
-    \ Modint& r) {\n        return (*this *= r.inv());\n    }\n    friend Modint operator/(const\
-    \ Modint& l, const Modint& r) {\n        return Modint(l) /= r;\n    }\n\n   \
-    \ Modint& operator^=(const ll n) {\n        val = pow_mod(val, n, mod());\n  \
-    \      return *this;\n    }\n    Modint operator^(const ll n) {\n        return\
-    \ this->pow(n);\n    }\n\n    Modint operator+() const { return *this; }\n   \
-    \ Modint operator-() const { return Modint() - *this; }\n\n    Modint& operator++()\
-    \ {\n        val++;\n        if(val == mod()) val = 0LL;\n        return *this;\n\
-    \    }\n    Modint& operator++(int) {\n        Modint res(*this);\n        ++*this;\n\
-    \        return res;\n    }\n\n    Modint& operator--() {\n        if(val == 0LL)\
-    \ val = mod();\n        val--;\n        return *this;\n    }\n    Modint& operator--(int)\
-    \ {\n        Modint res(*this);\n        --*this;\n        return res;\n    }\n\
-    \n    friend bool operator==(const Modint& l, const Modint& r) {\n        return\
-    \ l.val == r.val;\n    }\n    friend bool operator!=(const Modint& l, const Modint&\
-    \ r) {\n        return l.val != r.val;\n    }\n\n    static Pair<Vector<Modint>,\
-    \ Vector<Modint>> factorial(int n) {\n        Vector<Modint> fact(n+1), rfact(n+1);\n\
-    \        fact[0] = 1;\n        REP(i, n) fact[i+1] = fact[i] * (i+1);\n      \
-    \  rfact[n] = 1 / fact[n];\n        for(int i = n-1; i >= 0; i--) rfact[i] = rfact[i+1]\
-    \ * (i+1);\n        return {fact, rfact};\n    }\n\n    friend istream& operator>>(istream&\
-    \ is, Modint& mi) {\n        is >> mi.val;\n        return is;\n    }\n\n    friend\
-    \ ostream& operator<<(ostream& os, const Modint& mi) {\n        os << mi.val;\n\
-    \        return os;\n    }\n};\n\nnamespace std {\n    template<ll (*mod)()>\n\
-    \    struct hash<Modint<mod>> {\n        size_t operator()(const Modint<mod> &p)\
-    \ const {\n            return hash<ll>()(p.val);\n        }\n    };\n}\n\nusing\
-    \ MI3 = Modint<mod3>;\nusing V3 = Vector<MI3>;\nusing VV3 = Vector<V3>;\nusing\
-    \ VVV3 = Vector<VV3>;\nusing MI7 = Modint<mod7>;\nusing V7 = Vector<MI7>;\nusing\
-    \ VV7 = Vector<V7>;\nusing VVV7 = Vector<VV7>;\nusing MI9 = Modint<mod9>;\nusing\
-    \ V9 = Vector<MI9>;\nusing VV9 = Vector<V9>;\nusing VVV9 = Vector<VV9>;\n"
-  code: "#pragma once\n#include \"../operator.hpp\"\n#include \"pow-mod.hpp\"\n\n\
-    template <ll (*mod)()>\nstruct Modint {\n    ll val;\n    \n    Modint(): val(0)\
-    \ {}\n\n    Modint(ll x): val(x) {\n        val %= mod();\n        if(val < 0)\
-    \ val += mod();\n    }\n\n    Modint& operator+=(const Modint& r) {\n        val\
-    \ += r.val;\n        if(val >= mod()) val -= mod();\n        return *this;\n \
-    \   }\n    friend Modint operator+(const Modint& l, const Modint& r) {\n     \
-    \   return Modint(l) += r;\n    }\n\n    Modint& operator-=(const Modint& r) {\n\
-    \        val -= r.val;\n        if(val < 0) val += mod();\n        return *this;\n\
-    \    }\n    friend Modint operator-(const Modint& l, const Modint& r) {\n    \
-    \    return Modint(l) -= r;\n    }\n\n    Modint& operator*=(const Modint& r)\
-    \ {\n        val *= r.val;\n        val %= mod();\n        return *this;\n   \
-    \ }\n    Modint operator*(const Modint& r) {\n        return (Modint(*this) *=\
-    \ r);\n    }\n    friend Modint operator*(const Modint& l, const Modint& r) {\n\
-    \        return Modint(l) *= r;\n    }\n\n    Modint pow(ll n) const {\n     \
-    \   return Modint(pow_mod(val, n, mod()));\n    }\n\n    Modint inv() const {\n\
-    \        return Modint(inv_mod(val, mod()));\n    }\n\n    Modint& operator/=(const\
-    \ Modint& r) {\n        return (*this *= r.inv());\n    }\n    friend Modint operator/(const\
-    \ Modint& l, const Modint& r) {\n        return Modint(l) /= r;\n    }\n\n   \
-    \ Modint& operator^=(const ll n) {\n        val = pow_mod(val, n, mod());\n  \
-    \      return *this;\n    }\n    Modint operator^(const ll n) {\n        return\
-    \ this->pow(n);\n    }\n\n    Modint operator+() const { return *this; }\n   \
-    \ Modint operator-() const { return Modint() - *this; }\n\n    Modint& operator++()\
-    \ {\n        val++;\n        if(val == mod()) val = 0LL;\n        return *this;\n\
-    \    }\n    Modint& operator++(int) {\n        Modint res(*this);\n        ++*this;\n\
-    \        return res;\n    }\n\n    Modint& operator--() {\n        if(val == 0LL)\
-    \ val = mod();\n        val--;\n        return *this;\n    }\n    Modint& operator--(int)\
-    \ {\n        Modint res(*this);\n        --*this;\n        return res;\n    }\n\
-    \n    friend bool operator==(const Modint& l, const Modint& r) {\n        return\
-    \ l.val == r.val;\n    }\n    friend bool operator!=(const Modint& l, const Modint&\
-    \ r) {\n        return l.val != r.val;\n    }\n\n    static Pair<Vector<Modint>,\
-    \ Vector<Modint>> factorial(int n) {\n        Vector<Modint> fact(n+1), rfact(n+1);\n\
-    \        fact[0] = 1;\n        REP(i, n) fact[i+1] = fact[i] * (i+1);\n      \
-    \  rfact[n] = 1 / fact[n];\n        for(int i = n-1; i >= 0; i--) rfact[i] = rfact[i+1]\
-    \ * (i+1);\n        return {fact, rfact};\n    }\n\n    friend istream& operator>>(istream&\
-    \ is, Modint& mi) {\n        is >> mi.val;\n        return is;\n    }\n\n    friend\
-    \ ostream& operator<<(ostream& os, const Modint& mi) {\n        os << mi.val;\n\
-    \        return os;\n    }\n};\n\nnamespace std {\n    template<ll (*mod)()>\n\
-    \    struct hash<Modint<mod>> {\n        size_t operator()(const Modint<mod> &p)\
-    \ const {\n            return hash<ll>()(p.val);\n        }\n    };\n}\n\nusing\
-    \ MI3 = Modint<mod3>;\nusing V3 = Vector<MI3>;\nusing VV3 = Vector<V3>;\nusing\
-    \ VVV3 = Vector<VV3>;\nusing MI7 = Modint<mod7>;\nusing V7 = Vector<MI7>;\nusing\
-    \ VV7 = Vector<V7>;\nusing VVV7 = Vector<VV7>;\nusing MI9 = Modint<mod9>;\nusing\
-    \ V9 = Vector<MI9>;\nusing VV9 = Vector<V9>;\nusing VVV9 = Vector<VV9>;\n"
+    \ a;\n        a %= m;\n    }\n    return res;\n}\n#line 2 \"algebra/ordinal_operator.hpp\"\
+    \n\ntemplate <typename T>\nT ordinal_identity(const T& x) {\n    return x;\n}\n\
+    template <typename T>\nT ordinal_plus(const T& a, const T& b) {\n    return a\
+    \ + b;\n}\ntemplate <typename T>\nT ordinal_zero() {\n    return T(0);\n}\ntemplate\
+    \ <typename T>\nT ordinal_mult(const T& a, const T& b) {\n    return a * b;\n\
+    }\ntemplate <typename T>\nT ordinal_one() {\n    return T(1);\n}\ntemplate <typename\
+    \ T>\nT ordinal_plusinv(const T& a) {\n    return -a;\n}\ntemplate <typename T>\n\
+    T ordinal_multinv(const T& a) {\n    return T(1) / a;\n}\ntemplate <typename T>\n\
+    T ordinal_xor(const T& a, const T& b) {\n    return a ^ b;\n}\ntemplate <typename\
+    \ T>\nT ordinal_and(const T& a, const T& b) {\n    return a & b;\n}\ntemplate\
+    \ <typename T>\nT ordinal_or(const T& a, const T& b) {\n    return a | b;\n}\n\
+    #line 4 \"algebra/field.hpp\"\n\ntemplate <\n    typename T,\n    T (*mult)(const\
+    \ T&, const T&),\n    T (*one)(),\n    T (*multinv)(const T&),\n    T (*plus)(const\
+    \ T&, const T&),\n    T (*zero)(),\n    T (*plusinv)(const T&),\n    typename\
+    \ R = T,\n    T (*rtot)(const R&) = ordinal_identity<R>,\n    R (*ttor)(const\
+    \ T&) = ordinal_identity<T>\n>\nstruct Field {\n    T val;\n    Field() : val(zero())\
+    \ {}\n    Field(const R& r) : val(rtot(r)) {}\n    operator R() const { return\
+    \ ttor(val); }\n    Field& operator*=(const Field& other) {\n        val = mult(val,\
+    \ other.val);\n        return *this;\n    }\n    Field operator*(const Field&\
+    \ other) const {\n        return Field(*this) *= other;\n    }\n    Field inv()\
+    \ const {\n        return Field(multinv(val));\n    }\n    Field& operator/= (const\
+    \ Field& other) {\n        return *this *= other.inv();\n    }\n    Field operator/\
+    \ (const Field& other) const {\n        return Field(*this) /= other;\n    }\n\
+    \    Field& operator+=(const Field& other) {\n        val = plus(val, other.val);\n\
+    \        return *this;\n    }\n    Field operator+(const Field& other) const {\n\
+    \        return Field(*this) += other;\n    }\n    Field operator-() const {\n\
+    \        return Field(plusinv(val));\n    }\n    Field& operator-=(const Field&\
+    \ other) {\n        return *this += -other;\n    }\n    Field operator-(const\
+    \ Field& other) const {\n        return Field(*this) -= other;\n    }\n    Field\
+    \ pow(ll n) const {\n        if(n < 0) {\n            return inv().pow(-n);\n\
+    \        }\n        Field res = one();\n        Field a = *this;\n        while(n\
+    \ > 0) {\n            if(n & 1) res *= a;\n            a *= a;\n            n\
+    \ >>= 1;\n        }\n        return res;\n    }\n    friend istream& operator>>(istream&\
+    \ is, Field& f) {\n        R r; is >> r;\n        f = Field(r);\n        return\
+    \ is;\n    }\n    friend ostream& operator<<(ostream& os, const Field& f) {\n\
+    \        return os << (R)f.val;\n    }\n};\nnamespace std {\n    template <\n\
+    \        typename T,\n        T (*mult)(const T, const T),\n        T (*one)(),\n\
+    \        T (*multinv)(const T),\n        T (*plus)(const T, const T),\n      \
+    \  T (*zero)(),\n        T (*plusinv)(const T),\n        typename R,\n       \
+    \ T (*rtot)(const R),\n        R (*ttor)(const T)\n    >\n    struct hash<Field<T,\
+    \ mult, one, multinv, plus, zero, plusinv, R, rtot, ttor>> {\n        size_t operator()(const\
+    \ Field<T, mult, one, multinv, plus, zero, plusinv, R, rtot, ttor>& f) const {\n\
+    \            return hash<T>()((R)f.val);\n        }\n    };\n}\n#line 5 \"algebra/modint.hpp\"\
+    \n\ntemplate <ll (*mod)()>\nll mod_plus(const ll& a, const ll& b) {\n    ll res;\n\
+    \    if(__builtin_add_overflow(a, b, &res)) {\n        return a % mod() + b %\
+    \ mod();\n    }\n    return res;\n}\ntemplate <ll (*mod)()>\nll mod_mult(const\
+    \ ll& a, const ll& b) {\n    ll res;\n    if(__builtin_mul_overflow(a, b, &res))\
+    \ {\n        return (a % mod()) * (b % mod());\n    }\n    return res;\n}\ntemplate\
+    \ <ll (*mod)()>\nll mod_inv(const ll& a) {\n    return inv_mod(a, mod());\n}\n\
+    ll mod998244353() { return 998244353; }\nll mod1000000007() { return 1000000007;\
+    \ }\ntemplate <ll (*mod)()>\nll make_representative(const ll& a) {\n    ll b =\
+    \ a % mod();\n    if(b < 0) b += mod();\n    return b;\n}\n\ntemplate <ll (*mod)()>\n\
+    using Modint = Field<ll, mod_mult<mod>, ordinal_one<ll>, mod_inv<mod>, mod_plus<mod>,\
+    \ ordinal_zero<ll>, ordinal_plusinv<ll>, ll, ordinal_identity<ll>, make_representative<mod>>;\n\
+    \nusing MI3 = Modint<mod998244353>;\nusing V3 = Vector<MI3>;\nusing VV3 = Vector<V3>;\n\
+    using VVV3 = Vector<VV3>;\nusing MI7 = Modint<mod1000000007>;\nusing V7 = Vector<MI7>;\n\
+    using VV7 = Vector<V7>;\nusing VVV7 = Vector<VV7>;\n"
+  code: "#pragma once\n#include \"../integer/pow-mod.hpp\"\n#include \"ordinal_operator.hpp\"\
+    \n#include \"field.hpp\"\n\ntemplate <ll (*mod)()>\nll mod_plus(const ll& a, const\
+    \ ll& b) {\n    ll res;\n    if(__builtin_add_overflow(a, b, &res)) {\n      \
+    \  return a % mod() + b % mod();\n    }\n    return res;\n}\ntemplate <ll (*mod)()>\n\
+    ll mod_mult(const ll& a, const ll& b) {\n    ll res;\n    if(__builtin_mul_overflow(a,\
+    \ b, &res)) {\n        return (a % mod()) * (b % mod());\n    }\n    return res;\n\
+    }\ntemplate <ll (*mod)()>\nll mod_inv(const ll& a) {\n    return inv_mod(a, mod());\n\
+    }\nll mod998244353() { return 998244353; }\nll mod1000000007() { return 1000000007;\
+    \ }\ntemplate <ll (*mod)()>\nll make_representative(const ll& a) {\n    ll b =\
+    \ a % mod();\n    if(b < 0) b += mod();\n    return b;\n}\n\ntemplate <ll (*mod)()>\n\
+    using Modint = Field<ll, mod_mult<mod>, ordinal_one<ll>, mod_inv<mod>, mod_plus<mod>,\
+    \ ordinal_zero<ll>, ordinal_plusinv<ll>, ll, ordinal_identity<ll>, make_representative<mod>>;\n\
+    \nusing MI3 = Modint<mod998244353>;\nusing V3 = Vector<MI3>;\nusing VV3 = Vector<V3>;\n\
+    using VVV3 = Vector<VV3>;\nusing MI7 = Modint<mod1000000007>;\nusing V7 = Vector<MI7>;\n\
+    using VV7 = Vector<V7>;\nusing VVV7 = Vector<VV7>;\n"
   dependsOn:
-  - operator.hpp
+  - integer/pow-mod.hpp
+  - integer/extgcd.hpp
   - base.hpp
   - stl-wrapper/all.hpp
   - stl-wrapper/pair.hpp
@@ -556,16 +531,15 @@ data:
   - stl-wrapper/map.hpp
   - stl-wrapper/unordered_set.hpp
   - stl-wrapper/unordered_map.hpp
-  - integer/pow-mod.hpp
-  - integer/extgcd.hpp
+  - algebra/ordinal_operator.hpp
+  - algebra/field.hpp
   isVerificationFile: false
-  path: integer/modint.hpp
+  path: algebra/modint.hpp
   requiredBy:
   - convolution/ntt.hpp
   - general.hpp
-  - string.hpp
-  timestamp: '2022-11-01 23:37:53+00:00'
-  verificationStatus: LIBRARY_SOME_WA
+  timestamp: '2022-11-03 00:18:24+09:00'
+  verificationStatus: LIBRARY_ALL_WA
   verifiedWith:
   - test/aoj-dpl-5-j.test.cpp
   - test/aoj-dpl-5-e.test.cpp
@@ -578,10 +552,10 @@ data:
   - test/yosupo-determinant-of-matrix.test.cpp
   - test/aoj-dpl-5-b.test.cpp
   - test/aoj-dpl-5-g.test.cpp
-documentation_of: integer/modint.hpp
+documentation_of: algebra/modint.hpp
 layout: document
 redirect_from:
-- /library/integer/modint.hpp
-- /library/integer/modint.hpp.html
-title: integer/modint.hpp
+- /library/algebra/modint.hpp
+- /library/algebra/modint.hpp.html
+title: algebra/modint.hpp
 ---

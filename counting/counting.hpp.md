@@ -30,27 +30,27 @@ data:
     path: general.hpp
     title: general.hpp
   _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/aoj-dpl-5-b.test.cpp
     title: test/aoj-dpl-5-b.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/aoj-dpl-5-d.test.cpp
     title: test/aoj-dpl-5-d.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/aoj-dpl-5-e.test.cpp
     title: test/aoj-dpl-5-e.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/aoj-dpl-5-g.test.cpp
     title: test/aoj-dpl-5-g.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/aoj-dpl-5-i.test.cpp
     title: test/aoj-dpl-5-i.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/aoj-dpl-5-j.test.cpp
     title: test/aoj-dpl-5-j.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     links: []
   bundledCode: "#line 2 \"base.hpp\"\n\n#include <bits/stdc++.h>\nusing namespace\
@@ -481,8 +481,8 @@ data:
   path: counting/counting.hpp
   requiredBy:
   - general.hpp
-  timestamp: '2022-11-01 23:37:53+00:00'
-  verificationStatus: LIBRARY_ALL_AC
+  timestamp: '2022-11-03 00:18:24+09:00'
+  verificationStatus: LIBRARY_ALL_WA
   verifiedWith:
   - test/aoj-dpl-5-j.test.cpp
   - test/aoj-dpl-5-e.test.cpp

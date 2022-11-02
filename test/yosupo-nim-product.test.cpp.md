@@ -1,13 +1,13 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: algebra/nimber.hpp
     title: algebra/nimber.hpp
-  - icon: ':x:'
+  - icon: ':question:'
     path: algebra/ordinal_operator.hpp
     title: algebra/ordinal_operator.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: algebra/ring.hpp
     title: algebra/ring.hpp
   - icon: ':question:'
@@ -36,9 +36,9 @@ data:
     title: stl-wrapper/vector.hpp
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/nim_product_64
@@ -401,39 +401,44 @@ data:
     \ {\n    Vector<T> res(n+1), rev(n+1);\n    res[0] = 1;\n    REP(i, n) res[i+1]\
     \ = res[i] * (i+1);\n    rev[n] = 1 / res[n];\n    for(int i = n; i > 0; i--)\
     \ {\n        rev[i-1] = rev[i] * i;\n    }\n    return make_pair(res, rev);\n\
-    }\n#line 3 \"algebra/ring.hpp\"\n\ntemplate<\n    typename T,\n    T (*mult)(const\
-    \ T, const T),\n    T (*one)(),\n    T (*plus)(const T, const T),\n    T (*zero)(),\n\
-    \    T (*plusinv)(const T)\n>\nstruct Ring {\n    T val;\n\n    Ring(T val=zero())\
-    \ : val(val) {\n    }\n    operator T() const {\n        return val;\n    }\n\
-    \    Ring& operator*= (const Ring& other) {\n        this->val = mult(this->val,\
-    \ other.val);\n        return *this;\n    }\n    Ring operator*(const Ring& other)\
-    \ const {\n        return Ring(mult(this->val, other.val));\n    }\n    Ring&\
-    \ operator+=(const Ring& r) {\n        this->val = plus(this->val, r.val);\n \
-    \       return *this;\n    }\n    Ring operator+(const Ring& r) const {\n    \
-    \    return Ring(*this) += r;\n    }\n    Ring operator-() const {\n        return\
-    \ Ring(plusinv(this->val));\n    }\n    Ring& operator-=(const Ring& r) {\n  \
-    \      return *this += -r;\n    }\n    Ring operator-(const Ring& r) const {\n\
-    \        return Ring(*this) -= r;\n    }\n    Ring pow(ll n) {\n        assert(n\
-    \ >= 0);\n        Ring res = one();\n        Ring a = *this;\n        while (n\
-    \ > 0) {\n            if (n & 1) res *= a;\n            a *= a;\n            n\
-    \ >>= 1;\n        }\n        return res;\n    }\n    friend istream& operator>>(istream&\
-    \ is, Ring& r) {\n        return is >> r.val;\n    }\n    friend ostream& operator<<(ostream&\
-    \ os, const Ring& r) {\n        return os << r.val;\n    }\n};\nnamespace std\
-    \ {\n    template<typename T, T (*mult)(const T, const T), T (*one)(), T (*plus)(const\
-    \ T, const T), T (*zero)(), T (*plusinv)(const T)>\n    struct hash<Ring<T, mult,\
-    \ one, plus, zero, plusinv>> {\n        size_t operator()(const Ring<T, mult,\
-    \ one, plus, zero, plusinv>& r) const {\n            return hash<T>()(r.val);\n\
-    \        }\n    };\n}\n#line 2 \"algebra/ordinal_operator.hpp\"\n\ntemplate <typename\
-    \ T>\nT ordinal_identity(T x) {\n    return x;\n}\ntemplate <typename T>\nT ordinal_plus(const\
-    \ T a, const T b) {\n    return a + b;\n}\ntemplate <typename T>\nT ordinal_zero()\
-    \ {\n    return T(0);\n}\ntemplate <typename T>\nT ordinal_mult(const T a, const\
-    \ T b) {\n    return a * b;\n}\ntemplate <typename T>\nT ordinal_one() {\n   \
-    \ return T(1);\n}\ntemplate <typename T>\nT ordinal_plusinv(const T a) {\n   \
-    \ return -a;\n}\ntemplate <typename T>\nT ordinal_multinv(const T a) {\n    return\
-    \ T(1) / a;\n}\ntemplate <typename T>\nT ordinal_xor(const T a, const T b) {\n\
-    \    return a ^ b;\n}\ntemplate <typename T>\nT ordinal_and(const T a, const T\
-    \ b) {\n    return a & b;\n}\ntemplate <typename T>\nT ordinal_or(const T a, const\
-    \ T b) {\n    return a | b;\n}\n#line 5 \"algebra/nimber.hpp\"\n\nnamespace _nimber_precalc\
+    }\n#line 2 \"algebra/ordinal_operator.hpp\"\n\ntemplate <typename T>\nT ordinal_identity(const\
+    \ T& x) {\n    return x;\n}\ntemplate <typename T>\nT ordinal_plus(const T& a,\
+    \ const T& b) {\n    return a + b;\n}\ntemplate <typename T>\nT ordinal_zero()\
+    \ {\n    return T(0);\n}\ntemplate <typename T>\nT ordinal_mult(const T& a, const\
+    \ T& b) {\n    return a * b;\n}\ntemplate <typename T>\nT ordinal_one() {\n  \
+    \  return T(1);\n}\ntemplate <typename T>\nT ordinal_plusinv(const T& a) {\n \
+    \   return -a;\n}\ntemplate <typename T>\nT ordinal_multinv(const T& a) {\n  \
+    \  return T(1) / a;\n}\ntemplate <typename T>\nT ordinal_xor(const T& a, const\
+    \ T& b) {\n    return a ^ b;\n}\ntemplate <typename T>\nT ordinal_and(const T&\
+    \ a, const T& b) {\n    return a & b;\n}\ntemplate <typename T>\nT ordinal_or(const\
+    \ T& a, const T& b) {\n    return a | b;\n}\n#line 4 \"algebra/ring.hpp\"\n\n\
+    template <\n    typename T,\n    T (*mult)(const T&, const T&),\n    T (*one)(),\n\
+    \    T (*plus)(const T&, const T&),\n    T (*zero)(),\n    T (*plusinv)(const\
+    \ T&),\n    typename R = T,\n    T (*rtot)(const R&) = ordinal_identity<R>,\n\
+    \    R (*ttor)(const T&) = ordinal_identity<T>\n>\nstruct Ring {\n    T val;\n\
+    \    Ring() : val(zero()) {}\n    Ring(const R& r) : val(rtot(r)) {}\n    operator\
+    \ R() const { return ttor(val); }\n    Ring& operator*=(const Ring& other) {\n\
+    \        val = mult(val, other.val);\n        return *this;\n    }\n    Ring operator*(const\
+    \ Ring& other) const {\n        return Ring(*this) *= other;\n    }\n    Ring&\
+    \ operator+=(const Ring& other) {\n        val = plus(val, other.val);\n     \
+    \   return *this;\n    }\n    Ring operator+(const Ring& other) const {\n    \
+    \    return Ring(*this) += other;\n    }\n    Ring operator-() const {\n     \
+    \   return Ring(plusinv(val));\n    }\n    Ring& operator-=(const Ring& other)\
+    \ {\n        return *this += -other;\n    }\n    Ring operator-(const Ring& other)\
+    \ const {\n        return Ring(*this) -= other;\n    }\n    Ring pow(ll n) const\
+    \ {\n        assert(n >= 0);\n        Ring res = one();\n        Ring a = *this;\n\
+    \        while(n > 0) {\n            if(n & 1) res *= a;\n            a *= a;\n\
+    \            n >>= 1;\n        }\n        return res;\n    }\n    friend istream&\
+    \ operator>>(istream& is, Ring& f) {\n        R r; is >> r;\n        f = Ring(r);\n\
+    \        return is;\n    }\n    friend ostream& operator<<(ostream& os, const\
+    \ Ring& f) {\n        return os << (R)f.val;\n    }\n};\nnamespace std {\n   \
+    \ template <\n        typename T,\n        T (*mult)(const T, const T),\n    \
+    \    T (*one)(),\n        T (*plus)(const T, const T),\n        T (*zero)(),\n\
+    \        T (*plusinv)(const T),\n        typename R,\n        T (*rtot)(const\
+    \ R),\n        R (*ttor)(const T)\n    >\n    struct hash<Ring<T, mult, one, plus,\
+    \ zero, plusinv, R, rtot, ttor>> {\n        size_t operator()(const Ring<T, mult,\
+    \ one, plus, zero, plusinv, R, rtot, ttor>& f) const {\n            return hash<T>()((R)f.val);\n\
+    \        }\n    };\n}\n#line 5 \"algebra/nimber.hpp\"\n\nnamespace _nimber_precalc\
     \ {\n    static ull small_product[256][256];\n    static ull pow64_product[8][8][256];\n\
     \    static bool built = false;\n\n    ull nim_product_rec(ull x, ull y, int numbits)\
     \ {\n        if(x < 256 && y < 256) return small_product[x][y];\n        int nnumbits\
@@ -453,11 +458,11 @@ data:
     \                }\n            }\n        }\n        REP(i, 8) REP(j, 8) {\n\
     \            ull tmp = nim_product_rec(1ULL<<(i<<3), 1ULL<<(j<<3), 1ULL<<5);\n\
     \            REP(k, 256) pow64_product[i][j][k] = nim_product_rec(tmp, k, 1ULL<<5);\n\
-    \        }\n    }\n\n}\n\null nim_product(ull x, ull y) {\n    if(!_nimber_precalc::built)\
+    \        }\n    }\n\n}\n\null nim_product(const ull& x, const ull& y) {\n    if(!_nimber_precalc::built)\
     \ _nimber_precalc::precalc();\n    ull ret = 0;\n    REP(i, 8) REP(j, 8) {\n \
     \       ret ^= _nimber_precalc::pow64_product[i][j][_nimber_precalc::small_product[(x>>(i<<3))&255][(y>>(j<<3))&255]];\n\
-    \    }\n    return ret;\n}\n\nusing Nimber = Ring<ull, nim_product, ordinal_one,\
-    \ ordinal_xor, ordinal_zero, ordinal_identity>;\n#line 4 \"test/yosupo-nim-product.test.cpp\"\
+    \    }\n    return ret;\n}\n\nusing Nimber = Ring<ull, nim_product, ordinal_one<ull>,\
+    \ ordinal_xor<ull>, ordinal_zero<ull>, ordinal_identity<ull>>;\n#line 4 \"test/yosupo-nim-product.test.cpp\"\
     \n\nint main() {\n    int t; cin >> t;\n    while(t--) {\n        Nimber a, b;\
     \ cin >> a >> b;\n        print(a * b);\n    }\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/nim_product_64\"\n\n#include\
@@ -478,8 +483,8 @@ data:
   isVerificationFile: true
   path: test/yosupo-nim-product.test.cpp
   requiredBy: []
-  timestamp: '2022-11-01 23:37:53+00:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  timestamp: '2022-11-03 00:18:24+09:00'
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/yosupo-nim-product.test.cpp
 layout: document

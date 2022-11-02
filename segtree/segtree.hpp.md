@@ -502,7 +502,7 @@ data:
   isVerificationFile: false
   path: segtree/segtree.hpp
   requiredBy: []
-  timestamp: '2022-11-01 23:37:53+00:00'
+  timestamp: '2022-11-03 00:18:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/aoj-dsl-2-a.test.cpp

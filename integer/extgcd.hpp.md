@@ -26,53 +26,50 @@ data:
     path: stl-wrapper/vector.hpp
     title: stl-wrapper/vector.hpp
   _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
+    path: algebra/modint.hpp
+    title: algebra/modint.hpp
+  - icon: ':x:'
     path: convolution/ntt.hpp
     title: convolution/ntt.hpp
   - icon: ':warning:'
     path: general.hpp
     title: general.hpp
-  - icon: ':question:'
-    path: integer/modint.hpp
-    title: integer/modint.hpp
-  - icon: ':question:'
+  - icon: ':x:'
     path: integer/pow-mod.hpp
     title: integer/pow-mod.hpp
-  - icon: ':warning:'
-    path: string.hpp
-    title: string.hpp
   _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/aoj-dpl-5-b.test.cpp
     title: test/aoj-dpl-5-b.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/aoj-dpl-5-d.test.cpp
     title: test/aoj-dpl-5-d.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/aoj-dpl-5-e.test.cpp
     title: test/aoj-dpl-5-e.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/aoj-dpl-5-g.test.cpp
     title: test/aoj-dpl-5-g.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/aoj-dpl-5-i.test.cpp
     title: test/aoj-dpl-5-i.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/aoj-dpl-5-j.test.cpp
     title: test/aoj-dpl-5-j.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/aoj-ntl-1-b.test.cpp
     title: test/aoj-ntl-1-b.test.cpp
   - icon: ':heavy_check_mark:'
     path: test/aoj-ntl-1-e.test.cpp
     title: test/aoj-ntl-1-e.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/yosupo-convolution.test.cpp
     title: test/yosupo-convolution.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/yosupo-determinant-of-matrix.test.cpp
     title: test/yosupo-determinant-of-matrix.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/yosupo-montmort-number.test.cpp
     title: test/yosupo-montmort-number.test.cpp
   - icon: ':x:'
@@ -459,11 +456,10 @@ data:
   path: integer/extgcd.hpp
   requiredBy:
   - integer/pow-mod.hpp
-  - integer/modint.hpp
   - convolution/ntt.hpp
   - general.hpp
-  - string.hpp
-  timestamp: '2022-11-01 23:37:53+00:00'
+  - algebra/modint.hpp
+  timestamp: '2022-11-03 00:18:24+09:00'
   verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - test/aoj-dpl-5-j.test.cpp

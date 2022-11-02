@@ -2,6 +2,9 @@
 data:
   _extendedDependsOn:
   - icon: ':question:'
+    path: algebra/ordinal_operator.hpp
+    title: algebra/ordinal_operator.hpp
+  - icon: ':question:'
     path: base.hpp
     title: base.hpp
   - icon: ':question:'
@@ -26,16 +29,16 @@ data:
     path: stl-wrapper/vector.hpp
     title: stl-wrapper/vector.hpp
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: algebra/nimber.hpp
     title: algebra/nimber.hpp
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: test/yosupo-nim-product.test.cpp
     title: test/yosupo-nim-product.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"base.hpp\"\n\n#include <bits/stdc++.h>\nusing namespace\
@@ -393,52 +396,72 @@ data:
     \ {\n    Vector<T> res(n+1), rev(n+1);\n    res[0] = 1;\n    REP(i, n) res[i+1]\
     \ = res[i] * (i+1);\n    rev[n] = 1 / res[n];\n    for(int i = n; i > 0; i--)\
     \ {\n        rev[i-1] = rev[i] * i;\n    }\n    return make_pair(res, rev);\n\
-    }\n#line 3 \"algebra/ring.hpp\"\n\ntemplate<\n    typename T,\n    T (*mult)(const\
-    \ T, const T),\n    T (*one)(),\n    T (*plus)(const T, const T),\n    T (*zero)(),\n\
-    \    T (*plusinv)(const T)\n>\nstruct Ring {\n    T val;\n\n    Ring(T val=zero())\
-    \ : val(val) {\n    }\n    operator T() const {\n        return val;\n    }\n\
-    \    Ring& operator*= (const Ring& other) {\n        this->val = mult(this->val,\
-    \ other.val);\n        return *this;\n    }\n    Ring operator*(const Ring& other)\
-    \ const {\n        return Ring(mult(this->val, other.val));\n    }\n    Ring&\
-    \ operator+=(const Ring& r) {\n        this->val = plus(this->val, r.val);\n \
-    \       return *this;\n    }\n    Ring operator+(const Ring& r) const {\n    \
-    \    return Ring(*this) += r;\n    }\n    Ring operator-() const {\n        return\
-    \ Ring(plusinv(this->val));\n    }\n    Ring& operator-=(const Ring& r) {\n  \
-    \      return *this += -r;\n    }\n    Ring operator-(const Ring& r) const {\n\
-    \        return Ring(*this) -= r;\n    }\n    Ring pow(ll n) {\n        assert(n\
-    \ >= 0);\n        Ring res = one();\n        Ring a = *this;\n        while (n\
-    \ > 0) {\n            if (n & 1) res *= a;\n            a *= a;\n            n\
-    \ >>= 1;\n        }\n        return res;\n    }\n    friend istream& operator>>(istream&\
-    \ is, Ring& r) {\n        return is >> r.val;\n    }\n    friend ostream& operator<<(ostream&\
-    \ os, const Ring& r) {\n        return os << r.val;\n    }\n};\nnamespace std\
-    \ {\n    template<typename T, T (*mult)(const T, const T), T (*one)(), T (*plus)(const\
-    \ T, const T), T (*zero)(), T (*plusinv)(const T)>\n    struct hash<Ring<T, mult,\
-    \ one, plus, zero, plusinv>> {\n        size_t operator()(const Ring<T, mult,\
-    \ one, plus, zero, plusinv>& r) const {\n            return hash<T>()(r.val);\n\
-    \        }\n    };\n}\n"
-  code: "#pragma once\n#include \"../base.hpp\"\n\ntemplate<\n    typename T,\n  \
-    \  T (*mult)(const T, const T),\n    T (*one)(),\n    T (*plus)(const T, const\
-    \ T),\n    T (*zero)(),\n    T (*plusinv)(const T)\n>\nstruct Ring {\n    T val;\n\
-    \n    Ring(T val=zero()) : val(val) {\n    }\n    operator T() const {\n     \
-    \   return val;\n    }\n    Ring& operator*= (const Ring& other) {\n        this->val\
-    \ = mult(this->val, other.val);\n        return *this;\n    }\n    Ring operator*(const\
-    \ Ring& other) const {\n        return Ring(mult(this->val, other.val));\n   \
-    \ }\n    Ring& operator+=(const Ring& r) {\n        this->val = plus(this->val,\
-    \ r.val);\n        return *this;\n    }\n    Ring operator+(const Ring& r) const\
-    \ {\n        return Ring(*this) += r;\n    }\n    Ring operator-() const {\n \
-    \       return Ring(plusinv(this->val));\n    }\n    Ring& operator-=(const Ring&\
-    \ r) {\n        return *this += -r;\n    }\n    Ring operator-(const Ring& r)\
-    \ const {\n        return Ring(*this) -= r;\n    }\n    Ring pow(ll n) {\n   \
-    \     assert(n >= 0);\n        Ring res = one();\n        Ring a = *this;\n  \
-    \      while (n > 0) {\n            if (n & 1) res *= a;\n            a *= a;\n\
+    }\n#line 2 \"algebra/ordinal_operator.hpp\"\n\ntemplate <typename T>\nT ordinal_identity(const\
+    \ T& x) {\n    return x;\n}\ntemplate <typename T>\nT ordinal_plus(const T& a,\
+    \ const T& b) {\n    return a + b;\n}\ntemplate <typename T>\nT ordinal_zero()\
+    \ {\n    return T(0);\n}\ntemplate <typename T>\nT ordinal_mult(const T& a, const\
+    \ T& b) {\n    return a * b;\n}\ntemplate <typename T>\nT ordinal_one() {\n  \
+    \  return T(1);\n}\ntemplate <typename T>\nT ordinal_plusinv(const T& a) {\n \
+    \   return -a;\n}\ntemplate <typename T>\nT ordinal_multinv(const T& a) {\n  \
+    \  return T(1) / a;\n}\ntemplate <typename T>\nT ordinal_xor(const T& a, const\
+    \ T& b) {\n    return a ^ b;\n}\ntemplate <typename T>\nT ordinal_and(const T&\
+    \ a, const T& b) {\n    return a & b;\n}\ntemplate <typename T>\nT ordinal_or(const\
+    \ T& a, const T& b) {\n    return a | b;\n}\n#line 4 \"algebra/ring.hpp\"\n\n\
+    template <\n    typename T,\n    T (*mult)(const T&, const T&),\n    T (*one)(),\n\
+    \    T (*plus)(const T&, const T&),\n    T (*zero)(),\n    T (*plusinv)(const\
+    \ T&),\n    typename R = T,\n    T (*rtot)(const R&) = ordinal_identity<R>,\n\
+    \    R (*ttor)(const T&) = ordinal_identity<T>\n>\nstruct Ring {\n    T val;\n\
+    \    Ring() : val(zero()) {}\n    Ring(const R& r) : val(rtot(r)) {}\n    operator\
+    \ R() const { return ttor(val); }\n    Ring& operator*=(const Ring& other) {\n\
+    \        val = mult(val, other.val);\n        return *this;\n    }\n    Ring operator*(const\
+    \ Ring& other) const {\n        return Ring(*this) *= other;\n    }\n    Ring&\
+    \ operator+=(const Ring& other) {\n        val = plus(val, other.val);\n     \
+    \   return *this;\n    }\n    Ring operator+(const Ring& other) const {\n    \
+    \    return Ring(*this) += other;\n    }\n    Ring operator-() const {\n     \
+    \   return Ring(plusinv(val));\n    }\n    Ring& operator-=(const Ring& other)\
+    \ {\n        return *this += -other;\n    }\n    Ring operator-(const Ring& other)\
+    \ const {\n        return Ring(*this) -= other;\n    }\n    Ring pow(ll n) const\
+    \ {\n        assert(n >= 0);\n        Ring res = one();\n        Ring a = *this;\n\
+    \        while(n > 0) {\n            if(n & 1) res *= a;\n            a *= a;\n\
     \            n >>= 1;\n        }\n        return res;\n    }\n    friend istream&\
-    \ operator>>(istream& is, Ring& r) {\n        return is >> r.val;\n    }\n   \
-    \ friend ostream& operator<<(ostream& os, const Ring& r) {\n        return os\
-    \ << r.val;\n    }\n};\nnamespace std {\n    template<typename T, T (*mult)(const\
-    \ T, const T), T (*one)(), T (*plus)(const T, const T), T (*zero)(), T (*plusinv)(const\
-    \ T)>\n    struct hash<Ring<T, mult, one, plus, zero, plusinv>> {\n        size_t\
-    \ operator()(const Ring<T, mult, one, plus, zero, plusinv>& r) const {\n     \
-    \       return hash<T>()(r.val);\n        }\n    };\n}\n"
+    \ operator>>(istream& is, Ring& f) {\n        R r; is >> r;\n        f = Ring(r);\n\
+    \        return is;\n    }\n    friend ostream& operator<<(ostream& os, const\
+    \ Ring& f) {\n        return os << (R)f.val;\n    }\n};\nnamespace std {\n   \
+    \ template <\n        typename T,\n        T (*mult)(const T, const T),\n    \
+    \    T (*one)(),\n        T (*plus)(const T, const T),\n        T (*zero)(),\n\
+    \        T (*plusinv)(const T),\n        typename R,\n        T (*rtot)(const\
+    \ R),\n        R (*ttor)(const T)\n    >\n    struct hash<Ring<T, mult, one, plus,\
+    \ zero, plusinv, R, rtot, ttor>> {\n        size_t operator()(const Ring<T, mult,\
+    \ one, plus, zero, plusinv, R, rtot, ttor>& f) const {\n            return hash<T>()((R)f.val);\n\
+    \        }\n    };\n}\n"
+  code: "#pragma once\n#include \"../base.hpp\"\n#include \"ordinal_operator.hpp\"\
+    \n\ntemplate <\n    typename T,\n    T (*mult)(const T&, const T&),\n    T (*one)(),\n\
+    \    T (*plus)(const T&, const T&),\n    T (*zero)(),\n    T (*plusinv)(const\
+    \ T&),\n    typename R = T,\n    T (*rtot)(const R&) = ordinal_identity<R>,\n\
+    \    R (*ttor)(const T&) = ordinal_identity<T>\n>\nstruct Ring {\n    T val;\n\
+    \    Ring() : val(zero()) {}\n    Ring(const R& r) : val(rtot(r)) {}\n    operator\
+    \ R() const { return ttor(val); }\n    Ring& operator*=(const Ring& other) {\n\
+    \        val = mult(val, other.val);\n        return *this;\n    }\n    Ring operator*(const\
+    \ Ring& other) const {\n        return Ring(*this) *= other;\n    }\n    Ring&\
+    \ operator+=(const Ring& other) {\n        val = plus(val, other.val);\n     \
+    \   return *this;\n    }\n    Ring operator+(const Ring& other) const {\n    \
+    \    return Ring(*this) += other;\n    }\n    Ring operator-() const {\n     \
+    \   return Ring(plusinv(val));\n    }\n    Ring& operator-=(const Ring& other)\
+    \ {\n        return *this += -other;\n    }\n    Ring operator-(const Ring& other)\
+    \ const {\n        return Ring(*this) -= other;\n    }\n    Ring pow(ll n) const\
+    \ {\n        assert(n >= 0);\n        Ring res = one();\n        Ring a = *this;\n\
+    \        while(n > 0) {\n            if(n & 1) res *= a;\n            a *= a;\n\
+    \            n >>= 1;\n        }\n        return res;\n    }\n    friend istream&\
+    \ operator>>(istream& is, Ring& f) {\n        R r; is >> r;\n        f = Ring(r);\n\
+    \        return is;\n    }\n    friend ostream& operator<<(ostream& os, const\
+    \ Ring& f) {\n        return os << (R)f.val;\n    }\n};\nnamespace std {\n   \
+    \ template <\n        typename T,\n        T (*mult)(const T, const T),\n    \
+    \    T (*one)(),\n        T (*plus)(const T, const T),\n        T (*zero)(),\n\
+    \        T (*plusinv)(const T),\n        typename R,\n        T (*rtot)(const\
+    \ R),\n        R (*ttor)(const T)\n    >\n    struct hash<Ring<T, mult, one, plus,\
+    \ zero, plusinv, R, rtot, ttor>> {\n        size_t operator()(const Ring<T, mult,\
+    \ one, plus, zero, plusinv, R, rtot, ttor>& f) const {\n            return hash<T>()((R)f.val);\n\
+    \        }\n    };\n}\n"
   dependsOn:
   - base.hpp
   - stl-wrapper/all.hpp
@@ -448,12 +471,13 @@ data:
   - stl-wrapper/map.hpp
   - stl-wrapper/unordered_set.hpp
   - stl-wrapper/unordered_map.hpp
+  - algebra/ordinal_operator.hpp
   isVerificationFile: false
   path: algebra/ring.hpp
   requiredBy:
   - algebra/nimber.hpp
-  timestamp: '2022-11-01 23:37:53+00:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2022-11-03 00:18:24+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/yosupo-nim-product.test.cpp
 documentation_of: algebra/ring.hpp

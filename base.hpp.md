@@ -23,16 +23,19 @@ data:
     path: stl-wrapper/vector.hpp
     title: stl-wrapper/vector.hpp
   _extendedRequiredBy:
-  - icon: ':warning:'
+  - icon: ':x:'
     path: algebra/field.hpp
     title: algebra/field.hpp
+  - icon: ':x:'
+    path: algebra/modint.hpp
+    title: algebra/modint.hpp
   - icon: ':warning:'
     path: algebra/monoid.hpp
     title: algebra/monoid.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: algebra/nimber.hpp
     title: algebra/nimber.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: algebra/ring.hpp
     title: algebra/ring.hpp
   - icon: ':question:'
@@ -44,13 +47,13 @@ data:
   - icon: ':warning:'
     path: convolution/fft.hpp
     title: convolution/fft.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: convolution/ntt.hpp
     title: convolution/ntt.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: counting/counting.hpp
     title: counting/counting.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: counting/montmort.hpp
     title: counting/montmort.hpp
   - icon: ':warning:'
@@ -80,16 +83,13 @@ data:
   - icon: ':warning:'
     path: integer/least-prime-factors.hpp
     title: integer/least-prime-factors.hpp
-  - icon: ':question:'
-    path: integer/modint.hpp
-    title: integer/modint.hpp
-  - icon: ':question:'
+  - icon: ':x:'
     path: integer/pow-mod.hpp
     title: integer/pow-mod.hpp
   - icon: ':heavy_check_mark:'
     path: integer/prime.hpp
     title: integer/prime.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: matrix/matrix.hpp
     title: matrix/matrix.hpp
   - icon: ':question:'
@@ -114,22 +114,22 @@ data:
   - icon: ':heavy_check_mark:'
     path: test/aoj-alds-1-1-c.test.cpp
     title: test/aoj-alds-1-1-c.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/aoj-dpl-5-b.test.cpp
     title: test/aoj-dpl-5-b.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/aoj-dpl-5-d.test.cpp
     title: test/aoj-dpl-5-d.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/aoj-dpl-5-e.test.cpp
     title: test/aoj-dpl-5-e.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/aoj-dpl-5-g.test.cpp
     title: test/aoj-dpl-5-g.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/aoj-dpl-5-i.test.cpp
     title: test/aoj-dpl-5-i.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/aoj-dpl-5-j.test.cpp
     title: test/aoj-dpl-5-j.test.cpp
   - icon: ':heavy_check_mark:'
@@ -147,16 +147,16 @@ data:
   - icon: ':heavy_check_mark:'
     path: test/aoj-ntl-1-a.test.cpp
     title: test/aoj-ntl-1-a.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/aoj-ntl-1-b.test.cpp
     title: test/aoj-ntl-1-b.test.cpp
   - icon: ':heavy_check_mark:'
     path: test/aoj-ntl-1-e.test.cpp
     title: test/aoj-ntl-1-e.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/yosupo-convolution.test.cpp
     title: test/yosupo-convolution.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/yosupo-determinant-of-matrix.test.cpp
     title: test/yosupo-determinant-of-matrix.test.cpp
   - icon: ':heavy_check_mark:'
@@ -168,10 +168,10 @@ data:
   - icon: ':heavy_check_mark:'
     path: test/yosupo-lowest-common-ancestor.test.cpp
     title: test/yosupo-lowest-common-ancestor.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/yosupo-montmort-number.test.cpp
     title: test/yosupo-montmort-number.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: test/yosupo-nim-product.test.cpp
     title: test/yosupo-nim-product.test.cpp
   - icon: ':x:'
@@ -616,7 +616,6 @@ data:
   - integer/extgcd.hpp
   - integer/pow-mod.hpp
   - integer/least-prime-factors.hpp
-  - integer/modint.hpp
   - integer/prime.hpp
   - integer/kth-root-integer.hpp
   - bit/bitset.hpp
@@ -638,11 +637,12 @@ data:
   - algebra/field.hpp
   - algebra/monoid.hpp
   - algebra/ring.hpp
+  - algebra/modint.hpp
   - algebra/nimber.hpp
   - operator.hpp
   - geometry.hpp
   - string.hpp
-  timestamp: '2022-11-01 23:37:53+00:00'
+  timestamp: '2022-11-03 00:18:24+09:00'
   verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - test/aoj-dpl-5-j.test.cpp

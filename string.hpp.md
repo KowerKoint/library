@@ -5,18 +5,6 @@ data:
     path: base.hpp
     title: base.hpp
   - icon: ':question:'
-    path: integer/extgcd.hpp
-    title: integer/extgcd.hpp
-  - icon: ':question:'
-    path: integer/modint.hpp
-    title: integer/modint.hpp
-  - icon: ':question:'
-    path: integer/pow-mod.hpp
-    title: integer/pow-mod.hpp
-  - icon: ':question:'
-    path: operator.hpp
-    title: operator.hpp
-  - icon: ':question:'
     path: stl-wrapper/all.hpp
     title: stl-wrapper/all.hpp
   - icon: ':question:'
@@ -400,76 +388,11 @@ data:
     \ {\n    Vector<T> res(n+1), rev(n+1);\n    res[0] = 1;\n    REP(i, n) res[i+1]\
     \ = res[i] * (i+1);\n    rev[n] = 1 / res[n];\n    for(int i = n; i > 0; i--)\
     \ {\n        rev[i-1] = rev[i] * i;\n    }\n    return make_pair(res, rev);\n\
-    }\n#line 3 \"operator.hpp\"\n\ntemplate <typename T>\nT add_op(T a, T b) { return\
-    \ a + b; }\ntemplate <typename T>\nT sub_op(T a, T b) { return a - b; }\ntemplate\
-    \ <typename T>\nT zero_e() { return T(0); }\ntemplate <typename T>\nT div_op(T\
-    \ a, T b) { return a / b; }\ntemplate <typename T>\nT mult_op(T a, T b) { return\
-    \ a * b; }\ntemplate <typename T>\nT one_e() { return T(1); }\ntemplate <typename\
-    \ T>\nT xor_op(T a, T b) { return a ^ b; }\ntemplate <typename T>\nT and_op(T\
-    \ a, T b) { return a & b; }\ntemplate <typename T>\nT or_op(T a, T b) { return\
-    \ a | b; }\nll mod3() { return 998244353LL; }\nll mod7() { return 1000000007LL;\
-    \ }\nll mod9() { return 1000000009LL; }\ntemplate <typename T>\nT max_op(T a,\
-    \ T b) { return max(a, b); }\ntemplate <typename T>\nT min_op(T a, T b) { return\
-    \ min(a, b); }\n\ntemplate <typename T>\nT max_e() { return numeric_limits<T>::max();\
-    \ }\ntemplate <typename T>\nT min_e() { return numeric_limits<T>::min(); }\n#line\
-    \ 3 \"integer/extgcd.hpp\"\n\nll extgcd(ll a, ll b, ll& x, ll& y) {\n    x = 1,\
-    \ y = 0;\n    ll nx = 0, ny = 1;\n    while(b) {\n        ll q = a / b;\n    \
-    \    tie(a, b) = LP(b, a % b);\n        tie(x, nx) = LP(nx, x - nx*q);\n     \
-    \   tie(y, ny) = LP(ny, y - ny*q);\n    }\n    return a;\n}\n#line 2 \"integer/pow-mod.hpp\"\
-    \n\nll inv_mod(ll n, ll m) {\n    n %= m;\n    if (n < 0) n += m;\n    ll x, y;\n\
-    \    assert(extgcd(n, m, x, y) == 1);\n    x %= m;\n    if(x < 0) x += m;\n  \
-    \  return x;\n}\n\nll pow_mod(ll a, ll n, ll m) {\n    if(n == 0) return 1LL;\n\
-    \    if(n < 0) return inv_mod(pow_mod(a, -n, m), m);\n    a %= m;\n    if (a <\
-    \ 0) n += m;\n    ll res = 1;\n    while(n) {\n        if(n & 1) {\n         \
-    \   res *= a;\n            res %= m;\n        }\n        n >>= 1;\n        a *=\
-    \ a;\n        a %= m;\n    }\n    return res;\n}\n#line 4 \"integer/modint.hpp\"\
-    \n\ntemplate <ll (*mod)()>\nstruct Modint {\n    ll val;\n    \n    Modint():\
-    \ val(0) {}\n\n    Modint(ll x): val(x) {\n        val %= mod();\n        if(val\
-    \ < 0) val += mod();\n    }\n\n    Modint& operator+=(const Modint& r) {\n   \
-    \     val += r.val;\n        if(val >= mod()) val -= mod();\n        return *this;\n\
-    \    }\n    friend Modint operator+(const Modint& l, const Modint& r) {\n    \
-    \    return Modint(l) += r;\n    }\n\n    Modint& operator-=(const Modint& r)\
-    \ {\n        val -= r.val;\n        if(val < 0) val += mod();\n        return\
-    \ *this;\n    }\n    friend Modint operator-(const Modint& l, const Modint& r)\
-    \ {\n        return Modint(l) -= r;\n    }\n\n    Modint& operator*=(const Modint&\
-    \ r) {\n        val *= r.val;\n        val %= mod();\n        return *this;\n\
-    \    }\n    Modint operator*(const Modint& r) {\n        return (Modint(*this)\
-    \ *= r);\n    }\n    friend Modint operator*(const Modint& l, const Modint& r)\
-    \ {\n        return Modint(l) *= r;\n    }\n\n    Modint pow(ll n) const {\n \
-    \       return Modint(pow_mod(val, n, mod()));\n    }\n\n    Modint inv() const\
-    \ {\n        return Modint(inv_mod(val, mod()));\n    }\n\n    Modint& operator/=(const\
-    \ Modint& r) {\n        return (*this *= r.inv());\n    }\n    friend Modint operator/(const\
-    \ Modint& l, const Modint& r) {\n        return Modint(l) /= r;\n    }\n\n   \
-    \ Modint& operator^=(const ll n) {\n        val = pow_mod(val, n, mod());\n  \
-    \      return *this;\n    }\n    Modint operator^(const ll n) {\n        return\
-    \ this->pow(n);\n    }\n\n    Modint operator+() const { return *this; }\n   \
-    \ Modint operator-() const { return Modint() - *this; }\n\n    Modint& operator++()\
-    \ {\n        val++;\n        if(val == mod()) val = 0LL;\n        return *this;\n\
-    \    }\n    Modint& operator++(int) {\n        Modint res(*this);\n        ++*this;\n\
-    \        return res;\n    }\n\n    Modint& operator--() {\n        if(val == 0LL)\
-    \ val = mod();\n        val--;\n        return *this;\n    }\n    Modint& operator--(int)\
-    \ {\n        Modint res(*this);\n        --*this;\n        return res;\n    }\n\
-    \n    friend bool operator==(const Modint& l, const Modint& r) {\n        return\
-    \ l.val == r.val;\n    }\n    friend bool operator!=(const Modint& l, const Modint&\
-    \ r) {\n        return l.val != r.val;\n    }\n\n    static Pair<Vector<Modint>,\
-    \ Vector<Modint>> factorial(int n) {\n        Vector<Modint> fact(n+1), rfact(n+1);\n\
-    \        fact[0] = 1;\n        REP(i, n) fact[i+1] = fact[i] * (i+1);\n      \
-    \  rfact[n] = 1 / fact[n];\n        for(int i = n-1; i >= 0; i--) rfact[i] = rfact[i+1]\
-    \ * (i+1);\n        return {fact, rfact};\n    }\n\n    friend istream& operator>>(istream&\
-    \ is, Modint& mi) {\n        is >> mi.val;\n        return is;\n    }\n\n    friend\
-    \ ostream& operator<<(ostream& os, const Modint& mi) {\n        os << mi.val;\n\
-    \        return os;\n    }\n};\n\nnamespace std {\n    template<ll (*mod)()>\n\
-    \    struct hash<Modint<mod>> {\n        size_t operator()(const Modint<mod> &p)\
-    \ const {\n            return hash<ll>()(p.val);\n        }\n    };\n}\n\nusing\
-    \ MI3 = Modint<mod3>;\nusing V3 = Vector<MI3>;\nusing VV3 = Vector<V3>;\nusing\
-    \ VVV3 = Vector<VV3>;\nusing MI7 = Modint<mod7>;\nusing V7 = Vector<MI7>;\nusing\
-    \ VV7 = Vector<V7>;\nusing VVV7 = Vector<VV7>;\nusing MI9 = Modint<mod9>;\nusing\
-    \ V9 = Vector<MI9>;\nusing VV9 = Vector<V9>;\nusing VVV9 = Vector<VV9>;\n#line\
-    \ 4 \"string.hpp\"\n\ntemplate <typename It>\nVector<int> kmp_table(It begin,\
-    \ It end) {\n    int m = end - begin;\n    Vector<int> table(m);\n    int j =\
-    \ 0;\n    FOR(i, 1, m) {\n        while(j > 0 && *(begin+i) != *(begin+j)) j =\
-    \ table[j-1];\n        if(*(begin+i) == *(begin+j)) table[i] = ++j;\n    }\n \
-    \   return table;\n}\n\nVector<int> kmp_table(string& t) {\n    return kmp_table(ALL(t));\n\
+    }\n#line 4 \"string.hpp\"\n\ntemplate <typename It>\nVector<int> kmp_table(It\
+    \ begin, It end) {\n    int m = end - begin;\n    Vector<int> table(m);\n    int\
+    \ j = 0;\n    FOR(i, 1, m) {\n        while(j > 0 && *(begin+i) != *(begin+j))\
+    \ j = table[j-1];\n        if(*(begin+i) == *(begin+j)) table[i] = ++j;\n    }\n\
+    \    return table;\n}\n\nVector<int> kmp_table(string& t) {\n    return kmp_table(ALL(t));\n\
     }\n\ntemplate <typename It>\nVector<int> kmp_find(It s_begin, It s_end, It t_begin,\
     \ It t_end, Vector<int>& table) {\n    int n = s_end - s_begin;\n    int m = t_end\
     \ - t_begin;\n    Vector<int> res;\n    int j = 0;\n    REP(i, n) {\n        while(j\
@@ -536,23 +459,23 @@ data:
     \ == num);\n        assert(0 <= l && l <= r && r < hash[0].size());\n        expand(r\
     \ - l);\n        Vector<T> res(num);\n        REP(i, num) res[i] = hash[i][r]\
     \ - hash[i][l] * power[i][r-l];\n        return res;\n    }\n};\n"
-  code: "#pragma once\n\n#include \"integer/modint.hpp\"\n\ntemplate <typename It>\n\
-    Vector<int> kmp_table(It begin, It end) {\n    int m = end - begin;\n    Vector<int>\
-    \ table(m);\n    int j = 0;\n    FOR(i, 1, m) {\n        while(j > 0 && *(begin+i)\
-    \ != *(begin+j)) j = table[j-1];\n        if(*(begin+i) == *(begin+j)) table[i]\
-    \ = ++j;\n    }\n    return table;\n}\n\nVector<int> kmp_table(string& t) {\n\
-    \    return kmp_table(ALL(t));\n}\n\ntemplate <typename It>\nVector<int> kmp_find(It\
-    \ s_begin, It s_end, It t_begin, It t_end, Vector<int>& table) {\n    int n =\
-    \ s_end - s_begin;\n    int m = t_end - t_begin;\n    Vector<int> res;\n    int\
-    \ j = 0;\n    REP(i, n) {\n        while(j > 0 && *(s_begin+i) != *(t_begin+j))\
-    \ j = table[j-1];\n        if(*(s_begin+i) == *(t_begin+j)) {\n            if(++j\
-    \ == m) {\n                res.push_back(i - (m-1));\n                j = table[m-1];\n\
-    \            }\n        }\n    }\n    return res;\n}\n\nVector<int> kmp_find(string&\
-    \ s, string& t, Vector<int>& table) {\n    return kmp_find(ALL(s), ALL(t), table);\n\
-    }\n\ntemplate <typename T=char, T begin_char='a', int char_sz=26>\nstruct Trie\
-    \ {\n    struct Node {\n        T c;\n        int sz = 0;\n        int depth;\n\
-    \        Vector<Node*> nxt;\n        Node* failure;\n        Vector<int> fullmatch_keyword_id;\n\
-    \        Vector<int> suffixmatch_keyword_id;\n\n        Node(T _c, int _d): c(_c),\
+  code: "#pragma once\n\n#include \"base.hpp\"\n\ntemplate <typename It>\nVector<int>\
+    \ kmp_table(It begin, It end) {\n    int m = end - begin;\n    Vector<int> table(m);\n\
+    \    int j = 0;\n    FOR(i, 1, m) {\n        while(j > 0 && *(begin+i) != *(begin+j))\
+    \ j = table[j-1];\n        if(*(begin+i) == *(begin+j)) table[i] = ++j;\n    }\n\
+    \    return table;\n}\n\nVector<int> kmp_table(string& t) {\n    return kmp_table(ALL(t));\n\
+    }\n\ntemplate <typename It>\nVector<int> kmp_find(It s_begin, It s_end, It t_begin,\
+    \ It t_end, Vector<int>& table) {\n    int n = s_end - s_begin;\n    int m = t_end\
+    \ - t_begin;\n    Vector<int> res;\n    int j = 0;\n    REP(i, n) {\n        while(j\
+    \ > 0 && *(s_begin+i) != *(t_begin+j)) j = table[j-1];\n        if(*(s_begin+i)\
+    \ == *(t_begin+j)) {\n            if(++j == m) {\n                res.push_back(i\
+    \ - (m-1));\n                j = table[m-1];\n            }\n        }\n    }\n\
+    \    return res;\n}\n\nVector<int> kmp_find(string& s, string& t, Vector<int>&\
+    \ table) {\n    return kmp_find(ALL(s), ALL(t), table);\n}\n\ntemplate <typename\
+    \ T=char, T begin_char='a', int char_sz=26>\nstruct Trie {\n    struct Node {\n\
+    \        T c;\n        int sz = 0;\n        int depth;\n        Vector<Node*>\
+    \ nxt;\n        Node* failure;\n        Vector<int> fullmatch_keyword_id;\n  \
+    \      Vector<int> suffixmatch_keyword_id;\n\n        Node(T _c, int _d): c(_c),\
     \ depth(_d) {\n            nxt.resize(char_sz);\n            fill(ALL(nxt), nullptr);\n\
     \        }\n        ~Node() {\n            for(auto& p: nxt) if(p) delete p;\n\
     \        }\n    };\n\n    Node* root;\n    int keyword_id = 0;\n\n    Trie() {\n\
@@ -608,8 +531,6 @@ data:
     \ - l);\n        Vector<T> res(num);\n        REP(i, num) res[i] = hash[i][r]\
     \ - hash[i][l] * power[i][r-l];\n        return res;\n    }\n};\n"
   dependsOn:
-  - integer/modint.hpp
-  - operator.hpp
   - base.hpp
   - stl-wrapper/all.hpp
   - stl-wrapper/pair.hpp
@@ -618,12 +539,10 @@ data:
   - stl-wrapper/map.hpp
   - stl-wrapper/unordered_set.hpp
   - stl-wrapper/unordered_map.hpp
-  - integer/pow-mod.hpp
-  - integer/extgcd.hpp
   isVerificationFile: false
   path: string.hpp
   requiredBy: []
-  timestamp: '2022-11-01 23:37:53+00:00'
+  timestamp: '2022-11-03 00:18:24+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: string.hpp

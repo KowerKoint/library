@@ -27,12 +27,12 @@ data:
     title: stl-wrapper/vector.hpp
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/yosupo-montmort-number.test.cpp
     title: test/yosupo-montmort-number.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     links: []
   bundledCode: "#line 2 \"base.hpp\"\n\n#include <bits/stdc++.h>\nusing namespace\
@@ -409,8 +409,8 @@ data:
   isVerificationFile: false
   path: counting/montmort.hpp
   requiredBy: []
-  timestamp: '2022-11-01 23:37:53+00:00'
-  verificationStatus: LIBRARY_ALL_AC
+  timestamp: '2022-11-03 00:18:24+09:00'
+  verificationStatus: LIBRARY_ALL_WA
   verifiedWith:
   - test/yosupo-montmort-number.test.cpp
 documentation_of: counting/montmort.hpp

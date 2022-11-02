@@ -2,6 +2,9 @@
 data:
   _extendedDependsOn:
   - icon: ':question:'
+    path: algebra/ordinal_operator.hpp
+    title: algebra/ordinal_operator.hpp
+  - icon: ':question:'
     path: base.hpp
     title: base.hpp
   - icon: ':question:'
@@ -388,36 +391,62 @@ data:
     \ {\n    Vector<T> res(n+1), rev(n+1);\n    res[0] = 1;\n    REP(i, n) res[i+1]\
     \ = res[i] * (i+1);\n    rev[n] = 1 / res[n];\n    for(int i = n; i > 0; i--)\
     \ {\n        rev[i-1] = rev[i] * i;\n    }\n    return make_pair(res, rev);\n\
-    }\n#line 4 \"algebra/monoid.hpp\"\n\ntemplate <\n    typename T,\n    T (*mult)(const\
-    \ T, const T),\n    T (*one)()\n>\nstruct Monoid {\n    T val;\n\n    Monoid(T\
-    \ val=one()) : val(val) {\n    }\n    operator T() const {\n        return val;\n\
-    \    }\n    Monoid& operator*=(const Monoid& r) {\n        val = mult(val, r.val);\n\
-    \        return *this;\n    }\n    Monoid operator*(const Monoid& r) const {\n\
-    \        return Monoid(*this) *= r;\n    }\n    Monoid pow(ll n) const {\n   \
-    \     assert(n >= 0);\n        Monoid res = one();\n        Monoid a = *this;\n\
-    \        while(n > 0) {\n            if(n & 1) res *= a;\n            a *= a;\n\
-    \            n >>= 1;\n        }\n        return res;\n    }\n    friend istream&\
-    \ operator>>(istream& is, Monoid& r) {\n        return is >> r.val;\n    }\n \
-    \   friend ostream& operator<<(ostream& os, const Monoid& r) {\n        return\
-    \ os << r.val;\n    }\n};\nnamespace std {\n    template <typename T, T (*mult)(const\
-    \ T, const T), T (*one)()>\n    struct hash<Monoid<T, mult, one>> {\n        size_t\
-    \ operator()(const Monoid<T, mult, one>& r) const {\n            return hash<T>()(r.val);\n\
-    \        }\n    };\n}\n"
-  code: "#pragma once\n\n#include \"../base.hpp\"\n\ntemplate <\n    typename T,\n\
-    \    T (*mult)(const T, const T),\n    T (*one)()\n>\nstruct Monoid {\n    T val;\n\
-    \n    Monoid(T val=one()) : val(val) {\n    }\n    operator T() const {\n    \
-    \    return val;\n    }\n    Monoid& operator*=(const Monoid& r) {\n        val\
-    \ = mult(val, r.val);\n        return *this;\n    }\n    Monoid operator*(const\
-    \ Monoid& r) const {\n        return Monoid(*this) *= r;\n    }\n    Monoid pow(ll\
-    \ n) const {\n        assert(n >= 0);\n        Monoid res = one();\n        Monoid\
-    \ a = *this;\n        while(n > 0) {\n            if(n & 1) res *= a;\n      \
-    \      a *= a;\n            n >>= 1;\n        }\n        return res;\n    }\n\
-    \    friend istream& operator>>(istream& is, Monoid& r) {\n        return is >>\
-    \ r.val;\n    }\n    friend ostream& operator<<(ostream& os, const Monoid& r)\
-    \ {\n        return os << r.val;\n    }\n};\nnamespace std {\n    template <typename\
-    \ T, T (*mult)(const T, const T), T (*one)()>\n    struct hash<Monoid<T, mult,\
-    \ one>> {\n        size_t operator()(const Monoid<T, mult, one>& r) const {\n\
-    \            return hash<T>()(r.val);\n        }\n    };\n}\n"
+    }\n#line 2 \"algebra/ordinal_operator.hpp\"\n\ntemplate <typename T>\nT ordinal_identity(const\
+    \ T& x) {\n    return x;\n}\ntemplate <typename T>\nT ordinal_plus(const T& a,\
+    \ const T& b) {\n    return a + b;\n}\ntemplate <typename T>\nT ordinal_zero()\
+    \ {\n    return T(0);\n}\ntemplate <typename T>\nT ordinal_mult(const T& a, const\
+    \ T& b) {\n    return a * b;\n}\ntemplate <typename T>\nT ordinal_one() {\n  \
+    \  return T(1);\n}\ntemplate <typename T>\nT ordinal_plusinv(const T& a) {\n \
+    \   return -a;\n}\ntemplate <typename T>\nT ordinal_multinv(const T& a) {\n  \
+    \  return T(1) / a;\n}\ntemplate <typename T>\nT ordinal_xor(const T& a, const\
+    \ T& b) {\n    return a ^ b;\n}\ntemplate <typename T>\nT ordinal_and(const T&\
+    \ a, const T& b) {\n    return a & b;\n}\ntemplate <typename T>\nT ordinal_or(const\
+    \ T& a, const T& b) {\n    return a | b;\n}\n#line 5 \"algebra/monoid.hpp\"\n\n\
+    template <\n    typename T,\n    T (*mult)(const T&, const T&),\n    T (*one)(),\n\
+    \    typename R = T,\n    T (*rtot)(const R&) = ordinal_identity<R>,\n    R (*ttor)(const\
+    \ T&) = ordinal_identity<T>\n>\nstruct Monoid {\n    T val;\n    Monoid() : val(one())\
+    \ {}\n    Monoid(const R& r) : val(rtot(r)) {}\n    operator R() const { return\
+    \ ttor(val); }\n    Monoid& operator*=(const Monoid& other) {\n        val = mult(val,\
+    \ other.val);\n        return *this;\n    }\n    Monoid operator*(const Monoid&\
+    \ other) const {\n        return Monoid(*this) *= other;\n    }\n    Monoid inv()\
+    \ const {\n        return Monoid(multinv(val));\n    }\n    Monoid& operator/=\
+    \ (const Monoid& other) {\n        return *this *= other.inv();\n    }\n    Monoid\
+    \ operator/ (const Monoid& other) const {\n        return Monoid(*this) /= other;\n\
+    \    }\n    Monoid pow(ll n) const {\n        assert(n >= 0);\n        Monoid\
+    \ res = one();\n        Monoid a = *this;\n        while(n > 0) {\n          \
+    \  if(n & 1) res *= a;\n            a *= a;\n            n >>= 1;\n        }\n\
+    \        return res;\n    }\n    friend istream& operator>>(istream& is, Monoid&\
+    \ f) {\n        R r; is >> r;\n        f = Monoid(r);\n        return is;\n  \
+    \  }\n    friend ostream& operator<<(ostream& os, const Monoid& f) {\n       \
+    \ return os << (R)f.val;\n    }\n};\nnamespace std {\n    template <\n       \
+    \ typename T,\n        T (*mult)(const T, const T),\n        T (*one)(),\n   \
+    \     typename R,\n        T (*rtot)(const R),\n        R (*ttor)(const T)\n \
+    \   >\n    struct hash<Monoid<T, mult, one, R, rtot, ttor>> {\n        size_t\
+    \ operator()(const Monoid<T, mult, one, R, rtot, ttor>& f) const {\n         \
+    \   return hash<T>()((R)f.val);\n        }\n    };\n}\n"
+  code: "#pragma once\n\n#include \"../base.hpp\"\n#include \"ordinal_operator.hpp\"\
+    \n\ntemplate <\n    typename T,\n    T (*mult)(const T&, const T&),\n    T (*one)(),\n\
+    \    typename R = T,\n    T (*rtot)(const R&) = ordinal_identity<R>,\n    R (*ttor)(const\
+    \ T&) = ordinal_identity<T>\n>\nstruct Monoid {\n    T val;\n    Monoid() : val(one())\
+    \ {}\n    Monoid(const R& r) : val(rtot(r)) {}\n    operator R() const { return\
+    \ ttor(val); }\n    Monoid& operator*=(const Monoid& other) {\n        val = mult(val,\
+    \ other.val);\n        return *this;\n    }\n    Monoid operator*(const Monoid&\
+    \ other) const {\n        return Monoid(*this) *= other;\n    }\n    Monoid inv()\
+    \ const {\n        return Monoid(multinv(val));\n    }\n    Monoid& operator/=\
+    \ (const Monoid& other) {\n        return *this *= other.inv();\n    }\n    Monoid\
+    \ operator/ (const Monoid& other) const {\n        return Monoid(*this) /= other;\n\
+    \    }\n    Monoid pow(ll n) const {\n        assert(n >= 0);\n        Monoid\
+    \ res = one();\n        Monoid a = *this;\n        while(n > 0) {\n          \
+    \  if(n & 1) res *= a;\n            a *= a;\n            n >>= 1;\n        }\n\
+    \        return res;\n    }\n    friend istream& operator>>(istream& is, Monoid&\
+    \ f) {\n        R r; is >> r;\n        f = Monoid(r);\n        return is;\n  \
+    \  }\n    friend ostream& operator<<(ostream& os, const Monoid& f) {\n       \
+    \ return os << (R)f.val;\n    }\n};\nnamespace std {\n    template <\n       \
+    \ typename T,\n        T (*mult)(const T, const T),\n        T (*one)(),\n   \
+    \     typename R,\n        T (*rtot)(const R),\n        R (*ttor)(const T)\n \
+    \   >\n    struct hash<Monoid<T, mult, one, R, rtot, ttor>> {\n        size_t\
+    \ operator()(const Monoid<T, mult, one, R, rtot, ttor>& f) const {\n         \
+    \   return hash<T>()((R)f.val);\n        }\n    };\n}\n"
   dependsOn:
   - base.hpp
   - stl-wrapper/all.hpp
@@ -427,10 +456,11 @@ data:
   - stl-wrapper/map.hpp
   - stl-wrapper/unordered_set.hpp
   - stl-wrapper/unordered_map.hpp
+  - algebra/ordinal_operator.hpp
   isVerificationFile: false
   path: algebra/monoid.hpp
   requiredBy: []
-  timestamp: '2022-11-01 23:37:53+00:00'
+  timestamp: '2022-11-03 00:18:24+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: algebra/monoid.hpp
