@@ -1,49 +1,49 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: algebra/field.hpp
     title: algebra/field.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: algebra/modint.hpp
     title: algebra/modint.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: algebra/ordinal_operator.hpp
     title: algebra/ordinal_operator.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: base.hpp
     title: base.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: integer/extgcd.hpp
     title: integer/extgcd.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: integer/pow-mod.hpp
     title: integer/pow-mod.hpp
   - icon: ':heavy_check_mark:'
     path: matrix/matrix.hpp
     title: matrix/matrix.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: operator.hpp
     title: operator.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/all.hpp
     title: stl-wrapper/all.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/map.hpp
     title: stl-wrapper/map.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/pair.hpp
     title: stl-wrapper/pair.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/set.hpp
     title: stl-wrapper/set.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/unordered_map.hpp
     title: stl-wrapper/unordered_map.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/unordered_set.hpp
     title: stl-wrapper/unordered_set.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/vector.hpp
     title: stl-wrapper/vector.hpp
   _extendedRequiredBy: []
@@ -609,7 +609,7 @@ data:
   isVerificationFile: true
   path: test/yosupo-determinant-of-matrix.test.cpp
   requiredBy: []
-  timestamp: '2022-11-03 02:21:27+09:00'
+  timestamp: '2022-11-03 09:22:44+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/yosupo-determinant-of-matrix.test.cpp

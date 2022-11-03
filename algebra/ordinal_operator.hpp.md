@@ -2,19 +2,19 @@
 data:
   _extendedDependsOn: []
   _extendedRequiredBy:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: algebra/field.hpp
     title: algebra/field.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: algebra/modint.hpp
     title: algebra/modint.hpp
   - icon: ':warning:'
     path: algebra/monoid.hpp
     title: algebra/monoid.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: algebra/nimber.hpp
     title: algebra/nimber.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: algebra/ring.hpp
     title: algebra/ring.hpp
   - icon: ':heavy_check_mark:'
@@ -51,18 +51,18 @@ data:
   - icon: ':heavy_check_mark:'
     path: test/yosupo-determinant-of-matrix.test.cpp
     title: test/yosupo-determinant-of-matrix.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: test/yosupo-montmort-number.test.cpp
     title: test/yosupo-montmort-number.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: test/yosupo-nim-product.test.cpp
     title: test/yosupo-nim-product.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: test/yosupo-range-affine-range-sum.test.cpp
     title: test/yosupo-range-affine-range-sum.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"algebra/ordinal_operator.hpp\"\n\ntemplate <typename T>\n\
@@ -98,8 +98,8 @@ data:
   - algebra/ring.hpp
   - algebra/modint.hpp
   - algebra/nimber.hpp
-  timestamp: '2022-11-03 02:21:27+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  timestamp: '2022-11-03 09:22:44+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/aoj-dpl-5-j.test.cpp
   - test/aoj-dpl-5-e.test.cpp

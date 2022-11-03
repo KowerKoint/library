@@ -1,44 +1,44 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: base.hpp
     title: base.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: connectivity/union-find.hpp
     title: connectivity/union-find.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: graph/graph.hpp
     title: graph/graph.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: graph/tree.hpp
     title: graph/tree.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/all.hpp
     title: stl-wrapper/all.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/map.hpp
     title: stl-wrapper/map.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/pair.hpp
     title: stl-wrapper/pair.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/set.hpp
     title: stl-wrapper/set.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/unordered_map.hpp
     title: stl-wrapper/unordered_map.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/unordered_set.hpp
     title: stl-wrapper/unordered_set.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/vector.hpp
     title: stl-wrapper/vector.hpp
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/lca
@@ -542,8 +542,8 @@ data:
   isVerificationFile: true
   path: test/yosupo-lowest-common-ancestor.test.cpp
   requiredBy: []
-  timestamp: '2022-11-03 02:21:27+09:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  timestamp: '2022-11-03 09:22:44+09:00'
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/yosupo-lowest-common-ancestor.test.cpp
 layout: document

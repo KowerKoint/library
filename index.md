@@ -3,27 +3,27 @@ data:
   libraryCategories:
   - name: algebra
     pages:
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: algebra/field.hpp
       title: algebra/field.hpp
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: algebra/modint.hpp
       title: algebra/modint.hpp
     - icon: ':warning:'
       path: algebra/monoid.hpp
       title: algebra/monoid.hpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: algebra/nimber.hpp
       title: algebra/nimber.hpp
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: algebra/ordinal_operator.hpp
       title: algebra/ordinal_operator.hpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: algebra/ring.hpp
       title: algebra/ring.hpp
   - name: .
     pages:
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: base.hpp
       title: base.hpp
     - icon: ':warning:'
@@ -32,7 +32,7 @@ data:
     - icon: ':warning:'
       path: geometry.hpp
       title: geometry.hpp
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: operator.hpp
       title: operator.hpp
     - icon: ':warning:'
@@ -40,12 +40,12 @@ data:
       title: string.hpp
   - name: bit
     pages:
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: bit/bitset.hpp
       title: bit/bitset.hpp
   - name: connectivity
     pages:
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: connectivity/union-find.hpp
       title: connectivity/union-find.hpp
   - name: convolution
@@ -61,7 +61,7 @@ data:
     - icon: ':heavy_check_mark:'
       path: counting/counting.hpp
       title: counting/counting.hpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: counting/montmort.hpp
       title: counting/montmort.hpp
     - icon: ':warning:'
@@ -72,27 +72,27 @@ data:
     - icon: ':heavy_check_mark:'
       path: graph/ford-fulkerson.hpp
       title: graph/ford-fulkerson.hpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: graph/graph.hpp
       title: graph/graph.hpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: graph/tree.hpp
       title: graph/tree.hpp
   - name: integer
     pages:
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: integer/extgcd.hpp
       title: integer/extgcd.hpp
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: integer/kth-root-integer.hpp
       title: integer/kth-root-integer.hpp
     - icon: ':warning:'
       path: integer/least-prime-factors.hpp
       title: integer/least-prime-factors.hpp
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: integer/pow-mod.hpp
       title: integer/pow-mod.hpp
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: integer/prime.hpp
       title: integer/prime.hpp
   - name: matrix
@@ -102,39 +102,39 @@ data:
       title: matrix/matrix.hpp
   - name: segtree
     pages:
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: segtree/beats.hpp
       title: segtree/beats.hpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: segtree/lazy-segtree.hpp
       title: segtree/lazy-segtree.hpp
     - icon: ':heavy_check_mark:'
       path: segtree/segtree.hpp
       title: segtree/segtree.hpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: segtree/wavelet-matrix.hpp
       title: segtree/wavelet-matrix.hpp
   - name: stl-wrapper
     pages:
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: stl-wrapper/all.hpp
       title: stl-wrapper/all.hpp
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: stl-wrapper/map.hpp
       title: stl-wrapper/map.hpp
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: stl-wrapper/pair.hpp
       title: stl-wrapper/pair.hpp
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: stl-wrapper/set.hpp
       title: stl-wrapper/set.hpp
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: stl-wrapper/unordered_map.hpp
       title: stl-wrapper/unordered_map.hpp
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: stl-wrapper/unordered_set.hpp
       title: stl-wrapper/unordered_set.hpp
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: stl-wrapper/vector.hpp
       title: stl-wrapper/vector.hpp
   verificationCategories:
@@ -191,34 +191,34 @@ data:
     - icon: ':heavy_check_mark:'
       path: test/yosupo-determinant-of-matrix.test.cpp
       title: test/yosupo-determinant-of-matrix.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: test/yosupo-enumerate-primes.test.cpp
       title: test/yosupo-enumerate-primes.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: test/yosupo-kth-root-integer.test.cpp
       title: test/yosupo-kth-root-integer.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: test/yosupo-lowest-common-ancestor.test.cpp
       title: test/yosupo-lowest-common-ancestor.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: test/yosupo-montmort-number.test.cpp
       title: test/yosupo-montmort-number.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: test/yosupo-nim-product.test.cpp
       title: test/yosupo-nim-product.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: test/yosupo-range-affine-range-sum.test.cpp
       title: test/yosupo-range-affine-range-sum.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: test/yosupo-range-chmin-chmax-add-range-sum.test.cpp
       title: test/yosupo-range-chmin-chmax-add-range-sum.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: test/yosupo-set-xor-min.test.cpp
       title: test/yosupo-set-xor-min.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: test/yosupo-shortest-path.test.cpp
       title: test/yosupo-shortest-path.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: test/yosupo-static-range-frequency.test.cpp
       title: test/yosupo-static-range-frequency.test.cpp
 layout: toppage

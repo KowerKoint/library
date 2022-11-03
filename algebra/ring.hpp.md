@@ -1,44 +1,44 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: algebra/ordinal_operator.hpp
     title: algebra/ordinal_operator.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: base.hpp
     title: base.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/all.hpp
     title: stl-wrapper/all.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/map.hpp
     title: stl-wrapper/map.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/pair.hpp
     title: stl-wrapper/pair.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/set.hpp
     title: stl-wrapper/set.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/unordered_map.hpp
     title: stl-wrapper/unordered_map.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/unordered_set.hpp
     title: stl-wrapper/unordered_set.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/vector.hpp
     title: stl-wrapper/vector.hpp
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: algebra/nimber.hpp
     title: algebra/nimber.hpp
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: test/yosupo-nim-product.test.cpp
     title: test/yosupo-nim-product.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"base.hpp\"\n\n#include <bits/stdc++.h>\nusing namespace\
@@ -492,8 +492,8 @@ data:
   path: algebra/ring.hpp
   requiredBy:
   - algebra/nimber.hpp
-  timestamp: '2022-11-03 02:21:27+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2022-11-03 09:22:44+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/yosupo-nim-product.test.cpp
 documentation_of: algebra/ring.hpp

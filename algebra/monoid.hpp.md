@@ -1,31 +1,31 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: algebra/ordinal_operator.hpp
     title: algebra/ordinal_operator.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: base.hpp
     title: base.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/all.hpp
     title: stl-wrapper/all.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/map.hpp
     title: stl-wrapper/map.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/pair.hpp
     title: stl-wrapper/pair.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/set.hpp
     title: stl-wrapper/set.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/unordered_map.hpp
     title: stl-wrapper/unordered_map.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/unordered_set.hpp
     title: stl-wrapper/unordered_set.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/vector.hpp
     title: stl-wrapper/vector.hpp
   _extendedRequiredBy: []
@@ -468,7 +468,7 @@ data:
   isVerificationFile: false
   path: algebra/monoid.hpp
   requiredBy: []
-  timestamp: '2022-11-03 02:21:27+09:00'
+  timestamp: '2022-11-03 09:22:44+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: algebra/monoid.hpp
