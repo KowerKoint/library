@@ -1,10 +1,10 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/set.hpp
     title: stl-wrapper/set.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/vector.hpp
     title: stl-wrapper/vector.hpp
   _extendedRequiredBy: []
@@ -141,7 +141,7 @@ data:
   isVerificationFile: true
   path: test/yosupo-set-xor-min.test.cpp
   requiredBy: []
-  timestamp: '2022-11-06 10:00:21+00:00'
+  timestamp: '2022-11-06 10:32:16+00:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/yosupo-set-xor-min.test.cpp

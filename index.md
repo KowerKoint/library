@@ -3,13 +3,13 @@ data:
   libraryCategories:
   - name: algebra
     pages:
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: algebra/field.hpp
       title: algebra/field.hpp
     - icon: ':heavy_check_mark:'
       path: algebra/fps.hpp
       title: algebra/fps.hpp
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: algebra/modint.hpp
       title: algebra/modint.hpp
     - icon: ':heavy_check_mark:'
@@ -17,7 +17,7 @@ data:
       title: algebra/nimber.hpp
   - name: .
     pages:
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: base.hpp
       title: base.hpp
     - icon: ':warning:'
@@ -55,7 +55,7 @@ data:
     - icon: ':heavy_check_mark:'
       path: counting/counting.hpp
       title: counting/counting.hpp
-    - icon: ':x:'
+    - icon: ':warning:'
       path: counting/montmort.hpp
       title: counting/montmort.hpp
     - icon: ':warning:'
@@ -74,7 +74,7 @@ data:
       title: graph/tree.hpp
   - name: integer
     pages:
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: integer/extgcd.hpp
       title: integer/extgcd.hpp
     - icon: ':heavy_check_mark:'
@@ -83,7 +83,7 @@ data:
     - icon: ':warning:'
       path: integer/least-prime-factors.hpp
       title: integer/least-prime-factors.hpp
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: integer/pow-mod.hpp
       title: integer/pow-mod.hpp
     - icon: ':heavy_check_mark:'
@@ -110,25 +110,25 @@ data:
       title: segtree/wavelet-matrix.hpp
   - name: stl-wrapper
     pages:
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: stl-wrapper/all.hpp
       title: stl-wrapper/all.hpp
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: stl-wrapper/map.hpp
       title: stl-wrapper/map.hpp
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: stl-wrapper/pair.hpp
       title: stl-wrapper/pair.hpp
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: stl-wrapper/set.hpp
       title: stl-wrapper/set.hpp
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: stl-wrapper/unordered_map.hpp
       title: stl-wrapper/unordered_map.hpp
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: stl-wrapper/unordered_set.hpp
       title: stl-wrapper/unordered_set.hpp
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: stl-wrapper/vector.hpp
       title: stl-wrapper/vector.hpp
   verificationCategories:
@@ -194,9 +194,6 @@ data:
     - icon: ':heavy_check_mark:'
       path: test/yosupo-lowest-common-ancestor.test.cpp
       title: test/yosupo-lowest-common-ancestor.test.cpp
-    - icon: ':x:'
-      path: test/yosupo-montmort-number.test.cpp
-      title: test/yosupo-montmort-number.test.cpp
     - icon: ':heavy_check_mark:'
       path: test/yosupo-nim-product.test.cpp
       title: test/yosupo-nim-product.test.cpp

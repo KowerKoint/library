@@ -1,31 +1,31 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: base.hpp
     title: base.hpp
   - icon: ':heavy_check_mark:'
     path: operator.hpp
     title: operator.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/all.hpp
     title: stl-wrapper/all.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/map.hpp
     title: stl-wrapper/map.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/pair.hpp
     title: stl-wrapper/pair.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/set.hpp
     title: stl-wrapper/set.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/unordered_map.hpp
     title: stl-wrapper/unordered_map.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/unordered_set.hpp
     title: stl-wrapper/unordered_set.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/vector.hpp
     title: stl-wrapper/vector.hpp
   _extendedRequiredBy: []
@@ -580,7 +580,7 @@ data:
   isVerificationFile: false
   path: matrix/matrix.hpp
   requiredBy: []
-  timestamp: '2022-11-06 10:00:21+00:00'
+  timestamp: '2022-11-06 10:32:16+00:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/yosupo-determinant-of-matrix.test.cpp
