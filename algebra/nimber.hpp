@@ -1,7 +1,5 @@
 #pragma once
-
-#include "ring.hpp"
-#include "ordinal_operator.hpp"
+#include "field.hpp"
 
 namespace _nimber_precalc {
     static ull small_product[256][256];
@@ -51,4 +49,30 @@ ull nim_product(const ull& x, const ull& y) {
     return ret;
 }
 
-using Nimber = Ring<ull, nim_product, ordinal_one<ull>, ordinal_xor<ull>, ordinal_zero<ull>, ordinal_identity<ull>>;
+struct NimberBase {
+    ull val;
+};
+
+template<>
+struct SumGroup<NimberBase> {
+    inline static NimberBase& addassign(NimberBase& l, const NimberBase& r) {
+        l.val ^= r.val;
+        return l;
+    }
+    constexpr static bool defzero = true;
+    constexpr static NimberBase zero = {0};
+    inline static NimberBase minus(const NimberBase& r) {
+        return r;
+    }
+};
+template<>
+struct ProdGroup<NimberBase> {
+    static NimberBase& mulassign(NimberBase& l, const NimberBase& r) {
+        l.val = nim_product(l.val, r.val);
+        return l;
+    }
+    constexpr static bool defone = true;
+    constexpr static NimberBase one = {1};
+};
+
+using Nimber = Field<NimberBase>;

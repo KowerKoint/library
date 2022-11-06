@@ -1,40 +1,80 @@
 #pragma once
 #include "../base.hpp"
-#include "ordinal_operator.hpp"
 
-template <
-    typename T,
-    T (*mult)(const T&, const T&),
-    T (*one)(),
-    T (*multinv)(const T&),
-    T (*plus)(const T&, const T&),
-    T (*zero)(),
-    T (*plusinv)(const T&),
-    typename R = T,
-    T (*rtot)(const R&) = ordinal_identity<R>,
-    R (*ttor)(const T&) = ordinal_identity<T>
->
+template <typename T>
+struct SumGroup {
+    static_assert(is_arithmetic_v<T>);
+    constexpr static T& addassign(T& l, const T& r) {
+        return l += r;
+    }
+    constexpr static bool defzero = true;
+    constexpr static T zero = 0;
+    constexpr static T minus(const T& x) {
+        return -x;
+    }
+};
+template <typename T>
+struct ProdGroup {
+    static_assert(is_arithmetic_v<T>);
+    constexpr static T& mulassign(T& l, const T& r) {
+        return l *= r;
+    }
+    constexpr static bool defone = true;
+    constexpr static T one = 1;
+    constexpr static T inv(const T& x) {
+        static_assert(is_floating_point_v<T>);
+        return one / x;
+    }
+};
+template <typename T>
+struct Representation {
+    using R = decltype(T::val);
+    constexpr static T construct(const R& x) { return {x}; }
+    constexpr static R represent(const T& x) { return x.val; }
+};
+template <typename T>
+struct FiniteProperty {
+    constexpr static bool is_finite = false;
+};
+
+template <typename T>
 struct Field {
-private:
-    T _val;
-public:
-    Field() : _val(zero()) {}
-    Field(const R& r) : _val(rtot(r)) {}
-    R val() const { return ttor(_val); }
-    Field& operator*=(const Field& other) {
-        _val = mult(_val, other._val);
+    using R = typename Representation<T>::R;
+    T val;
+    constexpr static T zero() {
+        return SumGroup<T>::zero;
+    }
+    constexpr static T one() {
+        return ProdGroup<T>::one;
+    }
+    constexpr Field() {
+        if constexpr(SumGroup<T>::defzero) val = SumGroup<T>::zero;
+        else if constexpr(SumGroup<T>::defone) val = SumGroup<T>::one;
+        else val = T();
+    }
+    constexpr Field(const R& r) : val(Representation<T>::construct(r)) {}
+    constexpr Field(const T& r) : val(r) {}
+    constexpr R represent() const { return Representation<T>::represent(val); }
+    constexpr static Field premitive_root() {
+        return {FiniteProperty<T>::premitive_root()};
+    }
+    constexpr static size_t order() {
+        return FiniteProperty<T>::order();
+    }
+    constexpr Field& operator*=(const Field& other) {
+        ProdGroup<T>::mulassign(val, other.val);
         return *this;
     }
-    Field operator*(const Field& other) const {
+    constexpr Field operator*(const Field& other) const {
         return Field(*this) *= other;
     }
-    Field inv() const {
-        return Field(multinv(_val));
+    constexpr Field inv() const {
+        return ProdGroup<T>::inv(val);
     }
-    Field& operator/=(const Field& other) {
+    constexpr Field& operator/=(const Field& other) {
         return *this *= other.inv();
     }
-    Field operator/(const Field& other) const {
+    constexpr Field operator/(const Field& other) const {
         return Field(*this) /= other;
     }
     Field pow(ll n) const {
@@ -50,26 +90,26 @@ public:
         }
         return res;
     }
-    Field operator+() const {
+    constexpr Field operator+() const {
         return *this;
     }
-    Field& operator+=(const Field& other) {
-        _val = plus(_val, other._val);
+    constexpr Field& operator+=(const Field& other) {
+        SumGroup<T>::addassign(val, other.val);
         return *this;
     }
-    Field operator+(const Field& other) const {
+    constexpr Field operator+(const Field& other) const {
         return Field(*this) += other;
     }
-    Field operator-() const {
-        return Field(plusinv(_val));
+    constexpr Field operator-() const {
+        return SumGroup<T>::minus(val);
     }
-    Field& operator-=(const Field& other) {
+    constexpr Field& operator-=(const Field& other) {
         return *this += -other;
     }
-    Field operator-(const Field& other) const {
+    constexpr Field operator-(const Field& other) const {
         return Field(*this) -= other;
     }
-    Field& operator++() {
+    constexpr Field& operator++() {
         return *this += Field(one());
     }
     Field operator++(int) {
@@ -77,7 +117,7 @@ public:
         ++*this;
         return ret;
     }
-    Field& operator--() {
+    constexpr Field& operator--() {
         return *this -= Field(one());
     }
     Field operator--(int) {
@@ -85,22 +125,22 @@ public:
         --*this;
         return ret;
     }
-    bool operator==(const Field& other) const {
-        return val() == other.val();
+    constexpr bool operator==(const Field& other) const {
+        return represent() == other.represent();
     }
-    bool operator!=(const Field& other) const {
+    constexpr bool operator!=(const Field& other) const {
         return !(*this == other);
     }
-    bool operator<(const Field& other) const {
-        return val() < other.val();
+    constexpr bool operator<(const Field& other) const {
+        return represent() < other.represent();
     }
-    bool operator>(const Field& other) const {
+    constexpr bool operator>(const Field& other) const {
         return other < *this;
     }
-    bool operator<=(const Field& other) const {
+    constexpr bool operator<=(const Field& other) const {
         return !(other < *this);
     }
-    bool operator>=(const Field& other) const {
+    constexpr bool operator>=(const Field& other) const {
         return !(*this < other);
     }
     friend istream& operator>>(istream& is, Field& f) {
@@ -109,25 +149,18 @@ public:
         return is;
     }
     friend ostream& operator<<(ostream& os, const Field& f) {
-        return os << f.val();
+        return os << f.represent();
     }
 };
 namespace std {
-    template <
-        typename T,
-        T (*mult)(const T, const T),
-        T (*one)(),
-        T (*multinv)(const T),
-        T (*plus)(const T, const T),
-        T (*zero)(),
-        T (*plusinv)(const T),
-        typename R,
-        T (*rtot)(const R),
-        R (*ttor)(const T)
-    >
-    struct hash<Field<T, mult, one, multinv, plus, zero, plusinv, R, rtot, ttor>> {
-        size_t operator()(const Field<T, mult, one, multinv, plus, zero, plusinv, R, rtot, ttor>& f) const {
-            return hash<R>()(f.val());
+    template <typename T>
+    struct hash<Field<T>> {
+        size_t operator()(const Field<T>& f) const {
+            return hash<typename Field<T>::R>()(f.represent());
         }
     };
 }
+template <typename T>
+struct FiniteProperty<Field<T>> {
+    constexpr static bool is_finite = FiniteProperty<T>::is_finite;
+};
