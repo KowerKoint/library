@@ -6,7 +6,7 @@
 template <typename T>
 struct SumGroupFPS : SumGroupBase<Vector<T>> {
     static Vector<T>& addassign(Vector<T>& l, const Vector<T>& r) {
-        resize(max(l.size(), r.size()));
+        l.resize(max(l.size(), r.size()));
         for(int i = 0; i < r.size(); i++) {
             l[i] += r[i];
         }
