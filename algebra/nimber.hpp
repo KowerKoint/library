@@ -49,30 +49,23 @@ ull nim_product(const ull& x, const ull& y) {
     return ret;
 }
 
-struct NimberBase {
-    ull val;
-};
-
-template<>
-struct SumGroup<NimberBase> {
-    inline static NimberBase& addassign(NimberBase& l, const NimberBase& r) {
-        l.val ^= r.val;
-        return l;
+struct SumGroupNimber : SumGroupBase<ull> {
+    constexpr static ull& addassign(ull& l, const ull& r) {
+        return l ^= r;
     }
     constexpr static bool defzero = true;
-    constexpr static NimberBase zero = {0};
-    inline static NimberBase minus(const NimberBase& r) {
+    constexpr static ull zero = 0;
+    inline static ull minus(const ull& r) {
         return r;
     }
 };
-template<>
-struct ProdGroup<NimberBase> {
-    static NimberBase& mulassign(NimberBase& l, const NimberBase& r) {
-        l.val = nim_product(l.val, r.val);
+struct ProdGroupNimber : ProdGroupBase<ull> {
+    static ull& mulassign(ull& l, const ull& r) {
+        l = nim_product(l, r);
         return l;
     }
     constexpr static bool defone = true;
-    constexpr static NimberBase one = {1};
+    constexpr static ull one = 1;
 };
 
-using Nimber = Field<NimberBase>;
+using Nimber = Field<ull, SumGroupNimber, ProdGroupNimber>;
