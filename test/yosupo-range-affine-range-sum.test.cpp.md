@@ -1,13 +1,13 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: algebra/field.hpp
     title: algebra/field.hpp
   - icon: ':heavy_check_mark:'
     path: algebra/modint.hpp
     title: algebra/modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: base.hpp
     title: base.hpp
   - icon: ':heavy_check_mark:'
@@ -22,25 +22,25 @@ data:
   - icon: ':heavy_check_mark:'
     path: segtree/lazy-segtree.hpp
     title: segtree/lazy-segtree.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/all.hpp
     title: stl-wrapper/all.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/map.hpp
     title: stl-wrapper/map.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/pair.hpp
     title: stl-wrapper/pair.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/set.hpp
     title: stl-wrapper/set.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/unordered_map.hpp
     title: stl-wrapper/unordered_map.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/unordered_set.hpp
     title: stl-wrapper/unordered_set.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/vector.hpp
     title: stl-wrapper/vector.hpp
   _extendedRequiredBy: []
@@ -410,57 +410,55 @@ data:
     \ {\n    Vector<T> res(n+1), rev(n+1);\n    res[0] = 1;\n    REP(i, n) res[i+1]\
     \ = res[i] * (i+1);\n    rev[n] = 1 / res[n];\n    for(int i = n; i > 0; i--)\
     \ {\n        rev[i-1] = rev[i] * i;\n    }\n    return make_pair(res, rev);\n\
-    }\n#line 3 \"integer/extgcd.hpp\"\n\nll extgcd(ll a, ll b, ll& x, ll& y) {\n \
-    \   x = 1, y = 0;\n    ll nx = 0, ny = 1;\n    while(b) {\n        ll q = a /\
-    \ b;\n        tie(a, b) = LP(b, a % b);\n        tie(x, nx) = LP(nx, x - nx*q);\n\
-    \        tie(y, ny) = LP(ny, y - ny*q);\n    }\n    return a;\n}\n#line 2 \"integer/pow-mod.hpp\"\
-    \n\nll inv_mod(ll n, ll m) {\n    n %= m;\n    if (n < 0) n += m;\n    ll x, y;\n\
-    \    assert(extgcd(n, m, x, y) == 1);\n    x %= m;\n    if(x < 0) x += m;\n  \
-    \  return x;\n}\n\nll pow_mod(ll a, ll n, ll m) {\n    if(n == 0) return 1LL;\n\
+    }\n#line 3 \"integer/extgcd.hpp\"\n\nconstexpr ll extgcd(ll a, ll b, ll& x, ll&\
+    \ y) {\n    x = 1, y = 0;\n    ll nx = 0, ny = 1;\n    while(b) {\n        ll\
+    \ q = a / b;\n        tie(a, b) = LP(b, a % b);\n        tie(x, nx) = LP(nx, x\
+    \ - nx*q);\n        tie(y, ny) = LP(ny, y - ny*q);\n    }\n    return a;\n}\n\
+    #line 2 \"integer/pow-mod.hpp\"\n\nconstexpr ll inv_mod(ll n, ll m) {\n    n %=\
+    \ m;\n    if (n < 0) n += m;\n    ll x = -1, y = -1;\n    if(extgcd(n, m, x, y)\
+    \ != 1) throw logic_error(\"\");\n    x %= m;\n    if(x < 0) x += m;\n    return\
+    \ x;\n}\n\nconstexpr ll pow_mod(ll a, ll n, ll m) {\n    if(n == 0) return 1LL;\n\
     \    if(n < 0) return inv_mod(pow_mod(a, -n, m), m);\n    a %= m;\n    if (a <\
     \ 0) n += m;\n    ll res = 1;\n    while(n) {\n        if(n & 1) {\n         \
     \   res *= a;\n            res %= m;\n        }\n        n >>= 1;\n        a *=\
     \ a;\n        a %= m;\n    }\n    return res;\n}\n#line 3 \"algebra/field.hpp\"\
-    \n\ntemplate <typename T>\nstruct SumGroup {\n    static_assert(is_arithmetic_v<T>);\n\
-    \    constexpr static T& addassign(T& l, const T& r) {\n        return l += r;\n\
-    \    }\n    constexpr static bool defzero = true;\n    constexpr static T zero\
-    \ = 0;\n    constexpr static T minus(const T& x) {\n        return -x;\n    }\n\
-    };\ntemplate <typename T>\nstruct ProdGroup {\n    static_assert(is_arithmetic_v<T>);\n\
-    \    constexpr static T& mulassign(T& l, const T& r) {\n        return l *= r;\n\
-    \    }\n    constexpr static bool defone = true;\n    constexpr static T one =\
-    \ 1;\n    constexpr static T inv(const T& x) {\n        static_assert(is_floating_point_v<T>);\n\
-    \        return one / x;\n    }\n};\ntemplate <typename T>\nstruct Representation\
-    \ {\n    using R = decltype(T::val);\n    constexpr static T construct(const R&\
-    \ x) { return {x}; }\n    constexpr static R represent(const T& x) { return x.val;\
-    \ }\n};\ntemplate <typename T>\nstruct FiniteProperty {\n    constexpr static\
-    \ bool is_finite = false;\n};\n\ntemplate <typename T>\nstruct Field {\n    using\
-    \ R = typename Representation<T>::R;\n    T val;\n    constexpr static T zero()\
-    \ {\n        return SumGroup<T>::zero;\n    }\n    constexpr static T one() {\n\
-    \        return ProdGroup<T>::one;\n    }\n    constexpr Field() {\n        if\
-    \ constexpr(SumGroup<T>::defzero) val = SumGroup<T>::zero;\n        else if constexpr(SumGroup<T>::defone)\
-    \ val = SumGroup<T>::one;\n        else val = T();\n    }\n    constexpr Field(const\
-    \ R& r) : val(Representation<T>::construct(r)) {}\n    constexpr Field(const T&\
-    \ r) : val(r) {}\n    constexpr R represent() const { return Representation<T>::represent(val);\
-    \ }\n    constexpr static Field premitive_root() {\n        return {FiniteProperty<T>::premitive_root()};\n\
-    \    }\n    constexpr static size_t order() {\n        return FiniteProperty<T>::order();\n\
-    \    }\n    constexpr Field& operator*=(const Field& other) {\n        ProdGroup<T>::mulassign(val,\
+    \n\ntemplate <typename T>\nstruct SumGroupBase {\n    constexpr static bool defzero\
+    \ = false;\n};\ntemplate <typename T>\nstruct ProdGroupBase {\n    constexpr static\
+    \ bool defone = false;\n};\ntemplate <typename T>\nstruct RepresentationBase {\n\
+    \    using R = T;\n    constexpr static T construct(const R& x) { return x; }\n\
+    \    constexpr static R represent(const T& x) { return x; }\n};\ntemplate <typename\
+    \ T>\nstruct FinitePropertyBase {\n    constexpr static bool is_finite = false;\n\
+    };\n\ntemplate <typename T, typename SumGroup = SumGroupBase<T>, typename ProdGroup\
+    \ = ProdGroupBase<T>, typename Representation = RepresentationBase<T>, typename\
+    \ FiniteProperty = FinitePropertyBase<T>>\nstruct Field {\n    using R = typename\
+    \ Representation::R;\n    T val;\n    constexpr static T zero() {\n        return\
+    \ SumGroup::zero;\n    }\n    constexpr static T one() {\n        return ProdGroup::one;\n\
+    \    }\n    constexpr static bool defzero = SumGroup::defzero;\n    constexpr\
+    \ static bool defone = ProdGroup::defone;\n    constexpr static bool is_finite\
+    \ = FiniteProperty::is_finite;\n    constexpr Field() {\n        if constexpr(SumGroup::defzero)\
+    \ val = zero();\n        else if constexpr(SumGroup::defone) val = one();\n  \
+    \      else val = T();\n    }\n    constexpr Field(const R& r) : val(Representation::construct(r))\
+    \ {}\n    constexpr R represent() const { return Representation::represent(val);\
+    \ }\n    constexpr static Field premitive_root() {\n        return FiniteProperty::premitive_root();\n\
+    \    }\n    constexpr static size_t order() {\n        return FiniteProperty::order();\n\
+    \    }\n    constexpr Field& operator*=(const Field& other) {\n        ProdGroup::mulassign(val,\
     \ other.val);\n        return *this;\n    }\n    constexpr Field operator*(const\
     \ Field& other) const {\n        return Field(*this) *= other;\n    }\n    constexpr\
-    \ Field inv() const {\n        return ProdGroup<T>::inv(val);\n    }\n    constexpr\
+    \ Field inv() const {\n        return ProdGroup::inv(val);\n    }\n    constexpr\
     \ Field& operator/=(const Field& other) {\n        return *this *= other.inv();\n\
     \    }\n    constexpr Field operator/(const Field& other) const {\n        return\
-    \ Field(*this) /= other;\n    }\n    Field pow(ll n) const {\n        if(n < 0)\
-    \ {\n            return inv().pow(-n);\n        }\n        Field res = one();\n\
-    \        Field a = *this;\n        while(n > 0) {\n            if(n & 1) res *=\
-    \ a;\n            a *= a;\n            n >>= 1;\n        }\n        return res;\n\
-    \    }\n    constexpr Field operator+() const {\n        return *this;\n    }\n\
-    \    constexpr Field& operator+=(const Field& other) {\n        SumGroup<T>::addassign(val,\
-    \ other.val);\n        return *this;\n    }\n    constexpr Field operator+(const\
-    \ Field& other) const {\n        return Field(*this) += other;\n    }\n    constexpr\
-    \ Field operator-() const {\n        return SumGroup<T>::minus(val);\n    }\n\
-    \    constexpr Field& operator-=(const Field& other) {\n        return *this +=\
-    \ -other;\n    }\n    constexpr Field operator-(const Field& other) const {\n\
-    \        return Field(*this) -= other;\n    }\n    constexpr Field& operator++()\
+    \ Field(*this) /= other;\n    }\n    constexpr Field pow(ll n) const {\n     \
+    \   if(n < 0) {\n            return inv().pow(-n);\n        }\n        Field res\
+    \ = one();\n        Field a = *this;\n        while(n > 0) {\n            if(n\
+    \ & 1) res *= a;\n            a *= a;\n            n >>= 1;\n        }\n     \
+    \   return res;\n    }\n    constexpr Field operator+() const {\n        return\
+    \ *this;\n    }\n    constexpr Field& operator+=(const Field& other) {\n     \
+    \   SumGroup::addassign(val, other.val);\n        return *this;\n    }\n    constexpr\
+    \ Field operator+(const Field& other) const {\n        return Field(*this) +=\
+    \ other;\n    }\n    constexpr Field operator-() const {\n        return SumGroup::minus(val);\n\
+    \    }\n    constexpr Field& operator-=(const Field& other) {\n        return\
+    \ *this += -other;\n    }\n    constexpr Field operator-(const Field& other) const\
+    \ {\n        return Field(*this) -= other;\n    }\n    constexpr Field& operator++()\
     \ {\n        return *this += Field(one());\n    }\n    Field operator++(int) {\n\
     \        Field ret = *this;\n        ++*this;\n        return ret;\n    }\n  \
     \  constexpr Field& operator--() {\n        return *this -= Field(one());\n  \
@@ -474,70 +472,66 @@ data:
     \ operator<=(const Field& other) const {\n        return !(other < *this);\n \
     \   }\n    constexpr bool operator>=(const Field& other) const {\n        return\
     \ !(*this < other);\n    }\n    friend istream& operator>>(istream& is, Field&\
-    \ f) {\n        R r; is >> r;\n        f = Field(r);\n        return is;\n   \
-    \ }\n    friend ostream& operator<<(ostream& os, const Field& f) {\n        return\
-    \ os << f.represent();\n    }\n};\nnamespace std {\n    template <typename T>\n\
-    \    struct hash<Field<T>> {\n        size_t operator()(const Field<T>& f) const\
+    \ f) {\n        R r; is >> r;\n        f = r;\n        return is;\n    }\n   \
+    \ friend ostream& operator<<(ostream& os, const Field& f) {\n        return os\
+    \ << f.represent();\n    }\n};\nnamespace std {\n    template <typename T>\n \
+    \   struct hash<Field<T>> {\n        size_t operator()(const Field<T>& f) const\
     \ {\n            return hash<typename Field<T>::R>()(f.represent());\n       \
-    \ }\n    };\n}\ntemplate <typename T>\nstruct FiniteProperty<Field<T>> {\n   \
-    \ constexpr static bool is_finite = FiniteProperty<T>::is_finite;\n};\n#line 4\
-    \ \"algebra/modint.hpp\"\n\ntemplate <ll mod>\nstruct ModintBase {\n    ll val;\n\
-    };\ntemplate <ll mod>\nstruct SumGroup<ModintBase<mod>> {\n    static ModintBase<mod>&\
-    \ addassign(ModintBase<mod>& l, const ModintBase<mod>& r) {\n        ll ret;\n\
-    \        if(__builtin_add_overflow(l.val, r.val, &ret)) {\n            l.val =\
-    \ l.val % mod + r.val % mod;\n        } else {\n            l.val = ret;\n   \
-    \     }\n        return l;\n    }\n    constexpr static bool defzero = true;\n\
-    \    constexpr static ModintBase<mod> zero = {0};\n    constexpr static ModintBase<mod>\
-    \ minus(const ModintBase<mod>& x) {\n        return {-x.val};\n    }\n};\ntemplate\
-    \ <ll mod>\nstruct ProdGroup<ModintBase<mod>> {\n    constexpr static bool defmul\
-    \ = true;\n    static ModintBase<mod>& mulassign(ModintBase<mod>& l, const ModintBase<mod>&\
-    \ r) {\n        ll ret;\n        if(__builtin_mul_overflow(l.val, r.val, &ret))\
-    \ {\n            l.val = (l.val % mod) * (r.val % mod);\n        } else {\n  \
-    \          l.val = ret;\n        }\n        return l;\n    }\n    constexpr static\
-    \ bool defone = true;\n    constexpr static ModintBase<mod> one = {1};\n    constexpr\
-    \ static bool definv = true;\n    static ModintBase<mod> inv(const ModintBase<mod>&\
-    \ x) {\n        return {inv_mod(x.val, mod)};\n    }\n};\ntemplate <ll mod>\n\
-    struct Representation<ModintBase<mod>> {\n    using R = ll;\n    constexpr static\
-    \ ModintBase<mod> construct(const R& x) { return {x % mod}; }\n    static R represent(const\
-    \ ModintBase<mod>& x) {\n        ll ret = x.val % mod;\n        if(ret < 0) ret\
-    \ += mod;\n        return ret;\n    }\n};\ntemplate <ll mod>\nstruct FiniteProperty<ModintBase<mod>>\
-    \ {\n    constexpr static bool is_finite = true;\n    constexpr static ModintBase<mod>\
-    \ premitive_root() {\n        static_assert(mod == 998244353);\n        return\
-    \ 3;\n    }\n    constexpr static size_t order() {\n        return mod - 1;\n\
-    \    }\n};\n\ntemplate <ll mod>\nusing Modint = Field<ModintBase<mod>>;\n\nusing\
-    \ MI3 = Modint<998244353>;\nusing V3 = Vector<MI3>;\nusing VV3 = Vector<V3>;\n\
-    using VVV3 = Vector<VV3>;\nusing MI7 = Modint<1000000007>;\nusing V7 = Vector<MI7>;\n\
-    using VV7 = Vector<V7>;\nusing VVV7 = Vector<VV7>;\n#line 3 \"operator.hpp\"\n\
-    \ntemplate <typename T>\nT add_op(T a, T b) { return a + b; }\ntemplate <typename\
-    \ T>\nT sub_op(T a, T b) { return a - b; }\ntemplate <typename T>\nT zero_e()\
-    \ { return T(0); }\ntemplate <typename T>\nT div_op(T a, T b) { return a / b;\
-    \ }\ntemplate <typename T>\nT mult_op(T a, T b) { return a * b; }\ntemplate <typename\
-    \ T>\nT one_e() { return T(1); }\ntemplate <typename T>\nT xor_op(T a, T b) {\
-    \ return a ^ b; }\ntemplate <typename T>\nT and_op(T a, T b) { return a & b; }\n\
-    template <typename T>\nT or_op(T a, T b) { return a | b; }\nll mod3() { return\
-    \ 998244353LL; }\nll mod7() { return 1000000007LL; }\nll mod9() { return 1000000009LL;\
-    \ }\ntemplate <typename T>\nT max_op(T a, T b) { return max(a, b); }\ntemplate\
-    \ <typename T>\nT min_op(T a, T b) { return min(a, b); }\n\ntemplate <typename\
-    \ T>\nT max_e() { return numeric_limits<T>::max(); }\ntemplate <typename T>\n\
-    T min_e() { return numeric_limits<T>::min(); }\n#line 3 \"segtree/lazy-segtree.hpp\"\
-    \n\ntemplate <typename S, S (*op)(S, S), S (*e)(), typename F, S (*mapping)(F,\
-    \ S), F (*composition)(F, F), F (*id)()>\nstruct LazySegTree {\nprotected:\n \
-    \   int n, sz, height;\n    Vector<S> state;\n    Vector<F> lazy;\n    void update(int\
-    \ k) {\n        assert(0 <= k && k < sz);\n        state[k] = op(state[k*2], state[k*2+1]);\n\
-    \    }\n    void all_apply(int k, const F& f) {\n        assert(0 <= k && k <\
-    \ sz*2);\n        state[k] = mapping(f, state[k]);\n        if(k < sz) lazy[k]\
-    \ = composition(f, lazy[k]);\n    }\n    void push(int k) {\n        assert(0\
-    \ <= k && k < sz);\n        all_apply(k*2, lazy[k]);\n        all_apply(k*2+1,\
-    \ lazy[k]);\n        lazy[k] = id();\n    }\npublic:\n    LazySegTree(int n =\
-    \ 0): n(n) {\n        assert(0 <= n);\n        sz = 1;\n        height = 0;\n\
-    \        while(sz < n) {\n            height++;\n            sz <<= 1;\n     \
-    \   }\n        state.assign(sz*2, e());\n        lazy.assign(sz*2, id());\n  \
-    \  }\n    LazySegTree(const vector<S>& v): n(v.size()) {\n        sz = 1;\n  \
-    \      height = 0;\n        while(sz < n) {\n            height++;\n         \
-    \   sz <<= 1;\n        }\n        state.assign(sz*2, e());\n        REP(i, v.size())\
-    \ state[sz+i] = v[i];\n        for(int i = sz-1; i > 0; i--) update(i);\n    \
-    \    lazy.assign(sz*2, id());\n    }\n    S get(int i) {\n        assert(0 <=\
-    \ i && i < n);\n        i += sz;\n        for(int k = height; k > 0; k--) {\n\
+    \ }\n    };\n}\n#line 4 \"algebra/modint.hpp\"\n\ntemplate <ll mod>\nstruct SumGroupModint\
+    \ : SumGroupBase<ll> {\n    static ll& addassign(ll& l, const ll& r) {\n     \
+    \   ll ret;\n        if(__builtin_add_overflow(l, r, &ret)) {\n            l =\
+    \ l % mod + r % mod;\n        } else {\n            l = ret;\n        }\n    \
+    \    return l;\n    }\n    constexpr static bool defzero = true;\n    constexpr\
+    \ static ll zero = 0;\n    constexpr static ll minus(const ll& x) {\n        return\
+    \ -x;\n    }\n};\ntemplate <ll mod>\nstruct ProdGroupModint : ProdGroupBase<ll>\
+    \ {\n    constexpr static bool defmul = true;\n    static ll& mulassign(ll& l,\
+    \ const ll& r) {\n        ll ret;\n        if(__builtin_mul_overflow(l, r, &ret))\
+    \ {\n            l = (l % mod) * (r % mod);\n        } else {\n            l =\
+    \ ret;\n        }\n        return l;\n    }\n    constexpr static bool defone\
+    \ = true;\n    constexpr static ll one = 1;\n    constexpr static bool definv\
+    \ = true;\n    constexpr static ll inv(const ll& x) {\n        return inv_mod(x,\
+    \ mod);\n    }\n};\ntemplate <ll mod>\nstruct RepresentationModint : RepresentationBase<ll>\
+    \ {\n    using R = ll;\n    constexpr static ll construct(const R& x) { return\
+    \ x % mod; }\n    constexpr static R represent(const ll& x) {\n        ll ret\
+    \ = x % mod;\n        if(ret < 0) ret += mod;\n        return ret;\n    }\n};\n\
+    template <ll mod>\nstruct FinitePropertyModint : FinitePropertyBase<ll> {\n  \
+    \  constexpr static bool is_finite = true;\n    constexpr static ll premitive_root()\
+    \ {\n        static_assert(mod == 998244353);\n        return 3;\n    }\n    constexpr\
+    \ static size_t order() {\n        return mod - 1;\n    }\n};\n\ntemplate <ll\
+    \ mod>\nusing Modint = Field<ll, SumGroupModint<mod>, ProdGroupModint<mod>, RepresentationModint<mod>,\
+    \ FinitePropertyModint<mod>>;\n\nusing MI3 = Modint<998244353>;\nusing V3 = Vector<MI3>;\n\
+    using VV3 = Vector<V3>;\nusing VVV3 = Vector<VV3>;\nusing MI7 = Modint<1000000007>;\n\
+    using V7 = Vector<MI7>;\nusing VV7 = Vector<V7>;\nusing VVV7 = Vector<VV7>;\n\
+    #line 3 \"operator.hpp\"\n\ntemplate <typename T>\nT add_op(T a, T b) { return\
+    \ a + b; }\ntemplate <typename T>\nT sub_op(T a, T b) { return a - b; }\ntemplate\
+    \ <typename T>\nT zero_e() { return T(0); }\ntemplate <typename T>\nT div_op(T\
+    \ a, T b) { return a / b; }\ntemplate <typename T>\nT mult_op(T a, T b) { return\
+    \ a * b; }\ntemplate <typename T>\nT one_e() { return T(1); }\ntemplate <typename\
+    \ T>\nT xor_op(T a, T b) { return a ^ b; }\ntemplate <typename T>\nT and_op(T\
+    \ a, T b) { return a & b; }\ntemplate <typename T>\nT or_op(T a, T b) { return\
+    \ a | b; }\nll mod3() { return 998244353LL; }\nll mod7() { return 1000000007LL;\
+    \ }\nll mod9() { return 1000000009LL; }\ntemplate <typename T>\nT max_op(T a,\
+    \ T b) { return max(a, b); }\ntemplate <typename T>\nT min_op(T a, T b) { return\
+    \ min(a, b); }\n\ntemplate <typename T>\nT max_e() { return numeric_limits<T>::max();\
+    \ }\ntemplate <typename T>\nT min_e() { return numeric_limits<T>::min(); }\n#line\
+    \ 3 \"segtree/lazy-segtree.hpp\"\n\ntemplate <typename S, S (*op)(S, S), S (*e)(),\
+    \ typename F, S (*mapping)(F, S), F (*composition)(F, F), F (*id)()>\nstruct LazySegTree\
+    \ {\nprotected:\n    int n, sz, height;\n    Vector<S> state;\n    Vector<F> lazy;\n\
+    \    void update(int k) {\n        assert(0 <= k && k < sz);\n        state[k]\
+    \ = op(state[k*2], state[k*2+1]);\n    }\n    void all_apply(int k, const F& f)\
+    \ {\n        assert(0 <= k && k < sz*2);\n        state[k] = mapping(f, state[k]);\n\
+    \        if(k < sz) lazy[k] = composition(f, lazy[k]);\n    }\n    void push(int\
+    \ k) {\n        assert(0 <= k && k < sz);\n        all_apply(k*2, lazy[k]);\n\
+    \        all_apply(k*2+1, lazy[k]);\n        lazy[k] = id();\n    }\npublic:\n\
+    \    LazySegTree(int n = 0): n(n) {\n        assert(0 <= n);\n        sz = 1;\n\
+    \        height = 0;\n        while(sz < n) {\n            height++;\n       \
+    \     sz <<= 1;\n        }\n        state.assign(sz*2, e());\n        lazy.assign(sz*2,\
+    \ id());\n    }\n    LazySegTree(const vector<S>& v): n(v.size()) {\n        sz\
+    \ = 1;\n        height = 0;\n        while(sz < n) {\n            height++;\n\
+    \            sz <<= 1;\n        }\n        state.assign(sz*2, e());\n        REP(i,\
+    \ v.size()) state[sz+i] = v[i];\n        for(int i = sz-1; i > 0; i--) update(i);\n\
+    \        lazy.assign(sz*2, id());\n    }\n    S get(int i) {\n        assert(0\
+    \ <= i && i < n);\n        i += sz;\n        for(int k = height; k > 0; k--) {\n\
     \            push(i >> k);\n        }\n        return state[i];\n    }\n    void\
     \ set(int i, const S& x) {\n        assert(0 <= i && i < n);\n        i += sz;\n\
     \        for(int k = height; k > 0; k--) {\n            push(i >> k);\n      \
@@ -645,7 +639,7 @@ data:
   isVerificationFile: true
   path: test/yosupo-range-affine-range-sum.test.cpp
   requiredBy: []
-  timestamp: '2022-11-06 10:32:16+00:00'
+  timestamp: '2022-11-06 15:16:24+00:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/yosupo-range-affine-range-sum.test.cpp

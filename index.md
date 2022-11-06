@@ -3,7 +3,7 @@ data:
   libraryCategories:
   - name: algebra
     pages:
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: algebra/field.hpp
       title: algebra/field.hpp
     - icon: ':heavy_check_mark:'
@@ -12,12 +12,12 @@ data:
     - icon: ':heavy_check_mark:'
       path: algebra/modint.hpp
       title: algebra/modint.hpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: algebra/nimber.hpp
       title: algebra/nimber.hpp
   - name: .
     pages:
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: base.hpp
       title: base.hpp
     - icon: ':warning:'
@@ -110,25 +110,25 @@ data:
       title: segtree/wavelet-matrix.hpp
   - name: stl-wrapper
     pages:
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: stl-wrapper/all.hpp
       title: stl-wrapper/all.hpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: stl-wrapper/map.hpp
       title: stl-wrapper/map.hpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: stl-wrapper/pair.hpp
       title: stl-wrapper/pair.hpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: stl-wrapper/set.hpp
       title: stl-wrapper/set.hpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: stl-wrapper/unordered_map.hpp
       title: stl-wrapper/unordered_map.hpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: stl-wrapper/unordered_set.hpp
       title: stl-wrapper/unordered_set.hpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: stl-wrapper/vector.hpp
       title: stl-wrapper/vector.hpp
   verificationCategories:
@@ -194,7 +194,7 @@ data:
     - icon: ':heavy_check_mark:'
       path: test/yosupo-lowest-common-ancestor.test.cpp
       title: test/yosupo-lowest-common-ancestor.test.cpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: test/yosupo-nim-product.test.cpp
       title: test/yosupo-nim-product.test.cpp
     - icon: ':heavy_check_mark:'

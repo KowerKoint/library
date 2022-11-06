@@ -1,7 +1,7 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: algebra/field.hpp
     title: algebra/field.hpp
   - icon: ':heavy_check_mark:'
@@ -10,7 +10,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: algebra/modint.hpp
     title: algebra/modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: base.hpp
     title: base.hpp
   - icon: ':heavy_check_mark:'
@@ -25,25 +25,25 @@ data:
   - icon: ':heavy_check_mark:'
     path: integer/pow-mod.hpp
     title: integer/pow-mod.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/all.hpp
     title: stl-wrapper/all.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/map.hpp
     title: stl-wrapper/map.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/pair.hpp
     title: stl-wrapper/pair.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/set.hpp
     title: stl-wrapper/set.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/unordered_map.hpp
     title: stl-wrapper/unordered_map.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/unordered_set.hpp
     title: stl-wrapper/unordered_set.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/vector.hpp
     title: stl-wrapper/vector.hpp
   _extendedRequiredBy: []
@@ -412,105 +412,62 @@ data:
     \ {\n    Vector<T> res(n+1), rev(n+1);\n    res[0] = 1;\n    REP(i, n) res[i+1]\
     \ = res[i] * (i+1);\n    rev[n] = 1 / res[n];\n    for(int i = n; i > 0; i--)\
     \ {\n        rev[i-1] = rev[i] * i;\n    }\n    return make_pair(res, rev);\n\
-    }\n#line 3 \"algebra/field.hpp\"\n\ntemplate <typename T>\nstruct SumGroup {\n\
-    \    static_assert(is_arithmetic_v<T>);\n    constexpr static T& addassign(T&\
-    \ l, const T& r) {\n        return l += r;\n    }\n    constexpr static bool defzero\
-    \ = true;\n    constexpr static T zero = 0;\n    constexpr static T minus(const\
-    \ T& x) {\n        return -x;\n    }\n};\ntemplate <typename T>\nstruct ProdGroup\
-    \ {\n    static_assert(is_arithmetic_v<T>);\n    constexpr static T& mulassign(T&\
-    \ l, const T& r) {\n        return l *= r;\n    }\n    constexpr static bool defone\
-    \ = true;\n    constexpr static T one = 1;\n    constexpr static T inv(const T&\
-    \ x) {\n        static_assert(is_floating_point_v<T>);\n        return one / x;\n\
-    \    }\n};\ntemplate <typename T>\nstruct Representation {\n    using R = decltype(T::val);\n\
-    \    constexpr static T construct(const R& x) { return {x}; }\n    constexpr static\
-    \ R represent(const T& x) { return x.val; }\n};\ntemplate <typename T>\nstruct\
-    \ FiniteProperty {\n    constexpr static bool is_finite = false;\n};\n\ntemplate\
-    \ <typename T>\nstruct Field {\n    using R = typename Representation<T>::R;\n\
-    \    T val;\n    constexpr static T zero() {\n        return SumGroup<T>::zero;\n\
-    \    }\n    constexpr static T one() {\n        return ProdGroup<T>::one;\n  \
-    \  }\n    constexpr Field() {\n        if constexpr(SumGroup<T>::defzero) val\
-    \ = SumGroup<T>::zero;\n        else if constexpr(SumGroup<T>::defone) val = SumGroup<T>::one;\n\
-    \        else val = T();\n    }\n    constexpr Field(const R& r) : val(Representation<T>::construct(r))\
-    \ {}\n    constexpr Field(const T& r) : val(r) {}\n    constexpr R represent()\
-    \ const { return Representation<T>::represent(val); }\n    constexpr static Field\
-    \ premitive_root() {\n        return {FiniteProperty<T>::premitive_root()};\n\
-    \    }\n    constexpr static size_t order() {\n        return FiniteProperty<T>::order();\n\
-    \    }\n    constexpr Field& operator*=(const Field& other) {\n        ProdGroup<T>::mulassign(val,\
-    \ other.val);\n        return *this;\n    }\n    constexpr Field operator*(const\
-    \ Field& other) const {\n        return Field(*this) *= other;\n    }\n    constexpr\
-    \ Field inv() const {\n        return ProdGroup<T>::inv(val);\n    }\n    constexpr\
-    \ Field& operator/=(const Field& other) {\n        return *this *= other.inv();\n\
-    \    }\n    constexpr Field operator/(const Field& other) const {\n        return\
-    \ Field(*this) /= other;\n    }\n    Field pow(ll n) const {\n        if(n < 0)\
-    \ {\n            return inv().pow(-n);\n        }\n        Field res = one();\n\
-    \        Field a = *this;\n        while(n > 0) {\n            if(n & 1) res *=\
+    }\n#line 3 \"algebra/field.hpp\"\n\ntemplate <typename T>\nstruct SumGroupBase\
+    \ {\n    constexpr static bool defzero = false;\n};\ntemplate <typename T>\nstruct\
+    \ ProdGroupBase {\n    constexpr static bool defone = false;\n};\ntemplate <typename\
+    \ T>\nstruct RepresentationBase {\n    using R = T;\n    constexpr static T construct(const\
+    \ R& x) { return x; }\n    constexpr static R represent(const T& x) { return x;\
+    \ }\n};\ntemplate <typename T>\nstruct FinitePropertyBase {\n    constexpr static\
+    \ bool is_finite = false;\n};\n\ntemplate <typename T, typename SumGroup = SumGroupBase<T>,\
+    \ typename ProdGroup = ProdGroupBase<T>, typename Representation = RepresentationBase<T>,\
+    \ typename FiniteProperty = FinitePropertyBase<T>>\nstruct Field {\n    using\
+    \ R = typename Representation::R;\n    T val;\n    constexpr static T zero() {\n\
+    \        return SumGroup::zero;\n    }\n    constexpr static T one() {\n     \
+    \   return ProdGroup::one;\n    }\n    constexpr static bool defzero = SumGroup::defzero;\n\
+    \    constexpr static bool defone = ProdGroup::defone;\n    constexpr static bool\
+    \ is_finite = FiniteProperty::is_finite;\n    constexpr Field() {\n        if\
+    \ constexpr(SumGroup::defzero) val = zero();\n        else if constexpr(SumGroup::defone)\
+    \ val = one();\n        else val = T();\n    }\n    constexpr Field(const R& r)\
+    \ : val(Representation::construct(r)) {}\n    constexpr R represent() const {\
+    \ return Representation::represent(val); }\n    constexpr static Field premitive_root()\
+    \ {\n        return FiniteProperty::premitive_root();\n    }\n    constexpr static\
+    \ size_t order() {\n        return FiniteProperty::order();\n    }\n    constexpr\
+    \ Field& operator*=(const Field& other) {\n        ProdGroup::mulassign(val, other.val);\n\
+    \        return *this;\n    }\n    constexpr Field operator*(const Field& other)\
+    \ const {\n        return Field(*this) *= other;\n    }\n    constexpr Field inv()\
+    \ const {\n        return ProdGroup::inv(val);\n    }\n    constexpr Field& operator/=(const\
+    \ Field& other) {\n        return *this *= other.inv();\n    }\n    constexpr\
+    \ Field operator/(const Field& other) const {\n        return Field(*this) /=\
+    \ other;\n    }\n    constexpr Field pow(ll n) const {\n        if(n < 0) {\n\
+    \            return inv().pow(-n);\n        }\n        Field res = one();\n  \
+    \      Field a = *this;\n        while(n > 0) {\n            if(n & 1) res *=\
     \ a;\n            a *= a;\n            n >>= 1;\n        }\n        return res;\n\
     \    }\n    constexpr Field operator+() const {\n        return *this;\n    }\n\
-    \    constexpr Field& operator+=(const Field& other) {\n        SumGroup<T>::addassign(val,\
+    \    constexpr Field& operator+=(const Field& other) {\n        SumGroup::addassign(val,\
     \ other.val);\n        return *this;\n    }\n    constexpr Field operator+(const\
     \ Field& other) const {\n        return Field(*this) += other;\n    }\n    constexpr\
-    \ Field operator-() const {\n        return SumGroup<T>::minus(val);\n    }\n\
-    \    constexpr Field& operator-=(const Field& other) {\n        return *this +=\
-    \ -other;\n    }\n    constexpr Field operator-(const Field& other) const {\n\
-    \        return Field(*this) -= other;\n    }\n    constexpr Field& operator++()\
-    \ {\n        return *this += Field(one());\n    }\n    Field operator++(int) {\n\
-    \        Field ret = *this;\n        ++*this;\n        return ret;\n    }\n  \
-    \  constexpr Field& operator--() {\n        return *this -= Field(one());\n  \
-    \  }\n    Field operator--(int) {\n        Field ret = *this;\n        --*this;\n\
-    \        return ret;\n    }\n    constexpr bool operator==(const Field& other)\
-    \ const {\n        return represent() == other.represent();\n    }\n    constexpr\
-    \ bool operator!=(const Field& other) const {\n        return !(*this == other);\n\
-    \    }\n    constexpr bool operator<(const Field& other) const {\n        return\
-    \ represent() < other.represent();\n    }\n    constexpr bool operator>(const\
-    \ Field& other) const {\n        return other < *this;\n    }\n    constexpr bool\
-    \ operator<=(const Field& other) const {\n        return !(other < *this);\n \
-    \   }\n    constexpr bool operator>=(const Field& other) const {\n        return\
-    \ !(*this < other);\n    }\n    friend istream& operator>>(istream& is, Field&\
-    \ f) {\n        R r; is >> r;\n        f = Field(r);\n        return is;\n   \
-    \ }\n    friend ostream& operator<<(ostream& os, const Field& f) {\n        return\
-    \ os << f.represent();\n    }\n};\nnamespace std {\n    template <typename T>\n\
-    \    struct hash<Field<T>> {\n        size_t operator()(const Field<T>& f) const\
-    \ {\n            return hash<typename Field<T>::R>()(f.represent());\n       \
-    \ }\n    };\n}\ntemplate <typename T>\nstruct FiniteProperty<Field<T>> {\n   \
-    \ constexpr static bool is_finite = FiniteProperty<T>::is_finite;\n};\n#line 3\
-    \ \"integer/extgcd.hpp\"\n\nll extgcd(ll a, ll b, ll& x, ll& y) {\n    x = 1,\
-    \ y = 0;\n    ll nx = 0, ny = 1;\n    while(b) {\n        ll q = a / b;\n    \
-    \    tie(a, b) = LP(b, a % b);\n        tie(x, nx) = LP(nx, x - nx*q);\n     \
-    \   tie(y, ny) = LP(ny, y - ny*q);\n    }\n    return a;\n}\n#line 2 \"integer/pow-mod.hpp\"\
-    \n\nll inv_mod(ll n, ll m) {\n    n %= m;\n    if (n < 0) n += m;\n    ll x, y;\n\
-    \    assert(extgcd(n, m, x, y) == 1);\n    x %= m;\n    if(x < 0) x += m;\n  \
-    \  return x;\n}\n\nll pow_mod(ll a, ll n, ll m) {\n    if(n == 0) return 1LL;\n\
-    \    if(n < 0) return inv_mod(pow_mod(a, -n, m), m);\n    a %= m;\n    if (a <\
-    \ 0) n += m;\n    ll res = 1;\n    while(n) {\n        if(n & 1) {\n         \
-    \   res *= a;\n            res %= m;\n        }\n        n >>= 1;\n        a *=\
-    \ a;\n        a %= m;\n    }\n    return res;\n}\n#line 4 \"algebra/modint.hpp\"\
-    \n\ntemplate <ll mod>\nstruct ModintBase {\n    ll val;\n};\ntemplate <ll mod>\n\
-    struct SumGroup<ModintBase<mod>> {\n    static ModintBase<mod>& addassign(ModintBase<mod>&\
-    \ l, const ModintBase<mod>& r) {\n        ll ret;\n        if(__builtin_add_overflow(l.val,\
-    \ r.val, &ret)) {\n            l.val = l.val % mod + r.val % mod;\n        } else\
-    \ {\n            l.val = ret;\n        }\n        return l;\n    }\n    constexpr\
-    \ static bool defzero = true;\n    constexpr static ModintBase<mod> zero = {0};\n\
-    \    constexpr static ModintBase<mod> minus(const ModintBase<mod>& x) {\n    \
-    \    return {-x.val};\n    }\n};\ntemplate <ll mod>\nstruct ProdGroup<ModintBase<mod>>\
-    \ {\n    constexpr static bool defmul = true;\n    static ModintBase<mod>& mulassign(ModintBase<mod>&\
-    \ l, const ModintBase<mod>& r) {\n        ll ret;\n        if(__builtin_mul_overflow(l.val,\
-    \ r.val, &ret)) {\n            l.val = (l.val % mod) * (r.val % mod);\n      \
-    \  } else {\n            l.val = ret;\n        }\n        return l;\n    }\n \
-    \   constexpr static bool defone = true;\n    constexpr static ModintBase<mod>\
-    \ one = {1};\n    constexpr static bool definv = true;\n    static ModintBase<mod>\
-    \ inv(const ModintBase<mod>& x) {\n        return {inv_mod(x.val, mod)};\n   \
-    \ }\n};\ntemplate <ll mod>\nstruct Representation<ModintBase<mod>> {\n    using\
-    \ R = ll;\n    constexpr static ModintBase<mod> construct(const R& x) { return\
-    \ {x % mod}; }\n    static R represent(const ModintBase<mod>& x) {\n        ll\
-    \ ret = x.val % mod;\n        if(ret < 0) ret += mod;\n        return ret;\n \
-    \   }\n};\ntemplate <ll mod>\nstruct FiniteProperty<ModintBase<mod>> {\n    constexpr\
-    \ static bool is_finite = true;\n    constexpr static ModintBase<mod> premitive_root()\
-    \ {\n        static_assert(mod == 998244353);\n        return 3;\n    }\n    constexpr\
-    \ static size_t order() {\n        return mod - 1;\n    }\n};\n\ntemplate <ll\
-    \ mod>\nusing Modint = Field<ModintBase<mod>>;\n\nusing MI3 = Modint<998244353>;\n\
-    using V3 = Vector<MI3>;\nusing VV3 = Vector<V3>;\nusing VVV3 = Vector<VV3>;\n\
-    using MI7 = Modint<1000000007>;\nusing V7 = Vector<MI7>;\nusing VV7 = Vector<V7>;\n\
-    using VVV7 = Vector<VV7>;\n#line 3 \"convolution/fft.hpp\"\n\nvoid fft(vector<complex<double>>&\
+    \ Field operator-() const {\n        return SumGroup::minus(val);\n    }\n   \
+    \ constexpr Field& operator-=(const Field& other) {\n        return *this += -other;\n\
+    \    }\n    constexpr Field operator-(const Field& other) const {\n        return\
+    \ Field(*this) -= other;\n    }\n    constexpr Field& operator++() {\n       \
+    \ return *this += Field(one());\n    }\n    Field operator++(int) {\n        Field\
+    \ ret = *this;\n        ++*this;\n        return ret;\n    }\n    constexpr Field&\
+    \ operator--() {\n        return *this -= Field(one());\n    }\n    Field operator--(int)\
+    \ {\n        Field ret = *this;\n        --*this;\n        return ret;\n    }\n\
+    \    constexpr bool operator==(const Field& other) const {\n        return represent()\
+    \ == other.represent();\n    }\n    constexpr bool operator!=(const Field& other)\
+    \ const {\n        return !(*this == other);\n    }\n    constexpr bool operator<(const\
+    \ Field& other) const {\n        return represent() < other.represent();\n   \
+    \ }\n    constexpr bool operator>(const Field& other) const {\n        return\
+    \ other < *this;\n    }\n    constexpr bool operator<=(const Field& other) const\
+    \ {\n        return !(other < *this);\n    }\n    constexpr bool operator>=(const\
+    \ Field& other) const {\n        return !(*this < other);\n    }\n    friend istream&\
+    \ operator>>(istream& is, Field& f) {\n        R r; is >> r;\n        f = r;\n\
+    \        return is;\n    }\n    friend ostream& operator<<(ostream& os, const\
+    \ Field& f) {\n        return os << f.represent();\n    }\n};\nnamespace std {\n\
+    \    template <typename T>\n    struct hash<Field<T>> {\n        size_t operator()(const\
+    \ Field<T>& f) const {\n            return hash<typename Field<T>::R>()(f.represent());\n\
+    \        }\n    };\n}\n#line 3 \"convolution/fft.hpp\"\n\nvoid fft(vector<complex<double>>&\
     \ v) {\n    int n = v.size();\n    assert((n & (n - 1)) == 0);\n    int m = __builtin_ctz(n);\n\
     \    Vector<complex<double>> zeta(n);\n    zeta[0] = 1;\n    complex<double> gn\
     \ = polar(1.0, 2 * M_PI / n);\n    for(int i = 0; i < n-1; i++) zeta[i+1] = zeta[i]\
@@ -529,73 +486,106 @@ data:
     \        for(int j = 0; j < n; j++) {\n            int k = (((j & array_idx_mask)\
     \ << 1) & array_idx_mask) | (j & array_id_mask);\n            nv[j] = v[k] + izeta[j\
     \ & array_idx_mask] * v[k | (1 << (m-i-1))];\n        }\n        v.swap(nv);\n\
-    \    }\n    for(int i = 0; i < n; i++) v[i] /= n;\n}\ntemplate <typename T, enable_if_t<!FiniteProperty<T>::is_finite,\
-    \ nullptr_t> = nullptr>\nVector<T> sum_convolution(const vector<T>& v1, const\
-    \ vector<T>& v2) {\n    int n = 1;\n    while(n < (int)v1.size() + (int)v2.size()\
-    \ - 1) n <<= 1;\n    Vector<complex<double>> f1(ALL(v1)), f2(ALL(v2));\n    f1.resize(n);\
+    \    }\n    for(int i = 0; i < n; i++) v[i] /= n;\n}\nVector<complex<double>>\
+    \ sum_convolution(const vector<complex<double>>& v1, const vector<complex<double>>&\
+    \ v2) {\n    int n = 1;\n    while(n < (int)v1.size() + (int)v2.size() - 1) n\
+    \ <<= 1;\n    Vector<complex<double>> f1(ALL(v1)), f2(ALL(v2));\n    f1.resize(n);\
     \ f2.resize(n);\n    fft(f1); fft(f2);\n    for(int i = 0; i < n; i++) {\n   \
-    \     f1[i] *= f2[i];\n    }\n    ifft(f1);\n    return Vector<T>(f1.begin(),\
-    \ f1.begin() + v1.size() + v2.size() - 1);\n}\ntemplate <>\nVector<ll> sum_convolution<ll>(const\
-    \ vector<ll>& v1, const vector<ll>& v2) {\n    Vector<complex<double>> res = sum_convolution(Vector<complex<double>>(v1.begin(),\
+    \     f1[i] *= f2[i];\n    }\n    ifft(f1);\n    f1.resize(v1.size() + v2.size()\
+    \ - 1);\n    return f1;\n}\nVector<ll> sum_convolution(const vector<ll>& v1, const\
+    \ vector<ll>& v2) {\n    Vector<complex<double>> res = sum_convolution(Vector<complex<double>>(v1.begin(),\
     \ v1.end()), Vector<complex<double>>(v2.begin(), v2.end()));\n    Vector<ll> ret(res.size());\n\
     \    for(int i = 0; i < (int)res.size(); i++) {\n        ret[i] = round(res[i].real());\n\
-    \    }\n    return ret;\n}\n#line 4 \"convolution/ntt.hpp\"\n\ntemplate <ll mod>\n\
-    void ntt(vector<Modint<mod>>& v) {\n    assert(mod == 998244353);\n    constexpr\
-    \ ll g = 3;\n    int n = v.size();\n    assert((n & (n - 1)) == 0);\n    int m\
-    \ = __builtin_ctz(n);\n    assert(m <= 23);\n    Vector<Modint<mod>> zeta(n);\n\
-    \    zeta[0] = 1;\n    Modint<mod> gn = Modint<mod>(g).pow((mod - 1) >> m);\n\
-    \    for(int i = 0; i < n-1; i++) zeta[i+1] = zeta[i] * gn;\n    int array_idx_mask\
-    \ = 0;\n    int array_id_mask = n-1;\n    for(int i = 0; i < m; i++) {\n     \
-    \   array_idx_mask ^= 1 << (m-i-1);\n        array_id_mask ^= 1 << (m-i-1);\n\
-    \        Vector<Modint<mod>> nv(n);\n        for(int j = 0; j < n; j++) {\n  \
-    \          int k = (((j & array_idx_mask) << 1) & array_idx_mask) | (j & array_id_mask);\n\
-    \            nv[j] = v[k] + zeta[j & array_idx_mask] * v[k | (1 << (m-i-1))];\n\
-    \        }\n        v.swap(nv);\n    }\n}\ntemplate <ll mod>\nvoid intt(vector<Modint<mod>>&\
-    \ v) {\n    assert(mod == 998244353);\n    constexpr ll ig = 332748118;\n    int\
-    \ n = v.size();\n    assert((n & (n - 1)) == 0);\n    int m = __builtin_ctz(n);\n\
-    \    assert(m <= 23);\n    Vector<Modint<mod>> izeta(n);\n    izeta[0] = 1;\n\
-    \    Modint<mod> ign = Modint<mod>(ig).pow((mod - 1) >> m);\n    for(int i = 0;\
-    \ i < n-1; i++) izeta[i+1] = izeta[i] * ign;\n    int array_idx_mask = 0;\n  \
-    \  int array_id_mask = n-1;\n    for(int i = 0; i < m; i++) {\n        array_idx_mask\
-    \ ^= 1 << (m-i-1);\n        array_id_mask ^= 1 << (m-i-1);\n        Vector<Modint<mod>>\
-    \ nv(n);\n        for(int j = 0; j < n; j++) {\n            int k = (((j & array_idx_mask)\
+    \    }\n    return ret;\n}\n#line 3 \"integer/extgcd.hpp\"\n\nconstexpr ll extgcd(ll\
+    \ a, ll b, ll& x, ll& y) {\n    x = 1, y = 0;\n    ll nx = 0, ny = 1;\n    while(b)\
+    \ {\n        ll q = a / b;\n        tie(a, b) = LP(b, a % b);\n        tie(x,\
+    \ nx) = LP(nx, x - nx*q);\n        tie(y, ny) = LP(ny, y - ny*q);\n    }\n   \
+    \ return a;\n}\n#line 2 \"integer/pow-mod.hpp\"\n\nconstexpr ll inv_mod(ll n,\
+    \ ll m) {\n    n %= m;\n    if (n < 0) n += m;\n    ll x = -1, y = -1;\n    if(extgcd(n,\
+    \ m, x, y) != 1) throw logic_error(\"\");\n    x %= m;\n    if(x < 0) x += m;\n\
+    \    return x;\n}\n\nconstexpr ll pow_mod(ll a, ll n, ll m) {\n    if(n == 0)\
+    \ return 1LL;\n    if(n < 0) return inv_mod(pow_mod(a, -n, m), m);\n    a %= m;\n\
+    \    if (a < 0) n += m;\n    ll res = 1;\n    while(n) {\n        if(n & 1) {\n\
+    \            res *= a;\n            res %= m;\n        }\n        n >>= 1;\n \
+    \       a *= a;\n        a %= m;\n    }\n    return res;\n}\n#line 4 \"algebra/modint.hpp\"\
+    \n\ntemplate <ll mod>\nstruct SumGroupModint : SumGroupBase<ll> {\n    static\
+    \ ll& addassign(ll& l, const ll& r) {\n        ll ret;\n        if(__builtin_add_overflow(l,\
+    \ r, &ret)) {\n            l = l % mod + r % mod;\n        } else {\n        \
+    \    l = ret;\n        }\n        return l;\n    }\n    constexpr static bool\
+    \ defzero = true;\n    constexpr static ll zero = 0;\n    constexpr static ll\
+    \ minus(const ll& x) {\n        return -x;\n    }\n};\ntemplate <ll mod>\nstruct\
+    \ ProdGroupModint : ProdGroupBase<ll> {\n    constexpr static bool defmul = true;\n\
+    \    static ll& mulassign(ll& l, const ll& r) {\n        ll ret;\n        if(__builtin_mul_overflow(l,\
+    \ r, &ret)) {\n            l = (l % mod) * (r % mod);\n        } else {\n    \
+    \        l = ret;\n        }\n        return l;\n    }\n    constexpr static bool\
+    \ defone = true;\n    constexpr static ll one = 1;\n    constexpr static bool\
+    \ definv = true;\n    constexpr static ll inv(const ll& x) {\n        return inv_mod(x,\
+    \ mod);\n    }\n};\ntemplate <ll mod>\nstruct RepresentationModint : RepresentationBase<ll>\
+    \ {\n    using R = ll;\n    constexpr static ll construct(const R& x) { return\
+    \ x % mod; }\n    constexpr static R represent(const ll& x) {\n        ll ret\
+    \ = x % mod;\n        if(ret < 0) ret += mod;\n        return ret;\n    }\n};\n\
+    template <ll mod>\nstruct FinitePropertyModint : FinitePropertyBase<ll> {\n  \
+    \  constexpr static bool is_finite = true;\n    constexpr static ll premitive_root()\
+    \ {\n        static_assert(mod == 998244353);\n        return 3;\n    }\n    constexpr\
+    \ static size_t order() {\n        return mod - 1;\n    }\n};\n\ntemplate <ll\
+    \ mod>\nusing Modint = Field<ll, SumGroupModint<mod>, ProdGroupModint<mod>, RepresentationModint<mod>,\
+    \ FinitePropertyModint<mod>>;\n\nusing MI3 = Modint<998244353>;\nusing V3 = Vector<MI3>;\n\
+    using VV3 = Vector<V3>;\nusing VVV3 = Vector<VV3>;\nusing MI7 = Modint<1000000007>;\n\
+    using V7 = Vector<MI7>;\nusing VV7 = Vector<V7>;\nusing VVV7 = Vector<VV7>;\n\
+    #line 3 \"convolution/ntt.hpp\"\n\ntemplate <ll mod>\nvoid ntt(vector<Modint<mod>>&\
+    \ v) {\n    assert(mod == 998244353);\n    constexpr ll g = 3;\n    int n = v.size();\n\
+    \    assert((n & (n - 1)) == 0);\n    int m = __builtin_ctz(n);\n    assert(m\
+    \ <= 23);\n    Vector<Modint<mod>> zeta(n);\n    zeta[0] = 1;\n    Modint<mod>\
+    \ gn = Modint<mod>(g).pow((mod - 1) >> m);\n    for(int i = 0; i < n-1; i++) zeta[i+1]\
+    \ = zeta[i] * gn;\n    int array_idx_mask = 0;\n    int array_id_mask = n-1;\n\
+    \    for(int i = 0; i < m; i++) {\n        array_idx_mask ^= 1 << (m-i-1);\n \
+    \       array_id_mask ^= 1 << (m-i-1);\n        Vector<Modint<mod>> nv(n);\n \
+    \       for(int j = 0; j < n; j++) {\n            int k = (((j & array_idx_mask)\
+    \ << 1) & array_idx_mask) | (j & array_id_mask);\n            nv[j] = v[k] + zeta[j\
+    \ & array_idx_mask] * v[k | (1 << (m-i-1))];\n        }\n        v.swap(nv);\n\
+    \    }\n}\ntemplate <ll mod>\nvoid intt(vector<Modint<mod>>& v) {\n    assert(mod\
+    \ == 998244353);\n    constexpr ll ig = 332748118;\n    int n = v.size();\n  \
+    \  assert((n & (n - 1)) == 0);\n    int m = __builtin_ctz(n);\n    assert(m <=\
+    \ 23);\n    Vector<Modint<mod>> izeta(n);\n    izeta[0] = 1;\n    Modint<mod>\
+    \ ign = Modint<mod>(ig).pow((mod - 1) >> m);\n    for(int i = 0; i < n-1; i++)\
+    \ izeta[i+1] = izeta[i] * ign;\n    int array_idx_mask = 0;\n    int array_id_mask\
+    \ = n-1;\n    for(int i = 0; i < m; i++) {\n        array_idx_mask ^= 1 << (m-i-1);\n\
+    \        array_id_mask ^= 1 << (m-i-1);\n        Vector<Modint<mod>> nv(n);\n\
+    \        for(int j = 0; j < n; j++) {\n            int k = (((j & array_idx_mask)\
     \ << 1) & array_idx_mask) | (j & array_id_mask);\n            nv[j] = v[k] + izeta[j\
     \ & array_idx_mask] * v[k | (1 << (m-i-1))];\n        }\n        v.swap(nv);\n\
-    \    }\n    for(int i = 0; i < n; i++) v[i] /= n;\n}\ntemplate <typename T, enable_if_t<FiniteProperty<T>::is_finite,\
-    \ nullptr_t> = nullptr>\nVector<T> sum_convolution(const vector<T>& v1, const\
-    \ vector<T>& v2) {\n    static_assert(is_same_v<T, Modint<998244353>>);\n    int\
-    \ n = 1;\n    while(n < (int)v1.size() + (int)v2.size() - 1) n <<= 1;\n    Vector<T>\
-    \ f1(v1), f2(v2);\n    f1.resize(n); f2.resize(n);\n    ntt(f1); ntt(f2);\n  \
-    \  for(int i = 0; i < n; i++) {\n        f1[i] *= f2[i];\n    }\n    intt(f1);\n\
-    \    f1.resize(v1.size() + v2.size() - 1);\n    return f1;\n}\n#line 4 \"algebra/fps.hpp\"\
-    \n\ntemplate <typename T, bool expandable = false>\nstruct FPSBase {\n    Vector<T>\
-    \ val;\n};\ntemplate <typename T, bool expandable>\nstruct SumGroup<FPSBase<T,\
-    \ expandable>> {\n    static FPSBase<T, expandable>& addassign(FPSBase<T, expandable>&\
-    \ l, const FPSBase<T, expandable>& r) {\n        resize(max(l.val.size(), r.val.size()));\n\
-    \        for(int i = 0; i < r.size(); i++) {\n            l.val[i] += r.val[i];\n\
-    \        }\n        return l;\n    }\n    constexpr static bool defzero = true;\n\
-    \    const static FPSBase<T, expandable> zero;\n    static FPSBase<T, expandable>&\
-    \ minus(FPSBase<T, expandable> x) {\n        for(int i = 0; i < x.val.size();\
-    \ i++) {\n            x.val[i] = -x.val[i];\n        }\n        return x;\n  \
-    \  }\n};\ntemplate <typename T, bool expandable>\nconst FPSBase<T, expandable>\
-    \ SumGroup<FPSBase<T, expandable>>::zero = {{}};\ntemplate <typename T, bool expandable>\n\
-    struct ProdGroup<FPSBase<T, expandable>> {\n    static FPSBase<T, expandable>&\
-    \ mulassign(FPSBase<T, expandable>& l, const FPSBase<T, expandable>& r) {\n  \
-    \      Vector<T> ret = sum_convolution(l.val, r.val);\n        if constexpr(!expandable)\
-    \ {\n            ret.resize(max(l.val.size(), r.val.size()));\n        }\n   \
-    \     l.val = ret;\n        return l;\n    }\n    constexpr static bool defone\
-    \ = true;\n    const static FPSBase<T, expandable> one;\n    static FPSBase<T,\
-    \ expandable> inv(const FPSBase<T, expandable>& f) {\n        Vector<T> g = {f[0].inv()};\n\
-    \        while(g.size() < f.size()) {\n            Vector<T> fgg = sum_convolution(f,\
-    \ sum_convolution(g, g));\n            g.resize(g.size() << 1);\n            for(int\
-    \ i = 0; i < g.size(); i++) {\n                g[i] <<= 1;\n                if(i\
-    \ < (int)fgg.size()) g[i] -= fgg[i];\n            }\n        }\n        return\
-    \ {g};\n    }\n};\ntemplate <typename T, bool expandable>\nconst FPSBase<T, expandable>\
-    \ ProdGroup<FPSBase<T, expandable>>::one = {{1}};\n\ntemplate <typename T>\nusing\
-    \ FPS = Field<FPSBase<T>>;\ntemplate <typename T>\nusing ExpandableFPS = Field<FPSBase<T,\
-    \ true>>;\n#line 3 \"test/yosupo-convolution.test.cpp\"\n\nint main() {\n    int\
-    \ n, m; cin >> n >> m;\n    V3 _a(n), _b(m); cin >> _a >> _b;\n    ExpandableFPS<MI3>\
-    \ a(_a), b(_b);\n    print(a * b);\n}\n"
+    \    }\n    for(int i = 0; i < n; i++) v[i] /= n;\n}\ntemplate <ll mod>\nVector<Modint<mod>>\
+    \ sum_convolution(const vector<Modint<mod>>& v1, const vector<Modint<mod>>& v2)\
+    \ {\n    int n = 1;\n    while(n < (int)v1.size() + (int)v2.size() - 1) n <<=\
+    \ 1;\n    Vector<Modint<mod>> f1(v1), f2(v2);\n    f1.resize(n); f2.resize(n);\n\
+    \    ntt(f1); ntt(f2);\n    for(int i = 0; i < n; i++) {\n        f1[i] *= f2[i];\n\
+    \    }\n    intt(f1);\n    f1.resize(v1.size() + v2.size() - 1);\n    return f1;\n\
+    }\n#line 5 \"algebra/fps.hpp\"\n\ntemplate <typename T>\nstruct SumGroupFPS :\
+    \ SumGroupBase<Vector<T>> {\n    static Vector<T>& addassign(Vector<T>& l, const\
+    \ Vector<T>& r) {\n        l.resize(max(l.size(), r.size()));\n        for(int\
+    \ i = 0; i < r.size(); i++) {\n            l[i] += r[i];\n        }\n        return\
+    \ l;\n    }\n    constexpr static bool defzero = true;\n    const static Vector<T>\
+    \ zero;\n    static Vector<T> minus(const Vector<T>& x) {\n        Vector<T> ret;\n\
+    \        for(int i = 0; i < x.size(); i++) {\n            ret[i] = -ret[i];\n\
+    \        }\n        return ret;\n    }\n};\ntemplate <typename T>\nconst Vector<T>\
+    \ SumGroupFPS<T>::zero = {};\ntemplate <typename T, bool expandable>\nstruct ProdGroupFPS\
+    \ : ProdGroupBase<Vector<T>> {\n    static Vector<T>& mulassign(Vector<T>& l,\
+    \ const Vector<T>& r) {\n        Vector<T> ret = sum_convolution(l, r);\n    \
+    \    if constexpr(!expandable) {\n            ret.resize(max(l.size(), r.size()));\n\
+    \        }\n        return l = ret;\n    }\n    constexpr static bool defone =\
+    \ true;\n    const static Vector<T> one;\n    static Vector<T> inv(const Vector<T>&\
+    \ f) {\n        Vector<T> g = {f[0].inv()};\n        while(g.size() < f.size())\
+    \ {\n            Vector<T> f_short(f.begin(), f.begin() + min(f.size(), g.size()\
+    \ << 1));\n            Vector<T> fgg = sum_convolution(f_short, sum_convolution(g,\
+    \ g));\n            g.resize(g.size() << 1);\n            for(int i = 0; i < g.size();\
+    \ i++) {\n                g[i] += g[i];\n                if(i < (int)fgg.size())\
+    \ g[i] -= fgg[i];\n            }\n        }\n        return g;\n    }\n};\ntemplate\
+    \ <typename T, bool expandable>\nconst Vector<T> ProdGroupFPS<T, expandable>::one\
+    \ = {1};\n\ntemplate <typename T>\nusing FPS = Field<Vector<T>, SumGroupFPS<T>,\
+    \ ProdGroupFPS<T, false>>;\ntemplate <typename T>\nusing ExpandableFPS = Field<Vector<T>,\
+    \ SumGroupFPS<T>, ProdGroupFPS<T, true>>;\n#line 3 \"test/yosupo-convolution.test.cpp\"\
+    \n\nint main() {\n    int n, m; cin >> n >> m;\n    V3 _a(n), _b(m); cin >> _a\
+    \ >> _b;\n    ExpandableFPS<MI3> a(_a), b(_b);\n    print(a * b);\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/convolution_mod\"\n#include\
     \ \"../algebra/fps.hpp\"\n\nint main() {\n    int n, m; cin >> n >> m;\n    V3\
     \ _a(n), _b(m); cin >> _a >> _b;\n    ExpandableFPS<MI3> a(_a), b(_b);\n    print(a\
@@ -611,15 +601,15 @@ data:
   - stl-wrapper/map.hpp
   - stl-wrapper/unordered_set.hpp
   - stl-wrapper/unordered_map.hpp
+  - convolution/fft.hpp
   - convolution/ntt.hpp
   - algebra/modint.hpp
   - integer/pow-mod.hpp
   - integer/extgcd.hpp
-  - convolution/fft.hpp
   isVerificationFile: true
   path: test/yosupo-convolution.test.cpp
   requiredBy: []
-  timestamp: '2022-11-06 10:32:16+00:00'
+  timestamp: '2022-11-06 15:16:24+00:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/yosupo-convolution.test.cpp

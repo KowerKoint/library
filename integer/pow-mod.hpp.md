@@ -1,31 +1,31 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: base.hpp
     title: base.hpp
   - icon: ':heavy_check_mark:'
     path: integer/extgcd.hpp
     title: integer/extgcd.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/all.hpp
     title: stl-wrapper/all.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/map.hpp
     title: stl-wrapper/map.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/pair.hpp
     title: stl-wrapper/pair.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/set.hpp
     title: stl-wrapper/set.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/unordered_map.hpp
     title: stl-wrapper/unordered_map.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/unordered_set.hpp
     title: stl-wrapper/unordered_set.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/vector.hpp
     title: stl-wrapper/vector.hpp
   _extendedRequiredBy:
@@ -432,25 +432,26 @@ data:
     \ {\n    Vector<T> res(n+1), rev(n+1);\n    res[0] = 1;\n    REP(i, n) res[i+1]\
     \ = res[i] * (i+1);\n    rev[n] = 1 / res[n];\n    for(int i = n; i > 0; i--)\
     \ {\n        rev[i-1] = rev[i] * i;\n    }\n    return make_pair(res, rev);\n\
-    }\n#line 3 \"integer/extgcd.hpp\"\n\nll extgcd(ll a, ll b, ll& x, ll& y) {\n \
-    \   x = 1, y = 0;\n    ll nx = 0, ny = 1;\n    while(b) {\n        ll q = a /\
-    \ b;\n        tie(a, b) = LP(b, a % b);\n        tie(x, nx) = LP(nx, x - nx*q);\n\
-    \        tie(y, ny) = LP(ny, y - ny*q);\n    }\n    return a;\n}\n#line 2 \"integer/pow-mod.hpp\"\
-    \n\nll inv_mod(ll n, ll m) {\n    n %= m;\n    if (n < 0) n += m;\n    ll x, y;\n\
-    \    assert(extgcd(n, m, x, y) == 1);\n    x %= m;\n    if(x < 0) x += m;\n  \
-    \  return x;\n}\n\nll pow_mod(ll a, ll n, ll m) {\n    if(n == 0) return 1LL;\n\
+    }\n#line 3 \"integer/extgcd.hpp\"\n\nconstexpr ll extgcd(ll a, ll b, ll& x, ll&\
+    \ y) {\n    x = 1, y = 0;\n    ll nx = 0, ny = 1;\n    while(b) {\n        ll\
+    \ q = a / b;\n        tie(a, b) = LP(b, a % b);\n        tie(x, nx) = LP(nx, x\
+    \ - nx*q);\n        tie(y, ny) = LP(ny, y - ny*q);\n    }\n    return a;\n}\n\
+    #line 2 \"integer/pow-mod.hpp\"\n\nconstexpr ll inv_mod(ll n, ll m) {\n    n %=\
+    \ m;\n    if (n < 0) n += m;\n    ll x = -1, y = -1;\n    if(extgcd(n, m, x, y)\
+    \ != 1) throw logic_error(\"\");\n    x %= m;\n    if(x < 0) x += m;\n    return\
+    \ x;\n}\n\nconstexpr ll pow_mod(ll a, ll n, ll m) {\n    if(n == 0) return 1LL;\n\
     \    if(n < 0) return inv_mod(pow_mod(a, -n, m), m);\n    a %= m;\n    if (a <\
     \ 0) n += m;\n    ll res = 1;\n    while(n) {\n        if(n & 1) {\n         \
     \   res *= a;\n            res %= m;\n        }\n        n >>= 1;\n        a *=\
     \ a;\n        a %= m;\n    }\n    return res;\n}\n"
-  code: "#include \"extgcd.hpp\"\n\nll inv_mod(ll n, ll m) {\n    n %= m;\n    if\
-    \ (n < 0) n += m;\n    ll x, y;\n    assert(extgcd(n, m, x, y) == 1);\n    x %=\
-    \ m;\n    if(x < 0) x += m;\n    return x;\n}\n\nll pow_mod(ll a, ll n, ll m)\
-    \ {\n    if(n == 0) return 1LL;\n    if(n < 0) return inv_mod(pow_mod(a, -n, m),\
-    \ m);\n    a %= m;\n    if (a < 0) n += m;\n    ll res = 1;\n    while(n) {\n\
-    \        if(n & 1) {\n            res *= a;\n            res %= m;\n        }\n\
-    \        n >>= 1;\n        a *= a;\n        a %= m;\n    }\n    return res;\n\
-    }\n"
+  code: "#include \"extgcd.hpp\"\n\nconstexpr ll inv_mod(ll n, ll m) {\n    n %= m;\n\
+    \    if (n < 0) n += m;\n    ll x = -1, y = -1;\n    if(extgcd(n, m, x, y) !=\
+    \ 1) throw logic_error(\"\");\n    x %= m;\n    if(x < 0) x += m;\n    return\
+    \ x;\n}\n\nconstexpr ll pow_mod(ll a, ll n, ll m) {\n    if(n == 0) return 1LL;\n\
+    \    if(n < 0) return inv_mod(pow_mod(a, -n, m), m);\n    a %= m;\n    if (a <\
+    \ 0) n += m;\n    ll res = 1;\n    while(n) {\n        if(n & 1) {\n         \
+    \   res *= a;\n            res %= m;\n        }\n        n >>= 1;\n        a *=\
+    \ a;\n        a %= m;\n    }\n    return res;\n}\n"
   dependsOn:
   - integer/extgcd.hpp
   - base.hpp
@@ -468,7 +469,7 @@ data:
   - general.hpp
   - algebra/modint.hpp
   - algebra/fps.hpp
-  timestamp: '2022-11-06 10:32:16+00:00'
+  timestamp: '2022-11-06 15:16:24+00:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/aoj-dpl-5-j.test.cpp

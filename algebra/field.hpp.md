@@ -1,28 +1,28 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: base.hpp
     title: base.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/all.hpp
     title: stl-wrapper/all.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/map.hpp
     title: stl-wrapper/map.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/pair.hpp
     title: stl-wrapper/pair.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/set.hpp
     title: stl-wrapper/set.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/unordered_map.hpp
     title: stl-wrapper/unordered_map.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/unordered_set.hpp
     title: stl-wrapper/unordered_set.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/vector.hpp
     title: stl-wrapper/vector.hpp
   _extendedRequiredBy:
@@ -32,7 +32,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: algebra/modint.hpp
     title: algebra/modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: algebra/nimber.hpp
     title: algebra/nimber.hpp
   - icon: ':heavy_check_mark:'
@@ -72,15 +72,15 @@ data:
   - icon: ':heavy_check_mark:'
     path: test/yosupo-determinant-of-matrix.test.cpp
     title: test/yosupo-determinant-of-matrix.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/yosupo-nim-product.test.cpp
     title: test/yosupo-nim-product.test.cpp
   - icon: ':heavy_check_mark:'
     path: test/yosupo-range-affine-range-sum.test.cpp
     title: test/yosupo-range-affine-range-sum.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':question:'
   attributes:
     links: []
   bundledCode: "#line 2 \"base.hpp\"\n\n#include <bits/stdc++.h>\nusing namespace\
@@ -438,128 +438,118 @@ data:
     \ {\n    Vector<T> res(n+1), rev(n+1);\n    res[0] = 1;\n    REP(i, n) res[i+1]\
     \ = res[i] * (i+1);\n    rev[n] = 1 / res[n];\n    for(int i = n; i > 0; i--)\
     \ {\n        rev[i-1] = rev[i] * i;\n    }\n    return make_pair(res, rev);\n\
-    }\n#line 3 \"algebra/field.hpp\"\n\ntemplate <typename T>\nstruct SumGroup {\n\
-    \    static_assert(is_arithmetic_v<T>);\n    constexpr static T& addassign(T&\
-    \ l, const T& r) {\n        return l += r;\n    }\n    constexpr static bool defzero\
-    \ = true;\n    constexpr static T zero = 0;\n    constexpr static T minus(const\
-    \ T& x) {\n        return -x;\n    }\n};\ntemplate <typename T>\nstruct ProdGroup\
-    \ {\n    static_assert(is_arithmetic_v<T>);\n    constexpr static T& mulassign(T&\
-    \ l, const T& r) {\n        return l *= r;\n    }\n    constexpr static bool defone\
-    \ = true;\n    constexpr static T one = 1;\n    constexpr static T inv(const T&\
-    \ x) {\n        static_assert(is_floating_point_v<T>);\n        return one / x;\n\
-    \    }\n};\ntemplate <typename T>\nstruct Representation {\n    using R = decltype(T::val);\n\
-    \    constexpr static T construct(const R& x) { return {x}; }\n    constexpr static\
-    \ R represent(const T& x) { return x.val; }\n};\ntemplate <typename T>\nstruct\
-    \ FiniteProperty {\n    constexpr static bool is_finite = false;\n};\n\ntemplate\
-    \ <typename T>\nstruct Field {\n    using R = typename Representation<T>::R;\n\
-    \    T val;\n    constexpr static T zero() {\n        return SumGroup<T>::zero;\n\
-    \    }\n    constexpr static T one() {\n        return ProdGroup<T>::one;\n  \
-    \  }\n    constexpr Field() {\n        if constexpr(SumGroup<T>::defzero) val\
-    \ = SumGroup<T>::zero;\n        else if constexpr(SumGroup<T>::defone) val = SumGroup<T>::one;\n\
-    \        else val = T();\n    }\n    constexpr Field(const R& r) : val(Representation<T>::construct(r))\
-    \ {}\n    constexpr Field(const T& r) : val(r) {}\n    constexpr R represent()\
-    \ const { return Representation<T>::represent(val); }\n    constexpr static Field\
-    \ premitive_root() {\n        return {FiniteProperty<T>::premitive_root()};\n\
-    \    }\n    constexpr static size_t order() {\n        return FiniteProperty<T>::order();\n\
-    \    }\n    constexpr Field& operator*=(const Field& other) {\n        ProdGroup<T>::mulassign(val,\
-    \ other.val);\n        return *this;\n    }\n    constexpr Field operator*(const\
-    \ Field& other) const {\n        return Field(*this) *= other;\n    }\n    constexpr\
-    \ Field inv() const {\n        return ProdGroup<T>::inv(val);\n    }\n    constexpr\
-    \ Field& operator/=(const Field& other) {\n        return *this *= other.inv();\n\
-    \    }\n    constexpr Field operator/(const Field& other) const {\n        return\
-    \ Field(*this) /= other;\n    }\n    Field pow(ll n) const {\n        if(n < 0)\
-    \ {\n            return inv().pow(-n);\n        }\n        Field res = one();\n\
-    \        Field a = *this;\n        while(n > 0) {\n            if(n & 1) res *=\
+    }\n#line 3 \"algebra/field.hpp\"\n\ntemplate <typename T>\nstruct SumGroupBase\
+    \ {\n    constexpr static bool defzero = false;\n};\ntemplate <typename T>\nstruct\
+    \ ProdGroupBase {\n    constexpr static bool defone = false;\n};\ntemplate <typename\
+    \ T>\nstruct RepresentationBase {\n    using R = T;\n    constexpr static T construct(const\
+    \ R& x) { return x; }\n    constexpr static R represent(const T& x) { return x;\
+    \ }\n};\ntemplate <typename T>\nstruct FinitePropertyBase {\n    constexpr static\
+    \ bool is_finite = false;\n};\n\ntemplate <typename T, typename SumGroup = SumGroupBase<T>,\
+    \ typename ProdGroup = ProdGroupBase<T>, typename Representation = RepresentationBase<T>,\
+    \ typename FiniteProperty = FinitePropertyBase<T>>\nstruct Field {\n    using\
+    \ R = typename Representation::R;\n    T val;\n    constexpr static T zero() {\n\
+    \        return SumGroup::zero;\n    }\n    constexpr static T one() {\n     \
+    \   return ProdGroup::one;\n    }\n    constexpr static bool defzero = SumGroup::defzero;\n\
+    \    constexpr static bool defone = ProdGroup::defone;\n    constexpr static bool\
+    \ is_finite = FiniteProperty::is_finite;\n    constexpr Field() {\n        if\
+    \ constexpr(SumGroup::defzero) val = zero();\n        else if constexpr(SumGroup::defone)\
+    \ val = one();\n        else val = T();\n    }\n    constexpr Field(const R& r)\
+    \ : val(Representation::construct(r)) {}\n    constexpr R represent() const {\
+    \ return Representation::represent(val); }\n    constexpr static Field premitive_root()\
+    \ {\n        return FiniteProperty::premitive_root();\n    }\n    constexpr static\
+    \ size_t order() {\n        return FiniteProperty::order();\n    }\n    constexpr\
+    \ Field& operator*=(const Field& other) {\n        ProdGroup::mulassign(val, other.val);\n\
+    \        return *this;\n    }\n    constexpr Field operator*(const Field& other)\
+    \ const {\n        return Field(*this) *= other;\n    }\n    constexpr Field inv()\
+    \ const {\n        return ProdGroup::inv(val);\n    }\n    constexpr Field& operator/=(const\
+    \ Field& other) {\n        return *this *= other.inv();\n    }\n    constexpr\
+    \ Field operator/(const Field& other) const {\n        return Field(*this) /=\
+    \ other;\n    }\n    constexpr Field pow(ll n) const {\n        if(n < 0) {\n\
+    \            return inv().pow(-n);\n        }\n        Field res = one();\n  \
+    \      Field a = *this;\n        while(n > 0) {\n            if(n & 1) res *=\
     \ a;\n            a *= a;\n            n >>= 1;\n        }\n        return res;\n\
     \    }\n    constexpr Field operator+() const {\n        return *this;\n    }\n\
-    \    constexpr Field& operator+=(const Field& other) {\n        SumGroup<T>::addassign(val,\
+    \    constexpr Field& operator+=(const Field& other) {\n        SumGroup::addassign(val,\
     \ other.val);\n        return *this;\n    }\n    constexpr Field operator+(const\
     \ Field& other) const {\n        return Field(*this) += other;\n    }\n    constexpr\
-    \ Field operator-() const {\n        return SumGroup<T>::minus(val);\n    }\n\
-    \    constexpr Field& operator-=(const Field& other) {\n        return *this +=\
-    \ -other;\n    }\n    constexpr Field operator-(const Field& other) const {\n\
-    \        return Field(*this) -= other;\n    }\n    constexpr Field& operator++()\
-    \ {\n        return *this += Field(one());\n    }\n    Field operator++(int) {\n\
-    \        Field ret = *this;\n        ++*this;\n        return ret;\n    }\n  \
-    \  constexpr Field& operator--() {\n        return *this -= Field(one());\n  \
-    \  }\n    Field operator--(int) {\n        Field ret = *this;\n        --*this;\n\
-    \        return ret;\n    }\n    constexpr bool operator==(const Field& other)\
-    \ const {\n        return represent() == other.represent();\n    }\n    constexpr\
-    \ bool operator!=(const Field& other) const {\n        return !(*this == other);\n\
-    \    }\n    constexpr bool operator<(const Field& other) const {\n        return\
-    \ represent() < other.represent();\n    }\n    constexpr bool operator>(const\
-    \ Field& other) const {\n        return other < *this;\n    }\n    constexpr bool\
-    \ operator<=(const Field& other) const {\n        return !(other < *this);\n \
-    \   }\n    constexpr bool operator>=(const Field& other) const {\n        return\
-    \ !(*this < other);\n    }\n    friend istream& operator>>(istream& is, Field&\
-    \ f) {\n        R r; is >> r;\n        f = Field(r);\n        return is;\n   \
-    \ }\n    friend ostream& operator<<(ostream& os, const Field& f) {\n        return\
-    \ os << f.represent();\n    }\n};\nnamespace std {\n    template <typename T>\n\
-    \    struct hash<Field<T>> {\n        size_t operator()(const Field<T>& f) const\
-    \ {\n            return hash<typename Field<T>::R>()(f.represent());\n       \
-    \ }\n    };\n}\ntemplate <typename T>\nstruct FiniteProperty<Field<T>> {\n   \
-    \ constexpr static bool is_finite = FiniteProperty<T>::is_finite;\n};\n"
-  code: "#pragma once\n#include \"../base.hpp\"\n\ntemplate <typename T>\nstruct SumGroup\
-    \ {\n    static_assert(is_arithmetic_v<T>);\n    constexpr static T& addassign(T&\
-    \ l, const T& r) {\n        return l += r;\n    }\n    constexpr static bool defzero\
-    \ = true;\n    constexpr static T zero = 0;\n    constexpr static T minus(const\
-    \ T& x) {\n        return -x;\n    }\n};\ntemplate <typename T>\nstruct ProdGroup\
-    \ {\n    static_assert(is_arithmetic_v<T>);\n    constexpr static T& mulassign(T&\
-    \ l, const T& r) {\n        return l *= r;\n    }\n    constexpr static bool defone\
-    \ = true;\n    constexpr static T one = 1;\n    constexpr static T inv(const T&\
-    \ x) {\n        static_assert(is_floating_point_v<T>);\n        return one / x;\n\
-    \    }\n};\ntemplate <typename T>\nstruct Representation {\n    using R = decltype(T::val);\n\
-    \    constexpr static T construct(const R& x) { return {x}; }\n    constexpr static\
-    \ R represent(const T& x) { return x.val; }\n};\ntemplate <typename T>\nstruct\
-    \ FiniteProperty {\n    constexpr static bool is_finite = false;\n};\n\ntemplate\
-    \ <typename T>\nstruct Field {\n    using R = typename Representation<T>::R;\n\
-    \    T val;\n    constexpr static T zero() {\n        return SumGroup<T>::zero;\n\
-    \    }\n    constexpr static T one() {\n        return ProdGroup<T>::one;\n  \
-    \  }\n    constexpr Field() {\n        if constexpr(SumGroup<T>::defzero) val\
-    \ = SumGroup<T>::zero;\n        else if constexpr(SumGroup<T>::defone) val = SumGroup<T>::one;\n\
-    \        else val = T();\n    }\n    constexpr Field(const R& r) : val(Representation<T>::construct(r))\
-    \ {}\n    constexpr Field(const T& r) : val(r) {}\n    constexpr R represent()\
-    \ const { return Representation<T>::represent(val); }\n    constexpr static Field\
-    \ premitive_root() {\n        return {FiniteProperty<T>::premitive_root()};\n\
-    \    }\n    constexpr static size_t order() {\n        return FiniteProperty<T>::order();\n\
-    \    }\n    constexpr Field& operator*=(const Field& other) {\n        ProdGroup<T>::mulassign(val,\
-    \ other.val);\n        return *this;\n    }\n    constexpr Field operator*(const\
-    \ Field& other) const {\n        return Field(*this) *= other;\n    }\n    constexpr\
-    \ Field inv() const {\n        return ProdGroup<T>::inv(val);\n    }\n    constexpr\
-    \ Field& operator/=(const Field& other) {\n        return *this *= other.inv();\n\
-    \    }\n    constexpr Field operator/(const Field& other) const {\n        return\
-    \ Field(*this) /= other;\n    }\n    Field pow(ll n) const {\n        if(n < 0)\
-    \ {\n            return inv().pow(-n);\n        }\n        Field res = one();\n\
-    \        Field a = *this;\n        while(n > 0) {\n            if(n & 1) res *=\
+    \ Field operator-() const {\n        return SumGroup::minus(val);\n    }\n   \
+    \ constexpr Field& operator-=(const Field& other) {\n        return *this += -other;\n\
+    \    }\n    constexpr Field operator-(const Field& other) const {\n        return\
+    \ Field(*this) -= other;\n    }\n    constexpr Field& operator++() {\n       \
+    \ return *this += Field(one());\n    }\n    Field operator++(int) {\n        Field\
+    \ ret = *this;\n        ++*this;\n        return ret;\n    }\n    constexpr Field&\
+    \ operator--() {\n        return *this -= Field(one());\n    }\n    Field operator--(int)\
+    \ {\n        Field ret = *this;\n        --*this;\n        return ret;\n    }\n\
+    \    constexpr bool operator==(const Field& other) const {\n        return represent()\
+    \ == other.represent();\n    }\n    constexpr bool operator!=(const Field& other)\
+    \ const {\n        return !(*this == other);\n    }\n    constexpr bool operator<(const\
+    \ Field& other) const {\n        return represent() < other.represent();\n   \
+    \ }\n    constexpr bool operator>(const Field& other) const {\n        return\
+    \ other < *this;\n    }\n    constexpr bool operator<=(const Field& other) const\
+    \ {\n        return !(other < *this);\n    }\n    constexpr bool operator>=(const\
+    \ Field& other) const {\n        return !(*this < other);\n    }\n    friend istream&\
+    \ operator>>(istream& is, Field& f) {\n        R r; is >> r;\n        f = r;\n\
+    \        return is;\n    }\n    friend ostream& operator<<(ostream& os, const\
+    \ Field& f) {\n        return os << f.represent();\n    }\n};\nnamespace std {\n\
+    \    template <typename T>\n    struct hash<Field<T>> {\n        size_t operator()(const\
+    \ Field<T>& f) const {\n            return hash<typename Field<T>::R>()(f.represent());\n\
+    \        }\n    };\n}\n"
+  code: "#pragma once\n#include \"../base.hpp\"\n\ntemplate <typename T>\nstruct SumGroupBase\
+    \ {\n    constexpr static bool defzero = false;\n};\ntemplate <typename T>\nstruct\
+    \ ProdGroupBase {\n    constexpr static bool defone = false;\n};\ntemplate <typename\
+    \ T>\nstruct RepresentationBase {\n    using R = T;\n    constexpr static T construct(const\
+    \ R& x) { return x; }\n    constexpr static R represent(const T& x) { return x;\
+    \ }\n};\ntemplate <typename T>\nstruct FinitePropertyBase {\n    constexpr static\
+    \ bool is_finite = false;\n};\n\ntemplate <typename T, typename SumGroup = SumGroupBase<T>,\
+    \ typename ProdGroup = ProdGroupBase<T>, typename Representation = RepresentationBase<T>,\
+    \ typename FiniteProperty = FinitePropertyBase<T>>\nstruct Field {\n    using\
+    \ R = typename Representation::R;\n    T val;\n    constexpr static T zero() {\n\
+    \        return SumGroup::zero;\n    }\n    constexpr static T one() {\n     \
+    \   return ProdGroup::one;\n    }\n    constexpr static bool defzero = SumGroup::defzero;\n\
+    \    constexpr static bool defone = ProdGroup::defone;\n    constexpr static bool\
+    \ is_finite = FiniteProperty::is_finite;\n    constexpr Field() {\n        if\
+    \ constexpr(SumGroup::defzero) val = zero();\n        else if constexpr(SumGroup::defone)\
+    \ val = one();\n        else val = T();\n    }\n    constexpr Field(const R& r)\
+    \ : val(Representation::construct(r)) {}\n    constexpr R represent() const {\
+    \ return Representation::represent(val); }\n    constexpr static Field premitive_root()\
+    \ {\n        return FiniteProperty::premitive_root();\n    }\n    constexpr static\
+    \ size_t order() {\n        return FiniteProperty::order();\n    }\n    constexpr\
+    \ Field& operator*=(const Field& other) {\n        ProdGroup::mulassign(val, other.val);\n\
+    \        return *this;\n    }\n    constexpr Field operator*(const Field& other)\
+    \ const {\n        return Field(*this) *= other;\n    }\n    constexpr Field inv()\
+    \ const {\n        return ProdGroup::inv(val);\n    }\n    constexpr Field& operator/=(const\
+    \ Field& other) {\n        return *this *= other.inv();\n    }\n    constexpr\
+    \ Field operator/(const Field& other) const {\n        return Field(*this) /=\
+    \ other;\n    }\n    constexpr Field pow(ll n) const {\n        if(n < 0) {\n\
+    \            return inv().pow(-n);\n        }\n        Field res = one();\n  \
+    \      Field a = *this;\n        while(n > 0) {\n            if(n & 1) res *=\
     \ a;\n            a *= a;\n            n >>= 1;\n        }\n        return res;\n\
     \    }\n    constexpr Field operator+() const {\n        return *this;\n    }\n\
-    \    constexpr Field& operator+=(const Field& other) {\n        SumGroup<T>::addassign(val,\
+    \    constexpr Field& operator+=(const Field& other) {\n        SumGroup::addassign(val,\
     \ other.val);\n        return *this;\n    }\n    constexpr Field operator+(const\
     \ Field& other) const {\n        return Field(*this) += other;\n    }\n    constexpr\
-    \ Field operator-() const {\n        return SumGroup<T>::minus(val);\n    }\n\
-    \    constexpr Field& operator-=(const Field& other) {\n        return *this +=\
-    \ -other;\n    }\n    constexpr Field operator-(const Field& other) const {\n\
-    \        return Field(*this) -= other;\n    }\n    constexpr Field& operator++()\
-    \ {\n        return *this += Field(one());\n    }\n    Field operator++(int) {\n\
-    \        Field ret = *this;\n        ++*this;\n        return ret;\n    }\n  \
-    \  constexpr Field& operator--() {\n        return *this -= Field(one());\n  \
-    \  }\n    Field operator--(int) {\n        Field ret = *this;\n        --*this;\n\
-    \        return ret;\n    }\n    constexpr bool operator==(const Field& other)\
-    \ const {\n        return represent() == other.represent();\n    }\n    constexpr\
-    \ bool operator!=(const Field& other) const {\n        return !(*this == other);\n\
-    \    }\n    constexpr bool operator<(const Field& other) const {\n        return\
-    \ represent() < other.represent();\n    }\n    constexpr bool operator>(const\
-    \ Field& other) const {\n        return other < *this;\n    }\n    constexpr bool\
-    \ operator<=(const Field& other) const {\n        return !(other < *this);\n \
-    \   }\n    constexpr bool operator>=(const Field& other) const {\n        return\
-    \ !(*this < other);\n    }\n    friend istream& operator>>(istream& is, Field&\
-    \ f) {\n        R r; is >> r;\n        f = Field(r);\n        return is;\n   \
-    \ }\n    friend ostream& operator<<(ostream& os, const Field& f) {\n        return\
-    \ os << f.represent();\n    }\n};\nnamespace std {\n    template <typename T>\n\
-    \    struct hash<Field<T>> {\n        size_t operator()(const Field<T>& f) const\
-    \ {\n            return hash<typename Field<T>::R>()(f.represent());\n       \
-    \ }\n    };\n}\ntemplate <typename T>\nstruct FiniteProperty<Field<T>> {\n   \
-    \ constexpr static bool is_finite = FiniteProperty<T>::is_finite;\n};\n"
+    \ Field operator-() const {\n        return SumGroup::minus(val);\n    }\n   \
+    \ constexpr Field& operator-=(const Field& other) {\n        return *this += -other;\n\
+    \    }\n    constexpr Field operator-(const Field& other) const {\n        return\
+    \ Field(*this) -= other;\n    }\n    constexpr Field& operator++() {\n       \
+    \ return *this += Field(one());\n    }\n    Field operator++(int) {\n        Field\
+    \ ret = *this;\n        ++*this;\n        return ret;\n    }\n    constexpr Field&\
+    \ operator--() {\n        return *this -= Field(one());\n    }\n    Field operator--(int)\
+    \ {\n        Field ret = *this;\n        --*this;\n        return ret;\n    }\n\
+    \    constexpr bool operator==(const Field& other) const {\n        return represent()\
+    \ == other.represent();\n    }\n    constexpr bool operator!=(const Field& other)\
+    \ const {\n        return !(*this == other);\n    }\n    constexpr bool operator<(const\
+    \ Field& other) const {\n        return represent() < other.represent();\n   \
+    \ }\n    constexpr bool operator>(const Field& other) const {\n        return\
+    \ other < *this;\n    }\n    constexpr bool operator<=(const Field& other) const\
+    \ {\n        return !(other < *this);\n    }\n    constexpr bool operator>=(const\
+    \ Field& other) const {\n        return !(*this < other);\n    }\n    friend istream&\
+    \ operator>>(istream& is, Field& f) {\n        R r; is >> r;\n        f = r;\n\
+    \        return is;\n    }\n    friend ostream& operator<<(ostream& os, const\
+    \ Field& f) {\n        return os << f.represent();\n    }\n};\nnamespace std {\n\
+    \    template <typename T>\n    struct hash<Field<T>> {\n        size_t operator()(const\
+    \ Field<T>& f) const {\n            return hash<typename Field<T>::R>()(f.represent());\n\
+    \        }\n    };\n}\n"
   dependsOn:
   - base.hpp
   - stl-wrapper/all.hpp
@@ -578,8 +568,8 @@ data:
   - algebra/modint.hpp
   - algebra/fps.hpp
   - algebra/nimber.hpp
-  timestamp: '2022-11-06 10:32:16+00:00'
-  verificationStatus: LIBRARY_ALL_AC
+  timestamp: '2022-11-06 15:16:24+00:00'
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - test/aoj-dpl-5-j.test.cpp
   - test/aoj-dpl-5-e.test.cpp

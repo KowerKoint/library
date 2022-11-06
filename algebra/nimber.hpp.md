@@ -1,41 +1,41 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: algebra/field.hpp
     title: algebra/field.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: base.hpp
     title: base.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/all.hpp
     title: stl-wrapper/all.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/map.hpp
     title: stl-wrapper/map.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/pair.hpp
     title: stl-wrapper/pair.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/set.hpp
     title: stl-wrapper/set.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/unordered_map.hpp
     title: stl-wrapper/unordered_map.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/unordered_set.hpp
     title: stl-wrapper/unordered_set.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/vector.hpp
     title: stl-wrapper/vector.hpp
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/yosupo-nim-product.test.cpp
     title: test/yosupo-nim-product.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     links: []
   bundledCode: "#line 2 \"base.hpp\"\n\n#include <bits/stdc++.h>\nusing namespace\
@@ -393,82 +393,77 @@ data:
     \ {\n    Vector<T> res(n+1), rev(n+1);\n    res[0] = 1;\n    REP(i, n) res[i+1]\
     \ = res[i] * (i+1);\n    rev[n] = 1 / res[n];\n    for(int i = n; i > 0; i--)\
     \ {\n        rev[i-1] = rev[i] * i;\n    }\n    return make_pair(res, rev);\n\
-    }\n#line 3 \"algebra/field.hpp\"\n\ntemplate <typename T>\nstruct SumGroup {\n\
-    \    static_assert(is_arithmetic_v<T>);\n    constexpr static T& addassign(T&\
-    \ l, const T& r) {\n        return l += r;\n    }\n    constexpr static bool defzero\
-    \ = true;\n    constexpr static T zero = 0;\n    constexpr static T minus(const\
-    \ T& x) {\n        return -x;\n    }\n};\ntemplate <typename T>\nstruct ProdGroup\
-    \ {\n    static_assert(is_arithmetic_v<T>);\n    constexpr static T& mulassign(T&\
-    \ l, const T& r) {\n        return l *= r;\n    }\n    constexpr static bool defone\
-    \ = true;\n    constexpr static T one = 1;\n    constexpr static T inv(const T&\
-    \ x) {\n        static_assert(is_floating_point_v<T>);\n        return one / x;\n\
-    \    }\n};\ntemplate <typename T>\nstruct Representation {\n    using R = decltype(T::val);\n\
-    \    constexpr static T construct(const R& x) { return {x}; }\n    constexpr static\
-    \ R represent(const T& x) { return x.val; }\n};\ntemplate <typename T>\nstruct\
-    \ FiniteProperty {\n    constexpr static bool is_finite = false;\n};\n\ntemplate\
-    \ <typename T>\nstruct Field {\n    using R = typename Representation<T>::R;\n\
-    \    T val;\n    constexpr static T zero() {\n        return SumGroup<T>::zero;\n\
-    \    }\n    constexpr static T one() {\n        return ProdGroup<T>::one;\n  \
-    \  }\n    constexpr Field() {\n        if constexpr(SumGroup<T>::defzero) val\
-    \ = SumGroup<T>::zero;\n        else if constexpr(SumGroup<T>::defone) val = SumGroup<T>::one;\n\
-    \        else val = T();\n    }\n    constexpr Field(const R& r) : val(Representation<T>::construct(r))\
-    \ {}\n    constexpr Field(const T& r) : val(r) {}\n    constexpr R represent()\
-    \ const { return Representation<T>::represent(val); }\n    constexpr static Field\
-    \ premitive_root() {\n        return {FiniteProperty<T>::premitive_root()};\n\
-    \    }\n    constexpr static size_t order() {\n        return FiniteProperty<T>::order();\n\
-    \    }\n    constexpr Field& operator*=(const Field& other) {\n        ProdGroup<T>::mulassign(val,\
-    \ other.val);\n        return *this;\n    }\n    constexpr Field operator*(const\
-    \ Field& other) const {\n        return Field(*this) *= other;\n    }\n    constexpr\
-    \ Field inv() const {\n        return ProdGroup<T>::inv(val);\n    }\n    constexpr\
-    \ Field& operator/=(const Field& other) {\n        return *this *= other.inv();\n\
-    \    }\n    constexpr Field operator/(const Field& other) const {\n        return\
-    \ Field(*this) /= other;\n    }\n    Field pow(ll n) const {\n        if(n < 0)\
-    \ {\n            return inv().pow(-n);\n        }\n        Field res = one();\n\
-    \        Field a = *this;\n        while(n > 0) {\n            if(n & 1) res *=\
+    }\n#line 3 \"algebra/field.hpp\"\n\ntemplate <typename T>\nstruct SumGroupBase\
+    \ {\n    constexpr static bool defzero = false;\n};\ntemplate <typename T>\nstruct\
+    \ ProdGroupBase {\n    constexpr static bool defone = false;\n};\ntemplate <typename\
+    \ T>\nstruct RepresentationBase {\n    using R = T;\n    constexpr static T construct(const\
+    \ R& x) { return x; }\n    constexpr static R represent(const T& x) { return x;\
+    \ }\n};\ntemplate <typename T>\nstruct FinitePropertyBase {\n    constexpr static\
+    \ bool is_finite = false;\n};\n\ntemplate <typename T, typename SumGroup = SumGroupBase<T>,\
+    \ typename ProdGroup = ProdGroupBase<T>, typename Representation = RepresentationBase<T>,\
+    \ typename FiniteProperty = FinitePropertyBase<T>>\nstruct Field {\n    using\
+    \ R = typename Representation::R;\n    T val;\n    constexpr static T zero() {\n\
+    \        return SumGroup::zero;\n    }\n    constexpr static T one() {\n     \
+    \   return ProdGroup::one;\n    }\n    constexpr static bool defzero = SumGroup::defzero;\n\
+    \    constexpr static bool defone = ProdGroup::defone;\n    constexpr static bool\
+    \ is_finite = FiniteProperty::is_finite;\n    constexpr Field() {\n        if\
+    \ constexpr(SumGroup::defzero) val = zero();\n        else if constexpr(SumGroup::defone)\
+    \ val = one();\n        else val = T();\n    }\n    constexpr Field(const R& r)\
+    \ : val(Representation::construct(r)) {}\n    constexpr R represent() const {\
+    \ return Representation::represent(val); }\n    constexpr static Field premitive_root()\
+    \ {\n        return FiniteProperty::premitive_root();\n    }\n    constexpr static\
+    \ size_t order() {\n        return FiniteProperty::order();\n    }\n    constexpr\
+    \ Field& operator*=(const Field& other) {\n        ProdGroup::mulassign(val, other.val);\n\
+    \        return *this;\n    }\n    constexpr Field operator*(const Field& other)\
+    \ const {\n        return Field(*this) *= other;\n    }\n    constexpr Field inv()\
+    \ const {\n        return ProdGroup::inv(val);\n    }\n    constexpr Field& operator/=(const\
+    \ Field& other) {\n        return *this *= other.inv();\n    }\n    constexpr\
+    \ Field operator/(const Field& other) const {\n        return Field(*this) /=\
+    \ other;\n    }\n    constexpr Field pow(ll n) const {\n        if(n < 0) {\n\
+    \            return inv().pow(-n);\n        }\n        Field res = one();\n  \
+    \      Field a = *this;\n        while(n > 0) {\n            if(n & 1) res *=\
     \ a;\n            a *= a;\n            n >>= 1;\n        }\n        return res;\n\
     \    }\n    constexpr Field operator+() const {\n        return *this;\n    }\n\
-    \    constexpr Field& operator+=(const Field& other) {\n        SumGroup<T>::addassign(val,\
+    \    constexpr Field& operator+=(const Field& other) {\n        SumGroup::addassign(val,\
     \ other.val);\n        return *this;\n    }\n    constexpr Field operator+(const\
     \ Field& other) const {\n        return Field(*this) += other;\n    }\n    constexpr\
-    \ Field operator-() const {\n        return SumGroup<T>::minus(val);\n    }\n\
-    \    constexpr Field& operator-=(const Field& other) {\n        return *this +=\
-    \ -other;\n    }\n    constexpr Field operator-(const Field& other) const {\n\
-    \        return Field(*this) -= other;\n    }\n    constexpr Field& operator++()\
-    \ {\n        return *this += Field(one());\n    }\n    Field operator++(int) {\n\
-    \        Field ret = *this;\n        ++*this;\n        return ret;\n    }\n  \
-    \  constexpr Field& operator--() {\n        return *this -= Field(one());\n  \
-    \  }\n    Field operator--(int) {\n        Field ret = *this;\n        --*this;\n\
-    \        return ret;\n    }\n    constexpr bool operator==(const Field& other)\
-    \ const {\n        return represent() == other.represent();\n    }\n    constexpr\
-    \ bool operator!=(const Field& other) const {\n        return !(*this == other);\n\
-    \    }\n    constexpr bool operator<(const Field& other) const {\n        return\
-    \ represent() < other.represent();\n    }\n    constexpr bool operator>(const\
-    \ Field& other) const {\n        return other < *this;\n    }\n    constexpr bool\
-    \ operator<=(const Field& other) const {\n        return !(other < *this);\n \
-    \   }\n    constexpr bool operator>=(const Field& other) const {\n        return\
-    \ !(*this < other);\n    }\n    friend istream& operator>>(istream& is, Field&\
-    \ f) {\n        R r; is >> r;\n        f = Field(r);\n        return is;\n   \
-    \ }\n    friend ostream& operator<<(ostream& os, const Field& f) {\n        return\
-    \ os << f.represent();\n    }\n};\nnamespace std {\n    template <typename T>\n\
-    \    struct hash<Field<T>> {\n        size_t operator()(const Field<T>& f) const\
-    \ {\n            return hash<typename Field<T>::R>()(f.represent());\n       \
-    \ }\n    };\n}\ntemplate <typename T>\nstruct FiniteProperty<Field<T>> {\n   \
-    \ constexpr static bool is_finite = FiniteProperty<T>::is_finite;\n};\n#line 3\
-    \ \"algebra/nimber.hpp\"\n\nnamespace _nimber_precalc {\n    static ull small_product[256][256];\n\
-    \    static ull pow64_product[8][8][256];\n    static bool built = false;\n\n\
-    \    ull nim_product_rec(ull x, ull y, int numbits) {\n        if(x < 256 && y\
-    \ < 256) return small_product[x][y];\n        int nnumbits = numbits >> 1;\n \
-    \       ull x1 = x >> numbits, x0 = x ^ (x1 << numbits);\n        ull y1 = y >>\
-    \ numbits, y0 = y ^ (y1 << numbits);\n        ull x1y1 = nim_product_rec(x1, y1,\
-    \ nnumbits);\n        ull x1y0 = nim_product_rec(x1, y0, nnumbits);\n        ull\
-    \ x0y1 = nim_product_rec(x0, y1, nnumbits);\n        ull x0y0 = nim_product_rec(x0,\
-    \ y0, nnumbits);\n        return ((x1y1^x1y0^x0y1) << numbits) ^ nim_product_rec(x1y1,\
-    \ 1ULL<<(numbits-1), nnumbits) ^ x0y0;\n    }\n\n    void precalc() {\n      \
-    \  built = true;\n        small_product[1][1] = 1ULL;\n        REP(i, 3) {\n \
-    \           REP(j, 1ULL<<(1<<(i+1))) {\n                ull ju = j >> (1<<i);\n\
-    \                ull jl = j & ((1ULL<<(1<<i))-1);\n                REP(k, 1ULL<<(1<<(i+1)))\
-    \ {\n                    ull ku = k >> (1<<i);\n                    ull kl = k\
-    \ & ((1ULL<<(1<<i))-1);\n                    small_product[j][k] = ((small_product[ju][ku]^small_product[jl][ku]^small_product[ju][kl])\
+    \ Field operator-() const {\n        return SumGroup::minus(val);\n    }\n   \
+    \ constexpr Field& operator-=(const Field& other) {\n        return *this += -other;\n\
+    \    }\n    constexpr Field operator-(const Field& other) const {\n        return\
+    \ Field(*this) -= other;\n    }\n    constexpr Field& operator++() {\n       \
+    \ return *this += Field(one());\n    }\n    Field operator++(int) {\n        Field\
+    \ ret = *this;\n        ++*this;\n        return ret;\n    }\n    constexpr Field&\
+    \ operator--() {\n        return *this -= Field(one());\n    }\n    Field operator--(int)\
+    \ {\n        Field ret = *this;\n        --*this;\n        return ret;\n    }\n\
+    \    constexpr bool operator==(const Field& other) const {\n        return represent()\
+    \ == other.represent();\n    }\n    constexpr bool operator!=(const Field& other)\
+    \ const {\n        return !(*this == other);\n    }\n    constexpr bool operator<(const\
+    \ Field& other) const {\n        return represent() < other.represent();\n   \
+    \ }\n    constexpr bool operator>(const Field& other) const {\n        return\
+    \ other < *this;\n    }\n    constexpr bool operator<=(const Field& other) const\
+    \ {\n        return !(other < *this);\n    }\n    constexpr bool operator>=(const\
+    \ Field& other) const {\n        return !(*this < other);\n    }\n    friend istream&\
+    \ operator>>(istream& is, Field& f) {\n        R r; is >> r;\n        f = r;\n\
+    \        return is;\n    }\n    friend ostream& operator<<(ostream& os, const\
+    \ Field& f) {\n        return os << f.represent();\n    }\n};\nnamespace std {\n\
+    \    template <typename T>\n    struct hash<Field<T>> {\n        size_t operator()(const\
+    \ Field<T>& f) const {\n            return hash<typename Field<T>::R>()(f.represent());\n\
+    \        }\n    };\n}\n#line 3 \"algebra/nimber.hpp\"\n\nnamespace _nimber_precalc\
+    \ {\n    static ull small_product[256][256];\n    static ull pow64_product[8][8][256];\n\
+    \    static bool built = false;\n\n    ull nim_product_rec(ull x, ull y, int numbits)\
+    \ {\n        if(x < 256 && y < 256) return small_product[x][y];\n        int nnumbits\
+    \ = numbits >> 1;\n        ull x1 = x >> numbits, x0 = x ^ (x1 << numbits);\n\
+    \        ull y1 = y >> numbits, y0 = y ^ (y1 << numbits);\n        ull x1y1 =\
+    \ nim_product_rec(x1, y1, nnumbits);\n        ull x1y0 = nim_product_rec(x1, y0,\
+    \ nnumbits);\n        ull x0y1 = nim_product_rec(x0, y1, nnumbits);\n        ull\
+    \ x0y0 = nim_product_rec(x0, y0, nnumbits);\n        return ((x1y1^x1y0^x0y1)\
+    \ << numbits) ^ nim_product_rec(x1y1, 1ULL<<(numbits-1), nnumbits) ^ x0y0;\n \
+    \   }\n\n    void precalc() {\n        built = true;\n        small_product[1][1]\
+    \ = 1ULL;\n        REP(i, 3) {\n            REP(j, 1ULL<<(1<<(i+1))) {\n     \
+    \           ull ju = j >> (1<<i);\n                ull jl = j & ((1ULL<<(1<<i))-1);\n\
+    \                REP(k, 1ULL<<(1<<(i+1))) {\n                    ull ku = k >>\
+    \ (1<<i);\n                    ull kl = k & ((1ULL<<(1<<i))-1);\n            \
+    \        small_product[j][k] = ((small_product[ju][ku]^small_product[jl][ku]^small_product[ju][kl])\
     \ << (1<<i)) ^ (small_product[small_product[ju][ku]][1ULL<<((1<<i)-1)]^small_product[jl][kl]);\n\
     \                }\n            }\n        }\n        REP(i, 8) REP(j, 8) {\n\
     \            ull tmp = nim_product_rec(1ULL<<(i<<3), 1ULL<<(j<<3), 1ULL<<5);\n\
@@ -530,8 +525,8 @@ data:
   isVerificationFile: false
   path: algebra/nimber.hpp
   requiredBy: []
-  timestamp: '2022-11-06 10:32:16+00:00'
-  verificationStatus: LIBRARY_ALL_AC
+  timestamp: '2022-11-06 15:16:24+00:00'
+  verificationStatus: LIBRARY_ALL_WA
   verifiedWith:
   - test/yosupo-nim-product.test.cpp
 documentation_of: algebra/nimber.hpp

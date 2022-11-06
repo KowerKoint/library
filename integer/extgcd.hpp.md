@@ -1,28 +1,28 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: base.hpp
     title: base.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/all.hpp
     title: stl-wrapper/all.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/map.hpp
     title: stl-wrapper/map.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/pair.hpp
     title: stl-wrapper/pair.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/set.hpp
     title: stl-wrapper/set.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/unordered_map.hpp
     title: stl-wrapper/unordered_map.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/unordered_set.hpp
     title: stl-wrapper/unordered_set.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/vector.hpp
     title: stl-wrapper/vector.hpp
   _extendedRequiredBy:
@@ -435,14 +435,15 @@ data:
     \ {\n    Vector<T> res(n+1), rev(n+1);\n    res[0] = 1;\n    REP(i, n) res[i+1]\
     \ = res[i] * (i+1);\n    rev[n] = 1 / res[n];\n    for(int i = n; i > 0; i--)\
     \ {\n        rev[i-1] = rev[i] * i;\n    }\n    return make_pair(res, rev);\n\
-    }\n#line 3 \"integer/extgcd.hpp\"\n\nll extgcd(ll a, ll b, ll& x, ll& y) {\n \
-    \   x = 1, y = 0;\n    ll nx = 0, ny = 1;\n    while(b) {\n        ll q = a /\
-    \ b;\n        tie(a, b) = LP(b, a % b);\n        tie(x, nx) = LP(nx, x - nx*q);\n\
-    \        tie(y, ny) = LP(ny, y - ny*q);\n    }\n    return a;\n}\n"
-  code: "#pragma once\n#include \"../base.hpp\"\n\nll extgcd(ll a, ll b, ll& x, ll&\
+    }\n#line 3 \"integer/extgcd.hpp\"\n\nconstexpr ll extgcd(ll a, ll b, ll& x, ll&\
     \ y) {\n    x = 1, y = 0;\n    ll nx = 0, ny = 1;\n    while(b) {\n        ll\
     \ q = a / b;\n        tie(a, b) = LP(b, a % b);\n        tie(x, nx) = LP(nx, x\
     \ - nx*q);\n        tie(y, ny) = LP(ny, y - ny*q);\n    }\n    return a;\n}\n"
+  code: "#pragma once\n#include \"../base.hpp\"\n\nconstexpr ll extgcd(ll a, ll b,\
+    \ ll& x, ll& y) {\n    x = 1, y = 0;\n    ll nx = 0, ny = 1;\n    while(b) {\n\
+    \        ll q = a / b;\n        tie(a, b) = LP(b, a % b);\n        tie(x, nx)\
+    \ = LP(nx, x - nx*q);\n        tie(y, ny) = LP(ny, y - ny*q);\n    }\n    return\
+    \ a;\n}\n"
   dependsOn:
   - base.hpp
   - stl-wrapper/all.hpp
@@ -460,7 +461,7 @@ data:
   - general.hpp
   - algebra/modint.hpp
   - algebra/fps.hpp
-  timestamp: '2022-11-06 10:32:16+00:00'
+  timestamp: '2022-11-06 15:16:24+00:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/aoj-dpl-5-j.test.cpp
