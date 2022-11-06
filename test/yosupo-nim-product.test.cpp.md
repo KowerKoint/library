@@ -1,41 +1,41 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: algebra/field.hpp
     title: algebra/field.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: algebra/nimber.hpp
     title: algebra/nimber.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: base.hpp
     title: base.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/all.hpp
     title: stl-wrapper/all.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/map.hpp
     title: stl-wrapper/map.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/pair.hpp
     title: stl-wrapper/pair.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/set.hpp
     title: stl-wrapper/set.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/unordered_map.hpp
     title: stl-wrapper/unordered_map.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/unordered_set.hpp
     title: stl-wrapper/unordered_set.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/vector.hpp
     title: stl-wrapper/vector.hpp
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/nim_product_64
@@ -475,18 +475,17 @@ data:
     \        }\n    }\n\n}\n\null nim_product(const ull& x, const ull& y) {\n    if(!_nimber_precalc::built)\
     \ _nimber_precalc::precalc();\n    ull ret = 0;\n    REP(i, 8) REP(j, 8) {\n \
     \       ret ^= _nimber_precalc::pow64_product[i][j][_nimber_precalc::small_product[(x>>(i<<3))&255][(y>>(j<<3))&255]];\n\
-    \    }\n    return ret;\n}\n\nstruct NimberBase {\n    ull val;\n};\n\ntemplate<>\n\
-    struct SumGroup<NimberBase> {\n    inline static NimberBase& addassign(NimberBase&\
-    \ l, const NimberBase& r) {\n        l.val ^= r.val;\n        return l;\n    }\n\
-    \    constexpr static bool defzero = true;\n    constexpr static NimberBase zero\
-    \ = {0};\n    inline static NimberBase minus(const NimberBase& r) {\n        return\
-    \ r;\n    }\n};\ntemplate<>\nstruct ProdGroup<NimberBase> {\n    static NimberBase&\
-    \ mulassign(NimberBase& l, const NimberBase& r) {\n        l.val = nim_product(l.val,\
-    \ r.val);\n        return l;\n    }\n    constexpr static bool defone = true;\n\
-    \    constexpr static NimberBase one = {1};\n};\n\nusing Nimber = Field<NimberBase>;\n\
-    #line 4 \"test/yosupo-nim-product.test.cpp\"\n\nint main() {\n    int t; cin >>\
-    \ t;\n    while(t--) {\n        Nimber a, b; cin >> a >> b;\n        print(a *\
-    \ b);\n    }\n}\n"
+    \    }\n    return ret;\n}\n\nstruct SumGroupNimber : SumGroupBase<ull> {\n  \
+    \  constexpr static ull& addassign(ull& l, const ull& r) {\n        return l ^=\
+    \ r;\n    }\n    constexpr static bool defzero = true;\n    constexpr static ull\
+    \ zero = 0;\n    inline static ull minus(const ull& r) {\n        return r;\n\
+    \    }\n};\nstruct ProdGroupNimber : ProdGroupBase<ull> {\n    static ull& mulassign(ull&\
+    \ l, const ull& r) {\n        l = nim_product(l, r);\n        return l;\n    }\n\
+    \    constexpr static bool defone = true;\n    constexpr static ull one = 1;\n\
+    };\n\nusing Nimber = Field<ull, SumGroupNimber, ProdGroupNimber>;\n#line 4 \"\
+    test/yosupo-nim-product.test.cpp\"\n\nint main() {\n    int t; cin >> t;\n   \
+    \ while(t--) {\n        Nimber a, b; cin >> a >> b;\n        print(a * b);\n \
+    \   }\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/nim_product_64\"\n\n#include\
     \ \"algebra/nimber.hpp\"\n\nint main() {\n    int t; cin >> t;\n    while(t--)\
     \ {\n        Nimber a, b; cin >> a >> b;\n        print(a * b);\n    }\n}\n"
@@ -504,8 +503,8 @@ data:
   isVerificationFile: true
   path: test/yosupo-nim-product.test.cpp
   requiredBy: []
-  timestamp: '2022-11-06 15:16:24+00:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  timestamp: '2022-11-06 15:35:57+00:00'
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/yosupo-nim-product.test.cpp
 layout: document

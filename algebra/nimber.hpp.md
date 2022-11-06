@@ -1,41 +1,41 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: algebra/field.hpp
     title: algebra/field.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: base.hpp
     title: base.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/all.hpp
     title: stl-wrapper/all.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/map.hpp
     title: stl-wrapper/map.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/pair.hpp
     title: stl-wrapper/pair.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/set.hpp
     title: stl-wrapper/set.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/unordered_map.hpp
     title: stl-wrapper/unordered_map.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/unordered_set.hpp
     title: stl-wrapper/unordered_set.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-wrapper/vector.hpp
     title: stl-wrapper/vector.hpp
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: test/yosupo-nim-product.test.cpp
     title: test/yosupo-nim-product.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"base.hpp\"\n\n#include <bits/stdc++.h>\nusing namespace\
@@ -471,15 +471,14 @@ data:
     \        }\n    }\n\n}\n\null nim_product(const ull& x, const ull& y) {\n    if(!_nimber_precalc::built)\
     \ _nimber_precalc::precalc();\n    ull ret = 0;\n    REP(i, 8) REP(j, 8) {\n \
     \       ret ^= _nimber_precalc::pow64_product[i][j][_nimber_precalc::small_product[(x>>(i<<3))&255][(y>>(j<<3))&255]];\n\
-    \    }\n    return ret;\n}\n\nstruct NimberBase {\n    ull val;\n};\n\ntemplate<>\n\
-    struct SumGroup<NimberBase> {\n    inline static NimberBase& addassign(NimberBase&\
-    \ l, const NimberBase& r) {\n        l.val ^= r.val;\n        return l;\n    }\n\
-    \    constexpr static bool defzero = true;\n    constexpr static NimberBase zero\
-    \ = {0};\n    inline static NimberBase minus(const NimberBase& r) {\n        return\
-    \ r;\n    }\n};\ntemplate<>\nstruct ProdGroup<NimberBase> {\n    static NimberBase&\
-    \ mulassign(NimberBase& l, const NimberBase& r) {\n        l.val = nim_product(l.val,\
-    \ r.val);\n        return l;\n    }\n    constexpr static bool defone = true;\n\
-    \    constexpr static NimberBase one = {1};\n};\n\nusing Nimber = Field<NimberBase>;\n"
+    \    }\n    return ret;\n}\n\nstruct SumGroupNimber : SumGroupBase<ull> {\n  \
+    \  constexpr static ull& addassign(ull& l, const ull& r) {\n        return l ^=\
+    \ r;\n    }\n    constexpr static bool defzero = true;\n    constexpr static ull\
+    \ zero = 0;\n    inline static ull minus(const ull& r) {\n        return r;\n\
+    \    }\n};\nstruct ProdGroupNimber : ProdGroupBase<ull> {\n    static ull& mulassign(ull&\
+    \ l, const ull& r) {\n        l = nim_product(l, r);\n        return l;\n    }\n\
+    \    constexpr static bool defone = true;\n    constexpr static ull one = 1;\n\
+    };\n\nusing Nimber = Field<ull, SumGroupNimber, ProdGroupNimber>;\n"
   code: "#pragma once\n#include \"field.hpp\"\n\nnamespace _nimber_precalc {\n   \
     \ static ull small_product[256][256];\n    static ull pow64_product[8][8][256];\n\
     \    static bool built = false;\n\n    ull nim_product_rec(ull x, ull y, int numbits)\
@@ -503,15 +502,14 @@ data:
     \        }\n    }\n\n}\n\null nim_product(const ull& x, const ull& y) {\n    if(!_nimber_precalc::built)\
     \ _nimber_precalc::precalc();\n    ull ret = 0;\n    REP(i, 8) REP(j, 8) {\n \
     \       ret ^= _nimber_precalc::pow64_product[i][j][_nimber_precalc::small_product[(x>>(i<<3))&255][(y>>(j<<3))&255]];\n\
-    \    }\n    return ret;\n}\n\nstruct NimberBase {\n    ull val;\n};\n\ntemplate<>\n\
-    struct SumGroup<NimberBase> {\n    inline static NimberBase& addassign(NimberBase&\
-    \ l, const NimberBase& r) {\n        l.val ^= r.val;\n        return l;\n    }\n\
-    \    constexpr static bool defzero = true;\n    constexpr static NimberBase zero\
-    \ = {0};\n    inline static NimberBase minus(const NimberBase& r) {\n        return\
-    \ r;\n    }\n};\ntemplate<>\nstruct ProdGroup<NimberBase> {\n    static NimberBase&\
-    \ mulassign(NimberBase& l, const NimberBase& r) {\n        l.val = nim_product(l.val,\
-    \ r.val);\n        return l;\n    }\n    constexpr static bool defone = true;\n\
-    \    constexpr static NimberBase one = {1};\n};\n\nusing Nimber = Field<NimberBase>;\n"
+    \    }\n    return ret;\n}\n\nstruct SumGroupNimber : SumGroupBase<ull> {\n  \
+    \  constexpr static ull& addassign(ull& l, const ull& r) {\n        return l ^=\
+    \ r;\n    }\n    constexpr static bool defzero = true;\n    constexpr static ull\
+    \ zero = 0;\n    inline static ull minus(const ull& r) {\n        return r;\n\
+    \    }\n};\nstruct ProdGroupNimber : ProdGroupBase<ull> {\n    static ull& mulassign(ull&\
+    \ l, const ull& r) {\n        l = nim_product(l, r);\n        return l;\n    }\n\
+    \    constexpr static bool defone = true;\n    constexpr static ull one = 1;\n\
+    };\n\nusing Nimber = Field<ull, SumGroupNimber, ProdGroupNimber>;\n"
   dependsOn:
   - algebra/field.hpp
   - base.hpp
@@ -525,8 +523,8 @@ data:
   isVerificationFile: false
   path: algebra/nimber.hpp
   requiredBy: []
-  timestamp: '2022-11-06 15:16:24+00:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2022-11-06 15:35:57+00:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/yosupo-nim-product.test.cpp
 documentation_of: algebra/nimber.hpp
