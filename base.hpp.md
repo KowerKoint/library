@@ -1,50 +1,47 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/all.hpp
     title: stl-wrapper/all.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/map.hpp
     title: stl-wrapper/map.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/pair.hpp
     title: stl-wrapper/pair.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/set.hpp
     title: stl-wrapper/set.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/unordered_map.hpp
     title: stl-wrapper/unordered_map.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/unordered_set.hpp
     title: stl-wrapper/unordered_set.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/vector.hpp
     title: stl-wrapper/vector.hpp
   _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: algebra/field.hpp
     title: algebra/field.hpp
   - icon: ':heavy_check_mark:'
+    path: algebra/fps.hpp
+    title: algebra/fps.hpp
+  - icon: ':question:'
     path: algebra/modint.hpp
     title: algebra/modint.hpp
-  - icon: ':warning:'
-    path: algebra/monoid.hpp
-    title: algebra/monoid.hpp
   - icon: ':heavy_check_mark:'
     path: algebra/nimber.hpp
     title: algebra/nimber.hpp
-  - icon: ':heavy_check_mark:'
-    path: algebra/ring.hpp
-    title: algebra/ring.hpp
   - icon: ':heavy_check_mark:'
     path: bit/bitset.hpp
     title: bit/bitset.hpp
   - icon: ':heavy_check_mark:'
     path: connectivity/union-find.hpp
     title: connectivity/union-find.hpp
-  - icon: ':warning:'
+  - icon: ':heavy_check_mark:'
     path: convolution/fft.hpp
     title: convolution/fft.hpp
   - icon: ':heavy_check_mark:'
@@ -53,7 +50,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: counting/counting.hpp
     title: counting/counting.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: counting/montmort.hpp
     title: counting/montmort.hpp
   - icon: ':warning:'
@@ -74,7 +71,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: graph/tree.hpp
     title: graph/tree.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: integer/extgcd.hpp
     title: integer/extgcd.hpp
   - icon: ':heavy_check_mark:'
@@ -83,7 +80,7 @@ data:
   - icon: ':warning:'
     path: integer/least-prime-factors.hpp
     title: integer/least-prime-factors.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: integer/pow-mod.hpp
     title: integer/pow-mod.hpp
   - icon: ':heavy_check_mark:'
@@ -168,7 +165,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: test/yosupo-lowest-common-ancestor.test.cpp
     title: test/yosupo-lowest-common-ancestor.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: test/yosupo-montmort-number.test.cpp
     title: test/yosupo-montmort-number.test.cpp
   - icon: ':heavy_check_mark:'
@@ -186,9 +183,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: test/yosupo-static-range-frequency.test.cpp
     title: test/yosupo-static-range-frequency.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':question:'
   attributes:
     links: []
   bundledCode: "#line 2 \"base.hpp\"\n\n#include <bits/stdc++.h>\nusing namespace\
@@ -635,15 +632,14 @@ data:
   - matrix/matrix.hpp
   - connectivity/union-find.hpp
   - algebra/field.hpp
-  - algebra/monoid.hpp
-  - algebra/ring.hpp
   - algebra/modint.hpp
+  - algebra/fps.hpp
   - algebra/nimber.hpp
   - operator.hpp
   - geometry.hpp
   - string.hpp
-  timestamp: '2022-11-03 09:22:44+09:00'
-  verificationStatus: LIBRARY_ALL_AC
+  timestamp: '2022-11-06 10:00:21+00:00'
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - test/aoj-dpl-5-j.test.cpp
   - test/aoj-itp-1-3-d.test.cpp

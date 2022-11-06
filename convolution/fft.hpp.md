@@ -1,35 +1,47 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
+    path: algebra/field.hpp
+    title: algebra/field.hpp
+  - icon: ':question:'
     path: base.hpp
     title: base.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/all.hpp
     title: stl-wrapper/all.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/map.hpp
     title: stl-wrapper/map.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/pair.hpp
     title: stl-wrapper/pair.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/set.hpp
     title: stl-wrapper/set.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/unordered_map.hpp
     title: stl-wrapper/unordered_map.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/unordered_set.hpp
     title: stl-wrapper/unordered_set.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/vector.hpp
     title: stl-wrapper/vector.hpp
-  _extendedRequiredBy: []
-  _extendedVerifiedWith: []
+  _extendedRequiredBy:
+  - icon: ':heavy_check_mark:'
+    path: algebra/fps.hpp
+    title: algebra/fps.hpp
+  - icon: ':heavy_check_mark:'
+    path: convolution/ntt.hpp
+    title: convolution/ntt.hpp
+  _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: test/yosupo-convolution.test.cpp
+    title: test/yosupo-convolution.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"base.hpp\"\n\n#include <bits/stdc++.h>\nusing namespace\
@@ -387,17 +399,77 @@ data:
     \ {\n    Vector<T> res(n+1), rev(n+1);\n    res[0] = 1;\n    REP(i, n) res[i+1]\
     \ = res[i] * (i+1);\n    rev[n] = 1 / res[n];\n    for(int i = n; i > 0; i--)\
     \ {\n        rev[i-1] = rev[i] * i;\n    }\n    return make_pair(res, rev);\n\
-    }\n#line 3 \"convolution/fft.hpp\"\nusing namespace std;\nusing ll = long long;\n\
-    \nvoid fft(vector<complex<double>>& v) {\n    int n = v.size();\n    assert((n\
-    \ & (n - 1)) == 0);\n    int m = __builtin_ctz(n);\n    Vector<complex<double>>\
-    \ zeta(n);\n    zeta[0] = 1;\n    complex<double> gn = polar(1.0, 2 * M_PI / n);\n\
-    \    for(int i = 0; i < n-1; i++) zeta[i+1] = zeta[i] * gn;\n    int array_idx_mask\
-    \ = 0;\n    int array_id_mask = n-1;\n    for(int i = 0; i < m; i++) {\n     \
-    \   array_idx_mask ^= 1 << (m-i-1);\n        array_id_mask ^= 1 << (m-i-1);\n\
-    \        Vector<complex<double>> nv(n);\n        for(int j = 0; j < n; j++) {\n\
-    \            int k = (((j & array_idx_mask) << 1) & array_idx_mask) | (j & array_id_mask);\n\
-    \            nv[j] = v[k] + zeta[j & array_idx_mask] * v[k | (1 << (m-i-1))];\n\
-    \        }\n        v.swap(nv);\n    }\n}\nvoid ifft(vector<complex<double>>&\
+    }\n#line 3 \"algebra/field.hpp\"\n\ntemplate <typename T>\nstruct SumGroup {\n\
+    \    static_assert(is_arithmetic_v<T>);\n    constexpr static T& addassign(T&\
+    \ l, const T& r) {\n        return l += r;\n    }\n    constexpr static bool defzero\
+    \ = true;\n    constexpr static T zero = 0;\n    constexpr static T minus(const\
+    \ T& x) {\n        return -x;\n    }\n};\ntemplate <typename T>\nstruct ProdGroup\
+    \ {\n    static_assert(is_arithmetic_v<T>);\n    constexpr static T& mulassign(T&\
+    \ l, const T& r) {\n        return l *= r;\n    }\n    constexpr static bool defone\
+    \ = true;\n    constexpr static T one = 1;\n    constexpr static T inv(const T&\
+    \ x) {\n        static_assert(is_floating_point_v<T>);\n        return one / x;\n\
+    \    }\n};\ntemplate <typename T>\nstruct Representation {\n    using R = decltype(T::val);\n\
+    \    constexpr static T construct(const R& x) { return {x}; }\n    constexpr static\
+    \ R represent(const T& x) { return x.val; }\n};\ntemplate <typename T>\nstruct\
+    \ FiniteProperty {\n    constexpr static bool is_finite = false;\n};\n\ntemplate\
+    \ <typename T>\nstruct Field {\n    using R = typename Representation<T>::R;\n\
+    \    T val;\n    constexpr static T zero() {\n        return SumGroup<T>::zero;\n\
+    \    }\n    constexpr static T one() {\n        return ProdGroup<T>::one;\n  \
+    \  }\n    constexpr Field() {\n        if constexpr(SumGroup<T>::defzero) val\
+    \ = SumGroup<T>::zero;\n        else if constexpr(SumGroup<T>::defone) val = SumGroup<T>::one;\n\
+    \        else val = T();\n    }\n    constexpr Field(const R& r) : val(Representation<T>::construct(r))\
+    \ {}\n    constexpr Field(const T& r) : val(r) {}\n    constexpr R represent()\
+    \ const { return Representation<T>::represent(val); }\n    constexpr static Field\
+    \ premitive_root() {\n        return {FiniteProperty<T>::premitive_root()};\n\
+    \    }\n    constexpr static size_t order() {\n        return FiniteProperty<T>::order();\n\
+    \    }\n    constexpr Field& operator*=(const Field& other) {\n        ProdGroup<T>::mulassign(val,\
+    \ other.val);\n        return *this;\n    }\n    constexpr Field operator*(const\
+    \ Field& other) const {\n        return Field(*this) *= other;\n    }\n    constexpr\
+    \ Field inv() const {\n        return ProdGroup<T>::inv(val);\n    }\n    constexpr\
+    \ Field& operator/=(const Field& other) {\n        return *this *= other.inv();\n\
+    \    }\n    constexpr Field operator/(const Field& other) const {\n        return\
+    \ Field(*this) /= other;\n    }\n    Field pow(ll n) const {\n        if(n < 0)\
+    \ {\n            return inv().pow(-n);\n        }\n        Field res = one();\n\
+    \        Field a = *this;\n        while(n > 0) {\n            if(n & 1) res *=\
+    \ a;\n            a *= a;\n            n >>= 1;\n        }\n        return res;\n\
+    \    }\n    constexpr Field operator+() const {\n        return *this;\n    }\n\
+    \    constexpr Field& operator+=(const Field& other) {\n        SumGroup<T>::addassign(val,\
+    \ other.val);\n        return *this;\n    }\n    constexpr Field operator+(const\
+    \ Field& other) const {\n        return Field(*this) += other;\n    }\n    constexpr\
+    \ Field operator-() const {\n        return SumGroup<T>::minus(val);\n    }\n\
+    \    constexpr Field& operator-=(const Field& other) {\n        return *this +=\
+    \ -other;\n    }\n    constexpr Field operator-(const Field& other) const {\n\
+    \        return Field(*this) -= other;\n    }\n    constexpr Field& operator++()\
+    \ {\n        return *this += Field(one());\n    }\n    Field operator++(int) {\n\
+    \        Field ret = *this;\n        ++*this;\n        return ret;\n    }\n  \
+    \  constexpr Field& operator--() {\n        return *this -= Field(one());\n  \
+    \  }\n    Field operator--(int) {\n        Field ret = *this;\n        --*this;\n\
+    \        return ret;\n    }\n    constexpr bool operator==(const Field& other)\
+    \ const {\n        return represent() == other.represent();\n    }\n    constexpr\
+    \ bool operator!=(const Field& other) const {\n        return !(*this == other);\n\
+    \    }\n    constexpr bool operator<(const Field& other) const {\n        return\
+    \ represent() < other.represent();\n    }\n    constexpr bool operator>(const\
+    \ Field& other) const {\n        return other < *this;\n    }\n    constexpr bool\
+    \ operator<=(const Field& other) const {\n        return !(other < *this);\n \
+    \   }\n    constexpr bool operator>=(const Field& other) const {\n        return\
+    \ !(*this < other);\n    }\n    friend istream& operator>>(istream& is, Field&\
+    \ f) {\n        R r; is >> r;\n        f = Field(r);\n        return is;\n   \
+    \ }\n    friend ostream& operator<<(ostream& os, const Field& f) {\n        return\
+    \ os << f.represent();\n    }\n};\nnamespace std {\n    template <typename T>\n\
+    \    struct hash<Field<T>> {\n        size_t operator()(const Field<T>& f) const\
+    \ {\n            return hash<typename Field<T>::R>()(f.represent());\n       \
+    \ }\n    };\n}\ntemplate <typename T>\nstruct FiniteProperty<Field<T>> {\n   \
+    \ constexpr static bool is_finite = FiniteProperty<T>::is_finite;\n};\n#line 3\
+    \ \"convolution/fft.hpp\"\n\nvoid fft(vector<complex<double>>& v) {\n    int n\
+    \ = v.size();\n    assert((n & (n - 1)) == 0);\n    int m = __builtin_ctz(n);\n\
+    \    Vector<complex<double>> zeta(n);\n    zeta[0] = 1;\n    complex<double> gn\
+    \ = polar(1.0, 2 * M_PI / n);\n    for(int i = 0; i < n-1; i++) zeta[i+1] = zeta[i]\
+    \ * gn;\n    int array_idx_mask = 0;\n    int array_id_mask = n-1;\n    for(int\
+    \ i = 0; i < m; i++) {\n        array_idx_mask ^= 1 << (m-i-1);\n        array_id_mask\
+    \ ^= 1 << (m-i-1);\n        Vector<complex<double>> nv(n);\n        for(int j\
+    \ = 0; j < n; j++) {\n            int k = (((j & array_idx_mask) << 1) & array_idx_mask)\
+    \ | (j & array_id_mask);\n            nv[j] = v[k] + zeta[j & array_idx_mask]\
+    \ * v[k | (1 << (m-i-1))];\n        }\n        v.swap(nv);\n    }\n}\nvoid ifft(vector<complex<double>>&\
     \ v) {\n    int n = v.size();\n    assert((n & (n - 1)) == 0);\n    int m = __builtin_ctz(n);\n\
     \    Vector<complex<double>> izeta(n);\n    izeta[0] = 1;\n    complex<double>\
     \ ign = polar(1.0, -2 * M_PI / n);\n    for(int i = 0; i < n-1; i++) izeta[i+1]\
@@ -407,31 +479,27 @@ data:
     \        for(int j = 0; j < n; j++) {\n            int k = (((j & array_idx_mask)\
     \ << 1) & array_idx_mask) | (j & array_id_mask);\n            nv[j] = v[k] + izeta[j\
     \ & array_idx_mask] * v[k | (1 << (m-i-1))];\n        }\n        v.swap(nv);\n\
-    \    }\n    for(int i = 0; i < n; i++) v[i] /= n;\n}\nVector<complex<double>>\
-    \ sum_convolution(const vector<complex<double>>& v1, const vector<complex<double>>&\
-    \ v2) {\n    int n = 1;\n    while(n < (int)v1.size() + (int)v2.size() - 1) n\
-    \ <<= 1;\n    Vector<complex<double>> f1(v1), f2(v2);\n    f1.resize(n); f2.resize(n);\n\
-    \    fft(f1); fft(f2);\n    for(int i = 0; i < n; i++) {\n        f1[i] *= f2[i];\n\
-    \    }\n    ifft(f1);\n    f1.resize(v1.size() + v2.size() - 1);\n    return f1;\n\
-    }\nVector<double> sum_convolution(const vector<double>& v1, const vector<double>&\
-    \ v2) {\n    Vector<complex<double>> res = sum_convolution(Vector<complex<double>>(v1.begin(),\
-    \ v1.end()), Vector<complex<double>>(v2.begin(), v2.end()));\n    return Vector<double>(res.begin(),\
-    \ res.end());\n}\nVector<ll> sum_convolution(const vector<ll>& v1, const vector<ll>&\
-    \ v2) {\n    Vector<complex<double>> res = sum_convolution(Vector<complex<double>>(v1.begin(),\
+    \    }\n    for(int i = 0; i < n; i++) v[i] /= n;\n}\ntemplate <typename T, enable_if_t<!FiniteProperty<T>::is_finite,\
+    \ nullptr_t> = nullptr>\nVector<T> sum_convolution(const vector<T>& v1, const\
+    \ vector<T>& v2) {\n    int n = 1;\n    while(n < (int)v1.size() + (int)v2.size()\
+    \ - 1) n <<= 1;\n    Vector<complex<double>> f1(ALL(v1)), f2(ALL(v2));\n    f1.resize(n);\
+    \ f2.resize(n);\n    fft(f1); fft(f2);\n    for(int i = 0; i < n; i++) {\n   \
+    \     f1[i] *= f2[i];\n    }\n    ifft(f1);\n    return Vector<T>(f1.begin(),\
+    \ f1.begin() + v1.size() + v2.size() - 1);\n}\ntemplate <>\nVector<ll> sum_convolution<ll>(const\
+    \ vector<ll>& v1, const vector<ll>& v2) {\n    Vector<complex<double>> res = sum_convolution(Vector<complex<double>>(v1.begin(),\
     \ v1.end()), Vector<complex<double>>(v2.begin(), v2.end()));\n    Vector<ll> ret(res.size());\n\
     \    for(int i = 0; i < (int)res.size(); i++) {\n        ret[i] = round(res[i].real());\n\
     \    }\n    return ret;\n}\n"
-  code: "#pragma once\n#include \"base.hpp\"\nusing namespace std;\nusing ll = long\
-    \ long;\n\nvoid fft(vector<complex<double>>& v) {\n    int n = v.size();\n   \
-    \ assert((n & (n - 1)) == 0);\n    int m = __builtin_ctz(n);\n    Vector<complex<double>>\
-    \ zeta(n);\n    zeta[0] = 1;\n    complex<double> gn = polar(1.0, 2 * M_PI / n);\n\
-    \    for(int i = 0; i < n-1; i++) zeta[i+1] = zeta[i] * gn;\n    int array_idx_mask\
-    \ = 0;\n    int array_id_mask = n-1;\n    for(int i = 0; i < m; i++) {\n     \
-    \   array_idx_mask ^= 1 << (m-i-1);\n        array_id_mask ^= 1 << (m-i-1);\n\
-    \        Vector<complex<double>> nv(n);\n        for(int j = 0; j < n; j++) {\n\
-    \            int k = (((j & array_idx_mask) << 1) & array_idx_mask) | (j & array_id_mask);\n\
-    \            nv[j] = v[k] + zeta[j & array_idx_mask] * v[k | (1 << (m-i-1))];\n\
-    \        }\n        v.swap(nv);\n    }\n}\nvoid ifft(vector<complex<double>>&\
+  code: "#pragma once\n#include \"../algebra/field.hpp\"\n\nvoid fft(vector<complex<double>>&\
+    \ v) {\n    int n = v.size();\n    assert((n & (n - 1)) == 0);\n    int m = __builtin_ctz(n);\n\
+    \    Vector<complex<double>> zeta(n);\n    zeta[0] = 1;\n    complex<double> gn\
+    \ = polar(1.0, 2 * M_PI / n);\n    for(int i = 0; i < n-1; i++) zeta[i+1] = zeta[i]\
+    \ * gn;\n    int array_idx_mask = 0;\n    int array_id_mask = n-1;\n    for(int\
+    \ i = 0; i < m; i++) {\n        array_idx_mask ^= 1 << (m-i-1);\n        array_id_mask\
+    \ ^= 1 << (m-i-1);\n        Vector<complex<double>> nv(n);\n        for(int j\
+    \ = 0; j < n; j++) {\n            int k = (((j & array_idx_mask) << 1) & array_idx_mask)\
+    \ | (j & array_id_mask);\n            nv[j] = v[k] + zeta[j & array_idx_mask]\
+    \ * v[k | (1 << (m-i-1))];\n        }\n        v.swap(nv);\n    }\n}\nvoid ifft(vector<complex<double>>&\
     \ v) {\n    int n = v.size();\n    assert((n & (n - 1)) == 0);\n    int m = __builtin_ctz(n);\n\
     \    Vector<complex<double>> izeta(n);\n    izeta[0] = 1;\n    complex<double>\
     \ ign = polar(1.0, -2 * M_PI / n);\n    for(int i = 0; i < n-1; i++) izeta[i+1]\
@@ -441,21 +509,19 @@ data:
     \        for(int j = 0; j < n; j++) {\n            int k = (((j & array_idx_mask)\
     \ << 1) & array_idx_mask) | (j & array_id_mask);\n            nv[j] = v[k] + izeta[j\
     \ & array_idx_mask] * v[k | (1 << (m-i-1))];\n        }\n        v.swap(nv);\n\
-    \    }\n    for(int i = 0; i < n; i++) v[i] /= n;\n}\nVector<complex<double>>\
-    \ sum_convolution(const vector<complex<double>>& v1, const vector<complex<double>>&\
-    \ v2) {\n    int n = 1;\n    while(n < (int)v1.size() + (int)v2.size() - 1) n\
-    \ <<= 1;\n    Vector<complex<double>> f1(v1), f2(v2);\n    f1.resize(n); f2.resize(n);\n\
-    \    fft(f1); fft(f2);\n    for(int i = 0; i < n; i++) {\n        f1[i] *= f2[i];\n\
-    \    }\n    ifft(f1);\n    f1.resize(v1.size() + v2.size() - 1);\n    return f1;\n\
-    }\nVector<double> sum_convolution(const vector<double>& v1, const vector<double>&\
-    \ v2) {\n    Vector<complex<double>> res = sum_convolution(Vector<complex<double>>(v1.begin(),\
-    \ v1.end()), Vector<complex<double>>(v2.begin(), v2.end()));\n    return Vector<double>(res.begin(),\
-    \ res.end());\n}\nVector<ll> sum_convolution(const vector<ll>& v1, const vector<ll>&\
-    \ v2) {\n    Vector<complex<double>> res = sum_convolution(Vector<complex<double>>(v1.begin(),\
+    \    }\n    for(int i = 0; i < n; i++) v[i] /= n;\n}\ntemplate <typename T, enable_if_t<!FiniteProperty<T>::is_finite,\
+    \ nullptr_t> = nullptr>\nVector<T> sum_convolution(const vector<T>& v1, const\
+    \ vector<T>& v2) {\n    int n = 1;\n    while(n < (int)v1.size() + (int)v2.size()\
+    \ - 1) n <<= 1;\n    Vector<complex<double>> f1(ALL(v1)), f2(ALL(v2));\n    f1.resize(n);\
+    \ f2.resize(n);\n    fft(f1); fft(f2);\n    for(int i = 0; i < n; i++) {\n   \
+    \     f1[i] *= f2[i];\n    }\n    ifft(f1);\n    return Vector<T>(f1.begin(),\
+    \ f1.begin() + v1.size() + v2.size() - 1);\n}\ntemplate <>\nVector<ll> sum_convolution<ll>(const\
+    \ vector<ll>& v1, const vector<ll>& v2) {\n    Vector<complex<double>> res = sum_convolution(Vector<complex<double>>(v1.begin(),\
     \ v1.end()), Vector<complex<double>>(v2.begin(), v2.end()));\n    Vector<ll> ret(res.size());\n\
     \    for(int i = 0; i < (int)res.size(); i++) {\n        ret[i] = round(res[i].real());\n\
     \    }\n    return ret;\n}\n"
   dependsOn:
+  - algebra/field.hpp
   - base.hpp
   - stl-wrapper/all.hpp
   - stl-wrapper/pair.hpp
@@ -466,10 +532,13 @@ data:
   - stl-wrapper/unordered_map.hpp
   isVerificationFile: false
   path: convolution/fft.hpp
-  requiredBy: []
-  timestamp: '2022-11-03 09:22:44+09:00'
-  verificationStatus: LIBRARY_NO_TESTS
-  verifiedWith: []
+  requiredBy:
+  - convolution/ntt.hpp
+  - algebra/fps.hpp
+  timestamp: '2022-11-06 10:00:21+00:00'
+  verificationStatus: LIBRARY_ALL_AC
+  verifiedWith:
+  - test/yosupo-convolution.test.cpp
 documentation_of: convolution/fft.hpp
 layout: document
 redirect_from:

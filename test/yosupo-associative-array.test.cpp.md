@@ -1,10 +1,10 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/map.hpp
     title: stl-wrapper/map.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/vector.hpp
     title: stl-wrapper/vector.hpp
   _extendedRequiredBy: []
@@ -146,7 +146,7 @@ data:
   isVerificationFile: true
   path: test/yosupo-associative-array.test.cpp
   requiredBy: []
-  timestamp: '2022-11-03 09:22:44+09:00'
+  timestamp: '2022-11-06 10:00:21+00:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/yosupo-associative-array.test.cpp

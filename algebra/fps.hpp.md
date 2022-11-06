@@ -1,41 +1,53 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
-    path: algebra/ordinal_operator.hpp
-    title: algebra/ordinal_operator.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
+    path: algebra/field.hpp
+    title: algebra/field.hpp
+  - icon: ':question:'
+    path: algebra/modint.hpp
+    title: algebra/modint.hpp
+  - icon: ':question:'
     path: base.hpp
     title: base.hpp
   - icon: ':heavy_check_mark:'
+    path: convolution/fft.hpp
+    title: convolution/fft.hpp
+  - icon: ':heavy_check_mark:'
+    path: convolution/ntt.hpp
+    title: convolution/ntt.hpp
+  - icon: ':question:'
+    path: integer/extgcd.hpp
+    title: integer/extgcd.hpp
+  - icon: ':question:'
+    path: integer/pow-mod.hpp
+    title: integer/pow-mod.hpp
+  - icon: ':question:'
     path: stl-wrapper/all.hpp
     title: stl-wrapper/all.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/map.hpp
     title: stl-wrapper/map.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/pair.hpp
     title: stl-wrapper/pair.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/set.hpp
     title: stl-wrapper/set.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/unordered_map.hpp
     title: stl-wrapper/unordered_map.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/unordered_set.hpp
     title: stl-wrapper/unordered_set.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/vector.hpp
     title: stl-wrapper/vector.hpp
-  _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
-    path: algebra/nimber.hpp
-    title: algebra/nimber.hpp
+  _extendedRequiredBy: []
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
-    path: test/yosupo-nim-product.test.cpp
-    title: test/yosupo-nim-product.test.cpp
+    path: test/yosupo-convolution.test.cpp
+    title: test/yosupo-convolution.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -396,89 +408,217 @@ data:
     \ {\n    Vector<T> res(n+1), rev(n+1);\n    res[0] = 1;\n    REP(i, n) res[i+1]\
     \ = res[i] * (i+1);\n    rev[n] = 1 / res[n];\n    for(int i = n; i > 0; i--)\
     \ {\n        rev[i-1] = rev[i] * i;\n    }\n    return make_pair(res, rev);\n\
-    }\n#line 2 \"algebra/ordinal_operator.hpp\"\n\ntemplate <typename T>\nT ordinal_identity(const\
-    \ T& x) {\n    return x;\n}\ntemplate <typename T>\nT ordinal_plus(const T& a,\
-    \ const T& b) {\n    return a + b;\n}\ntemplate <typename T>\nT ordinal_zero()\
-    \ {\n    return T(0);\n}\ntemplate <typename T>\nT ordinal_mult(const T& a, const\
-    \ T& b) {\n    return a * b;\n}\ntemplate <typename T>\nT ordinal_one() {\n  \
-    \  return T(1);\n}\ntemplate <typename T>\nT ordinal_plusinv(const T& a) {\n \
-    \   return -a;\n}\ntemplate <typename T>\nT ordinal_multinv(const T& a) {\n  \
-    \  return T(1) / a;\n}\ntemplate <typename T>\nT ordinal_xor(const T& a, const\
-    \ T& b) {\n    return a ^ b;\n}\ntemplate <typename T>\nT ordinal_and(const T&\
-    \ a, const T& b) {\n    return a & b;\n}\ntemplate <typename T>\nT ordinal_or(const\
-    \ T& a, const T& b) {\n    return a | b;\n}\n#line 4 \"algebra/ring.hpp\"\n\n\
-    template <\n    typename T,\n    T (*mult)(const T&, const T&),\n    T (*one)(),\n\
-    \    T (*plus)(const T&, const T&),\n    T (*zero)(),\n    T (*plusinv)(const\
-    \ T&),\n    typename R = T,\n    T (*rtot)(const R&) = ordinal_identity<R>,\n\
-    \    R (*ttor)(const T&) = ordinal_identity<T>\n>\nstruct Ring {\nprivate:\n \
-    \   T _val;\npublic:\n    Ring() : _val(zero()) {}\n    Ring(const R& r) : _val(rtot(r))\
-    \ {}\n    R val() const { return ttor(_val); }\n    Ring& operator*=(const Ring&\
-    \ other) {\n        _val = mult(_val, other._val);\n        return *this;\n  \
-    \  }\n    Ring operator*(const Ring& other) const {\n        return Ring(*this)\
-    \ *= other;\n    }\n    Ring pow(ll n) const {\n        assert(n >= 0);\n    \
-    \    Ring res = one();\n        Ring a = *this;\n        while(n > 0) {\n    \
-    \        if(n & 1) res *= a;\n            a *= a;\n            n >>= 1;\n    \
-    \    }\n        return res;\n    }\n    Ring operator+() const {\n        return\
-    \ *this;\n    }\n    Ring& operator+=(const Ring& other) {\n        _val = plus(_val,\
-    \ other._val);\n        return *this;\n    }\n    Ring operator+(const Ring& other)\
-    \ const {\n        return Ring(*this) += other;\n    }\n    Ring operator-() const\
-    \ {\n        return Ring(plusinv(_val));\n    }\n    Ring& operator-=(const Ring&\
-    \ other) {\n        return *this += -other;\n    }\n    Ring operator-(const Ring&\
-    \ other) const {\n        return Ring(*this) -= other;\n    }\n    bool operator==(const\
-    \ Ring& other) const {\n        return val() == other.val();\n    }\n    bool\
-    \ operator!=(const Ring& other) const {\n        return !(*this == other);\n \
-    \   }\n    bool operator<(const Ring& other) const {\n        return val() < other.val();\n\
-    \    }\n    bool operator>(const Ring& other) const {\n        return other <\
-    \ *this;\n    }\n    bool operator<=(const Ring& other) const {\n        return\
-    \ !(other < *this);\n    }\n    bool operator>=(const Ring& other) const {\n \
-    \       return !(*this < other);\n    }\n    friend istream& operator>>(istream&\
-    \ is, Ring& f) {\n        R r; is >> r;\n        f = Ring(r);\n        return\
-    \ is;\n    }\n    friend ostream& operator<<(ostream& os, const Ring& f) {\n \
-    \       return os << f.val();\n    }\n};\nnamespace std {\n    template <\n  \
-    \      typename T,\n        T (*mult)(const T, const T),\n        T (*one)(),\n\
-    \        T (*plus)(const T, const T),\n        T (*zero)(),\n        T (*plusinv)(const\
-    \ T),\n        typename R,\n        T (*rtot)(const R),\n        R (*ttor)(const\
-    \ T)\n    >\n    struct hash<Ring<T, mult, one, plus, zero, plusinv, R, rtot,\
-    \ ttor>> {\n        size_t operator()(const Ring<T, mult, one, plus, zero, plusinv,\
-    \ R, rtot, ttor>& f) const {\n            return hash<R>()(f.val());\n       \
-    \ }\n    };\n}\n"
-  code: "#pragma once\n#include \"../base.hpp\"\n#include \"ordinal_operator.hpp\"\
-    \n\ntemplate <\n    typename T,\n    T (*mult)(const T&, const T&),\n    T (*one)(),\n\
-    \    T (*plus)(const T&, const T&),\n    T (*zero)(),\n    T (*plusinv)(const\
-    \ T&),\n    typename R = T,\n    T (*rtot)(const R&) = ordinal_identity<R>,\n\
-    \    R (*ttor)(const T&) = ordinal_identity<T>\n>\nstruct Ring {\nprivate:\n \
-    \   T _val;\npublic:\n    Ring() : _val(zero()) {}\n    Ring(const R& r) : _val(rtot(r))\
-    \ {}\n    R val() const { return ttor(_val); }\n    Ring& operator*=(const Ring&\
-    \ other) {\n        _val = mult(_val, other._val);\n        return *this;\n  \
-    \  }\n    Ring operator*(const Ring& other) const {\n        return Ring(*this)\
-    \ *= other;\n    }\n    Ring pow(ll n) const {\n        assert(n >= 0);\n    \
-    \    Ring res = one();\n        Ring a = *this;\n        while(n > 0) {\n    \
-    \        if(n & 1) res *= a;\n            a *= a;\n            n >>= 1;\n    \
-    \    }\n        return res;\n    }\n    Ring operator+() const {\n        return\
-    \ *this;\n    }\n    Ring& operator+=(const Ring& other) {\n        _val = plus(_val,\
-    \ other._val);\n        return *this;\n    }\n    Ring operator+(const Ring& other)\
-    \ const {\n        return Ring(*this) += other;\n    }\n    Ring operator-() const\
-    \ {\n        return Ring(plusinv(_val));\n    }\n    Ring& operator-=(const Ring&\
-    \ other) {\n        return *this += -other;\n    }\n    Ring operator-(const Ring&\
-    \ other) const {\n        return Ring(*this) -= other;\n    }\n    bool operator==(const\
-    \ Ring& other) const {\n        return val() == other.val();\n    }\n    bool\
-    \ operator!=(const Ring& other) const {\n        return !(*this == other);\n \
-    \   }\n    bool operator<(const Ring& other) const {\n        return val() < other.val();\n\
-    \    }\n    bool operator>(const Ring& other) const {\n        return other <\
-    \ *this;\n    }\n    bool operator<=(const Ring& other) const {\n        return\
-    \ !(other < *this);\n    }\n    bool operator>=(const Ring& other) const {\n \
-    \       return !(*this < other);\n    }\n    friend istream& operator>>(istream&\
-    \ is, Ring& f) {\n        R r; is >> r;\n        f = Ring(r);\n        return\
-    \ is;\n    }\n    friend ostream& operator<<(ostream& os, const Ring& f) {\n \
-    \       return os << f.val();\n    }\n};\nnamespace std {\n    template <\n  \
-    \      typename T,\n        T (*mult)(const T, const T),\n        T (*one)(),\n\
-    \        T (*plus)(const T, const T),\n        T (*zero)(),\n        T (*plusinv)(const\
-    \ T),\n        typename R,\n        T (*rtot)(const R),\n        R (*ttor)(const\
-    \ T)\n    >\n    struct hash<Ring<T, mult, one, plus, zero, plusinv, R, rtot,\
-    \ ttor>> {\n        size_t operator()(const Ring<T, mult, one, plus, zero, plusinv,\
-    \ R, rtot, ttor>& f) const {\n            return hash<R>()(f.val());\n       \
-    \ }\n    };\n}\n"
+    }\n#line 3 \"algebra/field.hpp\"\n\ntemplate <typename T>\nstruct SumGroup {\n\
+    \    static_assert(is_arithmetic_v<T>);\n    constexpr static T& addassign(T&\
+    \ l, const T& r) {\n        return l += r;\n    }\n    constexpr static bool defzero\
+    \ = true;\n    constexpr static T zero = 0;\n    constexpr static T minus(const\
+    \ T& x) {\n        return -x;\n    }\n};\ntemplate <typename T>\nstruct ProdGroup\
+    \ {\n    static_assert(is_arithmetic_v<T>);\n    constexpr static T& mulassign(T&\
+    \ l, const T& r) {\n        return l *= r;\n    }\n    constexpr static bool defone\
+    \ = true;\n    constexpr static T one = 1;\n    constexpr static T inv(const T&\
+    \ x) {\n        static_assert(is_floating_point_v<T>);\n        return one / x;\n\
+    \    }\n};\ntemplate <typename T>\nstruct Representation {\n    using R = decltype(T::val);\n\
+    \    constexpr static T construct(const R& x) { return {x}; }\n    constexpr static\
+    \ R represent(const T& x) { return x.val; }\n};\ntemplate <typename T>\nstruct\
+    \ FiniteProperty {\n    constexpr static bool is_finite = false;\n};\n\ntemplate\
+    \ <typename T>\nstruct Field {\n    using R = typename Representation<T>::R;\n\
+    \    T val;\n    constexpr static T zero() {\n        return SumGroup<T>::zero;\n\
+    \    }\n    constexpr static T one() {\n        return ProdGroup<T>::one;\n  \
+    \  }\n    constexpr Field() {\n        if constexpr(SumGroup<T>::defzero) val\
+    \ = SumGroup<T>::zero;\n        else if constexpr(SumGroup<T>::defone) val = SumGroup<T>::one;\n\
+    \        else val = T();\n    }\n    constexpr Field(const R& r) : val(Representation<T>::construct(r))\
+    \ {}\n    constexpr Field(const T& r) : val(r) {}\n    constexpr R represent()\
+    \ const { return Representation<T>::represent(val); }\n    constexpr static Field\
+    \ premitive_root() {\n        return {FiniteProperty<T>::premitive_root()};\n\
+    \    }\n    constexpr static size_t order() {\n        return FiniteProperty<T>::order();\n\
+    \    }\n    constexpr Field& operator*=(const Field& other) {\n        ProdGroup<T>::mulassign(val,\
+    \ other.val);\n        return *this;\n    }\n    constexpr Field operator*(const\
+    \ Field& other) const {\n        return Field(*this) *= other;\n    }\n    constexpr\
+    \ Field inv() const {\n        return ProdGroup<T>::inv(val);\n    }\n    constexpr\
+    \ Field& operator/=(const Field& other) {\n        return *this *= other.inv();\n\
+    \    }\n    constexpr Field operator/(const Field& other) const {\n        return\
+    \ Field(*this) /= other;\n    }\n    Field pow(ll n) const {\n        if(n < 0)\
+    \ {\n            return inv().pow(-n);\n        }\n        Field res = one();\n\
+    \        Field a = *this;\n        while(n > 0) {\n            if(n & 1) res *=\
+    \ a;\n            a *= a;\n            n >>= 1;\n        }\n        return res;\n\
+    \    }\n    constexpr Field operator+() const {\n        return *this;\n    }\n\
+    \    constexpr Field& operator+=(const Field& other) {\n        SumGroup<T>::addassign(val,\
+    \ other.val);\n        return *this;\n    }\n    constexpr Field operator+(const\
+    \ Field& other) const {\n        return Field(*this) += other;\n    }\n    constexpr\
+    \ Field operator-() const {\n        return SumGroup<T>::minus(val);\n    }\n\
+    \    constexpr Field& operator-=(const Field& other) {\n        return *this +=\
+    \ -other;\n    }\n    constexpr Field operator-(const Field& other) const {\n\
+    \        return Field(*this) -= other;\n    }\n    constexpr Field& operator++()\
+    \ {\n        return *this += Field(one());\n    }\n    Field operator++(int) {\n\
+    \        Field ret = *this;\n        ++*this;\n        return ret;\n    }\n  \
+    \  constexpr Field& operator--() {\n        return *this -= Field(one());\n  \
+    \  }\n    Field operator--(int) {\n        Field ret = *this;\n        --*this;\n\
+    \        return ret;\n    }\n    constexpr bool operator==(const Field& other)\
+    \ const {\n        return represent() == other.represent();\n    }\n    constexpr\
+    \ bool operator!=(const Field& other) const {\n        return !(*this == other);\n\
+    \    }\n    constexpr bool operator<(const Field& other) const {\n        return\
+    \ represent() < other.represent();\n    }\n    constexpr bool operator>(const\
+    \ Field& other) const {\n        return other < *this;\n    }\n    constexpr bool\
+    \ operator<=(const Field& other) const {\n        return !(other < *this);\n \
+    \   }\n    constexpr bool operator>=(const Field& other) const {\n        return\
+    \ !(*this < other);\n    }\n    friend istream& operator>>(istream& is, Field&\
+    \ f) {\n        R r; is >> r;\n        f = Field(r);\n        return is;\n   \
+    \ }\n    friend ostream& operator<<(ostream& os, const Field& f) {\n        return\
+    \ os << f.represent();\n    }\n};\nnamespace std {\n    template <typename T>\n\
+    \    struct hash<Field<T>> {\n        size_t operator()(const Field<T>& f) const\
+    \ {\n            return hash<typename Field<T>::R>()(f.represent());\n       \
+    \ }\n    };\n}\ntemplate <typename T>\nstruct FiniteProperty<Field<T>> {\n   \
+    \ constexpr static bool is_finite = FiniteProperty<T>::is_finite;\n};\n#line 3\
+    \ \"integer/extgcd.hpp\"\n\nll extgcd(ll a, ll b, ll& x, ll& y) {\n    x = 1,\
+    \ y = 0;\n    ll nx = 0, ny = 1;\n    while(b) {\n        ll q = a / b;\n    \
+    \    tie(a, b) = LP(b, a % b);\n        tie(x, nx) = LP(nx, x - nx*q);\n     \
+    \   tie(y, ny) = LP(ny, y - ny*q);\n    }\n    return a;\n}\n#line 2 \"integer/pow-mod.hpp\"\
+    \n\nll inv_mod(ll n, ll m) {\n    n %= m;\n    if (n < 0) n += m;\n    ll x, y;\n\
+    \    assert(extgcd(n, m, x, y) == 1);\n    x %= m;\n    if(x < 0) x += m;\n  \
+    \  return x;\n}\n\nll pow_mod(ll a, ll n, ll m) {\n    if(n == 0) return 1LL;\n\
+    \    if(n < 0) return inv_mod(pow_mod(a, -n, m), m);\n    a %= m;\n    if (a <\
+    \ 0) n += m;\n    ll res = 1;\n    while(n) {\n        if(n & 1) {\n         \
+    \   res *= a;\n            res %= m;\n        }\n        n >>= 1;\n        a *=\
+    \ a;\n        a %= m;\n    }\n    return res;\n}\n#line 4 \"algebra/modint.hpp\"\
+    \n\ntemplate <ll mod>\nstruct ModintBase {\n    ll val;\n};\ntemplate <ll mod>\n\
+    struct SumGroup<ModintBase<mod>> {\n    static ModintBase<mod>& addassign(ModintBase<mod>&\
+    \ l, const ModintBase<mod>& r) {\n        ll ret;\n        if(__builtin_add_overflow(l.val,\
+    \ r.val, &ret)) {\n            l.val = l.val % mod + r.val % mod;\n        } else\
+    \ {\n            l.val = ret;\n        }\n        return l;\n    }\n    constexpr\
+    \ static bool defzero = true;\n    constexpr static ModintBase<mod> zero = {0};\n\
+    \    constexpr static ModintBase<mod> minus(const ModintBase<mod>& x) {\n    \
+    \    return {-x.val};\n    }\n};\ntemplate <ll mod>\nstruct ProdGroup<ModintBase<mod>>\
+    \ {\n    constexpr static bool defmul = true;\n    static ModintBase<mod>& mulassign(ModintBase<mod>&\
+    \ l, const ModintBase<mod>& r) {\n        ll ret;\n        if(__builtin_mul_overflow(l.val,\
+    \ r.val, &ret)) {\n            l.val = (l.val % mod) * (r.val % mod);\n      \
+    \  } else {\n            l.val = ret;\n        }\n        return l;\n    }\n \
+    \   constexpr static bool defone = true;\n    constexpr static ModintBase<mod>\
+    \ one = {1};\n    constexpr static bool definv = true;\n    static ModintBase<mod>\
+    \ inv(const ModintBase<mod>& x) {\n        return {inv_mod(x.val, mod)};\n   \
+    \ }\n};\ntemplate <ll mod>\nstruct Representation<ModintBase<mod>> {\n    using\
+    \ R = ll;\n    constexpr static ModintBase<mod> construct(const R& x) { return\
+    \ {x % mod}; }\n    static R represent(const ModintBase<mod>& x) {\n        ll\
+    \ ret = x.val % mod;\n        if(ret < 0) ret += mod;\n        return ret;\n \
+    \   }\n};\ntemplate <ll mod>\nstruct FiniteProperty<ModintBase<mod>> {\n    constexpr\
+    \ static bool is_finite = true;\n    constexpr static ModintBase<mod> premitive_root()\
+    \ {\n        static_assert(mod == 998244353);\n        return 3;\n    }\n    constexpr\
+    \ static size_t order() {\n        return mod - 1;\n    }\n};\n\ntemplate <ll\
+    \ mod>\nusing Modint = Field<ModintBase<mod>>;\n\nusing MI3 = Modint<998244353>;\n\
+    using V3 = Vector<MI3>;\nusing VV3 = Vector<V3>;\nusing VVV3 = Vector<VV3>;\n\
+    using MI7 = Modint<1000000007>;\nusing V7 = Vector<MI7>;\nusing VV7 = Vector<V7>;\n\
+    using VVV7 = Vector<VV7>;\n#line 3 \"convolution/fft.hpp\"\n\nvoid fft(vector<complex<double>>&\
+    \ v) {\n    int n = v.size();\n    assert((n & (n - 1)) == 0);\n    int m = __builtin_ctz(n);\n\
+    \    Vector<complex<double>> zeta(n);\n    zeta[0] = 1;\n    complex<double> gn\
+    \ = polar(1.0, 2 * M_PI / n);\n    for(int i = 0; i < n-1; i++) zeta[i+1] = zeta[i]\
+    \ * gn;\n    int array_idx_mask = 0;\n    int array_id_mask = n-1;\n    for(int\
+    \ i = 0; i < m; i++) {\n        array_idx_mask ^= 1 << (m-i-1);\n        array_id_mask\
+    \ ^= 1 << (m-i-1);\n        Vector<complex<double>> nv(n);\n        for(int j\
+    \ = 0; j < n; j++) {\n            int k = (((j & array_idx_mask) << 1) & array_idx_mask)\
+    \ | (j & array_id_mask);\n            nv[j] = v[k] + zeta[j & array_idx_mask]\
+    \ * v[k | (1 << (m-i-1))];\n        }\n        v.swap(nv);\n    }\n}\nvoid ifft(vector<complex<double>>&\
+    \ v) {\n    int n = v.size();\n    assert((n & (n - 1)) == 0);\n    int m = __builtin_ctz(n);\n\
+    \    Vector<complex<double>> izeta(n);\n    izeta[0] = 1;\n    complex<double>\
+    \ ign = polar(1.0, -2 * M_PI / n);\n    for(int i = 0; i < n-1; i++) izeta[i+1]\
+    \ = izeta[i] * ign;\n    int array_idx_mask = 0;\n    int array_id_mask = n-1;\n\
+    \    for(int i = 0; i < m; i++) {\n        array_idx_mask ^= 1 << (m-i-1);\n \
+    \       array_id_mask ^= 1 << (m-i-1);\n        Vector<complex<double>> nv(n);\n\
+    \        for(int j = 0; j < n; j++) {\n            int k = (((j & array_idx_mask)\
+    \ << 1) & array_idx_mask) | (j & array_id_mask);\n            nv[j] = v[k] + izeta[j\
+    \ & array_idx_mask] * v[k | (1 << (m-i-1))];\n        }\n        v.swap(nv);\n\
+    \    }\n    for(int i = 0; i < n; i++) v[i] /= n;\n}\ntemplate <typename T, enable_if_t<!FiniteProperty<T>::is_finite,\
+    \ nullptr_t> = nullptr>\nVector<T> sum_convolution(const vector<T>& v1, const\
+    \ vector<T>& v2) {\n    int n = 1;\n    while(n < (int)v1.size() + (int)v2.size()\
+    \ - 1) n <<= 1;\n    Vector<complex<double>> f1(ALL(v1)), f2(ALL(v2));\n    f1.resize(n);\
+    \ f2.resize(n);\n    fft(f1); fft(f2);\n    for(int i = 0; i < n; i++) {\n   \
+    \     f1[i] *= f2[i];\n    }\n    ifft(f1);\n    return Vector<T>(f1.begin(),\
+    \ f1.begin() + v1.size() + v2.size() - 1);\n}\ntemplate <>\nVector<ll> sum_convolution<ll>(const\
+    \ vector<ll>& v1, const vector<ll>& v2) {\n    Vector<complex<double>> res = sum_convolution(Vector<complex<double>>(v1.begin(),\
+    \ v1.end()), Vector<complex<double>>(v2.begin(), v2.end()));\n    Vector<ll> ret(res.size());\n\
+    \    for(int i = 0; i < (int)res.size(); i++) {\n        ret[i] = round(res[i].real());\n\
+    \    }\n    return ret;\n}\n#line 4 \"convolution/ntt.hpp\"\n\ntemplate <ll mod>\n\
+    void ntt(vector<Modint<mod>>& v) {\n    assert(mod == 998244353);\n    constexpr\
+    \ ll g = 3;\n    int n = v.size();\n    assert((n & (n - 1)) == 0);\n    int m\
+    \ = __builtin_ctz(n);\n    assert(m <= 23);\n    Vector<Modint<mod>> zeta(n);\n\
+    \    zeta[0] = 1;\n    Modint<mod> gn = Modint<mod>(g).pow((mod - 1) >> m);\n\
+    \    for(int i = 0; i < n-1; i++) zeta[i+1] = zeta[i] * gn;\n    int array_idx_mask\
+    \ = 0;\n    int array_id_mask = n-1;\n    for(int i = 0; i < m; i++) {\n     \
+    \   array_idx_mask ^= 1 << (m-i-1);\n        array_id_mask ^= 1 << (m-i-1);\n\
+    \        Vector<Modint<mod>> nv(n);\n        for(int j = 0; j < n; j++) {\n  \
+    \          int k = (((j & array_idx_mask) << 1) & array_idx_mask) | (j & array_id_mask);\n\
+    \            nv[j] = v[k] + zeta[j & array_idx_mask] * v[k | (1 << (m-i-1))];\n\
+    \        }\n        v.swap(nv);\n    }\n}\ntemplate <ll mod>\nvoid intt(vector<Modint<mod>>&\
+    \ v) {\n    assert(mod == 998244353);\n    constexpr ll ig = 332748118;\n    int\
+    \ n = v.size();\n    assert((n & (n - 1)) == 0);\n    int m = __builtin_ctz(n);\n\
+    \    assert(m <= 23);\n    Vector<Modint<mod>> izeta(n);\n    izeta[0] = 1;\n\
+    \    Modint<mod> ign = Modint<mod>(ig).pow((mod - 1) >> m);\n    for(int i = 0;\
+    \ i < n-1; i++) izeta[i+1] = izeta[i] * ign;\n    int array_idx_mask = 0;\n  \
+    \  int array_id_mask = n-1;\n    for(int i = 0; i < m; i++) {\n        array_idx_mask\
+    \ ^= 1 << (m-i-1);\n        array_id_mask ^= 1 << (m-i-1);\n        Vector<Modint<mod>>\
+    \ nv(n);\n        for(int j = 0; j < n; j++) {\n            int k = (((j & array_idx_mask)\
+    \ << 1) & array_idx_mask) | (j & array_id_mask);\n            nv[j] = v[k] + izeta[j\
+    \ & array_idx_mask] * v[k | (1 << (m-i-1))];\n        }\n        v.swap(nv);\n\
+    \    }\n    for(int i = 0; i < n; i++) v[i] /= n;\n}\ntemplate <typename T, enable_if_t<FiniteProperty<T>::is_finite,\
+    \ nullptr_t> = nullptr>\nVector<T> sum_convolution(const vector<T>& v1, const\
+    \ vector<T>& v2) {\n    static_assert(is_same_v<T, Modint<998244353>>);\n    int\
+    \ n = 1;\n    while(n < (int)v1.size() + (int)v2.size() - 1) n <<= 1;\n    Vector<T>\
+    \ f1(v1), f2(v2);\n    f1.resize(n); f2.resize(n);\n    ntt(f1); ntt(f2);\n  \
+    \  for(int i = 0; i < n; i++) {\n        f1[i] *= f2[i];\n    }\n    intt(f1);\n\
+    \    f1.resize(v1.size() + v2.size() - 1);\n    return f1;\n}\n#line 4 \"algebra/fps.hpp\"\
+    \n\ntemplate <typename T, bool expandable = false>\nstruct FPSBase {\n    Vector<T>\
+    \ val;\n};\ntemplate <typename T, bool expandable>\nstruct SumGroup<FPSBase<T,\
+    \ expandable>> {\n    static FPSBase<T, expandable>& addassign(FPSBase<T, expandable>&\
+    \ l, const FPSBase<T, expandable>& r) {\n        resize(max(l.val.size(), r.val.size()));\n\
+    \        for(int i = 0; i < r.size(); i++) {\n            l.val[i] += r.val[i];\n\
+    \        }\n        return l;\n    }\n    constexpr static bool defzero = true;\n\
+    \    const static FPSBase<T, expandable> zero;\n    static FPSBase<T, expandable>&\
+    \ minus(FPSBase<T, expandable> x) {\n        for(int i = 0; i < x.val.size();\
+    \ i++) {\n            x.val[i] = -x.val[i];\n        }\n        return x;\n  \
+    \  }\n};\ntemplate <typename T, bool expandable>\nconst FPSBase<T, expandable>\
+    \ SumGroup<FPSBase<T, expandable>>::zero = {{}};\ntemplate <typename T, bool expandable>\n\
+    struct ProdGroup<FPSBase<T, expandable>> {\n    static FPSBase<T, expandable>&\
+    \ mulassign(FPSBase<T, expandable>& l, const FPSBase<T, expandable>& r) {\n  \
+    \      Vector<T> ret = sum_convolution(l.val, r.val);\n        if constexpr(!expandable)\
+    \ {\n            ret.resize(max(l.val.size(), r.val.size()));\n        }\n   \
+    \     l.val = ret;\n        return l;\n    }\n    constexpr static bool defone\
+    \ = true;\n    const static FPSBase<T, expandable> one;\n    static FPSBase<T,\
+    \ expandable> inv(const FPSBase<T, expandable>& f) {\n        Vector<T> g = {f[0].inv()};\n\
+    \        while(g.size() < f.size()) {\n            Vector<T> fgg = sum_convolution(f,\
+    \ sum_convolution(g, g));\n            g.resize(g.size() << 1);\n            for(int\
+    \ i = 0; i < g.size(); i++) {\n                g[i] <<= 1;\n                if(i\
+    \ < (int)fgg.size()) g[i] -= fgg[i];\n            }\n        }\n        return\
+    \ {g};\n    }\n};\ntemplate <typename T, bool expandable>\nconst FPSBase<T, expandable>\
+    \ ProdGroup<FPSBase<T, expandable>>::one = {{1}};\n\ntemplate <typename T>\nusing\
+    \ FPS = Field<FPSBase<T>>;\ntemplate <typename T>\nusing ExpandableFPS = Field<FPSBase<T,\
+    \ true>>;\n"
+  code: "#pragma once\n#include \"field.hpp\"\n#include \"../convolution/ntt.hpp\"\
+    \n\ntemplate <typename T, bool expandable = false>\nstruct FPSBase {\n    Vector<T>\
+    \ val;\n};\ntemplate <typename T, bool expandable>\nstruct SumGroup<FPSBase<T,\
+    \ expandable>> {\n    static FPSBase<T, expandable>& addassign(FPSBase<T, expandable>&\
+    \ l, const FPSBase<T, expandable>& r) {\n        resize(max(l.val.size(), r.val.size()));\n\
+    \        for(int i = 0; i < r.size(); i++) {\n            l.val[i] += r.val[i];\n\
+    \        }\n        return l;\n    }\n    constexpr static bool defzero = true;\n\
+    \    const static FPSBase<T, expandable> zero;\n    static FPSBase<T, expandable>&\
+    \ minus(FPSBase<T, expandable> x) {\n        for(int i = 0; i < x.val.size();\
+    \ i++) {\n            x.val[i] = -x.val[i];\n        }\n        return x;\n  \
+    \  }\n};\ntemplate <typename T, bool expandable>\nconst FPSBase<T, expandable>\
+    \ SumGroup<FPSBase<T, expandable>>::zero = {{}};\ntemplate <typename T, bool expandable>\n\
+    struct ProdGroup<FPSBase<T, expandable>> {\n    static FPSBase<T, expandable>&\
+    \ mulassign(FPSBase<T, expandable>& l, const FPSBase<T, expandable>& r) {\n  \
+    \      Vector<T> ret = sum_convolution(l.val, r.val);\n        if constexpr(!expandable)\
+    \ {\n            ret.resize(max(l.val.size(), r.val.size()));\n        }\n   \
+    \     l.val = ret;\n        return l;\n    }\n    constexpr static bool defone\
+    \ = true;\n    const static FPSBase<T, expandable> one;\n    static FPSBase<T,\
+    \ expandable> inv(const FPSBase<T, expandable>& f) {\n        Vector<T> g = {f[0].inv()};\n\
+    \        while(g.size() < f.size()) {\n            Vector<T> fgg = sum_convolution(f,\
+    \ sum_convolution(g, g));\n            g.resize(g.size() << 1);\n            for(int\
+    \ i = 0; i < g.size(); i++) {\n                g[i] <<= 1;\n                if(i\
+    \ < (int)fgg.size()) g[i] -= fgg[i];\n            }\n        }\n        return\
+    \ {g};\n    }\n};\ntemplate <typename T, bool expandable>\nconst FPSBase<T, expandable>\
+    \ ProdGroup<FPSBase<T, expandable>>::one = {{1}};\n\ntemplate <typename T>\nusing\
+    \ FPS = Field<FPSBase<T>>;\ntemplate <typename T>\nusing ExpandableFPS = Field<FPSBase<T,\
+    \ true>>;\n"
   dependsOn:
+  - algebra/field.hpp
   - base.hpp
   - stl-wrapper/all.hpp
   - stl-wrapper/pair.hpp
@@ -487,19 +627,22 @@ data:
   - stl-wrapper/map.hpp
   - stl-wrapper/unordered_set.hpp
   - stl-wrapper/unordered_map.hpp
-  - algebra/ordinal_operator.hpp
+  - convolution/ntt.hpp
+  - algebra/modint.hpp
+  - integer/pow-mod.hpp
+  - integer/extgcd.hpp
+  - convolution/fft.hpp
   isVerificationFile: false
-  path: algebra/ring.hpp
-  requiredBy:
-  - algebra/nimber.hpp
-  timestamp: '2022-11-03 09:22:44+09:00'
+  path: algebra/fps.hpp
+  requiredBy: []
+  timestamp: '2022-11-06 10:00:21+00:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - test/yosupo-nim-product.test.cpp
-documentation_of: algebra/ring.hpp
+  - test/yosupo-convolution.test.cpp
+documentation_of: algebra/fps.hpp
 layout: document
 redirect_from:
-- /library/algebra/ring.hpp
-- /library/algebra/ring.hpp.html
-title: algebra/ring.hpp
+- /library/algebra/fps.hpp
+- /library/algebra/fps.hpp.html
+title: algebra/fps.hpp
 ---

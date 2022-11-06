@@ -1,46 +1,43 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: algebra/field.hpp
     title: algebra/field.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: algebra/modint.hpp
     title: algebra/modint.hpp
-  - icon: ':heavy_check_mark:'
-    path: algebra/ordinal_operator.hpp
-    title: algebra/ordinal_operator.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: base.hpp
     title: base.hpp
   - icon: ':heavy_check_mark:'
     path: counting/counting.hpp
     title: counting/counting.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: integer/extgcd.hpp
     title: integer/extgcd.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: integer/pow-mod.hpp
     title: integer/pow-mod.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/all.hpp
     title: stl-wrapper/all.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/map.hpp
     title: stl-wrapper/map.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/pair.hpp
     title: stl-wrapper/pair.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/set.hpp
     title: stl-wrapper/set.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/unordered_map.hpp
     title: stl-wrapper/unordered_map.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/unordered_set.hpp
     title: stl-wrapper/unordered_set.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-wrapper/vector.hpp
     title: stl-wrapper/vector.hpp
   _extendedRequiredBy: []
@@ -415,78 +412,97 @@ data:
     \    if(n < 0) return inv_mod(pow_mod(a, -n, m), m);\n    a %= m;\n    if (a <\
     \ 0) n += m;\n    ll res = 1;\n    while(n) {\n        if(n & 1) {\n         \
     \   res *= a;\n            res %= m;\n        }\n        n >>= 1;\n        a *=\
-    \ a;\n        a %= m;\n    }\n    return res;\n}\n#line 2 \"algebra/ordinal_operator.hpp\"\
-    \n\ntemplate <typename T>\nT ordinal_identity(const T& x) {\n    return x;\n}\n\
-    template <typename T>\nT ordinal_plus(const T& a, const T& b) {\n    return a\
-    \ + b;\n}\ntemplate <typename T>\nT ordinal_zero() {\n    return T(0);\n}\ntemplate\
-    \ <typename T>\nT ordinal_mult(const T& a, const T& b) {\n    return a * b;\n\
-    }\ntemplate <typename T>\nT ordinal_one() {\n    return T(1);\n}\ntemplate <typename\
-    \ T>\nT ordinal_plusinv(const T& a) {\n    return -a;\n}\ntemplate <typename T>\n\
-    T ordinal_multinv(const T& a) {\n    return T(1) / a;\n}\ntemplate <typename T>\n\
-    T ordinal_xor(const T& a, const T& b) {\n    return a ^ b;\n}\ntemplate <typename\
-    \ T>\nT ordinal_and(const T& a, const T& b) {\n    return a & b;\n}\ntemplate\
-    \ <typename T>\nT ordinal_or(const T& a, const T& b) {\n    return a | b;\n}\n\
-    #line 4 \"algebra/field.hpp\"\n\ntemplate <\n    typename T,\n    T (*mult)(const\
-    \ T&, const T&),\n    T (*one)(),\n    T (*multinv)(const T&),\n    T (*plus)(const\
-    \ T&, const T&),\n    T (*zero)(),\n    T (*plusinv)(const T&),\n    typename\
-    \ R = T,\n    T (*rtot)(const R&) = ordinal_identity<R>,\n    R (*ttor)(const\
-    \ T&) = ordinal_identity<T>\n>\nstruct Field {\nprivate:\n    T _val;\npublic:\n\
-    \    Field() : _val(zero()) {}\n    Field(const R& r) : _val(rtot(r)) {}\n   \
-    \ R val() const { return ttor(_val); }\n    Field& operator*=(const Field& other)\
-    \ {\n        _val = mult(_val, other._val);\n        return *this;\n    }\n  \
-    \  Field operator*(const Field& other) const {\n        return Field(*this) *=\
-    \ other;\n    }\n    Field inv() const {\n        return Field(multinv(_val));\n\
-    \    }\n    Field& operator/=(const Field& other) {\n        return *this *= other.inv();\n\
-    \    }\n    Field operator/(const Field& other) const {\n        return Field(*this)\
-    \ /= other;\n    }\n    Field pow(ll n) const {\n        if(n < 0) {\n       \
-    \     return inv().pow(-n);\n        }\n        Field res = one();\n        Field\
-    \ a = *this;\n        while(n > 0) {\n            if(n & 1) res *= a;\n      \
-    \      a *= a;\n            n >>= 1;\n        }\n        return res;\n    }\n\
-    \    Field operator+() const {\n        return *this;\n    }\n    Field& operator+=(const\
-    \ Field& other) {\n        _val = plus(_val, other._val);\n        return *this;\n\
-    \    }\n    Field operator+(const Field& other) const {\n        return Field(*this)\
-    \ += other;\n    }\n    Field operator-() const {\n        return Field(plusinv(_val));\n\
-    \    }\n    Field& operator-=(const Field& other) {\n        return *this += -other;\n\
-    \    }\n    Field operator-(const Field& other) const {\n        return Field(*this)\
-    \ -= other;\n    }\n    Field& operator++() {\n        return *this += Field(one());\n\
-    \    }\n    Field operator++(int) {\n        Field ret = *this;\n        ++*this;\n\
-    \        return ret;\n    }\n    Field& operator--() {\n        return *this -=\
-    \ Field(one());\n    }\n    Field operator--(int) {\n        Field ret = *this;\n\
-    \        --*this;\n        return ret;\n    }\n    bool operator==(const Field&\
-    \ other) const {\n        return val() == other.val();\n    }\n    bool operator!=(const\
-    \ Field& other) const {\n        return !(*this == other);\n    }\n    bool operator<(const\
-    \ Field& other) const {\n        return val() < other.val();\n    }\n    bool\
-    \ operator>(const Field& other) const {\n        return other < *this;\n    }\n\
-    \    bool operator<=(const Field& other) const {\n        return !(other < *this);\n\
-    \    }\n    bool operator>=(const Field& other) const {\n        return !(*this\
-    \ < other);\n    }\n    friend istream& operator>>(istream& is, Field& f) {\n\
-    \        R r; is >> r;\n        f = Field(r);\n        return is;\n    }\n   \
-    \ friend ostream& operator<<(ostream& os, const Field& f) {\n        return os\
-    \ << f.val();\n    }\n};\nnamespace std {\n    template <\n        typename T,\n\
-    \        T (*mult)(const T, const T),\n        T (*one)(),\n        T (*multinv)(const\
-    \ T),\n        T (*plus)(const T, const T),\n        T (*zero)(),\n        T (*plusinv)(const\
-    \ T),\n        typename R,\n        T (*rtot)(const R),\n        R (*ttor)(const\
-    \ T)\n    >\n    struct hash<Field<T, mult, one, multinv, plus, zero, plusinv,\
-    \ R, rtot, ttor>> {\n        size_t operator()(const Field<T, mult, one, multinv,\
-    \ plus, zero, plusinv, R, rtot, ttor>& f) const {\n            return hash<R>()(f.val());\n\
-    \        }\n    };\n}\n#line 5 \"algebra/modint.hpp\"\n\ntemplate <ll (*mod)()>\n\
-    ll mod_plus(const ll& a, const ll& b) {\n    ll res;\n    if(__builtin_add_overflow(a,\
-    \ b, &res)) {\n        return a % mod() + b % mod();\n    }\n    return res;\n\
-    }\ntemplate <ll (*mod)()>\nll mod_mult(const ll& a, const ll& b) {\n    ll res;\n\
-    \    if(__builtin_mul_overflow(a, b, &res)) {\n        return (a % mod()) * (b\
-    \ % mod());\n    }\n    return res;\n}\ntemplate <ll (*mod)()>\nll mod_inv(const\
-    \ ll& a) {\n    return inv_mod(a, mod());\n}\nll mod998244353() { return 998244353;\
-    \ }\nll mod1000000007() { return 1000000007; }\ntemplate <ll (*mod)()>\nll make_representative(const\
-    \ ll& a) {\n    ll b = a % mod();\n    if(b < 0) b += mod();\n    return b;\n\
-    }\n\ntemplate <ll (*mod)()>\nusing Modint = Field<ll, mod_mult<mod>, ordinal_one<ll>,\
-    \ mod_inv<mod>, mod_plus<mod>, ordinal_zero<ll>, ordinal_plusinv<ll>, ll, ordinal_identity<ll>,\
-    \ make_representative<mod>>;\n\nusing MI3 = Modint<mod998244353>;\nusing V3 =\
-    \ Vector<MI3>;\nusing VV3 = Vector<V3>;\nusing VVV3 = Vector<VV3>;\nusing MI7\
-    \ = Modint<mod1000000007>;\nusing V7 = Vector<MI7>;\nusing VV7 = Vector<V7>;\n\
-    using VVV7 = Vector<VV7>;\n#line 3 \"counting/counting.hpp\"\n\ntemplate <typename\
-    \ T>\nstruct Counting {\n    Vector<T> fact, ifact;\n\n    Counting() {}\n   \
-    \ Counting(ll n) {\n        assert(n >= 0);\n        expand(n);\n    }\n\n   \
-    \ void expand(ll n) {\n        assert(n >= 0);\n        ll sz = (ll)fact.size();\n\
+    \ a;\n        a %= m;\n    }\n    return res;\n}\n#line 3 \"algebra/field.hpp\"\
+    \n\ntemplate <typename T>\nstruct SumGroup {\n    static_assert(is_arithmetic_v<T>);\n\
+    \    constexpr static T& addassign(T& l, const T& r) {\n        return l += r;\n\
+    \    }\n    constexpr static bool defzero = true;\n    constexpr static T zero\
+    \ = 0;\n    constexpr static T minus(const T& x) {\n        return -x;\n    }\n\
+    };\ntemplate <typename T>\nstruct ProdGroup {\n    static_assert(is_arithmetic_v<T>);\n\
+    \    constexpr static T& mulassign(T& l, const T& r) {\n        return l *= r;\n\
+    \    }\n    constexpr static bool defone = true;\n    constexpr static T one =\
+    \ 1;\n    constexpr static T inv(const T& x) {\n        static_assert(is_floating_point_v<T>);\n\
+    \        return one / x;\n    }\n};\ntemplate <typename T>\nstruct Representation\
+    \ {\n    using R = decltype(T::val);\n    constexpr static T construct(const R&\
+    \ x) { return {x}; }\n    constexpr static R represent(const T& x) { return x.val;\
+    \ }\n};\ntemplate <typename T>\nstruct FiniteProperty {\n    constexpr static\
+    \ bool is_finite = false;\n};\n\ntemplate <typename T>\nstruct Field {\n    using\
+    \ R = typename Representation<T>::R;\n    T val;\n    constexpr static T zero()\
+    \ {\n        return SumGroup<T>::zero;\n    }\n    constexpr static T one() {\n\
+    \        return ProdGroup<T>::one;\n    }\n    constexpr Field() {\n        if\
+    \ constexpr(SumGroup<T>::defzero) val = SumGroup<T>::zero;\n        else if constexpr(SumGroup<T>::defone)\
+    \ val = SumGroup<T>::one;\n        else val = T();\n    }\n    constexpr Field(const\
+    \ R& r) : val(Representation<T>::construct(r)) {}\n    constexpr Field(const T&\
+    \ r) : val(r) {}\n    constexpr R represent() const { return Representation<T>::represent(val);\
+    \ }\n    constexpr static Field premitive_root() {\n        return {FiniteProperty<T>::premitive_root()};\n\
+    \    }\n    constexpr static size_t order() {\n        return FiniteProperty<T>::order();\n\
+    \    }\n    constexpr Field& operator*=(const Field& other) {\n        ProdGroup<T>::mulassign(val,\
+    \ other.val);\n        return *this;\n    }\n    constexpr Field operator*(const\
+    \ Field& other) const {\n        return Field(*this) *= other;\n    }\n    constexpr\
+    \ Field inv() const {\n        return ProdGroup<T>::inv(val);\n    }\n    constexpr\
+    \ Field& operator/=(const Field& other) {\n        return *this *= other.inv();\n\
+    \    }\n    constexpr Field operator/(const Field& other) const {\n        return\
+    \ Field(*this) /= other;\n    }\n    Field pow(ll n) const {\n        if(n < 0)\
+    \ {\n            return inv().pow(-n);\n        }\n        Field res = one();\n\
+    \        Field a = *this;\n        while(n > 0) {\n            if(n & 1) res *=\
+    \ a;\n            a *= a;\n            n >>= 1;\n        }\n        return res;\n\
+    \    }\n    constexpr Field operator+() const {\n        return *this;\n    }\n\
+    \    constexpr Field& operator+=(const Field& other) {\n        SumGroup<T>::addassign(val,\
+    \ other.val);\n        return *this;\n    }\n    constexpr Field operator+(const\
+    \ Field& other) const {\n        return Field(*this) += other;\n    }\n    constexpr\
+    \ Field operator-() const {\n        return SumGroup<T>::minus(val);\n    }\n\
+    \    constexpr Field& operator-=(const Field& other) {\n        return *this +=\
+    \ -other;\n    }\n    constexpr Field operator-(const Field& other) const {\n\
+    \        return Field(*this) -= other;\n    }\n    constexpr Field& operator++()\
+    \ {\n        return *this += Field(one());\n    }\n    Field operator++(int) {\n\
+    \        Field ret = *this;\n        ++*this;\n        return ret;\n    }\n  \
+    \  constexpr Field& operator--() {\n        return *this -= Field(one());\n  \
+    \  }\n    Field operator--(int) {\n        Field ret = *this;\n        --*this;\n\
+    \        return ret;\n    }\n    constexpr bool operator==(const Field& other)\
+    \ const {\n        return represent() == other.represent();\n    }\n    constexpr\
+    \ bool operator!=(const Field& other) const {\n        return !(*this == other);\n\
+    \    }\n    constexpr bool operator<(const Field& other) const {\n        return\
+    \ represent() < other.represent();\n    }\n    constexpr bool operator>(const\
+    \ Field& other) const {\n        return other < *this;\n    }\n    constexpr bool\
+    \ operator<=(const Field& other) const {\n        return !(other < *this);\n \
+    \   }\n    constexpr bool operator>=(const Field& other) const {\n        return\
+    \ !(*this < other);\n    }\n    friend istream& operator>>(istream& is, Field&\
+    \ f) {\n        R r; is >> r;\n        f = Field(r);\n        return is;\n   \
+    \ }\n    friend ostream& operator<<(ostream& os, const Field& f) {\n        return\
+    \ os << f.represent();\n    }\n};\nnamespace std {\n    template <typename T>\n\
+    \    struct hash<Field<T>> {\n        size_t operator()(const Field<T>& f) const\
+    \ {\n            return hash<typename Field<T>::R>()(f.represent());\n       \
+    \ }\n    };\n}\ntemplate <typename T>\nstruct FiniteProperty<Field<T>> {\n   \
+    \ constexpr static bool is_finite = FiniteProperty<T>::is_finite;\n};\n#line 4\
+    \ \"algebra/modint.hpp\"\n\ntemplate <ll mod>\nstruct ModintBase {\n    ll val;\n\
+    };\ntemplate <ll mod>\nstruct SumGroup<ModintBase<mod>> {\n    static ModintBase<mod>&\
+    \ addassign(ModintBase<mod>& l, const ModintBase<mod>& r) {\n        ll ret;\n\
+    \        if(__builtin_add_overflow(l.val, r.val, &ret)) {\n            l.val =\
+    \ l.val % mod + r.val % mod;\n        } else {\n            l.val = ret;\n   \
+    \     }\n        return l;\n    }\n    constexpr static bool defzero = true;\n\
+    \    constexpr static ModintBase<mod> zero = {0};\n    constexpr static ModintBase<mod>\
+    \ minus(const ModintBase<mod>& x) {\n        return {-x.val};\n    }\n};\ntemplate\
+    \ <ll mod>\nstruct ProdGroup<ModintBase<mod>> {\n    constexpr static bool defmul\
+    \ = true;\n    static ModintBase<mod>& mulassign(ModintBase<mod>& l, const ModintBase<mod>&\
+    \ r) {\n        ll ret;\n        if(__builtin_mul_overflow(l.val, r.val, &ret))\
+    \ {\n            l.val = (l.val % mod) * (r.val % mod);\n        } else {\n  \
+    \          l.val = ret;\n        }\n        return l;\n    }\n    constexpr static\
+    \ bool defone = true;\n    constexpr static ModintBase<mod> one = {1};\n    constexpr\
+    \ static bool definv = true;\n    static ModintBase<mod> inv(const ModintBase<mod>&\
+    \ x) {\n        return {inv_mod(x.val, mod)};\n    }\n};\ntemplate <ll mod>\n\
+    struct Representation<ModintBase<mod>> {\n    using R = ll;\n    constexpr static\
+    \ ModintBase<mod> construct(const R& x) { return {x % mod}; }\n    static R represent(const\
+    \ ModintBase<mod>& x) {\n        ll ret = x.val % mod;\n        if(ret < 0) ret\
+    \ += mod;\n        return ret;\n    }\n};\ntemplate <ll mod>\nstruct FiniteProperty<ModintBase<mod>>\
+    \ {\n    constexpr static bool is_finite = true;\n    constexpr static ModintBase<mod>\
+    \ premitive_root() {\n        static_assert(mod == 998244353);\n        return\
+    \ 3;\n    }\n    constexpr static size_t order() {\n        return mod - 1;\n\
+    \    }\n};\n\ntemplate <ll mod>\nusing Modint = Field<ModintBase<mod>>;\n\nusing\
+    \ MI3 = Modint<998244353>;\nusing V3 = Vector<MI3>;\nusing VV3 = Vector<V3>;\n\
+    using VVV3 = Vector<VV3>;\nusing MI7 = Modint<1000000007>;\nusing V7 = Vector<MI7>;\n\
+    using VV7 = Vector<V7>;\nusing VVV7 = Vector<VV7>;\n#line 3 \"counting/counting.hpp\"\
+    \n\ntemplate <typename T>\nstruct Counting {\n    Vector<T> fact, ifact;\n\n \
+    \   Counting() {}\n    Counting(ll n) {\n        assert(n >= 0);\n        expand(n);\n\
+    \    }\n\n    void expand(ll n) {\n        assert(n >= 0);\n        ll sz = (ll)fact.size();\n\
     \        if(sz > n) return;\n        fact.resize(n+1);\n        ifact.resize(n+1);\n\
     \        fact[0] = 1;\n        FOR(i, max(1LL, sz), n+1) fact[i] = fact[i-1] *\
     \ i;\n        ifact[n] = fact[n].inv();\n        for(ll i = n-1; i >= sz; i--)\
@@ -533,13 +549,12 @@ data:
   - stl-wrapper/map.hpp
   - stl-wrapper/unordered_set.hpp
   - stl-wrapper/unordered_map.hpp
-  - algebra/ordinal_operator.hpp
   - algebra/field.hpp
   - counting/counting.hpp
   isVerificationFile: false
   path: general.hpp
   requiredBy: []
-  timestamp: '2022-11-03 09:22:44+09:00'
+  timestamp: '2022-11-06 10:00:21+00:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: general.hpp
