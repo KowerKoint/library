@@ -3,59 +3,55 @@
 #include "field.hpp"
 
 template <ll mod>
-struct ModintBase {
-    ll val;
-};
-template <ll mod>
-struct SumGroup<ModintBase<mod>> {
-    static ModintBase<mod>& addassign(ModintBase<mod>& l, const ModintBase<mod>& r) {
+struct SumGroupModint : SumGroupBase<ll> {
+    static ll& addassign(ll& l, const ll& r) {
         ll ret;
-        if(__builtin_add_overflow(l.val, r.val, &ret)) {
-            l.val = l.val % mod + r.val % mod;
+        if(__builtin_add_overflow(l, r, &ret)) {
+            l = l % mod + r % mod;
         } else {
-            l.val = ret;
+            l = ret;
         }
         return l;
     }
     constexpr static bool defzero = true;
-    constexpr static ModintBase<mod> zero = {0};
-    constexpr static ModintBase<mod> minus(const ModintBase<mod>& x) {
-        return {-x.val};
+    constexpr static ll zero = 0;
+    constexpr static ll minus(const ll& x) {
+        return -x;
     }
 };
 template <ll mod>
-struct ProdGroup<ModintBase<mod>> {
+struct ProdGroupModint : ProdGroupBase<ll> {
     constexpr static bool defmul = true;
-    static ModintBase<mod>& mulassign(ModintBase<mod>& l, const ModintBase<mod>& r) {
+    static ll& mulassign(ll& l, const ll& r) {
         ll ret;
-        if(__builtin_mul_overflow(l.val, r.val, &ret)) {
-            l.val = (l.val % mod) * (r.val % mod);
+        if(__builtin_mul_overflow(l, r, &ret)) {
+            l = (l % mod) * (r % mod);
         } else {
-            l.val = ret;
+            l = ret;
         }
         return l;
     }
     constexpr static bool defone = true;
-    constexpr static ModintBase<mod> one = {1};
+    constexpr static ll one = 1;
     constexpr static bool definv = true;
-    static ModintBase<mod> inv(const ModintBase<mod>& x) {
-        return {inv_mod(x.val, mod)};
+    constexpr static ll inv(const ll& x) {
+        return inv_mod(x, mod);
     }
 };
 template <ll mod>
-struct Representation<ModintBase<mod>> {
+struct RepresentationModint : RepresentationBase<ll> {
     using R = ll;
-    constexpr static ModintBase<mod> construct(const R& x) { return {x % mod}; }
-    static R represent(const ModintBase<mod>& x) {
-        ll ret = x.val % mod;
+    constexpr static ll construct(const R& x) { return x % mod; }
+    constexpr static R represent(const ll& x) {
+        ll ret = x % mod;
         if(ret < 0) ret += mod;
         return ret;
     }
 };
 template <ll mod>
-struct FiniteProperty<ModintBase<mod>> {
+struct FinitePropertyModint : FinitePropertyBase<ll> {
     constexpr static bool is_finite = true;
-    constexpr static ModintBase<mod> premitive_root() {
+    constexpr static ll premitive_root() {
         static_assert(mod == 998244353);
         return 3;
     }
@@ -65,7 +61,7 @@ struct FiniteProperty<ModintBase<mod>> {
 };
 
 template <ll mod>
-using Modint = Field<ModintBase<mod>>;
+using Modint = Field<ll, SumGroupModint<mod>, ProdGroupModint<mod>, RepresentationModint<mod>, FinitePropertyModint<mod>>;
 
 using MI3 = Modint<998244353>;
 using V3 = Vector<MI3>;

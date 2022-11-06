@@ -1,6 +1,5 @@
 #pragma once
 #include "../algebra/modint.hpp"
-#include "fft.hpp"
 
 template <ll mod>
 void ntt(vector<Modint<mod>>& v) {
@@ -53,12 +52,11 @@ void intt(vector<Modint<mod>>& v) {
     }
     for(int i = 0; i < n; i++) v[i] /= n;
 }
-template <typename T, enable_if_t<FiniteProperty<T>::is_finite, nullptr_t> = nullptr>
-Vector<T> sum_convolution(const vector<T>& v1, const vector<T>& v2) {
-    static_assert(is_same_v<T, Modint<998244353>>);
+template <ll mod>
+Vector<Modint<mod>> sum_convolution(const vector<Modint<mod>>& v1, const vector<Modint<mod>>& v2) {
     int n = 1;
     while(n < (int)v1.size() + (int)v2.size() - 1) n <<= 1;
-    Vector<T> f1(v1), f2(v2);
+    Vector<Modint<mod>> f1(v1), f2(v2);
     f1.resize(n); f2.resize(n);
     ntt(f1); ntt(f2);
     for(int i = 0; i < n; i++) {

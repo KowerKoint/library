@@ -2,74 +2,59 @@
 #include "../base.hpp"
 
 template <typename T>
-struct SumGroup {
-    static_assert(is_arithmetic_v<T>);
-    constexpr static T& addassign(T& l, const T& r) {
-        return l += r;
-    }
-    constexpr static bool defzero = true;
-    constexpr static T zero = 0;
-    constexpr static T minus(const T& x) {
-        return -x;
-    }
+struct SumGroupBase {
+    constexpr static bool defzero = false;
 };
 template <typename T>
-struct ProdGroup {
-    static_assert(is_arithmetic_v<T>);
-    constexpr static T& mulassign(T& l, const T& r) {
-        return l *= r;
-    }
-    constexpr static bool defone = true;
-    constexpr static T one = 1;
-    constexpr static T inv(const T& x) {
-        static_assert(is_floating_point_v<T>);
-        return one / x;
-    }
+struct ProdGroupBase {
+    constexpr static bool defone = false;
 };
 template <typename T>
-struct Representation {
-    using R = decltype(T::val);
-    constexpr static T construct(const R& x) { return {x}; }
-    constexpr static R represent(const T& x) { return x.val; }
+struct RepresentationBase {
+    using R = T;
+    constexpr static T construct(const R& x) { return x; }
+    constexpr static R represent(const T& x) { return x; }
 };
 template <typename T>
-struct FiniteProperty {
+struct FinitePropertyBase {
     constexpr static bool is_finite = false;
 };
 
-template <typename T>
+template <typename T, typename SumGroup = SumGroupBase<T>, typename ProdGroup = ProdGroupBase<T>, typename Representation = RepresentationBase<T>, typename FiniteProperty = FinitePropertyBase<T>>
 struct Field {
-    using R = typename Representation<T>::R;
+    using R = typename Representation::R;
     T val;
     constexpr static T zero() {
-        return SumGroup<T>::zero;
+        return SumGroup::zero;
     }
     constexpr static T one() {
-        return ProdGroup<T>::one;
+        return ProdGroup::one;
     }
+    constexpr static bool defzero = SumGroup::defzero;
+    constexpr static bool defone = ProdGroup::defone;
+    constexpr static bool is_finite = FiniteProperty::is_finite;
     constexpr Field() {
-        if constexpr(SumGroup<T>::defzero) val = SumGroup<T>::zero;
-        else if constexpr(SumGroup<T>::defone) val = SumGroup<T>::one;
+        if constexpr(SumGroup::defzero) val = zero();
+        else if constexpr(SumGroup::defone) val = one();
         else val = T();
     }
-    constexpr Field(const R& r) : val(Representation<T>::construct(r)) {}
-    constexpr Field(const T& r) : val(r) {}
-    constexpr R represent() const { return Representation<T>::represent(val); }
+    constexpr Field(const R& r) : val(Representation::construct(r)) {}
+    constexpr R represent() const { return Representation::represent(val); }
     constexpr static Field premitive_root() {
-        return {FiniteProperty<T>::premitive_root()};
+        return FiniteProperty::premitive_root();
     }
     constexpr static size_t order() {
-        return FiniteProperty<T>::order();
+        return FiniteProperty::order();
     }
     constexpr Field& operator*=(const Field& other) {
-        ProdGroup<T>::mulassign(val, other.val);
+        ProdGroup::mulassign(val, other.val);
         return *this;
     }
     constexpr Field operator*(const Field& other) const {
         return Field(*this) *= other;
     }
     constexpr Field inv() const {
-        return ProdGroup<T>::inv(val);
+        return ProdGroup::inv(val);
     }
     constexpr Field& operator/=(const Field& other) {
         return *this *= other.inv();
@@ -77,7 +62,7 @@ struct Field {
     constexpr Field operator/(const Field& other) const {
         return Field(*this) /= other;
     }
-    Field pow(ll n) const {
+    constexpr Field pow(ll n) const {
         if(n < 0) {
             return inv().pow(-n);
         }
@@ -94,14 +79,14 @@ struct Field {
         return *this;
     }
     constexpr Field& operator+=(const Field& other) {
-        SumGroup<T>::addassign(val, other.val);
+        SumGroup::addassign(val, other.val);
         return *this;
     }
     constexpr Field operator+(const Field& other) const {
         return Field(*this) += other;
     }
     constexpr Field operator-() const {
-        return SumGroup<T>::minus(val);
+        return SumGroup::minus(val);
     }
     constexpr Field& operator-=(const Field& other) {
         return *this += -other;
@@ -145,7 +130,7 @@ struct Field {
     }
     friend istream& operator>>(istream& is, Field& f) {
         R r; is >> r;
-        f = Field(r);
+        f = r;
         return is;
     }
     friend ostream& operator<<(ostream& os, const Field& f) {
@@ -160,7 +145,3 @@ namespace std {
         }
     };
 }
-template <typename T>
-struct FiniteProperty<Field<T>> {
-    constexpr static bool is_finite = FiniteProperty<T>::is_finite;
-};

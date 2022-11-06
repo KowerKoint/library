@@ -44,8 +44,7 @@ void ifft(vector<complex<double>>& v) {
     }
     for(int i = 0; i < n; i++) v[i] /= n;
 }
-template <typename T, enable_if_t<!FiniteProperty<T>::is_finite, nullptr_t> = nullptr>
-Vector<T> sum_convolution(const vector<T>& v1, const vector<T>& v2) {
+Vector<complex<double>> sum_convolution(const vector<complex<double>>& v1, const vector<complex<double>>& v2) {
     int n = 1;
     while(n < (int)v1.size() + (int)v2.size() - 1) n <<= 1;
     Vector<complex<double>> f1(ALL(v1)), f2(ALL(v2));
@@ -55,10 +54,10 @@ Vector<T> sum_convolution(const vector<T>& v1, const vector<T>& v2) {
         f1[i] *= f2[i];
     }
     ifft(f1);
-    return Vector<T>(f1.begin(), f1.begin() + v1.size() + v2.size() - 1);
+    f1.resize(v1.size() + v2.size() - 1);
+    return f1;
 }
-template <>
-Vector<ll> sum_convolution<ll>(const vector<ll>& v1, const vector<ll>& v2) {
+Vector<ll> sum_convolution(const vector<ll>& v1, const vector<ll>& v2) {
     Vector<complex<double>> res = sum_convolution(Vector<complex<double>>(v1.begin(), v1.end()), Vector<complex<double>>(v2.begin(), v2.end()));
     Vector<ll> ret(res.size());
     for(int i = 0; i < (int)res.size(); i++) {

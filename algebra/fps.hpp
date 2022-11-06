@@ -1,14 +1,11 @@
 #pragma once
 #include "field.hpp"
+#include "../convolution/fft.hpp"
 #include "../convolution/ntt.hpp"
 
-template <typename T, bool expandable = false>
-struct FPSBase {
-    Vector<T> val;
-};
-template <typename T, bool expandable>
-struct SumGroup<FPSBase<T, expandable>> {
-    static FPSBase<T, expandable>& addassign(FPSBase<T, expandable>& l, const FPSBase<T, expandable>& r) {
+template <typename T>
+struct SumGroupFPS : SumGroupBase<Vector<T>> {
+    static Vector<T>& addassign(Vector<T>& l, const Vector<T>& r) {
         resize(max(l.val.size(), r.val.size()));
         for(int i = 0; i < r.size(); i++) {
             l.val[i] += r.val[i];
@@ -16,45 +13,46 @@ struct SumGroup<FPSBase<T, expandable>> {
         return l;
     }
     constexpr static bool defzero = true;
-    const static FPSBase<T, expandable> zero;
-    static FPSBase<T, expandable>& minus(FPSBase<T, expandable> x) {
+    const static Vector<T> zero;
+    static Vector<T> minus(const Vector<T>& x) {
+        Vector<T> ret;
         for(int i = 0; i < x.val.size(); i++) {
-            x.val[i] = -x.val[i];
+            ret[i] = -ret[i];
         }
-        return x;
+        return ret;
     }
 };
+template <typename T>
+const Vector<T> SumGroupFPS<T>::zero = {};
 template <typename T, bool expandable>
-const FPSBase<T, expandable> SumGroup<FPSBase<T, expandable>>::zero = {{}};
-template <typename T, bool expandable>
-struct ProdGroup<FPSBase<T, expandable>> {
-    static FPSBase<T, expandable>& mulassign(FPSBase<T, expandable>& l, const FPSBase<T, expandable>& r) {
-        Vector<T> ret = sum_convolution(l.val, r.val);
+struct ProdGroupFPS : ProdGroupBase<Vector<T>> {
+    static Vector<T>& mulassign(Vector<T>& l, const Vector<T>& r) {
+        Vector<T> ret = sum_convolution(l, r);
         if constexpr(!expandable) {
-            ret.resize(max(l.val.size(), r.val.size()));
+            ret.resize(max(l.size(), r.size()));
         }
-        l.val = ret;
-        return l;
+        return l = ret;
     }
     constexpr static bool defone = true;
-    const static FPSBase<T, expandable> one;
-    static FPSBase<T, expandable> inv(const FPSBase<T, expandable>& f) {
+    const static Vector<T> one;
+    static Vector<T> inv(const Vector<T>& f) {
         Vector<T> g = {f[0].inv()};
         while(g.size() < f.size()) {
-            Vector<T> fgg = sum_convolution(f, sum_convolution(g, g));
+            Vector<T> f_short(f.begin(), f.begin() + min(f.size(), g.size() << 1));
+            Vector<T> fgg = sum_convolution(f_short, sum_convolution(g, g));
             g.resize(g.size() << 1);
             for(int i = 0; i < g.size(); i++) {
-                g[i] <<= 1;
+                g[i] += g[i];
                 if(i < (int)fgg.size()) g[i] -= fgg[i];
             }
         }
-        return {g};
+        return g;
     }
 };
 template <typename T, bool expandable>
-const FPSBase<T, expandable> ProdGroup<FPSBase<T, expandable>>::one = {{1}};
+const Vector<T> ProdGroupFPS<T, expandable>::one = {1};
 
 template <typename T>
-using FPS = Field<FPSBase<T>>;
+using FPS = Field<Vector<T>, SumGroupFPS<T>, ProdGroupFPS<T, false>>;
 template <typename T>
-using ExpandableFPS = Field<FPSBase<T, true>>;
+using ExpandableFPS = Field<Vector<T>, SumGroupFPS<T>, ProdGroupFPS<T, true>>;
