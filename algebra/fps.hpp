@@ -21,6 +21,13 @@ struct SumGroupFPS : SumGroupBase<Vector<T>> {
         }
         return ret;
     }
+    using Coef = T;
+    static Vector<T>& coefassign(Vector<T>& l, const T& k) {
+        for(int i = 0; i < l.size(); i++) {
+            l[i] *= k;
+        }
+        return l;
+    }
 };
 template <typename T>
 const Vector<T> SumGroupFPS<T>::zero = {};

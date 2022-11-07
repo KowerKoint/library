@@ -4,6 +4,7 @@
 template <typename T>
 struct SumGroupBase {
     constexpr static bool defzero = false;
+    using Coef = void;
 };
 template <typename T>
 struct ProdGroupBase {
@@ -23,11 +24,12 @@ struct FinitePropertyBase {
 template <typename T, typename SumGroup = SumGroupBase<T>, typename ProdGroup = ProdGroupBase<T>, typename Representation = RepresentationBase<T>, typename FiniteProperty = FinitePropertyBase<T>>
 struct Field {
     using R = typename Representation::R;
+    using Coef = typename SumGroup::Coef;
     T val;
-    constexpr static T zero() {
+    constexpr static Field zero() {
         return SumGroup::zero;
     }
-    constexpr static T one() {
+    constexpr static Field one() {
         return ProdGroup::one;
     }
     constexpr static bool defzero = SumGroup::defzero;
@@ -95,7 +97,7 @@ struct Field {
         return Field(*this) -= other;
     }
     constexpr Field& operator++() {
-        return *this += Field(one());
+        return *this += one();
     }
     Field operator++(int) {
         Field ret = *this;
@@ -103,12 +105,19 @@ struct Field {
         return ret;
     }
     constexpr Field& operator--() {
-        return *this -= Field(one());
+        return *this -= one();
     }
     Field operator--(int) {
         Field ret = *this;
         --*this;
         return ret;
+    }
+    constexpr Field& operator*=(const Coef& other) {
+        SumGroup::coefassign(val, other);
+        return *this;
+    }
+    constexpr Field operator*(const Coef& other) const {
+        return Field(*this) *= other;
     }
     constexpr bool operator==(const Field& other) const {
         return represent() == other.represent();
