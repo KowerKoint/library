@@ -4,12 +4,12 @@
 template <typename T=int>
 struct Tree : Graph<T> {
     int root = -1;
-    Vector<Edge<T>> par;
-    Vector<Vector<Edge<T>>> child;
-    Vector<T> depth;
-    Vector<int> sz;
-    Vector<int> preorder, postorder, eulertour;
-    Vector<Vector<int>> doubling_par;
+    vector<Edge<T>> par;
+    vector<vector<Edge<T>>> child;
+    vector<T> depth;
+    vector<int> sz;
+    vector<int> preorder, postorder, eulertour;
+    vector<vector<int>> doubling_par;
     Tree(int n_=0) : Graph<T>(n_) {}
     Tree(const Graph<T>& g) : Graph<T>(g) {}
     Tree(const vector<int>& par_, int padding = -1) : Graph<T>(par_.size()+1) {
@@ -24,10 +24,10 @@ struct Tree : Graph<T> {
         assert(0 <= root_ && root_ < this->n);
         root = root_;
         int n = this->n;
-        par = Vector<Edge<T>>(n);
-        child = Vector<Vector<Edge<T>>>(n);
-        depth = Vector<T>(n);
-        sz = Vector<int>(n);
+        par = vector<Edge<T>>(n);
+        child = vector<vector<Edge<T>>>(n);
+        depth = vector<T>(n);
+        sz = vector<int>(n);
         stack<int> stk;
         stk.push(~root);
         stk.push(root);

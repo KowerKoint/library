@@ -8,7 +8,7 @@ struct WaveletMatrix {
     int numzero[NUMBITS];
     Bitset bs[NUMBITS];
     VI sumone[NUMBITS];
-    Map<T, int> start_idx;
+    map<T, int> start_idx;
 
     WaveletMatrix(const vector<T>& v) {
         n = v.size();

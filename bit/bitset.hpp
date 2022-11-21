@@ -25,7 +25,7 @@ struct Bitset {
         if(n % 64) v[bnum-1] &= mask[n % 64];
     }
     public:
-    Vector<ull> v;
+    vector<ull> v;
     int n, bnum;
     Bitset(int n_ = 0) : n(n_) {
         assert(n_ >= 0);

@@ -5,7 +5,7 @@
 using namespace std;
 int main() {
     int q; cin >> q;
-    Set<int> s;
+    set<int> s;
     while(q--) {
         int t, x; cin >> t >> x;
         if(t == 0) {

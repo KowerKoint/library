@@ -13,17 +13,17 @@ template <
 >
 struct Matrix {
     int n, m;
-    Vector<Vector<T>> A;
+    vector<vector<T>> A;
 
-    Matrix() : n(0), m(0), A(Vector<Vector<T>>(0)) {}
-    Matrix(size_t _n, size_t _m) : n(_n), m(_m), A(_n, Vector<T>(_m, zero())) {}
+    Matrix() : n(0), m(0), A(vector<vector<T>>(0)) {}
+    Matrix(size_t _n, size_t _m) : n(_n), m(_m), A(_n, vector<T>(_m, zero())) {}
     Matrix(const vector<vector<T>>& _A) : n(_A.size()), m(_A[0].size()), A(_A) {}
 
-    Vector<T> &operator[](int i) {
+    vector<T> &operator[](int i) {
         assert(0 <= i && i < n);
         return A.at(i);
     }
-    const Vector<T> &operator[](int i) const {
+    const vector<T> &operator[](int i) const {
         assert(0 <= i && i < n);
         return A.at(i);
     }
@@ -57,7 +57,7 @@ struct Matrix {
 
     Matrix &operator*=(const Matrix &B) {
         assert(m == B.n);
-        Vector<Vector<T>> res(n, Vector<T>(B.m, zero()));
+        vector<vector<T>> res(n, vector<T>(B.m, zero()));
         REP(i, n) REP(j, m) REP(k, B.m) res[i][k] = add(res[i][k], mult(A[i][j], B[j][k]));
         A.swap(res);
         m = B.m;
@@ -132,7 +132,7 @@ struct Matrix {
         return os;
     }
 
-    Pair<Matrix, T> gaussian_elimination() const {
+    pair<Matrix, T> gaussian_elimination() const {
         Matrix mat(*this);
         T det = one();
         VI columns;
@@ -175,7 +175,7 @@ struct Matrix {
 
     void make_basis() {
         *this = gaussian_elimination().first;
-        while(n && get_bra(n-1) == Vector<T>(m, zero())) pop_bra();
+        while(n && get_bra(n-1) == vector<T>(m, zero())) pop_bra();
     }
 
     Matrix inv() const {
@@ -187,14 +187,14 @@ struct Matrix {
         return res;
     }
 
-    Vector<T> get_bra(int i) const {
+    vector<T> get_bra(int i) const {
         assert(0 <= i && i < n);
         return A[i];
     }
 
-    Vector<T> get_ket(int i) const {
+    vector<T> get_ket(int i) const {
         assert(0 <= i && i < m);
-        Vector<T> res(n);
+        vector<T> res(n);
         REP(i, n) res[i] = A[i][i];
         return res;
     }

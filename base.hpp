@@ -1,9 +1,6 @@
 #pragma once
-
-#include <bits/stdc++.h>
+#include <stl-expansion.hpp>
 using namespace std;
-
-#include "stl-wrapper/all.hpp"
 
 #define REP(i, n) for(int i = 0; i < (int)(n); i++)
 #define FOR(i, a, b) for(ll i = a; i < (ll)(b); i++)
@@ -11,34 +8,34 @@ using namespace std;
 #define RALL(a) (a).rbegin(),(a).rend()
 #define END(...) { print(__VA_ARGS__); return; }
 
-using VI = Vector<int>;
-using VVI = Vector<VI>;
-using VVVI = Vector<VVI>;
+using VI = vector<int>;
+using VVI = vector<VI>;
+using VVVI = vector<VVI>;
 using ll = long long;
-using VL = Vector<ll>;
-using VVL = Vector<VL>;
-using VVVL = Vector<VVL>;
+using VL = vector<ll>;
+using VVL = vector<VL>;
+using VVVL = vector<VVL>;
 using ull = unsigned long long;
-using VUL = Vector<ull>;
-using VVUL = Vector<VUL>;
-using VVVUL = Vector<VVUL>;
-using VD = Vector<double>;
-using VVD = Vector<VD>;
-using VVVD = Vector<VVD>;
-using VS = Vector<string>;
-using VVS = Vector<VS>;
-using VVVS = Vector<VVS>;
-using VC = Vector<char>;
-using VVC = Vector<VC>;
-using VVVC = Vector<VVC>;
-using P = Pair<int, int>;
-using VP = Vector<P>;
-using VVP = Vector<VP>;
-using VVVP = Vector<VVP>;
-using LP = Pair<ll, ll>;
-using VLP = Vector<LP>;
-using VVLP = Vector<VLP>;
-using VVVLP = Vector<VVLP>;
+using VUL = vector<ull>;
+using VVUL = vector<VUL>;
+using VVVUL = vector<VVUL>;
+using VD = vector<double>;
+using VVD = vector<VD>;
+using VVVD = vector<VVD>;
+using VS = vector<string>;
+using VVS = vector<VS>;
+using VVVS = vector<VVS>;
+using VC = vector<char>;
+using VVC = vector<VC>;
+using VVVC = vector<VVC>;
+using P = pair<int, int>;
+using VP = vector<P>;
+using VVP = vector<VP>;
+using VVVP = vector<VVP>;
+using LP = pair<ll, ll>;
+using VLP = vector<LP>;
+using VVLP = vector<VLP>;
+using VVVLP = vector<VVLP>;
 
 template <typename T>
 using PQ = priority_queue<T>;
@@ -74,9 +71,9 @@ void dbg(const Args &... args) {}
 #endif
 
 template<typename T>
-Vector<Vector<T>> split(typename vector<T>::const_iterator begin, typename vector<T>::const_iterator end, T val) {
-    Vector<Vector<T>> res;
-    Vector<T> cur;
+vector<vector<T>> split(typename vector<T>::const_iterator begin, typename vector<T>::const_iterator end, T val) {
+    vector<vector<T>> res;
+    vector<T> cur;
     for(auto it = begin; it != end; it++) {
         if(*it == val) {
             res.push_back(cur);
@@ -87,8 +84,8 @@ Vector<Vector<T>> split(typename vector<T>::const_iterator begin, typename vecto
     return res;
 }
 
-Vector<string> split(typename string::const_iterator begin, typename string::const_iterator end, char val) {
-    Vector<string> res;
+vector<string> split(typename string::const_iterator begin, typename string::const_iterator end, char val) {
+    vector<string> res;
     string cur = "";
     for(auto it = begin; it != end; it++) {
         if(*it == val) {
@@ -107,9 +104,9 @@ template< typename T1, typename T2 >
 inline bool chmin(T1 &a, T2 b) { return a > b && (a = b, true); }
 
 template <typename T>
-pair<VI, Vector<T>> compress(const vector<T> &a) {
+pair<VI, vector<T>> compress(const vector<T> &a) {
     int n = a.size();
-    Vector<T> x;
+    vector<T> x;
     REP(i, n) x.push_back(a[i]);
     sort(ALL(x)); x.erase(unique(ALL(x)), x.end());
     VI res(n);
@@ -119,7 +116,7 @@ pair<VI, Vector<T>> compress(const vector<T> &a) {
 
 template <typename It>
 auto rle(It begin, It end) {
-    Vector<pair<typename It::value_type, int>> res;
+    vector<pair<typename It::value_type, int>> res;
     if(begin == end) return res;
     auto pre = *begin;
     int num = 1;
@@ -135,8 +132,8 @@ auto rle(It begin, It end) {
 }
 
 template <typename It>
-Vector<pair<typename It::value_type, int>> rle_sort(It begin, It end) {
-    Vector<typename It::value_type> cloned(begin, end);
+vector<pair<typename It::value_type, int>> rle_sort(It begin, It end) {
+    vector<typename It::value_type> cloned(begin, end);
     sort(ALL(cloned));
     auto e = rle(ALL(cloned));
     sort(ALL(e), [](const auto& l, const auto& r) { return l.second < r.second; });
@@ -144,8 +141,8 @@ Vector<pair<typename It::value_type, int>> rle_sort(It begin, It end) {
 }
 
 template <typename T>
-Pair<Vector<T>, Vector<T>> factorial(int n) {
-    Vector<T> res(n+1), rev(n+1);
+pair<vector<T>, vector<T>> factorial(int n) {
+    vector<T> res(n+1), rev(n+1);
     res[0] = 1;
     REP(i, n) res[i+1] = res[i] * (i+1);
     rev[n] = 1 / res[n];

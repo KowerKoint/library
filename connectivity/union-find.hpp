@@ -5,8 +5,8 @@ template <typename Value=nullptr_t, Value (*merge_value)(Value, Value)=nullptr, 
 struct UnionFind {
     int n;
     VI par; // size if value is negative
-    Vector<Value> val;
-    Vector<Potential> pot;
+    vector<Value> val;
+    vector<Potential> pot;
     UnionFind(int n=0) : n(n), par(n, -1), val(n), pot(n) {
         assert(n >= 0);
     }
