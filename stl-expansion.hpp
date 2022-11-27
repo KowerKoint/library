@@ -26,7 +26,7 @@ std::ostream& operator<<(std::ostream& os, const std::pair<T1, T2>& p) {
 template <typename T, size_t N>
 std::ostream& operator<<(std::ostream& os, const std::array<T, N>& a) {
     for (size_t i = 0; i < N; ++i) {
-        os << a[i] << " ";
+        os << a[i] << (i + 1 == a.size() ? "" : " ");
     }
     return os;
 }

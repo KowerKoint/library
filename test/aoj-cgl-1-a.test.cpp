@@ -7,6 +7,6 @@ int main() {
     int q; cin >> q;
     while(q--) {
         Point<double> p; cin >> p;
-        cout << l.reflect(p) << endl;
+        cout << l.proj(p) << endl;
     }
 }
