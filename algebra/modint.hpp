@@ -70,7 +70,7 @@ struct FinitePropertyModint : FinitePropertyBase<ll> {
 };
 
 template <ll mod>
-using Modint = Field<ll, SumGroupModint<mod>, ProdGroupModint<mod>, RepresentationModint<mod>, FinitePropertyModint<mod>>;
+using Modint = Field<ll, SumGroupModint<mod>, ProdGroupModint<mod>, RepresentationModint<mod>, CompareModint<mod>, FinitePropertyModint<mod>>;
 
 using MI3 = Modint<998244353>;
 using V3 = vector<MI3>;
