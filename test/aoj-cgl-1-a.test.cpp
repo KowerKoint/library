@@ -5,6 +5,7 @@ int main() {
     Point<double> p1, p2; cin >> p1 >> p2;
     Line<double> l(p1, p2);
     int q; cin >> q;
+    cout << setprecision(10) << fixed;
     while(q--) {
         Point<double> p; cin >> p;
         cout << l.proj(p) << endl;
