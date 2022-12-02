@@ -18,12 +18,13 @@ struct RepresentationRatio : RepresentationBase<T> {
                 ret[i] /= g;
             }
             for(size_t i = 0; i < dim; i++) {
+                if(ret[i] == 0) continue;
                 if(ret[i] < 0) {
                     for(size_t j = i; j < dim; j++) {
                         ret[j] = -ret[j];
                     }
-                    break;
                 }
+                break;
             }
         }
         return ret;

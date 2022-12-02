@@ -30,7 +30,8 @@ struct Line {
     }
     bool orthogonal(const Line& l) const {
         Point<T, dim> dp(d.represent());
-        return dp.dot(l.d) == 0;
+        Point<T, dim> ldp(l.d.represent());
+        return dp.dot(ldp) == 0;
     }
     bool on_line(const Point<T, dim>& p) const {
         Point<T, dim> dp(d.represent());
