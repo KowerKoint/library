@@ -5,7 +5,7 @@ template <typename S, S (*op)(const S, const S), S (*e)()>
 struct SegTree {
 protected:
     int n, sz, height;
-    Vector<S> state;
+    vector<S> state;
     void update(int k) {
         assert(0 <= k && k < sz);
         state[k] = op(state[k*2], state[k*2+1]);

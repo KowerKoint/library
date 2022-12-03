@@ -1,109 +1,5 @@
 #include "base.hpp"
 
-template <typename T=double>
-struct Point {
-    T x, y;
-    Point(T x = 0, T y = 0) : x(x), y(y) {}
-    friend istream& operator>>(istream& is, Point& points) {
-        is >> points.x >> points.y;
-        return is;
-    }
-    friend ostream& operator<<(ostream& os, const Point& points) {
-        os << points.x << ' ' << points.y;
-        return os;
-    }
-    Point& operator+= (const Point& points) {
-        x += points.x;
-        y += points.y;
-        return *this;
-    }
-    Point operator+(const Point& points) const {
-        return Point(*this) += points;
-    }
-    Point& operator-= (const Point& points) {
-        x -= points.x;
-        y -= points.y;
-        return *this;
-    }
-    Point operator-(const Point& points) const {
-        return Point(*this) -= points;
-    }
-    Point& operator*=(T k) {
-        x *= k;
-        y *= k;
-        return *this;
-    }
-    Point operator*(T k) const {
-        return Point(*this) *= k;
-    }
-    bool operator==(const Point& points) const {
-        return x == points.x && y == points.y;
-    }
-    template<typename U>
-    operator Point<U>() const {
-        return Point<U>(static_cast<U>(x), static_cast<U>(y));
-    }
-    T inner_product(const Point& points) const {
-        return x * points.x + y * points.y;
-    }
-    T outer_product(const Point& points) const {
-        return x * points.y - y * points.x;
-    }
-    T r2() const {
-        return x * x + y * y;
-    }
-    double r() const {
-        return sqrt(x * x + y * y);
-    }
-    double theta() const {
-        return atan2(y, x);
-    }
-    double operator/(const Point& points) const {
-        T r1 = r(), r2 = points.r();
-        double theta1 = theta(), theta2 = points.theta();
-        return r1 / r2 * cos(theta1 - theta2);
-    }
-};
-
-template <typename T=double>
-struct Line {
-    T a, b, c; // ax + by + c = 0
-    Line(Point<T> p1, Point<T> p2) {
-        a = p2.y - p1.y;
-        b = -(p2.x - p1.x);
-        c = -a * p1.x - b * p1.y;
-    }
-    Line(T a, T b, T c) {
-        this->a = a;
-        this->b = b;
-        this->c = c;
-    }
-    Point<T> direction() {
-        return Point<T>(b, -a);
-    }
-    Point<T> proj(Point<T> points) {
-        T x = (b * (b * points.x - a * points.y) - a * c) / (a * a + b * b);
-        T y = (a * (a * points.y - b * points.x) - b * c) / (a * a + b * b);
-        return Point<T>(x, y);
-    }
-    Point<T> reflect(Point<T> points) {
-        return points + (proj(points) - points) * 2;
-    }
-    bool parallel(const Line<T>& l) const {
-        return a * l.b == b * l.a;
-    }
-    bool operator==(const Line<T>& l) const {
-        return a * l.c == c * l.a && b * l.c == c * l.b;
-    }
-    Point<T> cross_point(Line<T> l) {
-        T x = (b * l.c - c * l.b) / (a * l.b - b * l.a);
-        T y = (a * l.c - c * l.a) / (b * l.a - a * l.b);
-        return Point<T>(x, y);
-    }
-    double dist(Point<T> points) {
-        return abs(a * points.x + b * points.y + c) / sqrt(a * a + b * b);
-    }
-};
 
 template <typename T>
 bool intersection(Point<T> p0, Point<T> p1, Point<T> p2, Point<T> p3) {
@@ -149,41 +45,41 @@ double dist_ss(Point<T> p0, Point<T> p1, Point<T> p2, Point<T> p3) {
 
 template<typename T=double>
 struct Polygon {
-    Vector<Point<T>> points;
+    vector<Point<T>> Points;
     Polygon(int n) {
         assert(n >= 1);
-        points.resize(n);
+        Points.resize(n);
     }
-    Polygon(Vector<Point<T>> points) : points(points) {}
+    Polygon(vector<Point<T>> Points) : Points(Points) {}
     friend istream& operator>>(istream& is, Polygon& polygon) {
-        for(int i = 0; i < polygon.points.size(); i++) is >> polygon.points[i];
+        for(int i = 0; i < polygon.Points.size(); i++) is >> polygon.Points[i];
         return is;
     }
     T area() {
         T res = 0;
-        int n = points.size();
-        for(int i = 1; i + 1 < points.size(); i++) {
-            res += (points[i] - points[0]).outer_product(points[i+1] - points[0]);
+        int n = Points.size();
+        for(int i = 1; i + 1 < Points.size(); i++) {
+            res += (Points[i] - Points[0]).outer_product(Points[i+1] - Points[0]);
         }
         return res / 2;
     }
     bool is_convex() {
-        int n = points.size();
+        int n = Points.size();
         for(int i = 0; i < n; i++) {
             int j = (i + 1) % n;
             int k = (j + 1) % n;
-            if((points[k] - points[j]).outer_product(points[i] - points[j]) < 0) return false;
+            if((Points[k] - Points[j]).outer_product(Points[i] - Points[j]) < 0) return false;
         }
         return true;
     }
     // inside: 2, on: 1, outside: 0
     int contains(Point<T> p) {
-        int n = points.size();
+        int n = Points.size();
         int cnt = 0;
         double theta_sum = 0;
         for(int i = 0; i < n; i++) {
-            if(on_segment(points[i], points[(i+1)%n], p)) return 1;
-            double theta = (points[(i+1)%n] - p).theta() - (points[i] - p).theta();
+            if(on_segment(Points[i], Points[(i+1)%n], p)) return 1;
+            double theta = (Points[(i+1)%n] - p).theta() - (Points[i] - p).theta();
             if(theta < -M_PI) theta += 2 * M_PI;
             if(theta > M_PI) theta -= 2 * M_PI;
             theta_sum += theta;

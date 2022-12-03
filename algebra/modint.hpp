@@ -49,6 +49,15 @@ struct RepresentationModint : RepresentationBase<ll> {
     }
 };
 template <ll mod>
+struct CompareModint : CompareBase<ll> {
+    constexpr static bool lt(const ll& l, const ll& r) {
+        return RepresentationModint<mod>::represent(l) < RepresentationModint<mod>::represent(r);
+    }
+    constexpr static bool eq(const ll& l, const ll& r) {
+        return RepresentationModint<mod>::represent(l) == RepresentationModint<mod>::represent(r);
+    }
+};
+template <ll mod>
 struct FinitePropertyModint : FinitePropertyBase<ll> {
     constexpr static bool is_finite = true;
     constexpr static ll premitive_root() {
@@ -61,13 +70,13 @@ struct FinitePropertyModint : FinitePropertyBase<ll> {
 };
 
 template <ll mod>
-using Modint = Field<ll, SumGroupModint<mod>, ProdGroupModint<mod>, RepresentationModint<mod>, FinitePropertyModint<mod>>;
+using Modint = Field<ll, SumGroupModint<mod>, ProdGroupModint<mod>, RepresentationModint<mod>, CompareModint<mod>, FinitePropertyModint<mod>>;
 
 using MI3 = Modint<998244353>;
-using V3 = Vector<MI3>;
-using VV3 = Vector<V3>;
-using VVV3 = Vector<VV3>;
+using V3 = vector<MI3>;
+using VV3 = vector<V3>;
+using VVV3 = vector<VV3>;
 using MI7 = Modint<1000000007>;
-using V7 = Vector<MI7>;
-using VV7 = Vector<V7>;
-using VVV7 = Vector<VV7>;
+using V7 = vector<MI7>;
+using VV7 = vector<V7>;
+using VVV7 = vector<VV7>;

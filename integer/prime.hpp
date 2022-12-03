@@ -46,9 +46,9 @@ struct Prime {
         return VI(primes.begin(), upper_bound(ALL(primes), n));
     }
 
-    Vector<Pair<ull, int>> prime_factor(ull n) {
+    vector<pair<ull, int>> prime_factor(ull n) {
         assert(n > 0);
-        Vector<Pair<ull, int>> factor;
+        vector<pair<ull, int>> factor;
         expand(kth_root_integer(n, 2));
         for(ull prime : primes) {
             if(prime * prime > n) break;

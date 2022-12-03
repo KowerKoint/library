@@ -3,7 +3,7 @@
 
 template <typename T>
 struct Counting {
-    Vector<T> fact, ifact;
+    vector<T> fact, ifact;
 
     Counting() {}
     Counting(ll n) {
@@ -57,9 +57,9 @@ struct Counting {
         return res;
     }
 
-    Vector<Vector<T>> stirling_table(ll n, ll k) {
+    vector<vector<T>> stirling_table(ll n, ll k) {
         assert(n >= 0 && k >= 0);
-        Vector<Vector<T>> res(n+1, Vector<T>(k+1));
+        vector<vector<T>> res(n+1, vector<T>(k+1));
         res[0][0] = 1;
         FOR(i, 1, n+1) FOR(j, 1, k+1) {
             res[i][j] = res[i-1][j-1] + j * res[i-1][j];
@@ -70,7 +70,7 @@ struct Counting {
     T bell(ll n, ll k) {
         assert(n >= 0 && k >= 0);
         expand(k);
-        Vector<T> tmp(k+1);
+        vector<T> tmp(k+1);
         T sign = 1;
         tmp[0] = 1;
         FOR(i, 1, k+1) {
@@ -84,9 +84,9 @@ struct Counting {
         return res;
     }
 
-    Vector<Vector<T>> partition_table(ll n, ll k) {
+    vector<vector<T>> partition_table(ll n, ll k) {
         assert(n >= 0 && k >= 0);
-        Vector<Vector<T>> res(n+1, Vector<T>(k+1));
+        vector<vector<T>> res(n+1, vector<T>(k+1));
         REP(i, k+1) res[0][i] = 1;
         FOR(i, 1, n+1) FOR(j, 1, k+1) {
             res[i][j] = res[i][j-1] + (i<j? 0 : res[i-j][j]);

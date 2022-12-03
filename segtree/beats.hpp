@@ -4,8 +4,8 @@ template <typename S, S (*op)(S, S), S (*e)(), typename F, S (*mapping)(F, S), F
 struct SegTreeBeats {
 protected:
     int n, sz, height;
-    Vector<S> state;
-    Vector<F> lazy;
+    vector<S> state;
+    vector<F> lazy;
     void update(int k) {
         assert(0 <= k && k < sz);
         state[k] = op(state[k*2], state[k*2+1]);
