@@ -2,39 +2,21 @@
 data:
   _extendedDependsOn:
   - icon: ':question:'
+    path: algebra/field.hpp
+    title: algebra/field.hpp
+  - icon: ':question:'
+    path: algebra/ratio.hpp
+    title: algebra/ratio.hpp
+  - icon: ':question:'
     path: base.hpp
     title: base.hpp
+  - icon: ':question:'
+    path: geometry/point.hpp
+    title: geometry/point.hpp
   - icon: ':question:'
     path: stl-expansion.hpp
     title: stl-expansion.hpp
   _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
-    path: algebra/fps.hpp
-    title: algebra/fps.hpp
-  - icon: ':heavy_check_mark:'
-    path: algebra/modint.hpp
-    title: algebra/modint.hpp
-  - icon: ':heavy_check_mark:'
-    path: algebra/nimber.hpp
-    title: algebra/nimber.hpp
-  - icon: ':question:'
-    path: algebra/ratio.hpp
-    title: algebra/ratio.hpp
-  - icon: ':heavy_check_mark:'
-    path: convolution/fft.hpp
-    title: convolution/fft.hpp
-  - icon: ':heavy_check_mark:'
-    path: convolution/ntt.hpp
-    title: convolution/ntt.hpp
-  - icon: ':warning:'
-    path: general.hpp
-    title: general.hpp
-  - icon: ':question:'
-    path: geometry/line.hpp
-    title: geometry/line.hpp
-  - icon: ':question:'
-    path: geometry/point.hpp
-    title: geometry/point.hpp
   - icon: ':warning:'
     path: geometry/polygon.hpp
     title: geometry/polygon.hpp
@@ -49,50 +31,8 @@ data:
     path: test/aoj-cgl-1-b.test.cpp
     title: test/aoj-cgl-1-b.test.cpp
   - icon: ':heavy_check_mark:'
-    path: test/aoj-cgl-1-c.test.cpp
-    title: test/aoj-cgl-1-c.test.cpp
-  - icon: ':heavy_check_mark:'
     path: test/aoj-cgl-2-a.test.cpp
     title: test/aoj-cgl-2-a.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: test/aoj-cgl-2-b.test.cpp
-    title: test/aoj-cgl-2-b.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: test/aoj-cgl-2-c.test.cpp
-    title: test/aoj-cgl-2-c.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: test/aoj-dpl-5-b.test.cpp
-    title: test/aoj-dpl-5-b.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: test/aoj-dpl-5-d.test.cpp
-    title: test/aoj-dpl-5-d.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: test/aoj-dpl-5-e.test.cpp
-    title: test/aoj-dpl-5-e.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: test/aoj-dpl-5-g.test.cpp
-    title: test/aoj-dpl-5-g.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: test/aoj-dpl-5-i.test.cpp
-    title: test/aoj-dpl-5-i.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: test/aoj-dpl-5-j.test.cpp
-    title: test/aoj-dpl-5-j.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: test/aoj-ntl-1-b.test.cpp
-    title: test/aoj-ntl-1-b.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: test/yosupo-convolution.test.cpp
-    title: test/yosupo-convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: test/yosupo-determinant-of-matrix.test.cpp
-    title: test/yosupo-determinant-of-matrix.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: test/yosupo-nim-product.test.cpp
-    title: test/yosupo-nim-product.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: test/yosupo-range-affine-range-sum.test.cpp
-    title: test/yosupo-range-affine-range-sum.test.cpp
   _isVerificationFailed: true
   _pathExtension: hpp
   _verificationStatusIcon: ':question:'
@@ -241,124 +181,176 @@ data:
     \ return T::zero();\n    else return 0;\n}\ntemplate <typename T>\nconstexpr T\
     \ one() {\n    if constexpr(is_field_v<T>) return T::one();\n    else return 1;\n\
     }\ntemplate <typename T>\nconstexpr bool is_finite() {\n    if constexpr(is_field_v<T>)\
-    \ return T::is_finite;\n    else return false;\n}\n"
-  code: "#pragma once\n#include \"../base.hpp\"\n\ntemplate <typename T>\nstruct SumGroupBase\
-    \ {\n    constexpr static bool defzero = false;\n    using Coef = nullptr_t;\n\
-    \    using Scalar = nullptr_t;\n};\ntemplate <typename T>\nstruct ProdGroupBase\
-    \ {\n    constexpr static bool defone = false;\n};\ntemplate <typename T>\nstruct\
-    \ RepresentationBase {\n    using R = T;\n    constexpr static T construct(const\
-    \ R& x) { return x; }\n    constexpr static R represent(const T& x) { return x;\
-    \ }\n};\ntemplate <typename T>\nstruct CompareBase {\n    constexpr static bool\
-    \ eq(const T& x, const T& y) { return x == y; }\n    constexpr static bool lt(const\
-    \ T& x, const T& y) { return x < y; }\n};\ntemplate <typename T>\nstruct FinitePropertyBase\
-    \ {\n    constexpr static bool is_finite = false;\n};\n\ntemplate <typename T,\
-    \ typename SumGroup = SumGroupBase<T>, typename ProdGroup = ProdGroupBase<T>,\
-    \ typename Representation = RepresentationBase<T>, typename Compare = CompareBase<T>,\
-    \ typename FiniteProperty = FinitePropertyBase<T>>\nstruct Field {\n    using\
-    \ R = typename Representation::R;\n    using Coef = typename SumGroup::Coef;\n\
-    \    using Scalar = typename SumGroup::Scalar;\n    T val;\n    constexpr static\
-    \ Field zero() {\n        return SumGroup::zero;\n    }\n    constexpr static\
-    \ Field one() {\n        return ProdGroup::one;\n    }\n    constexpr static bool\
-    \ defzero = SumGroup::defzero;\n    constexpr static bool defone = ProdGroup::defone;\n\
-    \    constexpr static bool is_finite = FiniteProperty::is_finite;\n    constexpr\
-    \ Field() {\n        if constexpr(SumGroup::defzero) val = SumGroup::zero;\n \
-    \       else if constexpr(SumGroup::defone) val = ProdGroup::one;\n        else\
-    \ val = T();\n    }\n    constexpr Field(const R& r) : val(Representation::construct(r))\
-    \ {}\n    constexpr R represent() const { return Representation::represent(val);\
-    \ }\n    constexpr decltype(auto) operator[](size_t i) const {\n        return\
-    \ val[i];\n    }\n    constexpr static Field premitive_root() {\n        return\
-    \ FiniteProperty::premitive_root();\n    }\n    constexpr static size_t order()\
-    \ {\n        return FiniteProperty::order();\n    }\n    constexpr Field& operator*=(const\
-    \ Field& other) {\n        ProdGroup::mulassign(val, other.val);\n        return\
-    \ *this;\n    }\n    constexpr Field operator*(const Field& other) const {\n \
-    \       return Field(*this) *= other;\n    }\n    constexpr Field inv() const\
-    \ {\n        return ProdGroup::inv(val);\n    }\n    constexpr Field& operator/=(const\
-    \ Field& other) {\n        return *this *= other.inv();\n    }\n    constexpr\
-    \ Field operator/(const Field& other) const {\n        return Field(*this) /=\
-    \ other;\n    }\n    constexpr Field pow(ll n) const {\n        if(n < 0) {\n\
-    \            return inv().pow(-n);\n        }\n        Field res = one();\n  \
-    \      Field a = *this;\n        while(n > 0) {\n            if(n & 1) res *=\
-    \ a;\n            a *= a;\n            n >>= 1;\n        }\n        return res;\n\
-    \    }\n    constexpr Field operator+() const {\n        return *this;\n    }\n\
-    \    constexpr Field& operator+=(const Field& other) {\n        SumGroup::addassign(val,\
-    \ other.val);\n        return *this;\n    }\n    constexpr Field operator+(const\
-    \ Field& other) const {\n        return Field(*this) += other;\n    }\n    constexpr\
-    \ Field operator-() const {\n        return SumGroup::minus(val);\n    }\n   \
-    \ constexpr Field& operator-=(const Field& other) {\n        return *this += -other;\n\
-    \    }\n    constexpr Field operator-(const Field& other) const {\n        return\
-    \ Field(*this) -= other;\n    }\n    constexpr Field& operator++() {\n       \
-    \ return *this += one();\n    }\n    Field operator++(int) {\n        Field ret\
-    \ = *this;\n        ++*this;\n        return ret;\n    }\n    constexpr Field&\
-    \ operator--() {\n        return *this -= one();\n    }\n    Field operator--(int)\
-    \ {\n        Field ret = *this;\n        --*this;\n        return ret;\n    }\n\
-    \    constexpr Field& operator*=(const Coef& other) {\n        SumGroup::coefassign(val,\
-    \ other);\n        return *this;\n    }\n    constexpr Field operator*(const Coef&\
-    \ other) const {\n        return Field(*this) *= other;\n    }\n    constexpr\
-    \ Scalar dot(const Field& other) const {\n        return SumGroup::dot(val, other.val);\n\
-    \    }\n    constexpr Scalar norm() const {\n        return dot(*this);\n    }\n\
-    \    constexpr bool operator==(const Field& other) const {\n        return Compare::eq(val,\
-    \ other.val);\n    }\n    constexpr bool operator!=(const Field& other) const\
-    \ {\n        return !(*this == other);\n    }\n    constexpr bool operator<(const\
-    \ Field& other) const {\n        return Compare::lt(represent(), other.represent());\n\
-    \    }\n    constexpr bool operator>(const Field& other) const {\n        return\
-    \ other < *this;\n    }\n    constexpr bool operator<=(const Field& other) const\
-    \ {\n        return !(*this > other);\n    }\n    constexpr bool operator>=(const\
-    \ Field& other) const {\n        return !(*this < other);\n    }\n    friend istream&\
-    \ operator>>(istream& is, Field& f) {\n        R r; is >> r;\n        f = r;\n\
-    \        return is;\n    }\n    friend ostream& operator<<(ostream& os, const\
-    \ Field& f) {\n        return os << f.represent();\n    }\n};\nnamespace std {\n\
-    \    template <typename T>\n    struct hash<Field<T>> {\n        size_t operator()(const\
-    \ Field<T>& f) const {\n            return hash<typename Field<T>::R>()(f.represent());\n\
-    \        }\n    };\n}\ntemplate <typename>\nstruct is_field : false_type {};\n\
-    template <typename T, typename SumGroup, typename ProdGroup, typename Representation,\
-    \ typename FiniteProperty>\nstruct is_field<Field<T, SumGroup, ProdGroup, Representation,\
-    \ FiniteProperty>> : true_type {};\ntemplate <typename T>\nconstexpr bool is_field_v\
-    \ = is_field<T>::value;\ntemplate <typename T>\nconstexpr T zero() {\n    if constexpr(is_field_v<T>)\
-    \ return T::zero();\n    else return 0;\n}\ntemplate <typename T>\nconstexpr T\
-    \ one() {\n    if constexpr(is_field_v<T>) return T::one();\n    else return 1;\n\
-    }\ntemplate <typename T>\nconstexpr bool is_finite() {\n    if constexpr(is_field_v<T>)\
-    \ return T::is_finite;\n    else return false;\n}\n"
+    \ return T::is_finite;\n    else return false;\n}\n#line 2 \"geometry/point.hpp\"\
+    \n\ntemplate <typename T, size_t dim>\nstruct SumGroupPoint : SumGroupBase<array<T,\
+    \ dim>> {\n    static array<T, dim> addassign(array<T, dim> &a, const array<T,\
+    \ dim> &b) {\n        for (size_t i = 0; i < dim; i++) {\n            a[i] +=\
+    \ b[i];\n        }\n        return a;\n    }\n    constexpr static bool defzero\
+    \ = true;\n    const static array<T, dim> zero;\n    static array<T, dim> minus(const\
+    \ array<T, dim> &a) {\n        array<T, dim> res;\n        for (size_t i = 0;\
+    \ i < dim; i++) {\n            res[i] = -a[i];\n        }\n        return res;\n\
+    \    }\n    using Coef = T;\n    using Scalar = T;\n    static array<T, dim> coefassign(array<T,\
+    \ dim> &a, const T &b) {\n        for (size_t i = 0; i < dim; i++) {\n       \
+    \     a[i] *= b;\n        }\n        return a;\n    }\n    static T dot(const\
+    \ array<T, dim> &a, const array<T, dim> &b) {\n        T res = ::zero<T>();\n\
+    \        for (size_t i = 0; i < dim; i++) {\n            res += a[i] * b[i];\n\
+    \        }\n        return res;\n    }\n};\ntemplate <typename T, size_t dim>\n\
+    const array<T, dim> SumGroupPoint<T, dim>::zero = [] {\n    array<T, dim> res;\n\
+    \    for (size_t i = 0; i < dim; i++) {\n        res[i] = ::zero<T>();\n    }\n\
+    \    return res;\n}();\ntemplate <typename T, size_t dim=2>\nusing Point = Field<array<T,\
+    \ dim>, SumGroupPoint<T, dim>>;\n\ntemplate <typename T, size_t dim>\ndouble abs(const\
+    \ Point<T, dim> &a) {\n    return sqrt(a.norm());\n}\ntemplate <typename T>\n\
+    double theta(const Point<T, 2> &a) {\n    return atan2(a[1], a[0]);\n}\ntemplate\
+    \ <typename T>\nstruct CompareTheta {\n    bool operator()(const Point<T, 2> &a,\
+    \ const Point<T, 2> &b) const {\n        if (a[1] >= 0 && b[1] < 0) return true;\n\
+    \        if (a[1] < 0 && b[1] >= 0) return false;\n        if (a[1] == 0 && b[1]\
+    \ == 0) {\n            if (a[0] >= 0 && b[0] < 0) return true;\n            return\
+    \ false;\n        }\n        return a[0] * b[1] - a[1] * b[0] > 0;\n    }\n};\n\
+    template <typename T>\nT outer_product(const Point<T, 2> &a, const Point<T, 2>\
+    \ &b) {\n    return a[0] * b[1] - a[1] * b[0];\n}\ntemplate <typename T>\nPoint<T,\
+    \ 3> outer_product(const Point<T, 3> &a, const Point<T, 3> &b) {\n    return Point<T,\
+    \ 3>({a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1]\
+    \ * b[0]});\n}\ntemplate <typename T>\npair<bool, Point<T, 2>> segment_intersect(const\
+    \ Point<T, 2> &p0, const Point<T, 2> &p1, const Point<T, 2> &p2, const Point<T,\
+    \ 2> &p3) {\n    T o012 = outer_product(p1 - p0, p2 - p0);\n    int s012 = (o012\
+    \ > 0) - (o012 < 0);\n    T o013 = outer_product(p1 - p0, p3 - p0);\n    int s013\
+    \ = (o013 > 0) - (o013 < 0);\n    T o230 = outer_product(p3 - p2, p0 - p2);\n\
+    \    int s230 = (o230 > 0) - (o230 < 0);\n    T o231 = outer_product(p3 - p2,\
+    \ p1 - p2);\n    int s231 = (o231 > 0) - (o231 < 0);\n    if(s012 == 0 && s013\
+    \ == 0) {\n        if((p2-p0).dot(p3-p0) <= 0) return {true, p0};\n        if((p2-p1).dot(p3-p1)\
+    \ <= 0) return {true, p1};\n        if((p0-p2).dot(p1-p2) <= 0) return {true,\
+    \ p2};\n        if((p0-p3).dot(p1-p3) <= 0) return {true, p3};\n        return\
+    \ {false, Point<double>()};\n    }\n    if(s012 * s013 <= 0 && s230 * s231 <=\
+    \ 0) {\n        T kn = o230;\n        T kd = outer_product(p1-p0, p3-p2);\n  \
+    \      Point<T> p01 = p1 - p0;\n        if constexpr(is_integral<T>::value) {\n\
+    \            T g = gcd(kn, kd);\n            kn /= g;\n            kd /= g;\n\
+    \            assert(gcd(p01[0], p01[1]) % kd == 0);\n            p01[0] /= kd;\n\
+    \            p01[1] /= kd;\n            return {true, p0 + p01 * kn};\n      \
+    \  } else {\n            return {true, p0 + p01 * kn * (one<T>()/ kd)};\n    \
+    \    }\n    }\n    return {false, Point<double>()};\n}\n#line 3 \"algebra/ratio.hpp\"\
+    \n\ntemplate <typename T, size_t dim>\nstruct RepresentationRatio : RepresentationBase<T>\
+    \ {\n    using R = array<T, dim>;\n    constexpr static array<T, dim> construct(const\
+    \ R& x) {\n        return x;\n    }\n    constexpr static R represent(const array<T,\
+    \ dim>& x) {\n        array<T, dim> ret = x;\n        if constexpr(is_integral_v<T>)\
+    \ {\n            T g = 0;\n            for(size_t i = 0; i < dim; i++) {\n   \
+    \             g = gcd(g, ret[i]);\n            }\n            for(size_t i = 0;\
+    \ i < dim; i++) {\n                ret[i] /= g;\n            }\n            for(size_t\
+    \ i = 0; i < dim; i++) {\n                if(ret[i] == 0) continue;\n        \
+    \        if(ret[i] < 0) {\n                    for(size_t j = i; j < dim; j++)\
+    \ {\n                        ret[j] = -ret[j];\n                    }\n      \
+    \          }\n                break;\n            }\n        }\n        return\
+    \ ret;\n    }\n};\ntemplate <typename T, size_t dim>\nstruct CompareRatio : CompareBase<T>\
+    \ {\n    constexpr static bool lt(const array<T, dim>& x, const array<T, dim>&\
+    \ y) {\n        static_assert(dim == 2);\n        return x[0] * y[1] < x[1] *\
+    \ y[0];\n    }\n    constexpr static bool eq(const array<T, dim>& x, const array<T,\
+    \ dim>& y) {\n        return RepresentationRatio<T, dim>::represent(x) == RepresentationRatio<T,\
+    \ dim>::represent(y);\n    }\n};\ntemplate <typename T, size_t dim>\nusing Ratio\
+    \ = Field<array<T, dim>, SumGroupBase<array<T, dim>>, ProdGroupBase<array<T, dim>>,\
+    \ RepresentationRatio<T, dim>, CompareRatio<T, dim>>;\n#line 4 \"geometry/line.hpp\"\
+    \n\ntemplate <typename T, size_t dim=2>\nstruct Line {\n    Point<T, dim> a;\n\
+    \    Ratio<T, dim> d;\n    Line() = default;\n    Line(const Point<T, dim>& a,\
+    \ const Point<T, dim>& b) : a(a), d((b - a).represent()) {}\n    Line(const Point<T,\
+    \ dim>& a, const Ratio<T, dim>& d) : a(a), d(d) {}\n    Point<T, dim> operator()(const\
+    \ T& k) const {\n        Point<T, dim> dp(d.represent());\n        return a +\
+    \ dp * k;\n    }\n    Point<T, dim> proj(const Point<T, dim>& p) const {\n   \
+    \     Point<T, dim> dp(d.represent());\n        T kn = dp.dot(p - a);\n      \
+    \  T kd = dp.norm();\n        if constexpr(is_integral_v<T>) {\n            assert(kn\
+    \ % kd == 0);\n        }\n        return a + dp * (kn / kd);\n    }\n    Point<T,\
+    \ dim> reflect(const Point<T, dim>& p) const {\n        return proj(p) * 2 - p;\n\
+    \    }\n    bool parallel(const Line& l) const {\n        return d == l.d;\n \
+    \   }\n    bool orthogonal(const Line& l) const {\n        Point<T, dim> dp(d.represent());\n\
+    \        Point<T, dim> ldp(l.d.represent());\n        return dp.dot(ldp) == 0;\n\
+    \    }\n    bool on_line(const Point<T, dim>& p) const {\n        Point<T, dim>\
+    \ dp(d.represent());\n        T inpro = dp.dot(p - a);\n        return inpro *\
+    \ inpro == d.norm() * (p - a).norm();\n    }\n    bool operator==(const Line&\
+    \ l) const {\n        return parallel(l) && on_line(l.a);\n    }\n    double dist(const\
+    \ Point<T, dim>& p) const {\n        return abs(p - proj(p));\n    }\n};\n\ntemplate\
+    \ <typename T>\nstruct Line2D {\n    T a, b, c; // ax + by + c = 0\n    Line2D(Point<T,2>\
+    \ p1, Point<T,2> p2) {\n        a = p2[1] - p1[1];\n        b = -(p2[0] - p1[0]);\n\
+    \        c = -a * p1[0] - b * p1[1];\n    }\n    Line2D(T a, T b, T c) {\n   \
+    \     this->a = a;\n        this->b = b;\n        this->c = c;\n    }\n    Line2D(const\
+    \ Line<T, 2>& l) {\n        a = l.d[1];\n        b = -l.d[0];\n        c = -a\
+    \ * l.a[0] - b * l.a[1];\n    }\n    Ratio<T,2> direction() {\n        return\
+    \ {b, -a};\n    }\n    Point<T,2> proj(Point<T,2> Points) {\n        T d = a *\
+    \ a + b * b;\n        T x_n = b * (b * Points[0] - a * Points[1]) - a * c;\n \
+    \       T y_n = a * (a * Points[1] - b * Points[0]) - b * c;\n        if constexpr(is_integral_v<T>)\
+    \ {\n            assert(x_n % d == 0);\n            assert(y_n % d == 0);\n  \
+    \      }\n        return {x_n / d, y_n / d};\n    }\n    Point<T,2> reflect(Point<T,2>\
+    \ Points) {\n        return Points + (proj(Points) - Points) * 2;\n    }\n   \
+    \ bool parallel(const Line2D<T>& l) const {\n        return a * l.b == b * l.a;\n\
+    \    }\n    bool orthogonal(const Line2D<T>& l) const {\n        return a * l.a\
+    \ + b * l.b == 0;\n    }\n    bool on_line(Point<T,2> Points) {\n        return\
+    \ a * Points[0] + b * Points[1] + c == 0;\n    }\n    bool operator==(const Line2D<T>&\
+    \ l) const {\n        return a * l.c == c * l.a && b * l.c == c * l.b;\n    }\n\
+    \    Point<T,2> cross_point(Line2D<T> l) {\n        T x_n = b * l.c - c * l.b;\n\
+    \        T x_d = a * l.b - b * l.a;\n        T y_n = a * l.c - c * l.a;\n    \
+    \    T y_d = b * l.a - a * l.b;\n        if constexpr(is_integral_v<T>) {\n  \
+    \          assert(x_n % x_d == 0);\n            assert(y_n % y_d == 0);\n    \
+    \    }\n        return {x_n / x_d, y_n / y_d};\n    }\n    double dist(Point<T,2>\
+    \ Points) {\n        return sqrt(dist2(Points));\n    }\n};\n"
+  code: "#pragma once\n#include \"point.hpp\"\n#include \"../algebra/ratio.hpp\"\n\
+    \ntemplate <typename T, size_t dim=2>\nstruct Line {\n    Point<T, dim> a;\n \
+    \   Ratio<T, dim> d;\n    Line() = default;\n    Line(const Point<T, dim>& a,\
+    \ const Point<T, dim>& b) : a(a), d((b - a).represent()) {}\n    Line(const Point<T,\
+    \ dim>& a, const Ratio<T, dim>& d) : a(a), d(d) {}\n    Point<T, dim> operator()(const\
+    \ T& k) const {\n        Point<T, dim> dp(d.represent());\n        return a +\
+    \ dp * k;\n    }\n    Point<T, dim> proj(const Point<T, dim>& p) const {\n   \
+    \     Point<T, dim> dp(d.represent());\n        T kn = dp.dot(p - a);\n      \
+    \  T kd = dp.norm();\n        if constexpr(is_integral_v<T>) {\n            assert(kn\
+    \ % kd == 0);\n        }\n        return a + dp * (kn / kd);\n    }\n    Point<T,\
+    \ dim> reflect(const Point<T, dim>& p) const {\n        return proj(p) * 2 - p;\n\
+    \    }\n    bool parallel(const Line& l) const {\n        return d == l.d;\n \
+    \   }\n    bool orthogonal(const Line& l) const {\n        Point<T, dim> dp(d.represent());\n\
+    \        Point<T, dim> ldp(l.d.represent());\n        return dp.dot(ldp) == 0;\n\
+    \    }\n    bool on_line(const Point<T, dim>& p) const {\n        Point<T, dim>\
+    \ dp(d.represent());\n        T inpro = dp.dot(p - a);\n        return inpro *\
+    \ inpro == d.norm() * (p - a).norm();\n    }\n    bool operator==(const Line&\
+    \ l) const {\n        return parallel(l) && on_line(l.a);\n    }\n    double dist(const\
+    \ Point<T, dim>& p) const {\n        return abs(p - proj(p));\n    }\n};\n\ntemplate\
+    \ <typename T>\nstruct Line2D {\n    T a, b, c; // ax + by + c = 0\n    Line2D(Point<T,2>\
+    \ p1, Point<T,2> p2) {\n        a = p2[1] - p1[1];\n        b = -(p2[0] - p1[0]);\n\
+    \        c = -a * p1[0] - b * p1[1];\n    }\n    Line2D(T a, T b, T c) {\n   \
+    \     this->a = a;\n        this->b = b;\n        this->c = c;\n    }\n    Line2D(const\
+    \ Line<T, 2>& l) {\n        a = l.d[1];\n        b = -l.d[0];\n        c = -a\
+    \ * l.a[0] - b * l.a[1];\n    }\n    Ratio<T,2> direction() {\n        return\
+    \ {b, -a};\n    }\n    Point<T,2> proj(Point<T,2> Points) {\n        T d = a *\
+    \ a + b * b;\n        T x_n = b * (b * Points[0] - a * Points[1]) - a * c;\n \
+    \       T y_n = a * (a * Points[1] - b * Points[0]) - b * c;\n        if constexpr(is_integral_v<T>)\
+    \ {\n            assert(x_n % d == 0);\n            assert(y_n % d == 0);\n  \
+    \      }\n        return {x_n / d, y_n / d};\n    }\n    Point<T,2> reflect(Point<T,2>\
+    \ Points) {\n        return Points + (proj(Points) - Points) * 2;\n    }\n   \
+    \ bool parallel(const Line2D<T>& l) const {\n        return a * l.b == b * l.a;\n\
+    \    }\n    bool orthogonal(const Line2D<T>& l) const {\n        return a * l.a\
+    \ + b * l.b == 0;\n    }\n    bool on_line(Point<T,2> Points) {\n        return\
+    \ a * Points[0] + b * Points[1] + c == 0;\n    }\n    bool operator==(const Line2D<T>&\
+    \ l) const {\n        return a * l.c == c * l.a && b * l.c == c * l.b;\n    }\n\
+    \    Point<T,2> cross_point(Line2D<T> l) {\n        T x_n = b * l.c - c * l.b;\n\
+    \        T x_d = a * l.b - b * l.a;\n        T y_n = a * l.c - c * l.a;\n    \
+    \    T y_d = b * l.a - a * l.b;\n        if constexpr(is_integral_v<T>) {\n  \
+    \          assert(x_n % x_d == 0);\n            assert(y_n % y_d == 0);\n    \
+    \    }\n        return {x_n / x_d, y_n / y_d};\n    }\n    double dist(Point<T,2>\
+    \ Points) {\n        return sqrt(dist2(Points));\n    }\n};\n"
   dependsOn:
+  - geometry/point.hpp
+  - algebra/field.hpp
   - base.hpp
   - stl-expansion.hpp
-  isVerificationFile: false
-  path: algebra/field.hpp
-  requiredBy:
-  - convolution/fft.hpp
-  - convolution/ntt.hpp
-  - algebra/modint.hpp
-  - algebra/nimber.hpp
-  - algebra/fps.hpp
   - algebra/ratio.hpp
-  - general.hpp
-  - geometry/line.hpp
+  isVerificationFile: false
+  path: geometry/line.hpp
+  requiredBy:
   - geometry/segment.hpp
   - geometry/polygon.hpp
-  - geometry/point.hpp
   timestamp: '2022-12-03 20:54:48+09:00'
   verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
-  - test/aoj-cgl-2-b.test.cpp
-  - test/aoj-ntl-1-b.test.cpp
-  - test/yosupo-determinant-of-matrix.test.cpp
-  - test/yosupo-convolution.test.cpp
   - test/aoj-cgl-1-b.test.cpp
-  - test/aoj-dpl-5-e.test.cpp
-  - test/yosupo-nim-product.test.cpp
-  - test/aoj-dpl-5-g.test.cpp
-  - test/aoj-dpl-5-b.test.cpp
-  - test/aoj-dpl-5-j.test.cpp
-  - test/yosupo-range-affine-range-sum.test.cpp
-  - test/aoj-dpl-5-i.test.cpp
-  - test/aoj-cgl-1-c.test.cpp
-  - test/aoj-dpl-5-d.test.cpp
-  - test/aoj-cgl-2-c.test.cpp
   - test/aoj-cgl-2-a.test.cpp
   - test/aoj-cgl-1-a.test.cpp
-documentation_of: algebra/field.hpp
+documentation_of: geometry/line.hpp
 layout: document
 redirect_from:
-- /library/algebra/field.hpp
-- /library/algebra/field.hpp.html
-title: algebra/field.hpp
+- /library/geometry/line.hpp
+- /library/geometry/line.hpp.html
+title: geometry/line.hpp
 ---

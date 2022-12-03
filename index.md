@@ -3,7 +3,7 @@ data:
   libraryCategories:
   - name: algebra
     pages:
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: algebra/field.hpp
       title: algebra/field.hpp
     - icon: ':heavy_check_mark:'
@@ -15,9 +15,12 @@ data:
     - icon: ':heavy_check_mark:'
       path: algebra/nimber.hpp
       title: algebra/nimber.hpp
+    - icon: ':question:'
+      path: algebra/ratio.hpp
+      title: algebra/ratio.hpp
   - name: .
     pages:
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: base.hpp
       title: base.hpp
     - icon: ':warning:'
@@ -29,6 +32,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: operator.hpp
       title: operator.hpp
+    - icon: ':question:'
+      path: stl-expansion.hpp
+      title: stl-expansion.hpp
     - icon: ':warning:'
       path: string.hpp
       title: string.hpp
@@ -61,6 +67,20 @@ data:
     - icon: ':warning:'
       path: counting/permutation.hpp
       title: counting/permutation.hpp
+  - name: geometry
+    pages:
+    - icon: ':question:'
+      path: geometry/line.hpp
+      title: geometry/line.hpp
+    - icon: ':question:'
+      path: geometry/point.hpp
+      title: geometry/point.hpp
+    - icon: ':warning:'
+      path: geometry/polygon.hpp
+      title: geometry/polygon.hpp
+    - icon: ':warning:'
+      path: geometry/segment.hpp
+      title: geometry/segment.hpp
   - name: graph
     pages:
     - icon: ':heavy_check_mark:'
@@ -108,35 +128,30 @@ data:
     - icon: ':heavy_check_mark:'
       path: segtree/wavelet-matrix.hpp
       title: segtree/wavelet-matrix.hpp
-  - name: stl-wrapper
-    pages:
-    - icon: ':heavy_check_mark:'
-      path: stl-wrapper/all.hpp
-      title: stl-wrapper/all.hpp
-    - icon: ':heavy_check_mark:'
-      path: stl-wrapper/map.hpp
-      title: stl-wrapper/map.hpp
-    - icon: ':heavy_check_mark:'
-      path: stl-wrapper/pair.hpp
-      title: stl-wrapper/pair.hpp
-    - icon: ':heavy_check_mark:'
-      path: stl-wrapper/set.hpp
-      title: stl-wrapper/set.hpp
-    - icon: ':heavy_check_mark:'
-      path: stl-wrapper/unordered_map.hpp
-      title: stl-wrapper/unordered_map.hpp
-    - icon: ':heavy_check_mark:'
-      path: stl-wrapper/unordered_set.hpp
-      title: stl-wrapper/unordered_set.hpp
-    - icon: ':heavy_check_mark:'
-      path: stl-wrapper/vector.hpp
-      title: stl-wrapper/vector.hpp
   verificationCategories:
   - name: test
     pages:
     - icon: ':heavy_check_mark:'
       path: test/aoj-alds-1-1-c.test.cpp
       title: test/aoj-alds-1-1-c.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: test/aoj-cgl-1-a.test.cpp
+      title: test/aoj-cgl-1-a.test.cpp
+    - icon: ':x:'
+      path: test/aoj-cgl-1-b.test.cpp
+      title: test/aoj-cgl-1-b.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: test/aoj-cgl-1-c.test.cpp
+      title: test/aoj-cgl-1-c.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: test/aoj-cgl-2-a.test.cpp
+      title: test/aoj-cgl-2-a.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: test/aoj-cgl-2-b.test.cpp
+      title: test/aoj-cgl-2-b.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: test/aoj-cgl-2-c.test.cpp
+      title: test/aoj-cgl-2-c.test.cpp
     - icon: ':heavy_check_mark:'
       path: test/aoj-dpl-5-b.test.cpp
       title: test/aoj-dpl-5-b.test.cpp
@@ -177,9 +192,6 @@ data:
       path: test/aoj-ntl-1-e.test.cpp
       title: test/aoj-ntl-1-e.test.cpp
     - icon: ':heavy_check_mark:'
-      path: test/yosupo-associative-array.test.cpp
-      title: test/yosupo-associative-array.test.cpp
-    - icon: ':heavy_check_mark:'
       path: test/yosupo-convolution.test.cpp
       title: test/yosupo-convolution.test.cpp
     - icon: ':heavy_check_mark:'
@@ -203,9 +215,6 @@ data:
     - icon: ':heavy_check_mark:'
       path: test/yosupo-range-chmin-chmax-add-range-sum.test.cpp
       title: test/yosupo-range-chmin-chmax-add-range-sum.test.cpp
-    - icon: ':heavy_check_mark:'
-      path: test/yosupo-set-xor-min.test.cpp
-      title: test/yosupo-set-xor-min.test.cpp
     - icon: ':heavy_check_mark:'
       path: test/yosupo-shortest-path.test.cpp
       title: test/yosupo-shortest-path.test.cpp

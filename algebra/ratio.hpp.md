@@ -4,38 +4,40 @@ data:
   - icon: ':question:'
     path: algebra/field.hpp
     title: algebra/field.hpp
-  - icon: ':heavy_check_mark:'
-    path: algebra/modint.hpp
-    title: algebra/modint.hpp
   - icon: ':question:'
     path: base.hpp
     title: base.hpp
-  - icon: ':heavy_check_mark:'
-    path: counting/counting.hpp
-    title: counting/counting.hpp
-  - icon: ':heavy_check_mark:'
-    path: integer/extgcd.hpp
-    title: integer/extgcd.hpp
-  - icon: ':heavy_check_mark:'
-    path: integer/pow-mod.hpp
-    title: integer/pow-mod.hpp
   - icon: ':question:'
     path: stl-expansion.hpp
     title: stl-expansion.hpp
-  _extendedRequiredBy: []
-  _extendedVerifiedWith: []
-  _isVerificationFailed: false
-  _pathExtension: cpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _extendedRequiredBy:
+  - icon: ':question:'
+    path: geometry/line.hpp
+    title: geometry/line.hpp
+  - icon: ':warning:'
+    path: geometry/polygon.hpp
+    title: geometry/polygon.hpp
+  - icon: ':warning:'
+    path: geometry/segment.hpp
+    title: geometry/segment.hpp
+  _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: test/aoj-cgl-1-a.test.cpp
+    title: test/aoj-cgl-1-a.test.cpp
+  - icon: ':x:'
+    path: test/aoj-cgl-1-b.test.cpp
+    title: test/aoj-cgl-1-b.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: test/aoj-cgl-2-a.test.cpp
+    title: test/aoj-cgl-2-a.test.cpp
+  _isVerificationFailed: true
+  _pathExtension: hpp
+  _verificationStatusIcon: ':question:'
   attributes:
-    '*NOT_SPECIAL_COMMENTS*': ''
-    PROBLEM: https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_5_G
-    links:
-    - https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_5_G
-  bundledCode: "#line 1 \"test/aoj-dpl-5-g.test.cpp\"\n#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_5_G\"\
-    \n#line 2 \"stl-expansion.hpp\"\n#include <bits/stdc++.h>\n\ntemplate <typename\
-    \ T1, typename T2>\nstd::istream& operator>>(std::istream& is, std::pair<T1, T2>&\
-    \ p) {\n    is >> p.first >> p.second;\n    return is;\n}\ntemplate <typename\
+    links: []
+  bundledCode: "#line 2 \"stl-expansion.hpp\"\n#include <bits/stdc++.h>\n\ntemplate\
+    \ <typename T1, typename T2>\nstd::istream& operator>>(std::istream& is, std::pair<T1,\
+    \ T2>& p) {\n    is >> p.first >> p.second;\n    return is;\n}\ntemplate <typename\
     \ T, size_t N>\nstd::istream& operator>>(std::istream& is, std::array<T, N>& a)\
     \ {\n    for (size_t i = 0; i < N; ++i) {\n        is >> a[i];\n    }\n    return\
     \ is;\n}\ntemplate <typename T>\nstd::istream& operator>>(std::istream& is, std::vector<T>&\
@@ -101,47 +103,6 @@ data:
     \ {\n    vector<T> res(n+1), rev(n+1);\n    res[0] = 1;\n    REP(i, n) res[i+1]\
     \ = res[i] * (i+1);\n    rev[n] = 1 / res[n];\n    for(int i = n; i > 0; i--)\
     \ {\n        rev[i-1] = rev[i] * i;\n    }\n    return make_pair(res, rev);\n\
-    }\n#line 3 \"counting/counting.hpp\"\n\ntemplate <typename T>\nstruct Counting\
-    \ {\n    vector<T> fact, ifact;\n\n    Counting() {}\n    Counting(ll n) {\n \
-    \       assert(n >= 0);\n        expand(n);\n    }\n\n    void expand(ll n) {\n\
-    \        assert(n >= 0);\n        ll sz = (ll)fact.size();\n        if(sz > n)\
-    \ return;\n        fact.resize(n+1);\n        ifact.resize(n+1);\n        fact[0]\
-    \ = 1;\n        FOR(i, max(1LL, sz), n+1) fact[i] = fact[i-1] * i;\n        ifact[n]\
-    \ = fact[n].inv();\n        for(ll i = n-1; i >= sz; i--) ifact[i] = ifact[i+1]\
-    \ * (i+1);\n    }\n\n    T p(ll n, ll r) {\n        if(n < r) return 0;\n    \
-    \    assert(r >= 0);\n        expand(n);\n        return fact[n] * ifact[n-r];\n\
-    \    }\n\n    T c(ll n, ll r) {\n        if(n < r) return 0;\n        assert(r\
-    \ >= 0);\n        expand(n);\n        return fact[n] * ifact[r] * ifact[n-r];\n\
-    \    }\n\n    T h(ll n, ll r) {\n        assert(n >= 0);\n        assert(r >=\
-    \ 0);\n        return c(n+r-1, r);\n    }\n\n    T stirling(ll n, ll k) {\n  \
-    \      if(n < k) return 0;\n        assert(k >= 0);\n        if(n == 0) return\
-    \ 1;\n        T res = 0;\n        T sign = k%2? -1 : 1;\n        expand(k);\n\
-    \        REP(i, k+1) {\n            res += sign * ifact[i] * ifact[k-i] * T(i).pow(n);\n\
-    \            sign *= -1;\n        }\n        return res;\n    }\n\n    vector<vector<T>>\
-    \ stirling_table(ll n, ll k) {\n        assert(n >= 0 && k >= 0);\n        vector<vector<T>>\
-    \ res(n+1, vector<T>(k+1));\n        res[0][0] = 1;\n        FOR(i, 1, n+1) FOR(j,\
-    \ 1, k+1) {\n            res[i][j] = res[i-1][j-1] + j * res[i-1][j];\n      \
-    \  }\n        return res;\n    }\n\n    T bell(ll n, ll k) {\n        assert(n\
-    \ >= 0 && k >= 0);\n        expand(k);\n        vector<T> tmp(k+1);\n        T\
-    \ sign = 1;\n        tmp[0] = 1;\n        FOR(i, 1, k+1) {\n            sign *=\
-    \ -1;\n            tmp[i] = tmp[i-1] + sign * ifact[i];\n        }\n        T\
-    \ res = 0;\n        REP(i, k+1) {\n            res += T(i).pow(n) * ifact[i] *\
-    \ tmp[k-i];\n        }\n        return res;\n    }\n\n    vector<vector<T>> partition_table(ll\
-    \ n, ll k) {\n        assert(n >= 0 && k >= 0);\n        vector<vector<T>> res(n+1,\
-    \ vector<T>(k+1));\n        REP(i, k+1) res[0][i] = 1;\n        FOR(i, 1, n+1)\
-    \ FOR(j, 1, k+1) {\n            res[i][j] = res[i][j-1] + (i<j? 0 : res[i-j][j]);\n\
-    \        }\n        return res;\n    }\n};\n#line 3 \"integer/extgcd.hpp\"\n\n\
-    constexpr ll extgcd(ll a, ll b, ll& x, ll& y) {\n    x = 1, y = 0;\n    ll nx\
-    \ = 0, ny = 1;\n    while(b) {\n        ll q = a / b;\n        tie(a, b) = LP(b,\
-    \ a % b);\n        tie(x, nx) = LP(nx, x - nx*q);\n        tie(y, ny) = LP(ny,\
-    \ y - ny*q);\n    }\n    return a;\n}\n#line 2 \"integer/pow-mod.hpp\"\n\nconstexpr\
-    \ ll inv_mod(ll n, ll m) {\n    n %= m;\n    if (n < 0) n += m;\n    ll x = -1,\
-    \ y = -1;\n    if(extgcd(n, m, x, y) != 1) throw logic_error(\"\");\n    x %=\
-    \ m;\n    if(x < 0) x += m;\n    return x;\n}\n\nconstexpr ll pow_mod(ll a, ll\
-    \ n, ll m) {\n    if(n == 0) return 1LL;\n    if(n < 0) return inv_mod(pow_mod(a,\
-    \ -n, m), m);\n    a %= m;\n    if (a < 0) n += m;\n    ll res = 1;\n    while(n)\
-    \ {\n        if(n & 1) {\n            res *= a;\n            res %= m;\n     \
-    \   }\n        n >>= 1;\n        a *= a;\n        a %= m;\n    }\n    return res;\n\
     }\n#line 3 \"algebra/field.hpp\"\n\ntemplate <typename T>\nstruct SumGroupBase\
     \ {\n    constexpr static bool defzero = false;\n    using Coef = nullptr_t;\n\
     \    using Scalar = nullptr_t;\n};\ntemplate <typename T>\nstruct ProdGroupBase\
@@ -217,60 +178,66 @@ data:
     \ return T::zero();\n    else return 0;\n}\ntemplate <typename T>\nconstexpr T\
     \ one() {\n    if constexpr(is_field_v<T>) return T::one();\n    else return 1;\n\
     }\ntemplate <typename T>\nconstexpr bool is_finite() {\n    if constexpr(is_field_v<T>)\
-    \ return T::is_finite;\n    else return false;\n}\n#line 4 \"algebra/modint.hpp\"\
-    \n\ntemplate <ll mod>\nstruct SumGroupModint : SumGroupBase<ll> {\n    static\
-    \ ll& addassign(ll& l, const ll& r) {\n        ll ret;\n        if(__builtin_add_overflow(l,\
-    \ r, &ret)) {\n            l = l % mod + r % mod;\n        } else {\n        \
-    \    l = ret;\n        }\n        return l;\n    }\n    constexpr static bool\
-    \ defzero = true;\n    constexpr static ll zero = 0;\n    constexpr static ll\
-    \ minus(const ll& x) {\n        return -x;\n    }\n};\ntemplate <ll mod>\nstruct\
-    \ ProdGroupModint : ProdGroupBase<ll> {\n    constexpr static bool defmul = true;\n\
-    \    static ll& mulassign(ll& l, const ll& r) {\n        ll ret;\n        if(__builtin_mul_overflow(l,\
-    \ r, &ret)) {\n            l = (l % mod) * (r % mod);\n        } else {\n    \
-    \        l = ret;\n        }\n        return l;\n    }\n    constexpr static bool\
-    \ defone = true;\n    constexpr static ll one = 1;\n    constexpr static bool\
-    \ definv = true;\n    constexpr static ll inv(const ll& x) {\n        return inv_mod(x,\
-    \ mod);\n    }\n};\ntemplate <ll mod>\nstruct RepresentationModint : RepresentationBase<ll>\
-    \ {\n    using R = ll;\n    constexpr static ll construct(const R& x) { return\
-    \ x % mod; }\n    constexpr static R represent(const ll& x) {\n        ll ret\
-    \ = x % mod;\n        if(ret < 0) ret += mod;\n        return ret;\n    }\n};\n\
-    template <ll mod>\nstruct CompareModint : CompareBase<ll> {\n    constexpr static\
-    \ bool lt(const ll& l, const ll& r) {\n        return RepresentationModint<mod>::represent(l)\
-    \ < RepresentationModint<mod>::represent(r);\n    }\n    constexpr static bool\
-    \ eq(const ll& l, const ll& r) {\n        return RepresentationModint<mod>::represent(l)\
-    \ == RepresentationModint<mod>::represent(r);\n    }\n};\ntemplate <ll mod>\n\
-    struct FinitePropertyModint : FinitePropertyBase<ll> {\n    constexpr static bool\
-    \ is_finite = true;\n    constexpr static ll premitive_root() {\n        static_assert(mod\
-    \ == 998244353);\n        return 3;\n    }\n    constexpr static size_t order()\
-    \ {\n        return mod - 1;\n    }\n};\n\ntemplate <ll mod>\nusing Modint = Field<ll,\
-    \ SumGroupModint<mod>, ProdGroupModint<mod>, RepresentationModint<mod>, CompareModint<mod>,\
-    \ FinitePropertyModint<mod>>;\n\nusing MI3 = Modint<998244353>;\nusing V3 = vector<MI3>;\n\
-    using VV3 = vector<V3>;\nusing VVV3 = vector<VV3>;\nusing MI7 = Modint<1000000007>;\n\
-    using V7 = vector<MI7>;\nusing VV7 = vector<V7>;\nusing VVV7 = vector<VV7>;\n\
-    #line 4 \"test/aoj-dpl-5-g.test.cpp\"\n\nint main() {\n    int n, k; cin >> n\
-    \ >> k;\n    print(Counting<MI7>().bell(n, k));\n}\n"
-  code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_5_G\"\
-    \n#include \"../counting/counting.hpp\"\n#include \"../algebra/modint.hpp\"\n\n\
-    int main() {\n    int n, k; cin >> n >> k;\n    print(Counting<MI7>().bell(n,\
-    \ k));\n}\n"
+    \ return T::is_finite;\n    else return false;\n}\n#line 3 \"algebra/ratio.hpp\"\
+    \n\ntemplate <typename T, size_t dim>\nstruct RepresentationRatio : RepresentationBase<T>\
+    \ {\n    using R = array<T, dim>;\n    constexpr static array<T, dim> construct(const\
+    \ R& x) {\n        return x;\n    }\n    constexpr static R represent(const array<T,\
+    \ dim>& x) {\n        array<T, dim> ret = x;\n        if constexpr(is_integral_v<T>)\
+    \ {\n            T g = 0;\n            for(size_t i = 0; i < dim; i++) {\n   \
+    \             g = gcd(g, ret[i]);\n            }\n            for(size_t i = 0;\
+    \ i < dim; i++) {\n                ret[i] /= g;\n            }\n            for(size_t\
+    \ i = 0; i < dim; i++) {\n                if(ret[i] == 0) continue;\n        \
+    \        if(ret[i] < 0) {\n                    for(size_t j = i; j < dim; j++)\
+    \ {\n                        ret[j] = -ret[j];\n                    }\n      \
+    \          }\n                break;\n            }\n        }\n        return\
+    \ ret;\n    }\n};\ntemplate <typename T, size_t dim>\nstruct CompareRatio : CompareBase<T>\
+    \ {\n    constexpr static bool lt(const array<T, dim>& x, const array<T, dim>&\
+    \ y) {\n        static_assert(dim == 2);\n        return x[0] * y[1] < x[1] *\
+    \ y[0];\n    }\n    constexpr static bool eq(const array<T, dim>& x, const array<T,\
+    \ dim>& y) {\n        return RepresentationRatio<T, dim>::represent(x) == RepresentationRatio<T,\
+    \ dim>::represent(y);\n    }\n};\ntemplate <typename T, size_t dim>\nusing Ratio\
+    \ = Field<array<T, dim>, SumGroupBase<array<T, dim>>, ProdGroupBase<array<T, dim>>,\
+    \ RepresentationRatio<T, dim>, CompareRatio<T, dim>>;\n"
+  code: "#pragma once\n#include \"field.hpp\"\n\ntemplate <typename T, size_t dim>\n\
+    struct RepresentationRatio : RepresentationBase<T> {\n    using R = array<T, dim>;\n\
+    \    constexpr static array<T, dim> construct(const R& x) {\n        return x;\n\
+    \    }\n    constexpr static R represent(const array<T, dim>& x) {\n        array<T,\
+    \ dim> ret = x;\n        if constexpr(is_integral_v<T>) {\n            T g = 0;\n\
+    \            for(size_t i = 0; i < dim; i++) {\n                g = gcd(g, ret[i]);\n\
+    \            }\n            for(size_t i = 0; i < dim; i++) {\n              \
+    \  ret[i] /= g;\n            }\n            for(size_t i = 0; i < dim; i++) {\n\
+    \                if(ret[i] == 0) continue;\n                if(ret[i] < 0) {\n\
+    \                    for(size_t j = i; j < dim; j++) {\n                     \
+    \   ret[j] = -ret[j];\n                    }\n                }\n            \
+    \    break;\n            }\n        }\n        return ret;\n    }\n};\ntemplate\
+    \ <typename T, size_t dim>\nstruct CompareRatio : CompareBase<T> {\n    constexpr\
+    \ static bool lt(const array<T, dim>& x, const array<T, dim>& y) {\n        static_assert(dim\
+    \ == 2);\n        return x[0] * y[1] < x[1] * y[0];\n    }\n    constexpr static\
+    \ bool eq(const array<T, dim>& x, const array<T, dim>& y) {\n        return RepresentationRatio<T,\
+    \ dim>::represent(x) == RepresentationRatio<T, dim>::represent(y);\n    }\n};\n\
+    template <typename T, size_t dim>\nusing Ratio = Field<array<T, dim>, SumGroupBase<array<T,\
+    \ dim>>, ProdGroupBase<array<T, dim>>, RepresentationRatio<T, dim>, CompareRatio<T,\
+    \ dim>>;\n"
   dependsOn:
-  - counting/counting.hpp
+  - algebra/field.hpp
   - base.hpp
   - stl-expansion.hpp
-  - algebra/modint.hpp
-  - integer/pow-mod.hpp
-  - integer/extgcd.hpp
-  - algebra/field.hpp
-  isVerificationFile: true
-  path: test/aoj-dpl-5-g.test.cpp
-  requiredBy: []
+  isVerificationFile: false
+  path: algebra/ratio.hpp
+  requiredBy:
+  - geometry/line.hpp
+  - geometry/segment.hpp
+  - geometry/polygon.hpp
   timestamp: '2022-12-03 20:54:48+09:00'
-  verificationStatus: TEST_ACCEPTED
-  verifiedWith: []
-documentation_of: test/aoj-dpl-5-g.test.cpp
+  verificationStatus: LIBRARY_SOME_WA
+  verifiedWith:
+  - test/aoj-cgl-1-b.test.cpp
+  - test/aoj-cgl-2-a.test.cpp
+  - test/aoj-cgl-1-a.test.cpp
+documentation_of: algebra/ratio.hpp
 layout: document
 redirect_from:
-- /verify/test/aoj-dpl-5-g.test.cpp
-- /verify/test/aoj-dpl-5-g.test.cpp.html
-title: test/aoj-dpl-5-g.test.cpp
+- /library/algebra/ratio.hpp
+- /library/algebra/ratio.hpp.html
+title: algebra/ratio.hpp
 ---
