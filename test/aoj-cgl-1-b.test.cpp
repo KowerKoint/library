@@ -1,4 +1,5 @@
 #define PROBLEM "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_1_B"
+#define ERROR "1e-6"
 
 #include "../geometry/line.hpp"
 
