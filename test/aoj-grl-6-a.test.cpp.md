@@ -1,13 +1,13 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: base.hpp
     title: base.hpp
   - icon: ':heavy_check_mark:'
     path: graph/ford-fulkerson.hpp
     title: graph/ford-fulkerson.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-expansion.hpp
     title: stl-expansion.hpp
   _extendedRequiredBy: []
@@ -132,7 +132,7 @@ data:
   isVerificationFile: true
   path: test/aoj-grl-6-a.test.cpp
   requiredBy: []
-  timestamp: '2022-12-03 20:54:48+09:00'
+  timestamp: '2022-12-09 11:01:11+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/aoj-grl-6-a.test.cpp

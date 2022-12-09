@@ -1,7 +1,7 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: base.hpp
     title: base.hpp
   - icon: ':heavy_check_mark:'
@@ -10,7 +10,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: integer/kth-root-integer.hpp
     title: integer/kth-root-integer.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-expansion.hpp
     title: stl-expansion.hpp
   _extendedRequiredBy: []
@@ -240,13 +240,13 @@ data:
   isVerificationFile: false
   path: integer/prime.hpp
   requiredBy: []
-  timestamp: '2022-12-03 20:54:48+09:00'
+  timestamp: '2022-12-09 11:01:11+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - test/yosupo-enumerate-primes.test.cpp
   - test/aoj-itp-1-3-d.test.cpp
-  - test/aoj-alds-1-1-c.test.cpp
+  - test/yosupo-enumerate-primes.test.cpp
   - test/aoj-ntl-1-a.test.cpp
+  - test/aoj-alds-1-1-c.test.cpp
 documentation_of: integer/prime.hpp
 layout: document
 redirect_from:

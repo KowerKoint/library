@@ -1,10 +1,10 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: base.hpp
     title: base.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-expansion.hpp
     title: stl-expansion.hpp
   _extendedRequiredBy:
@@ -17,7 +17,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: algebra/nimber.hpp
     title: algebra/nimber.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: algebra/ratio.hpp
     title: algebra/ratio.hpp
   - icon: ':heavy_check_mark:'
@@ -29,23 +29,23 @@ data:
   - icon: ':warning:'
     path: general.hpp
     title: general.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: geometry/line.hpp
     title: geometry/line.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: geometry/point.hpp
     title: geometry/point.hpp
-  - icon: ':warning:'
+  - icon: ':heavy_check_mark:'
     path: geometry/polygon.hpp
     title: geometry/polygon.hpp
-  - icon: ':warning:'
+  - icon: ':heavy_check_mark:'
     path: geometry/segment.hpp
     title: geometry/segment.hpp
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: test/aoj-cgl-1-a.test.cpp
     title: test/aoj-cgl-1-a.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: test/aoj-cgl-1-b.test.cpp
     title: test/aoj-cgl-1-b.test.cpp
   - icon: ':heavy_check_mark:'
@@ -60,6 +60,18 @@ data:
   - icon: ':heavy_check_mark:'
     path: test/aoj-cgl-2-c.test.cpp
     title: test/aoj-cgl-2-c.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: test/aoj-cgl-3-a.test.cpp
+    title: test/aoj-cgl-3-a.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: test/aoj-cgl-3-b.test.cpp
+    title: test/aoj-cgl-3-b.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: test/aoj-cgl-3-c.test.cpp
+    title: test/aoj-cgl-3-c.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: test/aoj-cgl-4-a.test.cpp
+    title: test/aoj-cgl-4-a.test.cpp
   - icon: ':heavy_check_mark:'
     path: test/aoj-dpl-5-b.test.cpp
     title: test/aoj-dpl-5-b.test.cpp
@@ -93,9 +105,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: test/yosupo-range-affine-range-sum.test.cpp
     title: test/yosupo-range-affine-range-sum.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"stl-expansion.hpp\"\n#include <bits/stdc++.h>\n\ntemplate\
@@ -324,37 +336,41 @@ data:
   isVerificationFile: false
   path: algebra/field.hpp
   requiredBy:
-  - convolution/fft.hpp
-  - convolution/ntt.hpp
-  - algebra/modint.hpp
-  - algebra/nimber.hpp
-  - algebra/fps.hpp
-  - algebra/ratio.hpp
-  - general.hpp
+  - geometry/point.hpp
   - geometry/line.hpp
   - geometry/segment.hpp
   - geometry/polygon.hpp
-  - geometry/point.hpp
-  timestamp: '2022-12-03 20:54:48+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  - general.hpp
+  - convolution/fft.hpp
+  - convolution/ntt.hpp
+  - algebra/modint.hpp
+  - algebra/ratio.hpp
+  - algebra/fps.hpp
+  - algebra/nimber.hpp
+  timestamp: '2022-12-09 11:01:11+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - test/aoj-cgl-2-b.test.cpp
-  - test/aoj-ntl-1-b.test.cpp
   - test/yosupo-determinant-of-matrix.test.cpp
-  - test/yosupo-convolution.test.cpp
-  - test/aoj-cgl-1-b.test.cpp
-  - test/aoj-dpl-5-e.test.cpp
-  - test/yosupo-nim-product.test.cpp
-  - test/aoj-dpl-5-g.test.cpp
-  - test/aoj-dpl-5-b.test.cpp
-  - test/aoj-dpl-5-j.test.cpp
   - test/yosupo-range-affine-range-sum.test.cpp
-  - test/aoj-dpl-5-i.test.cpp
+  - test/aoj-dpl-5-j.test.cpp
+  - test/aoj-cgl-4-a.test.cpp
+  - test/aoj-cgl-3-a.test.cpp
+  - test/aoj-cgl-3-c.test.cpp
+  - test/aoj-cgl-1-a.test.cpp
+  - test/yosupo-convolution.test.cpp
+  - test/aoj-dpl-5-e.test.cpp
+  - test/aoj-cgl-1-b.test.cpp
+  - test/aoj-cgl-2-a.test.cpp
+  - test/yosupo-nim-product.test.cpp
   - test/aoj-cgl-1-c.test.cpp
+  - test/aoj-dpl-5-g.test.cpp
   - test/aoj-dpl-5-d.test.cpp
   - test/aoj-cgl-2-c.test.cpp
-  - test/aoj-cgl-2-a.test.cpp
-  - test/aoj-cgl-1-a.test.cpp
+  - test/aoj-dpl-5-b.test.cpp
+  - test/aoj-cgl-2-b.test.cpp
+  - test/aoj-dpl-5-i.test.cpp
+  - test/aoj-ntl-1-b.test.cpp
+  - test/aoj-cgl-3-b.test.cpp
 documentation_of: algebra/field.hpp
 layout: document
 redirect_from:

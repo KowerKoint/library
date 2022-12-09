@@ -1,16 +1,16 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: algebra/field.hpp
     title: algebra/field.hpp
   - icon: ':heavy_check_mark:'
     path: algebra/nimber.hpp
     title: algebra/nimber.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: base.hpp
     title: base.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-expansion.hpp
     title: stl-expansion.hpp
   _extendedRequiredBy: []
@@ -212,7 +212,7 @@ data:
   isVerificationFile: true
   path: test/yosupo-nim-product.test.cpp
   requiredBy: []
-  timestamp: '2022-12-03 20:54:48+09:00'
+  timestamp: '2022-12-09 11:01:11+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/yosupo-nim-product.test.cpp

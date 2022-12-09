@@ -1,52 +1,53 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: algebra/field.hpp
     title: algebra/field.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: algebra/ratio.hpp
     title: algebra/ratio.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: base.hpp
     title: base.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: geometry/line.hpp
     title: geometry/line.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: geometry/point.hpp
     title: geometry/point.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-expansion.hpp
     title: stl-expansion.hpp
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
+    ERROR: 1e-6
     PROBLEM: https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_1_B
     links:
     - https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_1_B
   bundledCode: "#line 1 \"test/aoj-cgl-1-b.test.cpp\"\n#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_1_B\"\
-    \n\n#line 2 \"stl-expansion.hpp\"\n#include <bits/stdc++.h>\n\ntemplate <typename\
-    \ T1, typename T2>\nstd::istream& operator>>(std::istream& is, std::pair<T1, T2>&\
-    \ p) {\n    is >> p.first >> p.second;\n    return is;\n}\ntemplate <typename\
-    \ T, size_t N>\nstd::istream& operator>>(std::istream& is, std::array<T, N>& a)\
-    \ {\n    for (size_t i = 0; i < N; ++i) {\n        is >> a[i];\n    }\n    return\
-    \ is;\n}\ntemplate <typename T>\nstd::istream& operator>>(std::istream& is, std::vector<T>&\
-    \ v) {\n    for (auto& e : v) is >> e;\n    return is;\n}\ntemplate <typename\
-    \ T1, typename T2>\nstd::ostream& operator<<(std::ostream& os, const std::pair<T1,\
-    \ T2>& p) {\n    os << p.first << \" \" << p.second;\n    return os;\n}\ntemplate\
-    \ <typename T, size_t N>\nstd::ostream& operator<<(std::ostream& os, const std::array<T,\
-    \ N>& a) {\n    for (size_t i = 0; i < N; ++i) {\n        os << a[i] << (i + 1\
-    \ == a.size() ? \"\" : \" \");\n    }\n    return os;\n}\ntemplate <typename T>\n\
-    std::ostream& operator<<(std::ostream& os, const std::vector<T>& v) {\n    for\
-    \ (size_t i = 0; i < v.size(); ++i) {\n        os << v[i] << (i + 1 == v.size()\
-    \ ? \"\" : \" \");\n    }\n    return os;\n}\n#line 3 \"base.hpp\"\nusing namespace\
-    \ std;\n\n#define REP(i, n) for(int i = 0; i < (int)(n); i++)\n#define FOR(i,\
-    \ a, b) for(ll i = a; i < (ll)(b); i++)\n#define ALL(a) (a).begin(),(a).end()\n\
+    \n#define ERROR \"1e-6\"\n\n#line 2 \"stl-expansion.hpp\"\n#include <bits/stdc++.h>\n\
+    \ntemplate <typename T1, typename T2>\nstd::istream& operator>>(std::istream&\
+    \ is, std::pair<T1, T2>& p) {\n    is >> p.first >> p.second;\n    return is;\n\
+    }\ntemplate <typename T, size_t N>\nstd::istream& operator>>(std::istream& is,\
+    \ std::array<T, N>& a) {\n    for (size_t i = 0; i < N; ++i) {\n        is >>\
+    \ a[i];\n    }\n    return is;\n}\ntemplate <typename T>\nstd::istream& operator>>(std::istream&\
+    \ is, std::vector<T>& v) {\n    for (auto& e : v) is >> e;\n    return is;\n}\n\
+    template <typename T1, typename T2>\nstd::ostream& operator<<(std::ostream& os,\
+    \ const std::pair<T1, T2>& p) {\n    os << p.first << \" \" << p.second;\n   \
+    \ return os;\n}\ntemplate <typename T, size_t N>\nstd::ostream& operator<<(std::ostream&\
+    \ os, const std::array<T, N>& a) {\n    for (size_t i = 0; i < N; ++i) {\n   \
+    \     os << a[i] << (i + 1 == a.size() ? \"\" : \" \");\n    }\n    return os;\n\
+    }\ntemplate <typename T>\nstd::ostream& operator<<(std::ostream& os, const std::vector<T>&\
+    \ v) {\n    for (size_t i = 0; i < v.size(); ++i) {\n        os << v[i] << (i\
+    \ + 1 == v.size() ? \"\" : \" \");\n    }\n    return os;\n}\n#line 3 \"base.hpp\"\
+    \nusing namespace std;\n\n#define REP(i, n) for(int i = 0; i < (int)(n); i++)\n\
+    #define FOR(i, a, b) for(ll i = a; i < (ll)(b); i++)\n#define ALL(a) (a).begin(),(a).end()\n\
     #define RALL(a) (a).rbegin(),(a).rend()\n#define END(...) { print(__VA_ARGS__);\
     \ return; }\n\nusing VI = vector<int>;\nusing VVI = vector<VI>;\nusing VVVI =\
     \ vector<VVI>;\nusing ll = long long;\nusing VL = vector<ll>;\nusing VVL = vector<VL>;\n\
@@ -279,16 +280,17 @@ data:
     \    T y_d = b * l.a - a * l.b;\n        if constexpr(is_integral_v<T>) {\n  \
     \          assert(x_n % x_d == 0);\n            assert(y_n % y_d == 0);\n    \
     \    }\n        return {x_n / x_d, y_n / y_d};\n    }\n    double dist(Point<T,2>\
-    \ Points) {\n        return sqrt(dist2(Points));\n    }\n};\n#line 4 \"test/aoj-cgl-1-b.test.cpp\"\
+    \ Points) {\n        return sqrt(dist2(Points));\n    }\n};\n#line 5 \"test/aoj-cgl-1-b.test.cpp\"\
     \n\nint main() {\n    Point<double> p1, p2; cin >> p1 >> p2;\n    Line<double>\
     \ l(p1, p2);\n    int q; cin >> q;\n    cout << fixed << setprecision(10);\n \
     \   while(q--) {\n        Point<double> p; cin >> p;\n        cout << l.reflect(p)\
     \ << endl;\n    }\n}\n"
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_1_B\"\
-    \n\n#include \"../geometry/line.hpp\"\n\nint main() {\n    Point<double> p1, p2;\
-    \ cin >> p1 >> p2;\n    Line<double> l(p1, p2);\n    int q; cin >> q;\n    cout\
-    \ << fixed << setprecision(10);\n    while(q--) {\n        Point<double> p; cin\
-    \ >> p;\n        cout << l.reflect(p) << endl;\n    }\n}\n"
+    \n#define ERROR \"1e-6\"\n\n#include \"../geometry/line.hpp\"\n\nint main() {\n\
+    \    Point<double> p1, p2; cin >> p1 >> p2;\n    Line<double> l(p1, p2);\n   \
+    \ int q; cin >> q;\n    cout << fixed << setprecision(10);\n    while(q--) {\n\
+    \        Point<double> p; cin >> p;\n        cout << l.reflect(p) << endl;\n \
+    \   }\n}\n"
   dependsOn:
   - geometry/line.hpp
   - geometry/point.hpp
@@ -299,8 +301,8 @@ data:
   isVerificationFile: true
   path: test/aoj-cgl-1-b.test.cpp
   requiredBy: []
-  timestamp: '2022-12-03 20:54:48+09:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  timestamp: '2022-12-09 11:01:11+09:00'
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/aoj-cgl-1-b.test.cpp
 layout: document

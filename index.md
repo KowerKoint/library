@@ -3,7 +3,7 @@ data:
   libraryCategories:
   - name: algebra
     pages:
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: algebra/field.hpp
       title: algebra/field.hpp
     - icon: ':heavy_check_mark:'
@@ -15,24 +15,21 @@ data:
     - icon: ':heavy_check_mark:'
       path: algebra/nimber.hpp
       title: algebra/nimber.hpp
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: algebra/ratio.hpp
       title: algebra/ratio.hpp
   - name: .
     pages:
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: base.hpp
       title: base.hpp
     - icon: ':warning:'
       path: general.hpp
       title: general.hpp
-    - icon: ':warning:'
-      path: geometry.hpp
-      title: geometry.hpp
     - icon: ':heavy_check_mark:'
       path: operator.hpp
       title: operator.hpp
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: stl-expansion.hpp
       title: stl-expansion.hpp
     - icon: ':warning:'
@@ -69,16 +66,16 @@ data:
       title: counting/permutation.hpp
   - name: geometry
     pages:
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: geometry/line.hpp
       title: geometry/line.hpp
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: geometry/point.hpp
       title: geometry/point.hpp
-    - icon: ':warning:'
+    - icon: ':heavy_check_mark:'
       path: geometry/polygon.hpp
       title: geometry/polygon.hpp
-    - icon: ':warning:'
+    - icon: ':heavy_check_mark:'
       path: geometry/segment.hpp
       title: geometry/segment.hpp
   - name: graph
@@ -137,7 +134,7 @@ data:
     - icon: ':heavy_check_mark:'
       path: test/aoj-cgl-1-a.test.cpp
       title: test/aoj-cgl-1-a.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: test/aoj-cgl-1-b.test.cpp
       title: test/aoj-cgl-1-b.test.cpp
     - icon: ':heavy_check_mark:'
@@ -152,6 +149,18 @@ data:
     - icon: ':heavy_check_mark:'
       path: test/aoj-cgl-2-c.test.cpp
       title: test/aoj-cgl-2-c.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: test/aoj-cgl-3-a.test.cpp
+      title: test/aoj-cgl-3-a.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: test/aoj-cgl-3-b.test.cpp
+      title: test/aoj-cgl-3-b.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: test/aoj-cgl-3-c.test.cpp
+      title: test/aoj-cgl-3-c.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: test/aoj-cgl-4-a.test.cpp
+      title: test/aoj-cgl-4-a.test.cpp
     - icon: ':heavy_check_mark:'
       path: test/aoj-dpl-5-b.test.cpp
       title: test/aoj-dpl-5-b.test.cpp
