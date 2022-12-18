@@ -101,7 +101,7 @@ struct Line2D {
             assert(x_n % x_d == 0);
             assert(y_n % y_d == 0);
         }
-        return {x_n / x_d, y_n / y_d};
+        return Point<T, 2>({x_n / x_d, y_n / y_d});
     }
     double dist(Point<T,2> Points) {
         return sqrt(dist2(Points));

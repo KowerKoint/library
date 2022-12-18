@@ -107,3 +107,54 @@ pair<bool, Point<T, 2>> segment_intersect(const Point<T, 2> &p0, const Point<T, 
     }
     return {false, Point<double>()};
 }
+
+template <typename T>
+double closest_point_pair(const vector<Point<T, 2>>& _ps) {
+    vector<Point<T, 2>> ps = _ps;
+    sort(ps.begin(), ps.end(), [](const Point<T, 2> &a, const Point<T, 2> &b) {
+        return a[0] < b[0];
+    });
+    int n = ps.size();
+    stack<tuple<int, int, int>> stk;
+    stk.emplace(~0, n, 0);
+    stk.emplace(0, n, 0);
+    vector<double> retval;
+    VI par;
+    par.push_back(-1);
+    while(!stk.empty()) {
+        auto [l, r, d] = stk.top(); stk.pop();
+        if(l >= 0) {
+            if(l + 1 >= r) continue;
+            if((int)retval.size() <= d) retval.resize(d+1, 1e100);
+            int m = (l + r) / 2;
+            stk.emplace(~l, m, par.size());
+            stk.emplace(l, m, par.size());
+            par.push_back(d);
+            stk.emplace(~m, r, par.size());
+            stk.emplace(m, r, par.size());
+            par.push_back(d);
+        } else {
+            l = ~l;
+            if(l + 1 >= r) continue;
+            int m = (l + r) / 2;
+            vector<Point<T, 2>> ps2;
+            for(int i = l; i < r; i++) {
+                if(abs(ps[i][0] - ps[m][0]) + 1e-12 < retval[d]) {
+                    ps2.push_back(ps[i]);
+                }
+            }
+            sort(ps2.begin(), ps2.end(), [](const Point<T, 2> &a, const Point<T, 2> &b) {
+                return a[1] < b[1];
+            });
+            REP(i, ps2.size()) {
+                for(int j = i+1; j < (int)ps2.size() && ps2[j][1] - ps2[i][1] + 1e-12 < retval[d]; j++) {
+                    chmin(retval[d], abs(ps2[i] - ps2[j]));
+                }
+            }
+            if(d > 0) {
+                chmin(retval[par[d]], retval[d]);
+            }
+        }
+    }
+    return retval[0];
+}
