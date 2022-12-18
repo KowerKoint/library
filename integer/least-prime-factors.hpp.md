@@ -98,7 +98,7 @@ data:
   isVerificationFile: false
   path: integer/least-prime-factors.hpp
   requiredBy: []
-  timestamp: '2022-12-09 11:01:11+09:00'
+  timestamp: '2022-12-18 23:57:03+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: integer/least-prime-factors.hpp

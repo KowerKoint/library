@@ -146,24 +146,24 @@ data:
   path: integer/extgcd.hpp
   requiredBy:
   - general.hpp
-  - convolution/ntt.hpp
   - integer/pow-mod.hpp
-  - algebra/modint.hpp
+  - convolution/ntt.hpp
   - algebra/fps.hpp
-  timestamp: '2022-12-09 11:01:11+09:00'
+  - algebra/modint.hpp
+  timestamp: '2022-12-18 23:57:03+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - test/yosupo-determinant-of-matrix.test.cpp
-  - test/yosupo-range-affine-range-sum.test.cpp
+  - test/aoj-ntl-1-b.test.cpp
   - test/aoj-ntl-1-e.test.cpp
   - test/aoj-dpl-5-j.test.cpp
   - test/yosupo-convolution.test.cpp
   - test/aoj-dpl-5-e.test.cpp
-  - test/aoj-dpl-5-g.test.cpp
-  - test/aoj-dpl-5-d.test.cpp
   - test/aoj-dpl-5-b.test.cpp
+  - test/aoj-dpl-5-d.test.cpp
   - test/aoj-dpl-5-i.test.cpp
-  - test/aoj-ntl-1-b.test.cpp
+  - test/aoj-dpl-5-g.test.cpp
+  - test/yosupo-determinant-of-matrix.test.cpp
+  - test/yosupo-range-affine-range-sum.test.cpp
 documentation_of: integer/extgcd.hpp
 layout: document
 redirect_from:

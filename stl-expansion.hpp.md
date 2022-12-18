@@ -136,6 +136,15 @@ data:
     path: test/aoj-cgl-4-a.test.cpp
     title: test/aoj-cgl-4-a.test.cpp
   - icon: ':heavy_check_mark:'
+    path: test/aoj-cgl-4-b.test.cpp
+    title: test/aoj-cgl-4-b.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: test/aoj-cgl-4-c.test.cpp
+    title: test/aoj-cgl-4-c.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: test/aoj-cgl-5-a.test.cpp
+    title: test/aoj-cgl-5-a.test.cpp
+  - icon: ':heavy_check_mark:'
     path: test/aoj-dpl-5-b.test.cpp
     title: test/aoj-dpl-5-b.test.cpp
   - icon: ':heavy_check_mark:'
@@ -243,76 +252,79 @@ data:
   isVerificationFile: false
   path: stl-expansion.hpp
   requiredBy:
-  - connectivity/union-find.hpp
-  - geometry/point.hpp
-  - geometry/line.hpp
-  - geometry/segment.hpp
-  - geometry/polygon.hpp
-  - general.hpp
-  - bit/bitset.hpp
-  - convolution/fft.hpp
-  - convolution/ntt.hpp
-  - string.hpp
   - counting/permutation.hpp
   - counting/counting.hpp
   - counting/montmort.hpp
-  - integer/kth-root-integer.hpp
-  - integer/extgcd.hpp
-  - integer/pow-mod.hpp
-  - integer/prime.hpp
-  - integer/least-prime-factors.hpp
-  - operator.hpp
   - matrix/matrix.hpp
-  - segtree/beats.hpp
-  - segtree/wavelet-matrix.hpp
-  - segtree/segtree.hpp
-  - segtree/lazy-segtree.hpp
-  - algebra/modint.hpp
-  - algebra/field.hpp
-  - algebra/ratio.hpp
-  - algebra/fps.hpp
-  - algebra/nimber.hpp
+  - general.hpp
+  - string.hpp
   - base.hpp
-  - graph/ford-fulkerson.hpp
+  - geometry/polygon.hpp
+  - geometry/segment.hpp
+  - geometry/line.hpp
+  - geometry/point.hpp
+  - integer/least-prime-factors.hpp
+  - integer/pow-mod.hpp
+  - integer/extgcd.hpp
+  - integer/kth-root-integer.hpp
+  - integer/prime.hpp
   - graph/graph.hpp
   - graph/tree.hpp
-  timestamp: '2022-12-09 11:01:11+09:00'
+  - graph/ford-fulkerson.hpp
+  - convolution/fft.hpp
+  - convolution/ntt.hpp
+  - segtree/wavelet-matrix.hpp
+  - segtree/lazy-segtree.hpp
+  - segtree/segtree.hpp
+  - segtree/beats.hpp
+  - algebra/fps.hpp
+  - algebra/modint.hpp
+  - algebra/field.hpp
+  - algebra/nimber.hpp
+  - algebra/ratio.hpp
+  - connectivity/union-find.hpp
+  - bit/bitset.hpp
+  - operator.hpp
+  timestamp: '2022-12-18 23:57:03+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - test/aoj-itp-1-3-d.test.cpp
-  - test/yosupo-determinant-of-matrix.test.cpp
-  - test/yosupo-range-affine-range-sum.test.cpp
+  - test/aoj-ntl-1-b.test.cpp
+  - test/aoj-cgl-3-b.test.cpp
   - test/aoj-ntl-1-e.test.cpp
   - test/aoj-dpl-5-j.test.cpp
-  - test/aoj-cgl-4-a.test.cpp
-  - test/aoj-cgl-3-a.test.cpp
-  - test/yosupo-static-range-frequency.test.cpp
-  - test/aoj-cgl-3-c.test.cpp
-  - test/aoj-cgl-1-a.test.cpp
-  - test/aoj-grl-6-a.test.cpp
-  - test/yosupo-convolution.test.cpp
-  - test/yosupo-shortest-path.test.cpp
-  - test/aoj-dpl-5-e.test.cpp
-  - test/aoj-cgl-1-b.test.cpp
   - test/aoj-cgl-2-a.test.cpp
+  - test/aoj-cgl-4-c.test.cpp
+  - test/aoj-cgl-4-b.test.cpp
+  - test/yosupo-convolution.test.cpp
+  - test/aoj-dpl-5-e.test.cpp
+  - test/aoj-itp-1-3-d.test.cpp
   - test/yosupo-enumerate-primes.test.cpp
-  - test/yosupo-nim-product.test.cpp
-  - test/aoj-ntl-1-a.test.cpp
-  - test/yosupo-range-chmin-chmax-add-range-sum.test.cpp
-  - test/aoj-cgl-1-c.test.cpp
-  - test/aoj-dpl-5-g.test.cpp
-  - test/aoj-dpl-5-d.test.cpp
-  - test/yosupo-lowest-common-ancestor.test.cpp
-  - test/aoj-cgl-2-c.test.cpp
-  - test/aoj-alds-1-1-c.test.cpp
   - test/aoj-dpl-5-b.test.cpp
-  - test/aoj-cgl-2-b.test.cpp
-  - test/aoj-dsl-1-b.test.cpp
-  - test/aoj-dsl-2-a.test.cpp
+  - test/aoj-dpl-5-d.test.cpp
+  - test/aoj-cgl-2-c.test.cpp
   - test/aoj-dpl-5-i.test.cpp
-  - test/aoj-ntl-1-b.test.cpp
+  - test/aoj-cgl-1-b.test.cpp
+  - test/aoj-dpl-5-g.test.cpp
+  - test/aoj-cgl-3-a.test.cpp
+  - test/aoj-cgl-2-b.test.cpp
+  - test/aoj-alds-1-1-c.test.cpp
+  - test/yosupo-static-range-frequency.test.cpp
+  - test/aoj-cgl-4-a.test.cpp
+  - test/aoj-cgl-1-c.test.cpp
+  - test/aoj-cgl-3-c.test.cpp
+  - test/yosupo-range-chmin-chmax-add-range-sum.test.cpp
   - test/yosupo-kth-root-integer.test.cpp
-  - test/aoj-cgl-3-b.test.cpp
+  - test/yosupo-determinant-of-matrix.test.cpp
+  - test/yosupo-lowest-common-ancestor.test.cpp
+  - test/aoj-dsl-1-b.test.cpp
+  - test/yosupo-range-affine-range-sum.test.cpp
+  - test/aoj-dsl-2-a.test.cpp
+  - test/yosupo-nim-product.test.cpp
+  - test/aoj-cgl-1-a.test.cpp
+  - test/aoj-ntl-1-a.test.cpp
+  - test/aoj-cgl-5-a.test.cpp
+  - test/yosupo-shortest-path.test.cpp
+  - test/aoj-grl-6-a.test.cpp
 documentation_of: stl-expansion.hpp
 layout: document
 redirect_from:

@@ -32,27 +32,28 @@ data:
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
-    PROBLEM: http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_3_C
+    ERROR: 1e-6
+    PROBLEM: http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_4_C
     links:
-    - http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_3_C
-  bundledCode: "#line 1 \"test/aoj-cgl-3-c.test.cpp\"\n#define PROBLEM \"http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_3_C\"\
-    \n#line 2 \"stl-expansion.hpp\"\n#include <bits/stdc++.h>\n\ntemplate <typename\
-    \ T1, typename T2>\nstd::istream& operator>>(std::istream& is, std::pair<T1, T2>&\
-    \ p) {\n    is >> p.first >> p.second;\n    return is;\n}\ntemplate <typename\
-    \ T, size_t N>\nstd::istream& operator>>(std::istream& is, std::array<T, N>& a)\
-    \ {\n    for (size_t i = 0; i < N; ++i) {\n        is >> a[i];\n    }\n    return\
-    \ is;\n}\ntemplate <typename T>\nstd::istream& operator>>(std::istream& is, std::vector<T>&\
-    \ v) {\n    for (auto& e : v) is >> e;\n    return is;\n}\ntemplate <typename\
-    \ T1, typename T2>\nstd::ostream& operator<<(std::ostream& os, const std::pair<T1,\
-    \ T2>& p) {\n    os << p.first << \" \" << p.second;\n    return os;\n}\ntemplate\
-    \ <typename T, size_t N>\nstd::ostream& operator<<(std::ostream& os, const std::array<T,\
-    \ N>& a) {\n    for (size_t i = 0; i < N; ++i) {\n        os << a[i] << (i + 1\
-    \ == a.size() ? \"\" : \" \");\n    }\n    return os;\n}\ntemplate <typename T>\n\
-    std::ostream& operator<<(std::ostream& os, const std::vector<T>& v) {\n    for\
-    \ (size_t i = 0; i < v.size(); ++i) {\n        os << v[i] << (i + 1 == v.size()\
-    \ ? \"\" : \" \");\n    }\n    return os;\n}\n#line 3 \"base.hpp\"\nusing namespace\
-    \ std;\n\n#define REP(i, n) for(int i = 0; i < (int)(n); i++)\n#define FOR(i,\
-    \ a, b) for(ll i = a; i < (ll)(b); i++)\n#define ALL(a) (a).begin(),(a).end()\n\
+    - http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_4_C
+  bundledCode: "#line 1 \"test/aoj-cgl-4-c.test.cpp\"\n#define PROBLEM \"http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_4_C\"\
+    \n#define ERROR \"1e-6\"\n#line 2 \"stl-expansion.hpp\"\n#include <bits/stdc++.h>\n\
+    \ntemplate <typename T1, typename T2>\nstd::istream& operator>>(std::istream&\
+    \ is, std::pair<T1, T2>& p) {\n    is >> p.first >> p.second;\n    return is;\n\
+    }\ntemplate <typename T, size_t N>\nstd::istream& operator>>(std::istream& is,\
+    \ std::array<T, N>& a) {\n    for (size_t i = 0; i < N; ++i) {\n        is >>\
+    \ a[i];\n    }\n    return is;\n}\ntemplate <typename T>\nstd::istream& operator>>(std::istream&\
+    \ is, std::vector<T>& v) {\n    for (auto& e : v) is >> e;\n    return is;\n}\n\
+    template <typename T1, typename T2>\nstd::ostream& operator<<(std::ostream& os,\
+    \ const std::pair<T1, T2>& p) {\n    os << p.first << \" \" << p.second;\n   \
+    \ return os;\n}\ntemplate <typename T, size_t N>\nstd::ostream& operator<<(std::ostream&\
+    \ os, const std::array<T, N>& a) {\n    for (size_t i = 0; i < N; ++i) {\n   \
+    \     os << a[i] << (i + 1 == a.size() ? \"\" : \" \");\n    }\n    return os;\n\
+    }\ntemplate <typename T>\nstd::ostream& operator<<(std::ostream& os, const std::vector<T>&\
+    \ v) {\n    for (size_t i = 0; i < v.size(); ++i) {\n        os << v[i] << (i\
+    \ + 1 == v.size() ? \"\" : \" \");\n    }\n    return os;\n}\n#line 3 \"base.hpp\"\
+    \nusing namespace std;\n\n#define REP(i, n) for(int i = 0; i < (int)(n); i++)\n\
+    #define FOR(i, a, b) for(ll i = a; i < (ll)(b); i++)\n#define ALL(a) (a).begin(),(a).end()\n\
     #define RALL(a) (a).rbegin(),(a).rend()\n#define END(...) { print(__VA_ARGS__);\
     \ return; }\n\nusing VI = vector<int>;\nusing VVI = vector<VI>;\nusing VVVI =\
     \ vector<VVI>;\nusing ll = long long;\nusing VL = vector<ll>;\nusing VVL = vector<VL>;\n\
@@ -373,34 +374,58 @@ data:
     \ 2>> upper_hull = select_convex(vector<Point<T, 2>>(sorted.rbegin(), sorted.rend()));\n\
     \    res.reserve(lower_hull.size() + upper_hull.size() - 2);\n    for(auto& p\
     \ : lower_hull) res.push_back(p);\n    for(int i = 1; i + 1 < (int)upper_hull.size();\
-    \ i++) res.push_back(upper_hull[i]);\n    return Polygon<T>(res);\n}\n#line 3\
-    \ \"test/aoj-cgl-3-c.test.cpp\"\n\nint main() {\n    int n; cin >> n;\n    Polygon<int>\
-    \ poly(n); cin >> poly;\n    int q; cin >> q;\n    while(q--) {\n        Point<int>\
-    \ p; cin >> p;\n        print(poly.contains(p));\n    }\n}\n"
-  code: "#define PROBLEM \"http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_3_C\"\
-    \n#include \"../geometry/polygon.hpp\"\n\nint main() {\n    int n; cin >> n;\n\
-    \    Polygon<int> poly(n); cin >> poly;\n    int q; cin >> q;\n    while(q--)\
-    \ {\n        Point<int> p; cin >> p;\n        print(poly.contains(p));\n    }\n\
-    }\n"
+    \ i++) res.push_back(upper_hull[i]);\n    return Polygon<T>(res);\n}\n#line 5\
+    \ \"test/aoj-cgl-4-c.test.cpp\"\n\nint main() {\n    int n; cin >> n;\n    vector<Point<double,\
+    \ 2>> p(n); cin >> p;\n    p.resize(n*3);\n    for (int i = 0; i < n; ++i) p[i+n]\
+    \ = p[i+n+n] = p[i];\n    int q; cin >> q;\n    cout << fixed << setprecision(10);\n\
+    \    while(q--) {\n        Point<double, 2> a, b; cin >> a >> b;\n        int\
+    \ st = 0;\n        while(st < n*3 && outer_product(b-a, p[st]-a) >= 0) st++;\n\
+    \        if(st == n*3) {\n            Polygon<double> poly(vector<Point<double,\
+    \ 2>>(p.begin(), p.begin()+n));\n            print(poly.area());\n           \
+    \ continue;\n        }\n        while(st < n*3 && outer_product(b-a, p[st]-a)\
+    \ < 0) st++;\n        if(st == n*3) {\n            cout << 0. << endl;\n     \
+    \       continue;\n        }\n        int ed = st;\n        while(outer_product(b-a,\
+    \ p[ed]-a) >= 0) ed++;\n        vector<Point<double, 2>> res;\n        res.push_back(Line2D(p[st-1],\
+    \ p[st]).cross_point(Line2D(a, b)));\n        for(int i = st; i < ed; ++i) {\n\
+    \            res.push_back(p[i]);\n        }\n        res.push_back(Line2D(p[ed-1],\
+    \ p[ed]).cross_point(Line2D(a, b)));\n        print(Polygon<double>(res).area());\n\
+    \    }\n}\n\n"
+  code: "#define PROBLEM \"http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_4_C\"\
+    \n#define ERROR \"1e-6\"\n#include \"../geometry/line.hpp\"\n#include \"../geometry/polygon.hpp\"\
+    \n\nint main() {\n    int n; cin >> n;\n    vector<Point<double, 2>> p(n); cin\
+    \ >> p;\n    p.resize(n*3);\n    for (int i = 0; i < n; ++i) p[i+n] = p[i+n+n]\
+    \ = p[i];\n    int q; cin >> q;\n    cout << fixed << setprecision(10);\n    while(q--)\
+    \ {\n        Point<double, 2> a, b; cin >> a >> b;\n        int st = 0;\n    \
+    \    while(st < n*3 && outer_product(b-a, p[st]-a) >= 0) st++;\n        if(st\
+    \ == n*3) {\n            Polygon<double> poly(vector<Point<double, 2>>(p.begin(),\
+    \ p.begin()+n));\n            print(poly.area());\n            continue;\n   \
+    \     }\n        while(st < n*3 && outer_product(b-a, p[st]-a) < 0) st++;\n  \
+    \      if(st == n*3) {\n            cout << 0. << endl;\n            continue;\n\
+    \        }\n        int ed = st;\n        while(outer_product(b-a, p[ed]-a) >=\
+    \ 0) ed++;\n        vector<Point<double, 2>> res;\n        res.push_back(Line2D(p[st-1],\
+    \ p[st]).cross_point(Line2D(a, b)));\n        for(int i = st; i < ed; ++i) {\n\
+    \            res.push_back(p[i]);\n        }\n        res.push_back(Line2D(p[ed-1],\
+    \ p[ed]).cross_point(Line2D(a, b)));\n        print(Polygon<double>(res).area());\n\
+    \    }\n}\n\n"
   dependsOn:
-  - geometry/polygon.hpp
-  - geometry/segment.hpp
   - geometry/line.hpp
   - geometry/point.hpp
   - algebra/field.hpp
   - base.hpp
   - stl-expansion.hpp
   - algebra/ratio.hpp
+  - geometry/polygon.hpp
+  - geometry/segment.hpp
   isVerificationFile: true
-  path: test/aoj-cgl-3-c.test.cpp
+  path: test/aoj-cgl-4-c.test.cpp
   requiredBy: []
   timestamp: '2022-12-18 23:57:03+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
-documentation_of: test/aoj-cgl-3-c.test.cpp
+documentation_of: test/aoj-cgl-4-c.test.cpp
 layout: document
 redirect_from:
-- /verify/test/aoj-cgl-3-c.test.cpp
-- /verify/test/aoj-cgl-3-c.test.cpp.html
-title: test/aoj-cgl-3-c.test.cpp
+- /verify/test/aoj-cgl-4-c.test.cpp
+- /verify/test/aoj-cgl-4-c.test.cpp.html
+title: test/aoj-cgl-4-c.test.cpp
 ---

@@ -217,7 +217,7 @@ data:
   isVerificationFile: true
   path: test/aoj-alds-1-1-c.test.cpp
   requiredBy: []
-  timestamp: '2022-12-09 11:01:11+09:00'
+  timestamp: '2022-12-18 23:57:03+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/aoj-alds-1-1-c.test.cpp

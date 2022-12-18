@@ -5,23 +5,11 @@ data:
     path: algebra/field.hpp
     title: algebra/field.hpp
   - icon: ':heavy_check_mark:'
-    path: algebra/ratio.hpp
-    title: algebra/ratio.hpp
-  - icon: ':heavy_check_mark:'
     path: base.hpp
     title: base.hpp
   - icon: ':heavy_check_mark:'
-    path: geometry/line.hpp
-    title: geometry/line.hpp
-  - icon: ':heavy_check_mark:'
     path: geometry/point.hpp
     title: geometry/point.hpp
-  - icon: ':heavy_check_mark:'
-    path: geometry/polygon.hpp
-    title: geometry/polygon.hpp
-  - icon: ':heavy_check_mark:'
-    path: geometry/segment.hpp
-    title: geometry/segment.hpp
   - icon: ':heavy_check_mark:'
     path: stl-expansion.hpp
     title: stl-expansion.hpp
@@ -32,27 +20,28 @@ data:
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
-    PROBLEM: http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_3_C
+    ERROR: 1e-6
+    PROBLEM: http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_5_A
     links:
-    - http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_3_C
-  bundledCode: "#line 1 \"test/aoj-cgl-3-c.test.cpp\"\n#define PROBLEM \"http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_3_C\"\
-    \n#line 2 \"stl-expansion.hpp\"\n#include <bits/stdc++.h>\n\ntemplate <typename\
-    \ T1, typename T2>\nstd::istream& operator>>(std::istream& is, std::pair<T1, T2>&\
-    \ p) {\n    is >> p.first >> p.second;\n    return is;\n}\ntemplate <typename\
-    \ T, size_t N>\nstd::istream& operator>>(std::istream& is, std::array<T, N>& a)\
-    \ {\n    for (size_t i = 0; i < N; ++i) {\n        is >> a[i];\n    }\n    return\
-    \ is;\n}\ntemplate <typename T>\nstd::istream& operator>>(std::istream& is, std::vector<T>&\
-    \ v) {\n    for (auto& e : v) is >> e;\n    return is;\n}\ntemplate <typename\
-    \ T1, typename T2>\nstd::ostream& operator<<(std::ostream& os, const std::pair<T1,\
-    \ T2>& p) {\n    os << p.first << \" \" << p.second;\n    return os;\n}\ntemplate\
-    \ <typename T, size_t N>\nstd::ostream& operator<<(std::ostream& os, const std::array<T,\
-    \ N>& a) {\n    for (size_t i = 0; i < N; ++i) {\n        os << a[i] << (i + 1\
-    \ == a.size() ? \"\" : \" \");\n    }\n    return os;\n}\ntemplate <typename T>\n\
-    std::ostream& operator<<(std::ostream& os, const std::vector<T>& v) {\n    for\
-    \ (size_t i = 0; i < v.size(); ++i) {\n        os << v[i] << (i + 1 == v.size()\
-    \ ? \"\" : \" \");\n    }\n    return os;\n}\n#line 3 \"base.hpp\"\nusing namespace\
-    \ std;\n\n#define REP(i, n) for(int i = 0; i < (int)(n); i++)\n#define FOR(i,\
-    \ a, b) for(ll i = a; i < (ll)(b); i++)\n#define ALL(a) (a).begin(),(a).end()\n\
+    - http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_5_A
+  bundledCode: "#line 1 \"test/aoj-cgl-5-a.test.cpp\"\n#define PROBLEM \"http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_5_A\"\
+    \n#define ERROR \"1e-6\"\n#line 2 \"stl-expansion.hpp\"\n#include <bits/stdc++.h>\n\
+    \ntemplate <typename T1, typename T2>\nstd::istream& operator>>(std::istream&\
+    \ is, std::pair<T1, T2>& p) {\n    is >> p.first >> p.second;\n    return is;\n\
+    }\ntemplate <typename T, size_t N>\nstd::istream& operator>>(std::istream& is,\
+    \ std::array<T, N>& a) {\n    for (size_t i = 0; i < N; ++i) {\n        is >>\
+    \ a[i];\n    }\n    return is;\n}\ntemplate <typename T>\nstd::istream& operator>>(std::istream&\
+    \ is, std::vector<T>& v) {\n    for (auto& e : v) is >> e;\n    return is;\n}\n\
+    template <typename T1, typename T2>\nstd::ostream& operator<<(std::ostream& os,\
+    \ const std::pair<T1, T2>& p) {\n    os << p.first << \" \" << p.second;\n   \
+    \ return os;\n}\ntemplate <typename T, size_t N>\nstd::ostream& operator<<(std::ostream&\
+    \ os, const std::array<T, N>& a) {\n    for (size_t i = 0; i < N; ++i) {\n   \
+    \     os << a[i] << (i + 1 == a.size() ? \"\" : \" \");\n    }\n    return os;\n\
+    }\ntemplate <typename T>\nstd::ostream& operator<<(std::ostream& os, const std::vector<T>&\
+    \ v) {\n    for (size_t i = 0; i < v.size(); ++i) {\n        os << v[i] << (i\
+    \ + 1 == v.size() ? \"\" : \" \");\n    }\n    return os;\n}\n#line 3 \"base.hpp\"\
+    \nusing namespace std;\n\n#define REP(i, n) for(int i = 0; i < (int)(n); i++)\n\
+    #define FOR(i, a, b) for(ll i = a; i < (ll)(b); i++)\n#define ALL(a) (a).begin(),(a).end()\n\
     #define RALL(a) (a).rbegin(),(a).rend()\n#define END(...) { print(__VA_ARGS__);\
     \ return; }\n\nusing VI = vector<int>;\nusing VVI = vector<VI>;\nusing VVVI =\
     \ vector<VVI>;\nusing ll = long long;\nusing VL = vector<ll>;\nusing VVL = vector<VL>;\n\
@@ -248,159 +237,28 @@ data:
     \                   chmin(retval[d], abs(ps2[i] - ps2[j]));\n                }\n\
     \            }\n            if(d > 0) {\n                chmin(retval[par[d]],\
     \ retval[d]);\n            }\n        }\n    }\n    return retval[0];\n}\n#line\
-    \ 3 \"algebra/ratio.hpp\"\n\ntemplate <typename T, size_t dim>\nstruct RepresentationRatio\
-    \ : RepresentationBase<T> {\n    using R = array<T, dim>;\n    constexpr static\
-    \ array<T, dim> construct(const R& x) {\n        return x;\n    }\n    constexpr\
-    \ static R represent(const array<T, dim>& x) {\n        array<T, dim> ret = x;\n\
-    \        if constexpr(is_integral_v<T>) {\n            T g = 0;\n            for(size_t\
-    \ i = 0; i < dim; i++) {\n                g = gcd(g, ret[i]);\n            }\n\
-    \            for(size_t i = 0; i < dim; i++) {\n                ret[i] /= g;\n\
-    \            }\n            for(size_t i = 0; i < dim; i++) {\n              \
-    \  if(ret[i] == 0) continue;\n                if(ret[i] < 0) {\n             \
-    \       for(size_t j = i; j < dim; j++) {\n                        ret[j] = -ret[j];\n\
-    \                    }\n                }\n                break;\n          \
-    \  }\n        }\n        return ret;\n    }\n};\ntemplate <typename T, size_t\
-    \ dim>\nstruct CompareRatio : CompareBase<T> {\n    constexpr static bool lt(const\
-    \ array<T, dim>& x, const array<T, dim>& y) {\n        static_assert(dim == 2);\n\
-    \        return x[0] * y[1] < x[1] * y[0];\n    }\n    constexpr static bool eq(const\
-    \ array<T, dim>& x, const array<T, dim>& y) {\n        return RepresentationRatio<T,\
-    \ dim>::represent(x) == RepresentationRatio<T, dim>::represent(y);\n    }\n};\n\
-    template <typename T, size_t dim>\nusing Ratio = Field<array<T, dim>, SumGroupBase<array<T,\
-    \ dim>>, ProdGroupBase<array<T, dim>>, RepresentationRatio<T, dim>, CompareRatio<T,\
-    \ dim>>;\n#line 4 \"geometry/line.hpp\"\n\ntemplate <typename T, size_t dim=2>\n\
-    struct Line {\n    Point<T, dim> a;\n    Ratio<T, dim> d;\n    Line() = default;\n\
-    \    Line(const Point<T, dim>& a, const Point<T, dim>& b) : a(a), d((b - a).represent())\
-    \ {}\n    Line(const Point<T, dim>& a, const Ratio<T, dim>& d) : a(a), d(d) {}\n\
-    \    Point<T, dim> operator()(const T& k) const {\n        Point<T, dim> dp(d.represent());\n\
-    \        return a + dp * k;\n    }\n    Point<T, dim> proj(const Point<T, dim>&\
-    \ p) const {\n        Point<T, dim> dp(d.represent());\n        T kn = dp.dot(p\
-    \ - a);\n        T kd = dp.norm();\n        if constexpr(is_integral_v<T>) {\n\
-    \            assert(kn % kd == 0);\n        }\n        return a + dp * (kn / kd);\n\
-    \    }\n    Point<T, dim> reflect(const Point<T, dim>& p) const {\n        return\
-    \ proj(p) * 2 - p;\n    }\n    bool parallel(const Line& l) const {\n        return\
-    \ d == l.d;\n    }\n    bool orthogonal(const Line& l) const {\n        Point<T,\
-    \ dim> dp(d.represent());\n        Point<T, dim> ldp(l.d.represent());\n     \
-    \   return dp.dot(ldp) == 0;\n    }\n    bool on_line(const Point<T, dim>& p)\
-    \ const {\n        Point<T, dim> dp(d.represent());\n        T inpro = dp.dot(p\
-    \ - a);\n        return inpro * inpro == d.norm() * (p - a).norm();\n    }\n \
-    \   bool operator==(const Line& l) const {\n        return parallel(l) && on_line(l.a);\n\
-    \    }\n    double dist(const Point<T, dim>& p) const {\n        return abs(p\
-    \ - proj(p));\n    }\n};\n\ntemplate <typename T>\nstruct Line2D {\n    T a, b,\
-    \ c; // ax + by + c = 0\n    Line2D(Point<T,2> p1, Point<T,2> p2) {\n        a\
-    \ = p2[1] - p1[1];\n        b = -(p2[0] - p1[0]);\n        c = -a * p1[0] - b\
-    \ * p1[1];\n    }\n    Line2D(T a, T b, T c) {\n        this->a = a;\n       \
-    \ this->b = b;\n        this->c = c;\n    }\n    Line2D(const Line<T, 2>& l) {\n\
-    \        a = l.d[1];\n        b = -l.d[0];\n        c = -a * l.a[0] - b * l.a[1];\n\
-    \    }\n    Ratio<T,2> direction() {\n        return {b, -a};\n    }\n    Point<T,2>\
-    \ proj(Point<T,2> Points) {\n        T d = a * a + b * b;\n        T x_n = b *\
-    \ (b * Points[0] - a * Points[1]) - a * c;\n        T y_n = a * (a * Points[1]\
-    \ - b * Points[0]) - b * c;\n        if constexpr(is_integral_v<T>) {\n      \
-    \      assert(x_n % d == 0);\n            assert(y_n % d == 0);\n        }\n \
-    \       return {x_n / d, y_n / d};\n    }\n    Point<T,2> reflect(Point<T,2> Points)\
-    \ {\n        return Points + (proj(Points) - Points) * 2;\n    }\n    bool parallel(const\
-    \ Line2D<T>& l) const {\n        return a * l.b == b * l.a;\n    }\n    bool orthogonal(const\
-    \ Line2D<T>& l) const {\n        return a * l.a + b * l.b == 0;\n    }\n    bool\
-    \ on_line(Point<T,2> Points) {\n        return a * Points[0] + b * Points[1] +\
-    \ c == 0;\n    }\n    bool operator==(const Line2D<T>& l) const {\n        return\
-    \ a * l.c == c * l.a && b * l.c == c * l.b;\n    }\n    Point<T,2> cross_point(Line2D<T>\
-    \ l) {\n        T x_n = b * l.c - c * l.b;\n        T x_d = a * l.b - b * l.a;\n\
-    \        T y_n = a * l.c - c * l.a;\n        T y_d = b * l.a - a * l.b;\n    \
-    \    if constexpr(is_integral_v<T>) {\n            assert(x_n % x_d == 0);\n \
-    \           assert(y_n % y_d == 0);\n        }\n        return Point<T, 2>({x_n\
-    \ / x_d, y_n / y_d});\n    }\n    double dist(Point<T,2> Points) {\n        return\
-    \ sqrt(dist2(Points));\n    }\n};\n#line 3 \"geometry/segment.hpp\"\n\ntemplate\
-    \ <typename T>\nstruct Segment {\n    Point<T, 2> a, b;\n    Segment() = default;\n\
-    \    Segment(const Point<T, 2>& a, const Point<T, 2>& b) : a(a), b(b) {}\n   \
-    \ bool operator==(const Segment& rhs) const { return a == rhs.a && b == rhs.b;\
-    \ }\n    bool operator!=(const Segment& rhs) const { return !(*this == rhs); }\n\
-    \    bool intersect(const Segment<T>& other) const {\n        if(Line<T, 2>(a,\
-    \ b) == Line<T, 2>(other.a, other.b)) {\n            if((other.a-a).dot(other.b-a)\
-    \ <= 0) return true;\n            if((other.a-a).dot(other.a-b) <= 0) return true;\n\
-    \            if((other.a-a).dot(other.b-b) <= 0) return true;\n            return\
-    \ false;\n        }\n        T o012 = outer_product(b - a, other.a - a);\n   \
-    \     int s012 = (o012 > zero<T>()) - (o012 < zero<T>());\n        T o013 = outer_product(b\
-    \ - a, other.b - a);\n        int s013 = (o013 > zero<T>()) - (o013 < zero<T>());\n\
-    \        T o230 = outer_product(other.b - other.a, a - other.a);\n        int\
-    \ s230 = (o230 > zero<T>()) - (o230 < zero<T>());\n        T o231 = outer_product(other.b\
-    \ - other.a, b - other.a);\n        int s231 = (o231 > zero<T>()) - (o231 < zero<T>());\n\
-    \        return s012 * s013 <= 0 && s230 * s231 <= 0;\n    }\n    bool on_segment(const\
-    \ Point<T, 2>& p) const {\n        if(outer_product(b - a, p - a) != zero<T>())\
-    \ return false;\n        if(p[0] < min(a[0], b[0]) || p[0] > max(a[0], b[0]))\
-    \ return false;\n        if(p[1] < min(a[1], b[1]) || p[1] > max(a[1], b[1]))\
-    \ return false;\n        return true;\n    }\n    double dist(const Point<T, 2>&\
-    \ p) const {\n        if((b - a).dot(p - a) < zero<T>()) return abs(p - a);\n\
-    \        if((a - b).dot(p - b) < zero<T>()) return abs(p - b);\n        return\
-    \ abs(outer_product(b - a, p - a)) / abs(b - a);\n    }\n    double dist(const\
-    \ Segment<T>& other) const {\n        if(intersect(other)) return 0;\n       \
-    \ return min({dist(other.a), dist(other.b), other.dist(a), other.dist(b)});\n\
-    \    }\n    int outer_product_sign(const Point<T, 2>& p) const {\n        T o\
-    \ = outer_product(b - a, p - a);\n        return (o > zero<T>()) - (o < zero<T>());\n\
-    \    }\n};\n#line 3 \"geometry/polygon.hpp\"\n\ntemplate<typename T=double>\n\
-    struct Polygon {\n    vector<Point<T, 2>> points;\n    Polygon(int n) {\n    \
-    \    assert(n >= 1);\n        points.resize(n);\n    }\n    Polygon(vector<Point<T,\
-    \ 2>> points) : points(points) {}\n    friend istream& operator>>(istream& is,\
-    \ Polygon& polygon) {\n        return is >> polygon.points;\n    }\n    friend\
-    \ ostream& operator<<(ostream& os, Polygon& polygon) {\n        return os << polygon.points;\n\
-    \    }\n    Point<T, 2>& operator[](int i) {\n        return points[i];\n    }\n\
-    \    const Point<T, 2>& operator[](int i) const {\n        return points[i];\n\
-    \    }\n    int size() const {\n        return points.size();\n    }\n    using\
-    \ iterator = typename vector<Point<T, 2>>::iterator;\n    using const_iterator\
-    \ = typename vector<Point<T, 2>>::const_iterator;\n    iterator begin() { return\
-    \ points.begin(); }\n    iterator end() { return points.end(); }\n    const_iterator\
-    \ begin() const { return points.begin(); }\n    const_iterator end() const { return\
-    \ points.end(); }\n    T area2() {\n        T res = 0;\n        int n = points.size();\n\
-    \        for(int i = 1; i + 1 < n; i++) {\n            res += outer_product(points[i]\
-    \ - points[0], points[i+1] - points[0]);\n        }\n        return res;\n   \
-    \ }\n    T area() {\n        T a = area2();\n        if constexpr(is_integral_v<T>)\
-    \ assert(a % 2 == 0);\n        return a / 2;\n    }\n    bool is_convex() {\n\
-    \        int n = points.size();\n        for(int i = 0; i < n; i++) {\n      \
-    \      int j = (i + 1) % n;\n            int k = (j + 1) % n;\n            if(outer_product(points[k]\
-    \ - points[j], points[i] - points[j]) < 0) return false;\n        }\n        return\
-    \ true;\n    }\n    // inside: 2, on: 1, outside: 0\n    int contains(Point<T,\
-    \ 2> p) {\n        int n = points.size();\n        double t_sum = 0;\n       \
-    \ for(int i = 0; i < n; i++) {\n            if(Segment<T>(points[i], points[(i+1)%n]).on_segment(p))\
-    \ return 1;\n            double t = theta(points[(i+1)%n] - p) - theta(points[i]\
-    \ - p);\n            if(t < -M_PI) t += 2 * M_PI;\n            if(t > M_PI) t\
-    \ -= 2 * M_PI;\n            t_sum += t;\n        }\n        if(abs(t_sum) < M_PI)\
-    \ return 0;\n        return 2;\n    }\n};\n\ntemplate <typename T>\nvector<Point<T,\
-    \ 2>> select_convex(const vector<Point<T, 2>>& v) {\n    vector<Point<T, 2>> res;\n\
-    \    for(auto& p : v) {\n        while(res.size() >= 2 && outer_product(res.back()\
-    \ - res[res.size()-2], p - res.back()) < 0) {\n            res.pop_back();\n \
-    \       }\n        res.push_back(p);\n    }\n    return res;\n}\n\ntemplate <typename\
-    \ T>\nPolygon<T> convex_hull(const vector<Point<T, 2>>& v) {\n    vector<Point<T,\
-    \ 2>> sorted = v;\n    vector<Point<T, 2>> res;\n    sort(sorted.begin(), sorted.end());\n\
-    \    vector<Point<T, 2>> lower_hull = select_convex(sorted);\n    vector<Point<T,\
-    \ 2>> upper_hull = select_convex(vector<Point<T, 2>>(sorted.rbegin(), sorted.rend()));\n\
-    \    res.reserve(lower_hull.size() + upper_hull.size() - 2);\n    for(auto& p\
-    \ : lower_hull) res.push_back(p);\n    for(int i = 1; i + 1 < (int)upper_hull.size();\
-    \ i++) res.push_back(upper_hull[i]);\n    return Polygon<T>(res);\n}\n#line 3\
-    \ \"test/aoj-cgl-3-c.test.cpp\"\n\nint main() {\n    int n; cin >> n;\n    Polygon<int>\
-    \ poly(n); cin >> poly;\n    int q; cin >> q;\n    while(q--) {\n        Point<int>\
-    \ p; cin >> p;\n        print(poly.contains(p));\n    }\n}\n"
-  code: "#define PROBLEM \"http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_3_C\"\
-    \n#include \"../geometry/polygon.hpp\"\n\nint main() {\n    int n; cin >> n;\n\
-    \    Polygon<int> poly(n); cin >> poly;\n    int q; cin >> q;\n    while(q--)\
-    \ {\n        Point<int> p; cin >> p;\n        print(poly.contains(p));\n    }\n\
-    }\n"
+    \ 4 \"test/aoj-cgl-5-a.test.cpp\"\n\nint main() {\n    int n; cin >> n;\n    vector<Point<double>>\
+    \ ps(n); cin >> ps;\n    cout << fixed << setprecision(10) << closest_point_pair(ps)\
+    \ << endl;\n}\n"
+  code: "#define PROBLEM \"http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_5_A\"\
+    \n#define ERROR \"1e-6\"\n#include \"../geometry/point.hpp\"\n\nint main() {\n\
+    \    int n; cin >> n;\n    vector<Point<double>> ps(n); cin >> ps;\n    cout <<\
+    \ fixed << setprecision(10) << closest_point_pair(ps) << endl;\n}\n"
   dependsOn:
-  - geometry/polygon.hpp
-  - geometry/segment.hpp
-  - geometry/line.hpp
   - geometry/point.hpp
   - algebra/field.hpp
   - base.hpp
   - stl-expansion.hpp
-  - algebra/ratio.hpp
   isVerificationFile: true
-  path: test/aoj-cgl-3-c.test.cpp
+  path: test/aoj-cgl-5-a.test.cpp
   requiredBy: []
   timestamp: '2022-12-18 23:57:03+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
-documentation_of: test/aoj-cgl-3-c.test.cpp
+documentation_of: test/aoj-cgl-5-a.test.cpp
 layout: document
 redirect_from:
-- /verify/test/aoj-cgl-3-c.test.cpp
-- /verify/test/aoj-cgl-3-c.test.cpp.html
-title: test/aoj-cgl-3-c.test.cpp
+- /verify/test/aoj-cgl-5-a.test.cpp
+- /verify/test/aoj-cgl-5-a.test.cpp.html
+title: test/aoj-cgl-5-a.test.cpp
 ---

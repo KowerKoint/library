@@ -261,14 +261,14 @@ data:
   requiredBy:
   - integer/prime.hpp
   - segtree/wavelet-matrix.hpp
-  timestamp: '2022-12-09 11:01:11+09:00'
+  timestamp: '2022-12-18 23:57:03+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/aoj-itp-1-3-d.test.cpp
-  - test/yosupo-static-range-frequency.test.cpp
   - test/yosupo-enumerate-primes.test.cpp
-  - test/aoj-ntl-1-a.test.cpp
   - test/aoj-alds-1-1-c.test.cpp
+  - test/yosupo-static-range-frequency.test.cpp
+  - test/aoj-ntl-1-a.test.cpp
 documentation_of: bit/bitset.hpp
 layout: document
 redirect_from:

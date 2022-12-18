@@ -219,71 +219,94 @@ data:
     \            assert(gcd(p01[0], p01[1]) % kd == 0);\n            p01[0] /= kd;\n\
     \            p01[1] /= kd;\n            return {true, p0 + p01 * kn};\n      \
     \  } else {\n            return {true, p0 + p01 * kn * (one<T>()/ kd)};\n    \
-    \    }\n    }\n    return {false, Point<double>()};\n}\n#line 3 \"algebra/ratio.hpp\"\
-    \n\ntemplate <typename T, size_t dim>\nstruct RepresentationRatio : RepresentationBase<T>\
-    \ {\n    using R = array<T, dim>;\n    constexpr static array<T, dim> construct(const\
-    \ R& x) {\n        return x;\n    }\n    constexpr static R represent(const array<T,\
-    \ dim>& x) {\n        array<T, dim> ret = x;\n        if constexpr(is_integral_v<T>)\
-    \ {\n            T g = 0;\n            for(size_t i = 0; i < dim; i++) {\n   \
-    \             g = gcd(g, ret[i]);\n            }\n            for(size_t i = 0;\
-    \ i < dim; i++) {\n                ret[i] /= g;\n            }\n            for(size_t\
-    \ i = 0; i < dim; i++) {\n                if(ret[i] == 0) continue;\n        \
-    \        if(ret[i] < 0) {\n                    for(size_t j = i; j < dim; j++)\
-    \ {\n                        ret[j] = -ret[j];\n                    }\n      \
-    \          }\n                break;\n            }\n        }\n        return\
-    \ ret;\n    }\n};\ntemplate <typename T, size_t dim>\nstruct CompareRatio : CompareBase<T>\
-    \ {\n    constexpr static bool lt(const array<T, dim>& x, const array<T, dim>&\
-    \ y) {\n        static_assert(dim == 2);\n        return x[0] * y[1] < x[1] *\
-    \ y[0];\n    }\n    constexpr static bool eq(const array<T, dim>& x, const array<T,\
-    \ dim>& y) {\n        return RepresentationRatio<T, dim>::represent(x) == RepresentationRatio<T,\
-    \ dim>::represent(y);\n    }\n};\ntemplate <typename T, size_t dim>\nusing Ratio\
-    \ = Field<array<T, dim>, SumGroupBase<array<T, dim>>, ProdGroupBase<array<T, dim>>,\
-    \ RepresentationRatio<T, dim>, CompareRatio<T, dim>>;\n#line 4 \"geometry/line.hpp\"\
-    \n\ntemplate <typename T, size_t dim=2>\nstruct Line {\n    Point<T, dim> a;\n\
-    \    Ratio<T, dim> d;\n    Line() = default;\n    Line(const Point<T, dim>& a,\
-    \ const Point<T, dim>& b) : a(a), d((b - a).represent()) {}\n    Line(const Point<T,\
-    \ dim>& a, const Ratio<T, dim>& d) : a(a), d(d) {}\n    Point<T, dim> operator()(const\
-    \ T& k) const {\n        Point<T, dim> dp(d.represent());\n        return a +\
-    \ dp * k;\n    }\n    Point<T, dim> proj(const Point<T, dim>& p) const {\n   \
-    \     Point<T, dim> dp(d.represent());\n        T kn = dp.dot(p - a);\n      \
-    \  T kd = dp.norm();\n        if constexpr(is_integral_v<T>) {\n            assert(kn\
-    \ % kd == 0);\n        }\n        return a + dp * (kn / kd);\n    }\n    Point<T,\
-    \ dim> reflect(const Point<T, dim>& p) const {\n        return proj(p) * 2 - p;\n\
-    \    }\n    bool parallel(const Line& l) const {\n        return d == l.d;\n \
-    \   }\n    bool orthogonal(const Line& l) const {\n        Point<T, dim> dp(d.represent());\n\
-    \        Point<T, dim> ldp(l.d.represent());\n        return dp.dot(ldp) == 0;\n\
-    \    }\n    bool on_line(const Point<T, dim>& p) const {\n        Point<T, dim>\
-    \ dp(d.represent());\n        T inpro = dp.dot(p - a);\n        return inpro *\
-    \ inpro == d.norm() * (p - a).norm();\n    }\n    bool operator==(const Line&\
-    \ l) const {\n        return parallel(l) && on_line(l.a);\n    }\n    double dist(const\
-    \ Point<T, dim>& p) const {\n        return abs(p - proj(p));\n    }\n};\n\ntemplate\
-    \ <typename T>\nstruct Line2D {\n    T a, b, c; // ax + by + c = 0\n    Line2D(Point<T,2>\
-    \ p1, Point<T,2> p2) {\n        a = p2[1] - p1[1];\n        b = -(p2[0] - p1[0]);\n\
-    \        c = -a * p1[0] - b * p1[1];\n    }\n    Line2D(T a, T b, T c) {\n   \
-    \     this->a = a;\n        this->b = b;\n        this->c = c;\n    }\n    Line2D(const\
-    \ Line<T, 2>& l) {\n        a = l.d[1];\n        b = -l.d[0];\n        c = -a\
-    \ * l.a[0] - b * l.a[1];\n    }\n    Ratio<T,2> direction() {\n        return\
-    \ {b, -a};\n    }\n    Point<T,2> proj(Point<T,2> Points) {\n        T d = a *\
-    \ a + b * b;\n        T x_n = b * (b * Points[0] - a * Points[1]) - a * c;\n \
-    \       T y_n = a * (a * Points[1] - b * Points[0]) - b * c;\n        if constexpr(is_integral_v<T>)\
-    \ {\n            assert(x_n % d == 0);\n            assert(y_n % d == 0);\n  \
-    \      }\n        return {x_n / d, y_n / d};\n    }\n    Point<T,2> reflect(Point<T,2>\
-    \ Points) {\n        return Points + (proj(Points) - Points) * 2;\n    }\n   \
-    \ bool parallel(const Line2D<T>& l) const {\n        return a * l.b == b * l.a;\n\
-    \    }\n    bool orthogonal(const Line2D<T>& l) const {\n        return a * l.a\
-    \ + b * l.b == 0;\n    }\n    bool on_line(Point<T,2> Points) {\n        return\
-    \ a * Points[0] + b * Points[1] + c == 0;\n    }\n    bool operator==(const Line2D<T>&\
-    \ l) const {\n        return a * l.c == c * l.a && b * l.c == c * l.b;\n    }\n\
-    \    Point<T,2> cross_point(Line2D<T> l) {\n        T x_n = b * l.c - c * l.b;\n\
-    \        T x_d = a * l.b - b * l.a;\n        T y_n = a * l.c - c * l.a;\n    \
-    \    T y_d = b * l.a - a * l.b;\n        if constexpr(is_integral_v<T>) {\n  \
-    \          assert(x_n % x_d == 0);\n            assert(y_n % y_d == 0);\n    \
-    \    }\n        return {x_n / x_d, y_n / y_d};\n    }\n    double dist(Point<T,2>\
-    \ Points) {\n        return sqrt(dist2(Points));\n    }\n};\n#line 3 \"test/aoj-cgl-1-a.test.cpp\"\
-    \n\nint main() {\n    Point<double> p1, p2; cin >> p1 >> p2;\n    Line<double>\
-    \ l(p1, p2);\n    int q; cin >> q;\n    cout << setprecision(10) << fixed;\n \
-    \   while(q--) {\n        Point<double> p; cin >> p;\n        cout << l.proj(p)\
-    \ << endl;\n    }\n}\n"
+    \    }\n    }\n    return {false, Point<double>()};\n}\n\ntemplate <typename T>\n\
+    double closest_point_pair(const vector<Point<T, 2>>& _ps) {\n    vector<Point<T,\
+    \ 2>> ps = _ps;\n    sort(ps.begin(), ps.end(), [](const Point<T, 2> &a, const\
+    \ Point<T, 2> &b) {\n        return a[0] < b[0];\n    });\n    int n = ps.size();\n\
+    \    stack<tuple<int, int, int>> stk;\n    stk.emplace(~0, n, 0);\n    stk.emplace(0,\
+    \ n, 0);\n    vector<double> retval;\n    VI par;\n    par.push_back(-1);\n  \
+    \  while(!stk.empty()) {\n        auto [l, r, d] = stk.top(); stk.pop();\n   \
+    \     if(l >= 0) {\n            if(l + 1 >= r) continue;\n            if((int)retval.size()\
+    \ <= d) retval.resize(d+1, 1e100);\n            int m = (l + r) / 2;\n       \
+    \     stk.emplace(~l, m, par.size());\n            stk.emplace(l, m, par.size());\n\
+    \            par.push_back(d);\n            stk.emplace(~m, r, par.size());\n\
+    \            stk.emplace(m, r, par.size());\n            par.push_back(d);\n \
+    \       } else {\n            l = ~l;\n            if(l + 1 >= r) continue;\n\
+    \            int m = (l + r) / 2;\n            vector<Point<T, 2>> ps2;\n    \
+    \        for(int i = l; i < r; i++) {\n                if(abs(ps[i][0] - ps[m][0])\
+    \ + 1e-12 < retval[d]) {\n                    ps2.push_back(ps[i]);\n        \
+    \        }\n            }\n            sort(ps2.begin(), ps2.end(), [](const Point<T,\
+    \ 2> &a, const Point<T, 2> &b) {\n                return a[1] < b[1];\n      \
+    \      });\n            REP(i, ps2.size()) {\n                for(int j = i+1;\
+    \ j < (int)ps2.size() && ps2[j][1] - ps2[i][1] + 1e-12 < retval[d]; j++) {\n \
+    \                   chmin(retval[d], abs(ps2[i] - ps2[j]));\n                }\n\
+    \            }\n            if(d > 0) {\n                chmin(retval[par[d]],\
+    \ retval[d]);\n            }\n        }\n    }\n    return retval[0];\n}\n#line\
+    \ 3 \"algebra/ratio.hpp\"\n\ntemplate <typename T, size_t dim>\nstruct RepresentationRatio\
+    \ : RepresentationBase<T> {\n    using R = array<T, dim>;\n    constexpr static\
+    \ array<T, dim> construct(const R& x) {\n        return x;\n    }\n    constexpr\
+    \ static R represent(const array<T, dim>& x) {\n        array<T, dim> ret = x;\n\
+    \        if constexpr(is_integral_v<T>) {\n            T g = 0;\n            for(size_t\
+    \ i = 0; i < dim; i++) {\n                g = gcd(g, ret[i]);\n            }\n\
+    \            for(size_t i = 0; i < dim; i++) {\n                ret[i] /= g;\n\
+    \            }\n            for(size_t i = 0; i < dim; i++) {\n              \
+    \  if(ret[i] == 0) continue;\n                if(ret[i] < 0) {\n             \
+    \       for(size_t j = i; j < dim; j++) {\n                        ret[j] = -ret[j];\n\
+    \                    }\n                }\n                break;\n          \
+    \  }\n        }\n        return ret;\n    }\n};\ntemplate <typename T, size_t\
+    \ dim>\nstruct CompareRatio : CompareBase<T> {\n    constexpr static bool lt(const\
+    \ array<T, dim>& x, const array<T, dim>& y) {\n        static_assert(dim == 2);\n\
+    \        return x[0] * y[1] < x[1] * y[0];\n    }\n    constexpr static bool eq(const\
+    \ array<T, dim>& x, const array<T, dim>& y) {\n        return RepresentationRatio<T,\
+    \ dim>::represent(x) == RepresentationRatio<T, dim>::represent(y);\n    }\n};\n\
+    template <typename T, size_t dim>\nusing Ratio = Field<array<T, dim>, SumGroupBase<array<T,\
+    \ dim>>, ProdGroupBase<array<T, dim>>, RepresentationRatio<T, dim>, CompareRatio<T,\
+    \ dim>>;\n#line 4 \"geometry/line.hpp\"\n\ntemplate <typename T, size_t dim=2>\n\
+    struct Line {\n    Point<T, dim> a;\n    Ratio<T, dim> d;\n    Line() = default;\n\
+    \    Line(const Point<T, dim>& a, const Point<T, dim>& b) : a(a), d((b - a).represent())\
+    \ {}\n    Line(const Point<T, dim>& a, const Ratio<T, dim>& d) : a(a), d(d) {}\n\
+    \    Point<T, dim> operator()(const T& k) const {\n        Point<T, dim> dp(d.represent());\n\
+    \        return a + dp * k;\n    }\n    Point<T, dim> proj(const Point<T, dim>&\
+    \ p) const {\n        Point<T, dim> dp(d.represent());\n        T kn = dp.dot(p\
+    \ - a);\n        T kd = dp.norm();\n        if constexpr(is_integral_v<T>) {\n\
+    \            assert(kn % kd == 0);\n        }\n        return a + dp * (kn / kd);\n\
+    \    }\n    Point<T, dim> reflect(const Point<T, dim>& p) const {\n        return\
+    \ proj(p) * 2 - p;\n    }\n    bool parallel(const Line& l) const {\n        return\
+    \ d == l.d;\n    }\n    bool orthogonal(const Line& l) const {\n        Point<T,\
+    \ dim> dp(d.represent());\n        Point<T, dim> ldp(l.d.represent());\n     \
+    \   return dp.dot(ldp) == 0;\n    }\n    bool on_line(const Point<T, dim>& p)\
+    \ const {\n        Point<T, dim> dp(d.represent());\n        T inpro = dp.dot(p\
+    \ - a);\n        return inpro * inpro == d.norm() * (p - a).norm();\n    }\n \
+    \   bool operator==(const Line& l) const {\n        return parallel(l) && on_line(l.a);\n\
+    \    }\n    double dist(const Point<T, dim>& p) const {\n        return abs(p\
+    \ - proj(p));\n    }\n};\n\ntemplate <typename T>\nstruct Line2D {\n    T a, b,\
+    \ c; // ax + by + c = 0\n    Line2D(Point<T,2> p1, Point<T,2> p2) {\n        a\
+    \ = p2[1] - p1[1];\n        b = -(p2[0] - p1[0]);\n        c = -a * p1[0] - b\
+    \ * p1[1];\n    }\n    Line2D(T a, T b, T c) {\n        this->a = a;\n       \
+    \ this->b = b;\n        this->c = c;\n    }\n    Line2D(const Line<T, 2>& l) {\n\
+    \        a = l.d[1];\n        b = -l.d[0];\n        c = -a * l.a[0] - b * l.a[1];\n\
+    \    }\n    Ratio<T,2> direction() {\n        return {b, -a};\n    }\n    Point<T,2>\
+    \ proj(Point<T,2> Points) {\n        T d = a * a + b * b;\n        T x_n = b *\
+    \ (b * Points[0] - a * Points[1]) - a * c;\n        T y_n = a * (a * Points[1]\
+    \ - b * Points[0]) - b * c;\n        if constexpr(is_integral_v<T>) {\n      \
+    \      assert(x_n % d == 0);\n            assert(y_n % d == 0);\n        }\n \
+    \       return {x_n / d, y_n / d};\n    }\n    Point<T,2> reflect(Point<T,2> Points)\
+    \ {\n        return Points + (proj(Points) - Points) * 2;\n    }\n    bool parallel(const\
+    \ Line2D<T>& l) const {\n        return a * l.b == b * l.a;\n    }\n    bool orthogonal(const\
+    \ Line2D<T>& l) const {\n        return a * l.a + b * l.b == 0;\n    }\n    bool\
+    \ on_line(Point<T,2> Points) {\n        return a * Points[0] + b * Points[1] +\
+    \ c == 0;\n    }\n    bool operator==(const Line2D<T>& l) const {\n        return\
+    \ a * l.c == c * l.a && b * l.c == c * l.b;\n    }\n    Point<T,2> cross_point(Line2D<T>\
+    \ l) {\n        T x_n = b * l.c - c * l.b;\n        T x_d = a * l.b - b * l.a;\n\
+    \        T y_n = a * l.c - c * l.a;\n        T y_d = b * l.a - a * l.b;\n    \
+    \    if constexpr(is_integral_v<T>) {\n            assert(x_n % x_d == 0);\n \
+    \           assert(y_n % y_d == 0);\n        }\n        return Point<T, 2>({x_n\
+    \ / x_d, y_n / y_d});\n    }\n    double dist(Point<T,2> Points) {\n        return\
+    \ sqrt(dist2(Points));\n    }\n};\n#line 3 \"test/aoj-cgl-1-a.test.cpp\"\n\nint\
+    \ main() {\n    Point<double> p1, p2; cin >> p1 >> p2;\n    Line<double> l(p1,\
+    \ p2);\n    int q; cin >> q;\n    cout << setprecision(10) << fixed;\n    while(q--)\
+    \ {\n        Point<double> p; cin >> p;\n        cout << l.proj(p) << endl;\n\
+    \    }\n}\n"
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_1_A\"\
     \n#include \"../geometry/line.hpp\"\n\nint main() {\n    Point<double> p1, p2;\
     \ cin >> p1 >> p2;\n    Line<double> l(p1, p2);\n    int q; cin >> q;\n    cout\
@@ -299,7 +322,7 @@ data:
   isVerificationFile: true
   path: test/aoj-cgl-1-a.test.cpp
   requiredBy: []
-  timestamp: '2022-12-09 11:01:11+09:00'
+  timestamp: '2022-12-18 23:57:03+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/aoj-cgl-1-a.test.cpp

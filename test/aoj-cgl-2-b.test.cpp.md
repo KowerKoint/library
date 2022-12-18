@@ -213,10 +213,33 @@ data:
     \            assert(gcd(p01[0], p01[1]) % kd == 0);\n            p01[0] /= kd;\n\
     \            p01[1] /= kd;\n            return {true, p0 + p01 * kn};\n      \
     \  } else {\n            return {true, p0 + p01 * kn * (one<T>()/ kd)};\n    \
-    \    }\n    }\n    return {false, Point<double>()};\n}\n#line 4 \"test/aoj-cgl-2-b.test.cpp\"\
-    \nint main() {\n    int q; cin >> q;\n    while(q--) {\n        Point<double>\
-    \ p0, p1, p2, p3; cin >> p0 >> p1 >> p2 >> p3;\n        cout << (segment_intersect(p0,\
-    \ p1, p2, p3).first ? 1 : 0) << endl;\n    }\n}\n"
+    \    }\n    }\n    return {false, Point<double>()};\n}\n\ntemplate <typename T>\n\
+    double closest_point_pair(const vector<Point<T, 2>>& _ps) {\n    vector<Point<T,\
+    \ 2>> ps = _ps;\n    sort(ps.begin(), ps.end(), [](const Point<T, 2> &a, const\
+    \ Point<T, 2> &b) {\n        return a[0] < b[0];\n    });\n    int n = ps.size();\n\
+    \    stack<tuple<int, int, int>> stk;\n    stk.emplace(~0, n, 0);\n    stk.emplace(0,\
+    \ n, 0);\n    vector<double> retval;\n    VI par;\n    par.push_back(-1);\n  \
+    \  while(!stk.empty()) {\n        auto [l, r, d] = stk.top(); stk.pop();\n   \
+    \     if(l >= 0) {\n            if(l + 1 >= r) continue;\n            if((int)retval.size()\
+    \ <= d) retval.resize(d+1, 1e100);\n            int m = (l + r) / 2;\n       \
+    \     stk.emplace(~l, m, par.size());\n            stk.emplace(l, m, par.size());\n\
+    \            par.push_back(d);\n            stk.emplace(~m, r, par.size());\n\
+    \            stk.emplace(m, r, par.size());\n            par.push_back(d);\n \
+    \       } else {\n            l = ~l;\n            if(l + 1 >= r) continue;\n\
+    \            int m = (l + r) / 2;\n            vector<Point<T, 2>> ps2;\n    \
+    \        for(int i = l; i < r; i++) {\n                if(abs(ps[i][0] - ps[m][0])\
+    \ + 1e-12 < retval[d]) {\n                    ps2.push_back(ps[i]);\n        \
+    \        }\n            }\n            sort(ps2.begin(), ps2.end(), [](const Point<T,\
+    \ 2> &a, const Point<T, 2> &b) {\n                return a[1] < b[1];\n      \
+    \      });\n            REP(i, ps2.size()) {\n                for(int j = i+1;\
+    \ j < (int)ps2.size() && ps2[j][1] - ps2[i][1] + 1e-12 < retval[d]; j++) {\n \
+    \                   chmin(retval[d], abs(ps2[i] - ps2[j]));\n                }\n\
+    \            }\n            if(d > 0) {\n                chmin(retval[par[d]],\
+    \ retval[d]);\n            }\n        }\n    }\n    return retval[0];\n}\n#line\
+    \ 4 \"test/aoj-cgl-2-b.test.cpp\"\nint main() {\n    int q; cin >> q;\n    while(q--)\
+    \ {\n        Point<double> p0, p1, p2, p3; cin >> p0 >> p1 >> p2 >> p3;\n    \
+    \    cout << (segment_intersect(p0, p1, p2, p3).first ? 1 : 0) << endl;\n    }\n\
+    }\n"
   code: "#define PROBLEM \"http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_2_B\"\
     \n\n#include \"../geometry/point.hpp\"\nint main() {\n    int q; cin >> q;\n \
     \   while(q--) {\n        Point<double> p0, p1, p2, p3; cin >> p0 >> p1 >> p2\
@@ -230,7 +253,7 @@ data:
   isVerificationFile: true
   path: test/aoj-cgl-2-b.test.cpp
   requiredBy: []
-  timestamp: '2022-12-09 11:01:11+09:00'
+  timestamp: '2022-12-18 23:57:03+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/aoj-cgl-2-b.test.cpp

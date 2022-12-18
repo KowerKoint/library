@@ -42,6 +42,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: test/aoj-cgl-4-a.test.cpp
     title: test/aoj-cgl-4-a.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: test/aoj-cgl-4-b.test.cpp
+    title: test/aoj-cgl-4-b.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: test/aoj-cgl-4-c.test.cpp
+    title: test/aoj-cgl-4-c.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -237,19 +243,21 @@ data:
   isVerificationFile: false
   path: algebra/ratio.hpp
   requiredBy:
-  - geometry/line.hpp
-  - geometry/segment.hpp
   - geometry/polygon.hpp
-  timestamp: '2022-12-09 11:01:11+09:00'
+  - geometry/segment.hpp
+  - geometry/line.hpp
+  timestamp: '2022-12-18 23:57:03+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - test/aoj-cgl-4-a.test.cpp
+  - test/aoj-cgl-3-b.test.cpp
+  - test/aoj-cgl-2-a.test.cpp
+  - test/aoj-cgl-4-c.test.cpp
+  - test/aoj-cgl-4-b.test.cpp
+  - test/aoj-cgl-1-b.test.cpp
   - test/aoj-cgl-3-a.test.cpp
+  - test/aoj-cgl-4-a.test.cpp
   - test/aoj-cgl-3-c.test.cpp
   - test/aoj-cgl-1-a.test.cpp
-  - test/aoj-cgl-1-b.test.cpp
-  - test/aoj-cgl-2-a.test.cpp
-  - test/aoj-cgl-3-b.test.cpp
 documentation_of: algebra/ratio.hpp
 layout: document
 redirect_from:

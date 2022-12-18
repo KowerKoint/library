@@ -245,7 +245,7 @@ data:
   isVerificationFile: false
   path: segtree/wavelet-matrix.hpp
   requiredBy: []
-  timestamp: '2022-12-09 11:01:11+09:00'
+  timestamp: '2022-12-18 23:57:03+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/yosupo-static-range-frequency.test.cpp

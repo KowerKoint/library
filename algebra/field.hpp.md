@@ -73,6 +73,15 @@ data:
     path: test/aoj-cgl-4-a.test.cpp
     title: test/aoj-cgl-4-a.test.cpp
   - icon: ':heavy_check_mark:'
+    path: test/aoj-cgl-4-b.test.cpp
+    title: test/aoj-cgl-4-b.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: test/aoj-cgl-4-c.test.cpp
+    title: test/aoj-cgl-4-c.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: test/aoj-cgl-5-a.test.cpp
+    title: test/aoj-cgl-5-a.test.cpp
+  - icon: ':heavy_check_mark:'
     path: test/aoj-dpl-5-b.test.cpp
     title: test/aoj-dpl-5-b.test.cpp
   - icon: ':heavy_check_mark:'
@@ -336,41 +345,44 @@ data:
   isVerificationFile: false
   path: algebra/field.hpp
   requiredBy:
-  - geometry/point.hpp
-  - geometry/line.hpp
-  - geometry/segment.hpp
-  - geometry/polygon.hpp
   - general.hpp
+  - geometry/polygon.hpp
+  - geometry/segment.hpp
+  - geometry/line.hpp
+  - geometry/point.hpp
   - convolution/fft.hpp
   - convolution/ntt.hpp
-  - algebra/modint.hpp
-  - algebra/ratio.hpp
   - algebra/fps.hpp
+  - algebra/modint.hpp
   - algebra/nimber.hpp
-  timestamp: '2022-12-09 11:01:11+09:00'
+  - algebra/ratio.hpp
+  timestamp: '2022-12-18 23:57:03+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - test/yosupo-determinant-of-matrix.test.cpp
-  - test/yosupo-range-affine-range-sum.test.cpp
-  - test/aoj-dpl-5-j.test.cpp
-  - test/aoj-cgl-4-a.test.cpp
-  - test/aoj-cgl-3-a.test.cpp
-  - test/aoj-cgl-3-c.test.cpp
-  - test/aoj-cgl-1-a.test.cpp
-  - test/yosupo-convolution.test.cpp
-  - test/aoj-dpl-5-e.test.cpp
-  - test/aoj-cgl-1-b.test.cpp
-  - test/aoj-cgl-2-a.test.cpp
-  - test/yosupo-nim-product.test.cpp
-  - test/aoj-cgl-1-c.test.cpp
-  - test/aoj-dpl-5-g.test.cpp
-  - test/aoj-dpl-5-d.test.cpp
-  - test/aoj-cgl-2-c.test.cpp
-  - test/aoj-dpl-5-b.test.cpp
-  - test/aoj-cgl-2-b.test.cpp
-  - test/aoj-dpl-5-i.test.cpp
   - test/aoj-ntl-1-b.test.cpp
   - test/aoj-cgl-3-b.test.cpp
+  - test/aoj-dpl-5-j.test.cpp
+  - test/aoj-cgl-2-a.test.cpp
+  - test/aoj-cgl-4-c.test.cpp
+  - test/aoj-cgl-4-b.test.cpp
+  - test/yosupo-convolution.test.cpp
+  - test/aoj-dpl-5-e.test.cpp
+  - test/aoj-dpl-5-b.test.cpp
+  - test/aoj-dpl-5-d.test.cpp
+  - test/aoj-cgl-2-c.test.cpp
+  - test/aoj-dpl-5-i.test.cpp
+  - test/aoj-cgl-1-b.test.cpp
+  - test/aoj-dpl-5-g.test.cpp
+  - test/aoj-cgl-3-a.test.cpp
+  - test/aoj-cgl-2-b.test.cpp
+  - test/aoj-cgl-4-a.test.cpp
+  - test/aoj-cgl-1-c.test.cpp
+  - test/aoj-cgl-3-c.test.cpp
+  - test/yosupo-determinant-of-matrix.test.cpp
+  - test/yosupo-range-affine-range-sum.test.cpp
+  - test/yosupo-nim-product.test.cpp
+  - test/aoj-cgl-1-a.test.cpp
+  - test/aoj-cgl-5-a.test.cpp
 documentation_of: algebra/field.hpp
 layout: document
 redirect_from:
