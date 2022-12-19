@@ -81,11 +81,11 @@ data:
   - name: graph
     pages:
     - icon: ':heavy_check_mark:'
-      path: graph/ford-fulkerson.hpp
-      title: graph/ford-fulkerson.hpp
-    - icon: ':heavy_check_mark:'
       path: graph/graph.hpp
       title: graph/graph.hpp
+    - icon: ':heavy_check_mark:'
+      path: graph/max-flow.hpp
+      title: graph/max-flow.hpp
     - icon: ':heavy_check_mark:'
       path: graph/tree.hpp
       title: graph/tree.hpp

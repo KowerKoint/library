@@ -5,25 +5,21 @@ data:
     path: base.hpp
     title: base.hpp
   - icon: ':heavy_check_mark:'
-    path: graph/max-flow.hpp
-    title: graph/max-flow.hpp
-  - icon: ':heavy_check_mark:'
     path: stl-expansion.hpp
     title: stl-expansion.hpp
   _extendedRequiredBy: []
-  _extendedVerifiedWith: []
+  _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: test/aoj-grl-6-a.test.cpp
+    title: test/aoj-grl-6-a.test.cpp
   _isVerificationFailed: false
-  _pathExtension: cpp
+  _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    '*NOT_SPECIAL_COMMENTS*': ''
-    PROBLEM: https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_6_A
-    links:
-    - https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_6_A
-  bundledCode: "#line 1 \"test/aoj-grl-6-a.test.cpp\"\n#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_6_A\"\
-    \n#line 2 \"stl-expansion.hpp\"\n#include <bits/stdc++.h>\n\ntemplate <typename\
-    \ T1, typename T2>\nstd::istream& operator>>(std::istream& is, std::pair<T1, T2>&\
-    \ p) {\n    is >> p.first >> p.second;\n    return is;\n}\ntemplate <typename\
+    links: []
+  bundledCode: "#line 2 \"stl-expansion.hpp\"\n#include <bits/stdc++.h>\n\ntemplate\
+    \ <typename T1, typename T2>\nstd::istream& operator>>(std::istream& is, std::pair<T1,\
+    \ T2>& p) {\n    is >> p.first >> p.second;\n    return is;\n}\ntemplate <typename\
     \ T, size_t N>\nstd::istream& operator>>(std::istream& is, std::array<T, N>& a)\
     \ {\n    for (size_t i = 0; i < N; ++i) {\n        is >> a[i];\n    }\n    return\
     \ is;\n}\ntemplate <typename T>\nstd::istream& operator>>(std::istream& is, std::vector<T>&\
@@ -131,29 +127,64 @@ data:
     \          if(e.cap - e.flow == 0) continue;\n                if(seen[e.to]) continue;\n\
     \                stk.push(e.to);\n            }\n        }\n        VI res;\n\
     \        REP(i, n) if(seen[i]) res.push_back(i);\n        return res;\n    }\n\
-    };\n#line 3 \"test/aoj-grl-6-a.test.cpp\"\n\nint main() {\n    int v, e; cin >>\
-    \ v >> e;\n    MaxFlowGraph g(v);\n    REP(i, e) {\n        int a, b, c; cin >>\
-    \ a >> b >> c;\n        g.add_edge(a, b, c);\n    }\n    print(g.max_flow(0, v\
-    \ - 1));\n}\n"
-  code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_6_A\"\
-    \n#include \"../graph/max-flow.hpp\"\n\nint main() {\n    int v, e; cin >> v >>\
-    \ e;\n    MaxFlowGraph g(v);\n    REP(i, e) {\n        int a, b, c; cin >> a >>\
-    \ b >> c;\n        g.add_edge(a, b, c);\n    }\n    print(g.max_flow(0, v - 1));\n\
-    }\n"
+    };\n"
+  code: "#pragma once\n#include \"../base.hpp\"\n\ntemplate <typename T=int>\nstruct\
+    \ MaxFlowEdge {\n    int to;\n    T cap, flow;\n    int rev;\n    bool is_rev;\n\
+    \    MaxFlowEdge(int to, T cap, int rev, bool is_rev) : to(to), cap(cap), flow(0),\
+    \ rev(rev), is_rev(is_rev){}\n};\n\ntemplate <typename T=int>\nstruct MaxFlowGraph\
+    \ {\n    int n;\n    vector<vector<MaxFlowEdge<T>>> g;\n    MaxFlowGraph(int n_\
+    \ = 0) : n(n_), g(n_) {\n        assert(n_ >= 0);\n    }\n    void add_edge(int\
+    \ from, int to, T cap) {\n        assert(0 <= from && from < n);\n        assert(0\
+    \ <= to && to < n);\n        assert(cap >= 0);\n        assert(from != to);\n\
+    \        MaxFlowEdge<T> e(to, cap, g[to].size(), false);\n        MaxFlowEdge<T>\
+    \ re(from, 0, g[from].size(), true);\n        g[from].push_back(e);\n        g[to].push_back(re);\n\
+    \    }\n\n    T max_flow(int s, int t) {\n        assert(0 <= s && s < n);\n \
+    \       assert(0 <= t && t < n);\n        assert(s != t);\n        T res = 0;\n\
+    \        while (true) {\n            VI dist(n, numeric_limits<int>::max());\n\
+    \            dist[s] = 0;\n            queue<int> que;\n            que.push(s);\n\
+    \            while(!que.empty()) {\n                int from = que.front(); que.pop();\n\
+    \                for(auto& e : g[from]) {\n                    if(e.cap - e.flow\
+    \ == 0) continue;\n                    if(dist[e.to] != numeric_limits<int>::max())\
+    \ continue;\n                    dist[e.to] = dist[from] + 1;\n              \
+    \      que.push(e.to);\n                }\n            }\n            if(dist[t]\
+    \ == numeric_limits<int>::max()) break;\n            VI iter(n);\n           \
+    \ while(1) {\n                stack<pair<int, T>> stk;\n                stk.emplace(s,\
+    \ numeric_limits<T>::max());\n                VI pre(n);\n                T flow\
+    \ = 0;\n                while(!stk.empty()) {\n                    auto [from,\
+    \ f] = stk.top(); stk.pop();\n                    if(from == t && f > 0) {\n \
+    \                       flow = f;\n                        break;\n          \
+    \          }\n                    for(int& i = iter[from]; i < (int)g[from].size();\
+    \ i++) {\n                        auto& e = g[from][i];\n                    \
+    \    if(e.cap - e.flow == 0) continue;\n                        if(dist[e.to]\
+    \ != dist[from] + 1) continue;\n                        pre[e.to] = e.rev;\n \
+    \                       stk.emplace(e.to, min(f, e.cap - e.flow));\n         \
+    \           }\n                }\n                if(flow == 0) break;\n     \
+    \           int cur = t;\n                while(cur != s) {\n                \
+    \    auto& re = g[cur][pre[cur]];\n                    auto& e = g[re.to][re.rev];\n\
+    \                    e.flow += flow;\n                    re.flow -= flow;\n \
+    \                   cur = re.to;\n                }\n                res += flow;\n\
+    \            }\n        }\n        return res;\n    }\n    vector<int> min_cut(int\
+    \ s) {\n        assert(0 <= s && s < n);\n        VI seen(n);\n        stack<int>\
+    \ stk;\n        stk.push(s);\n        while(!stk.empty()) {\n            int from\
+    \ = stk.top(); stk.pop();\n            seen[from] = true;\n            for(auto&\
+    \ e : g[from]) {\n                if(e.cap - e.flow == 0) continue;\n        \
+    \        if(seen[e.to]) continue;\n                stk.push(e.to);\n         \
+    \   }\n        }\n        VI res;\n        REP(i, n) if(seen[i]) res.push_back(i);\n\
+    \        return res;\n    }\n};\n"
   dependsOn:
-  - graph/max-flow.hpp
   - base.hpp
   - stl-expansion.hpp
-  isVerificationFile: true
-  path: test/aoj-grl-6-a.test.cpp
+  isVerificationFile: false
+  path: graph/max-flow.hpp
   requiredBy: []
   timestamp: '2022-12-20 05:12:23+09:00'
-  verificationStatus: TEST_ACCEPTED
-  verifiedWith: []
-documentation_of: test/aoj-grl-6-a.test.cpp
+  verificationStatus: LIBRARY_ALL_AC
+  verifiedWith:
+  - test/aoj-grl-6-a.test.cpp
+documentation_of: graph/max-flow.hpp
 layout: document
 redirect_from:
-- /verify/test/aoj-grl-6-a.test.cpp
-- /verify/test/aoj-grl-6-a.test.cpp.html
-title: test/aoj-grl-6-a.test.cpp
+- /library/graph/max-flow.hpp
+- /library/graph/max-flow.hpp.html
+title: graph/max-flow.hpp
 ---

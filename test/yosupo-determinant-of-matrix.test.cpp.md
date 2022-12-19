@@ -331,7 +331,7 @@ data:
   isVerificationFile: true
   path: test/yosupo-determinant-of-matrix.test.cpp
   requiredBy: []
-  timestamp: '2022-12-19 21:32:47+09:00'
+  timestamp: '2022-12-20 05:12:23+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/yosupo-determinant-of-matrix.test.cpp

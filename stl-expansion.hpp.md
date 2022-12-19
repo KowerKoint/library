@@ -57,11 +57,11 @@ data:
     path: geometry/segment.hpp
     title: geometry/segment.hpp
   - icon: ':heavy_check_mark:'
-    path: graph/ford-fulkerson.hpp
-    title: graph/ford-fulkerson.hpp
-  - icon: ':heavy_check_mark:'
     path: graph/graph.hpp
     title: graph/graph.hpp
+  - icon: ':heavy_check_mark:'
+    path: graph/max-flow.hpp
+    title: graph/max-flow.hpp
   - icon: ':heavy_check_mark:'
     path: graph/tree.hpp
     title: graph/tree.hpp
@@ -268,9 +268,9 @@ data:
   - integer/extgcd.hpp
   - integer/kth-root-integer.hpp
   - integer/prime.hpp
+  - graph/max-flow.hpp
   - graph/graph.hpp
   - graph/tree.hpp
-  - graph/ford-fulkerson.hpp
   - convolution/fft.hpp
   - convolution/ntt.hpp
   - segtree/wavelet-matrix.hpp
@@ -285,7 +285,7 @@ data:
   - connectivity/union-find.hpp
   - bit/bitset.hpp
   - operator.hpp
-  timestamp: '2022-12-19 21:32:47+09:00'
+  timestamp: '2022-12-20 05:12:23+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/aoj-ntl-1-b.test.cpp
