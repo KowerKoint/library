@@ -18,6 +18,7 @@ struct MaxFlowGraph {
         assert(n_ >= 0);
     }
     void add_edge(int from, int to, T cap) {
+        static_assert(is_integral<T>::value);
         assert(0 <= from && from < n);
         assert(0 <= to && to < n);
         assert(cap >= 0);
