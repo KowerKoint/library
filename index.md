@@ -87,6 +87,9 @@ data:
       path: graph/max-flow.hpp
       title: graph/max-flow.hpp
     - icon: ':heavy_check_mark:'
+      path: graph/min-cost-flow.hpp
+      title: graph/min-cost-flow.hpp
+    - icon: ':heavy_check_mark:'
       path: graph/tree.hpp
       title: graph/tree.hpp
   - name: integer
@@ -197,6 +200,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: test/aoj-grl-6-a.test.cpp
       title: test/aoj-grl-6-a.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: test/aoj-grl-6-b.test.cpp
+      title: test/aoj-grl-6-b.test.cpp
     - icon: ':heavy_check_mark:'
       path: test/aoj-itp-1-3-d.test.cpp
       title: test/aoj-itp-1-3-d.test.cpp

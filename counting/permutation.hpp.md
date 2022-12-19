@@ -94,7 +94,7 @@ data:
   isVerificationFile: false
   path: counting/permutation.hpp
   requiredBy: []
-  timestamp: '2022-12-20 05:12:23+09:00'
+  timestamp: '2022-12-20 07:37:47+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: counting/permutation.hpp

@@ -288,7 +288,7 @@ data:
   - general.hpp
   - convolution/ntt.hpp
   - algebra/fps.hpp
-  timestamp: '2022-12-20 05:12:23+09:00'
+  timestamp: '2022-12-20 07:37:47+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/aoj-ntl-1-b.test.cpp

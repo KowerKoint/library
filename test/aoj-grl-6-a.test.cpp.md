@@ -94,15 +94,15 @@ data:
     \ to, T cap, int rev, bool is_rev) : to(to), cap(cap), flow(0), rev(rev), is_rev(is_rev){}\n\
     };\n\ntemplate <typename T=int>\nstruct MaxFlowGraph {\n    int n;\n    vector<vector<MaxFlowEdge<T>>>\
     \ g;\n    MaxFlowGraph(int n_ = 0) : n(n_), g(n_) {\n        assert(n_ >= 0);\n\
-    \    }\n    void add_edge(int from, int to, T cap) {\n        assert(0 <= from\
-    \ && from < n);\n        assert(0 <= to && to < n);\n        assert(cap >= 0);\n\
-    \        assert(from != to);\n        MaxFlowEdge<T> e(to, cap, g[to].size(),\
-    \ false);\n        MaxFlowEdge<T> re(from, 0, g[from].size(), true);\n       \
-    \ g[from].push_back(e);\n        g[to].push_back(re);\n    }\n\n    T max_flow(int\
-    \ s, int t) {\n        assert(0 <= s && s < n);\n        assert(0 <= t && t <\
-    \ n);\n        assert(s != t);\n        T res = 0;\n        while (true) {\n \
-    \           VI dist(n, numeric_limits<int>::max());\n            dist[s] = 0;\n\
-    \            queue<int> que;\n            que.push(s);\n            while(!que.empty())\
+    \    }\n    void add_edge(int from, int to, T cap) {\n        static_assert(is_integral<T>::value);\n\
+    \        assert(0 <= from && from < n);\n        assert(0 <= to && to < n);\n\
+    \        assert(cap >= 0);\n        assert(from != to);\n        MaxFlowEdge<T>\
+    \ e(to, cap, g[to].size(), false);\n        MaxFlowEdge<T> re(from, 0, g[from].size(),\
+    \ true);\n        g[from].push_back(e);\n        g[to].push_back(re);\n    }\n\
+    \n    T max_flow(int s, int t) {\n        assert(0 <= s && s < n);\n        assert(0\
+    \ <= t && t < n);\n        assert(s != t);\n        T res = 0;\n        while\
+    \ (true) {\n            VI dist(n, numeric_limits<int>::max());\n            dist[s]\
+    \ = 0;\n            queue<int> que;\n            que.push(s);\n            while(!que.empty())\
     \ {\n                int from = que.front(); que.pop();\n                for(auto&\
     \ e : g[from]) {\n                    if(e.cap - e.flow == 0) continue;\n    \
     \                if(dist[e.to] != numeric_limits<int>::max()) continue;\n    \
@@ -147,7 +147,7 @@ data:
   isVerificationFile: true
   path: test/aoj-grl-6-a.test.cpp
   requiredBy: []
-  timestamp: '2022-12-20 05:12:23+09:00'
+  timestamp: '2022-12-20 07:37:47+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/aoj-grl-6-a.test.cpp

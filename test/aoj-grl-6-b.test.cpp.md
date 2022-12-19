@@ -5,18 +5,25 @@ data:
     path: base.hpp
     title: base.hpp
   - icon: ':heavy_check_mark:'
+    path: graph/min-cost-flow.hpp
+    title: graph/min-cost-flow.hpp
+  - icon: ':heavy_check_mark:'
     path: stl-expansion.hpp
     title: stl-expansion.hpp
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
   _isVerificationFailed: false
-  _pathExtension: hpp
-  _verificationStatusIcon: ':warning:'
+  _pathExtension: cpp
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    links: []
-  bundledCode: "#line 2 \"stl-expansion.hpp\"\n#include <bits/stdc++.h>\n\ntemplate\
-    \ <typename T1, typename T2>\nstd::istream& operator>>(std::istream& is, std::pair<T1,\
-    \ T2>& p) {\n    is >> p.first >> p.second;\n    return is;\n}\ntemplate <typename\
+    '*NOT_SPECIAL_COMMENTS*': ''
+    PROBLEM: http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_6_B
+    links:
+    - http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_6_B
+  bundledCode: "#line 1 \"test/aoj-grl-6-b.test.cpp\"\n#define PROBLEM \"http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_6_B\"\
+    \n#line 2 \"stl-expansion.hpp\"\n#include <bits/stdc++.h>\n\ntemplate <typename\
+    \ T1, typename T2>\nstd::istream& operator>>(std::istream& is, std::pair<T1, T2>&\
+    \ p) {\n    is >> p.first >> p.second;\n    return is;\n}\ntemplate <typename\
     \ T, size_t N>\nstd::istream& operator>>(std::istream& is, std::array<T, N>& a)\
     \ {\n    for (size_t i = 0; i < N; ++i) {\n        is >> a[i];\n    }\n    return\
     \ is;\n}\ntemplate <typename T>\nstd::istream& operator>>(std::istream& is, std::vector<T>&\
@@ -82,29 +89,73 @@ data:
     \ {\n    vector<T> res(n+1), rev(n+1);\n    res[0] = 1;\n    REP(i, n) res[i+1]\
     \ = res[i] * (i+1);\n    rev[n] = 1 / res[n];\n    for(int i = n; i > 0; i--)\
     \ {\n        rev[i-1] = rev[i] * i;\n    }\n    return make_pair(res, rev);\n\
-    }\n#line 3 \"integer/least-prime-factors.hpp\"\n\nVI least_prime_factors(int n)\
-    \ {\n    assert(n > 0);\n    VI lpfs(n+1, -1), primes;\n    FOR(d, 2, n+1) {\n\
-    \        if(lpfs[d] == -1) {\n            lpfs[d] = d;\n            primes.push_back(d);\n\
-    \        }\n        for(int p : primes) {\n            if(p * d > n || p > lpfs[d])\
-    \ break;\n            lpfs[p*d] = p;\n        }\n    }\n    return lpfs;\n}\n"
-  code: "#pragma once\n#include \"../base.hpp\"\n\nVI least_prime_factors(int n) {\n\
-    \    assert(n > 0);\n    VI lpfs(n+1, -1), primes;\n    FOR(d, 2, n+1) {\n   \
-    \     if(lpfs[d] == -1) {\n            lpfs[d] = d;\n            primes.push_back(d);\n\
-    \        }\n        for(int p : primes) {\n            if(p * d > n || p > lpfs[d])\
-    \ break;\n            lpfs[p*d] = p;\n        }\n    }\n    return lpfs;\n}\n"
+    }\n#line 3 \"graph/min-cost-flow.hpp\"\n\ntemplate <typename T=int>\nstruct MinCostFlowEdge\
+    \ {\n    int to;\n    T cap, cost, flow;\n    int rev;\n    bool is_rev;\n   \
+    \ MinCostFlowEdge(int to, T cap, T cost, int rev, bool is_rev)\n        : to(to),\
+    \ cap(cap), cost(cost), flow(0), rev(rev), is_rev(is_rev) {}\n};\n\ntemplate <typename\
+    \ T=int>\nstruct MinCostFlowGraph {\n    int n;\n    vector<vector<MinCostFlowEdge<T>>>\
+    \ g;\n    vector<T> h;\n    MinCostFlowGraph(int n) : n(n), g(n), h(n) {\n   \
+    \     static_assert(is_integral<T>::value);\n        assert(n > 0);\n    }\n \
+    \   void add_edge(int from, int to, T cap, T cost) {\n        assert(0 <= from\
+    \ && from < n && 0 <= to && to < n);\n        assert(cap >= 0);\n        assert(cost\
+    \ >= 0);\n        MinCostFlowEdge<T> e(to, cap, cost, g[to].size(), false);\n\
+    \        MinCostFlowEdge<T> re(from, 0, -cost, g[from].size(), true);\n      \
+    \  g[from].push_back(e);\n        g[to].push_back(re);\n    }\n    pair<T, T>\
+    \ min_cost_one_flow(int s, int t, T f=numeric_limits<T>::max()) {\n        assert(0\
+    \ <= s && s < n && 0 <= t && t < n);\n        assert(s != t);\n        vector<T>\
+    \ dist(n, numeric_limits<T>::max());\n        dist[s] = 0;\n        vector<int>\
+    \ pre(n);\n        GPQ<pair<T, int>> pq;\n        pq.emplace(0, s);\n        while(!pq.empty())\
+    \ {\n            auto [d, u] = pq.top(); pq.pop();\n            if(dist[u] < d)\
+    \ continue;\n            REP(i, g[u].size()) {\n                auto& e = g[u][i];\n\
+    \                if(e.cap > e.flow && chmin(dist[e.to], dist[u] + e.cost + h[u]\
+    \ - h[e.to])) {\n                    pre[e.to] = e.rev;\n                    pq.emplace(dist[e.to],\
+    \ e.to);\n                }\n            }\n        }\n        if(dist[t] == numeric_limits<T>::max())\
+    \ return {0, 0};\n        REP(i, n) h[i] += dist[i];\n        for(int u = t; u\
+    \ != s; u = g[u][pre[u]].to) {\n            auto& e = g[g[u][pre[u]].to][g[u][pre[u]].rev];\n\
+    \            chmin(f, e.cap - e.flow);\n        }\n        for(int u = t; u !=\
+    \ s; u = g[u][pre[u]].to) {\n            auto& e = g[g[u][pre[u]].to][g[u][pre[u]].rev];\n\
+    \            e.flow += f;\n            g[u][pre[u]].flow -= f;\n        }\n  \
+    \      return {f, f * (h[t] - h[s])};\n    }\n    pair<T, T> min_cost_flow(int\
+    \ s, int t, T f) {\n        assert(0 <= s && s < n && 0 <= t && t < n);\n    \
+    \    assert(s != t);\n        T flow = 0, cost = 0;\n        while(f > 0) {\n\
+    \            auto [cur_flow, cur_cost] = min_cost_one_flow(s, t, f);\n       \
+    \     if(cur_flow == 0) break;\n            flow += cur_flow;\n            cost\
+    \ += cur_cost;\n            f -= cur_flow;\n        }\n        return {flow, cost};\n\
+    \    }\n    vector<pair<T, T>> min_cost_slope(int s, int t, T f = numeric_limits<T>::max())\
+    \ {\n        assert(0 <= s && s < n && 0 <= t && t < n);\n        assert(s !=\
+    \ t);\n        vector<pair<T, T>> res;\n        res.emplace_back(0, 0);\n    \
+    \    T flow = 0, cost = 0;\n        pair<T, T> prev_rate = {0, 0};\n        while(f\
+    \ > 0) {\n            auto [cur_flow, cur_cost] = min_cost_one_flow(s, t, f);\n\
+    \            if(cur_flow == 0) break;\n            flow += cur_flow;\n       \
+    \     cost += cur_cost;\n            f -= cur_flow;\n            T g = gcd(cur_cost,\
+    \ cur_flow);\n            if(prev_rate == make_pair(cur_cost / g, cur_flow / g))\
+    \ {\n                res.pop_back();\n            } else {\n                prev_rate\
+    \ = {cur_cost / g, cur_flow / g};\n            }\n            res.emplace_back(flow,\
+    \ cost);\n        }\n        return res;\n    }\n};\n#line 3 \"test/aoj-grl-6-b.test.cpp\"\
+    \n\nint main() {\n    int v, e, f; cin >> v >> e >> f;\n    MinCostFlowGraph g(v);\n\
+    \    for (int i = 0; i < e; i++) {\n        int u, v, c, d; cin >> u >> v >> c\
+    \ >> d;\n        g.add_edge(u, v, c, d);\n    }\n    auto [flow, cost] = g.min_cost_flow(0,\
+    \ v - 1, f);\n    print(flow < f ? -1 : cost);\n}\n"
+  code: "#define PROBLEM \"http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_6_B\"\
+    \n#include \"../graph/min-cost-flow.hpp\"\n\nint main() {\n    int v, e, f; cin\
+    \ >> v >> e >> f;\n    MinCostFlowGraph g(v);\n    for (int i = 0; i < e; i++)\
+    \ {\n        int u, v, c, d; cin >> u >> v >> c >> d;\n        g.add_edge(u, v,\
+    \ c, d);\n    }\n    auto [flow, cost] = g.min_cost_flow(0, v - 1, f);\n    print(flow\
+    \ < f ? -1 : cost);\n}\n"
   dependsOn:
+  - graph/min-cost-flow.hpp
   - base.hpp
   - stl-expansion.hpp
-  isVerificationFile: false
-  path: integer/least-prime-factors.hpp
+  isVerificationFile: true
+  path: test/aoj-grl-6-b.test.cpp
   requiredBy: []
   timestamp: '2022-12-20 07:37:47+09:00'
-  verificationStatus: LIBRARY_NO_TESTS
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
-documentation_of: integer/least-prime-factors.hpp
+documentation_of: test/aoj-grl-6-b.test.cpp
 layout: document
 redirect_from:
-- /library/integer/least-prime-factors.hpp
-- /library/integer/least-prime-factors.hpp.html
-title: integer/least-prime-factors.hpp
+- /verify/test/aoj-grl-6-b.test.cpp
+- /verify/test/aoj-grl-6-b.test.cpp.html
+title: test/aoj-grl-6-b.test.cpp
 ---

@@ -63,6 +63,9 @@ data:
     path: graph/max-flow.hpp
     title: graph/max-flow.hpp
   - icon: ':heavy_check_mark:'
+    path: graph/min-cost-flow.hpp
+    title: graph/min-cost-flow.hpp
+  - icon: ':heavy_check_mark:'
     path: graph/tree.hpp
     title: graph/tree.hpp
   - icon: ':heavy_check_mark:'
@@ -172,6 +175,9 @@ data:
     path: test/aoj-grl-6-a.test.cpp
     title: test/aoj-grl-6-a.test.cpp
   - icon: ':heavy_check_mark:'
+    path: test/aoj-grl-6-b.test.cpp
+    title: test/aoj-grl-6-b.test.cpp
+  - icon: ':heavy_check_mark:'
     path: test/aoj-itp-1-3-d.test.cpp
     title: test/aoj-itp-1-3-d.test.cpp
   - icon: ':heavy_check_mark:'
@@ -271,6 +277,7 @@ data:
   - graph/max-flow.hpp
   - graph/graph.hpp
   - graph/tree.hpp
+  - graph/min-cost-flow.hpp
   - convolution/fft.hpp
   - convolution/ntt.hpp
   - segtree/wavelet-matrix.hpp
@@ -285,10 +292,11 @@ data:
   - connectivity/union-find.hpp
   - bit/bitset.hpp
   - operator.hpp
-  timestamp: '2022-12-20 05:12:23+09:00'
+  timestamp: '2022-12-20 07:37:47+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/aoj-ntl-1-b.test.cpp
+  - test/aoj-grl-6-b.test.cpp
   - test/aoj-cgl-3-b.test.cpp
   - test/aoj-ntl-1-e.test.cpp
   - test/aoj-dpl-5-j.test.cpp
