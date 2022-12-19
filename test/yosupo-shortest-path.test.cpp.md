@@ -187,7 +187,7 @@ data:
   isVerificationFile: true
   path: test/yosupo-shortest-path.test.cpp
   requiredBy: []
-  timestamp: '2022-12-18 23:57:03+09:00'
+  timestamp: '2022-12-19 21:32:47+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/yosupo-shortest-path.test.cpp

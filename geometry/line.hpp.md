@@ -382,7 +382,7 @@ data:
   requiredBy:
   - geometry/polygon.hpp
   - geometry/segment.hpp
-  timestamp: '2022-12-18 23:57:03+09:00'
+  timestamp: '2022-12-19 21:32:47+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/aoj-cgl-3-b.test.cpp

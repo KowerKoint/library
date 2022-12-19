@@ -212,7 +212,7 @@ data:
     \ a, ll b, ll& x, ll& y) {\n    x = 1, y = 0;\n    ll nx = 0, ny = 1;\n    while(b)\
     \ {\n        ll q = a / b;\n        tie(a, b) = LP(b, a % b);\n        tie(x,\
     \ nx) = LP(nx, x - nx*q);\n        tie(y, ny) = LP(ny, y - ny*q);\n    }\n   \
-    \ return a;\n}\n#line 2 \"integer/pow-mod.hpp\"\n\nconstexpr ll inv_mod(ll n,\
+    \ return a;\n}\n#line 3 \"integer/pow-mod.hpp\"\n\nconstexpr ll inv_mod(ll n,\
     \ ll m) {\n    n %= m;\n    if (n < 0) n += m;\n    ll x = -1, y = -1;\n    if(extgcd(n,\
     \ m, x, y) != 1) throw logic_error(\"\");\n    x %= m;\n    if(x < 0) x += m;\n\
     \    return x;\n}\n\nconstexpr ll pow_mod(ll a, ll n, ll m) {\n    if(n == 0)\
@@ -350,7 +350,7 @@ data:
   isVerificationFile: false
   path: algebra/fps.hpp
   requiredBy: []
-  timestamp: '2022-12-18 23:57:03+09:00'
+  timestamp: '2022-12-19 21:32:47+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/yosupo-convolution.test.cpp

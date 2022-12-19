@@ -285,7 +285,7 @@ data:
   - connectivity/union-find.hpp
   - bit/bitset.hpp
   - operator.hpp
-  timestamp: '2022-12-18 23:57:03+09:00'
+  timestamp: '2022-12-19 21:32:47+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/aoj-ntl-1-b.test.cpp

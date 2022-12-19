@@ -325,7 +325,7 @@ data:
   isVerificationFile: true
   path: test/aoj-cgl-2-a.test.cpp
   requiredBy: []
-  timestamp: '2022-12-18 23:57:03+09:00'
+  timestamp: '2022-12-19 21:32:47+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/aoj-cgl-2-a.test.cpp
