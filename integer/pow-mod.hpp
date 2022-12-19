@@ -1,3 +1,4 @@
+#pragma once
 #include "extgcd.hpp"
 
 constexpr ll inv_mod(ll n, ll m) {
