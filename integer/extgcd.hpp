@@ -6,9 +6,12 @@ constexpr ll extgcd(ll a, ll b, ll& x, ll& y) {
     ll nx = 0, ny = 1;
     while(b) {
         ll q = a / b;
-        tie(a, b) = LP(b, a % b);
-        tie(x, nx) = LP(nx, x - nx*q);
-        tie(y, ny) = LP(ny, y - ny*q);
+        ll r = a % b;
+        a = b, b = r;
+        ll nnx = x - q * nx;
+        ll nny = y - q * ny;
+        x = nx, nx = nnx;
+        y = ny, ny = nny;
     }
     return a;
 }
