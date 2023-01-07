@@ -7,7 +7,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: algebra/modint.hpp
     title: algebra/modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: base.hpp
     title: base.hpp
   - icon: ':heavy_check_mark:'
@@ -16,7 +16,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: integer/pow-mod.hpp
     title: integer/pow-mod.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-expansion.hpp
     title: stl-expansion.hpp
   _extendedRequiredBy: []
@@ -100,36 +100,37 @@ data:
     \ {\n        rev[i-1] = rev[i] * i;\n    }\n    return make_pair(res, rev);\n\
     }\n#line 3 \"integer/extgcd.hpp\"\n\nconstexpr ll extgcd(ll a, ll b, ll& x, ll&\
     \ y) {\n    x = 1, y = 0;\n    ll nx = 0, ny = 1;\n    while(b) {\n        ll\
-    \ q = a / b;\n        tie(a, b) = LP(b, a % b);\n        tie(x, nx) = LP(nx, x\
-    \ - nx*q);\n        tie(y, ny) = LP(ny, y - ny*q);\n    }\n    return a;\n}\n\
-    #line 3 \"integer/pow-mod.hpp\"\n\nconstexpr ll inv_mod(ll n, ll m) {\n    n %=\
-    \ m;\n    if (n < 0) n += m;\n    ll x = -1, y = -1;\n    if(extgcd(n, m, x, y)\
-    \ != 1) throw logic_error(\"\");\n    x %= m;\n    if(x < 0) x += m;\n    return\
-    \ x;\n}\n\nconstexpr ll pow_mod(ll a, ll n, ll m) {\n    if(n == 0) return 1LL;\n\
-    \    if(n < 0) return inv_mod(pow_mod(a, -n, m), m);\n    a %= m;\n    if (a <\
-    \ 0) n += m;\n    ll res = 1;\n    while(n) {\n        if(n & 1) {\n         \
-    \   res *= a;\n            res %= m;\n        }\n        n >>= 1;\n        a *=\
-    \ a;\n        a %= m;\n    }\n    return res;\n}\n#line 3 \"algebra/field.hpp\"\
-    \n\ntemplate <typename T>\nstruct SumGroupBase {\n    constexpr static bool defzero\
-    \ = false;\n    using Coef = nullptr_t;\n    using Scalar = nullptr_t;\n};\ntemplate\
-    \ <typename T>\nstruct ProdGroupBase {\n    constexpr static bool defone = false;\n\
-    };\ntemplate <typename T>\nstruct RepresentationBase {\n    using R = T;\n   \
-    \ constexpr static T construct(const R& x) { return x; }\n    constexpr static\
-    \ R represent(const T& x) { return x; }\n};\ntemplate <typename T>\nstruct CompareBase\
-    \ {\n    constexpr static bool eq(const T& x, const T& y) { return x == y; }\n\
-    \    constexpr static bool lt(const T& x, const T& y) { return x < y; }\n};\n\
-    template <typename T>\nstruct FinitePropertyBase {\n    constexpr static bool\
-    \ is_finite = false;\n};\n\ntemplate <typename T, typename SumGroup = SumGroupBase<T>,\
-    \ typename ProdGroup = ProdGroupBase<T>, typename Representation = RepresentationBase<T>,\
-    \ typename Compare = CompareBase<T>, typename FiniteProperty = FinitePropertyBase<T>>\n\
-    struct Field {\n    using R = typename Representation::R;\n    using Coef = typename\
-    \ SumGroup::Coef;\n    using Scalar = typename SumGroup::Scalar;\n    T val;\n\
-    \    constexpr static Field zero() {\n        return SumGroup::zero;\n    }\n\
-    \    constexpr static Field one() {\n        return ProdGroup::one;\n    }\n \
-    \   constexpr static bool defzero = SumGroup::defzero;\n    constexpr static bool\
-    \ defone = ProdGroup::defone;\n    constexpr static bool is_finite = FiniteProperty::is_finite;\n\
-    \    constexpr Field() {\n        if constexpr(SumGroup::defzero) val = SumGroup::zero;\n\
-    \        else if constexpr(SumGroup::defone) val = ProdGroup::one;\n        else\
+    \ q = a / b;\n        ll r = a % b;\n        a = b, b = r;\n        ll nnx = x\
+    \ - q * nx;\n        ll nny = y - q * ny;\n        x = nx, nx = nnx;\n       \
+    \ y = ny, ny = nny;\n    }\n    return a;\n}\n#line 3 \"integer/pow-mod.hpp\"\n\
+    \nconstexpr ll inv_mod(ll n, ll m) {\n    n %= m;\n    if (n < 0) n += m;\n  \
+    \  ll x = -1, y = -1;\n    if(extgcd(n, m, x, y) != 1) throw logic_error(\"\"\
+    );\n    x %= m;\n    if(x < 0) x += m;\n    return x;\n}\n\nconstexpr ll pow_mod(ll\
+    \ a, ll n, ll m) {\n    if(n == 0) return 1LL;\n    if(n < 0) return inv_mod(pow_mod(a,\
+    \ -n, m), m);\n    a %= m;\n    if (a < 0) n += m;\n    ll res = 1;\n    while(n)\
+    \ {\n        if(n & 1) {\n            res *= a;\n            res %= m;\n     \
+    \   }\n        n >>= 1;\n        a *= a;\n        a %= m;\n    }\n    return res;\n\
+    }\n#line 3 \"algebra/field.hpp\"\n\ntemplate <typename T>\nstruct SumGroupBase\
+    \ {\n    constexpr static bool defzero = false;\n    using Coef = nullptr_t;\n\
+    \    using Scalar = nullptr_t;\n};\ntemplate <typename T>\nstruct ProdGroupBase\
+    \ {\n    constexpr static bool defone = false;\n};\ntemplate <typename T>\nstruct\
+    \ RepresentationBase {\n    using R = T;\n    constexpr static T construct(const\
+    \ R& x) { return x; }\n    constexpr static R represent(const T& x) { return x;\
+    \ }\n};\ntemplate <typename T>\nstruct CompareBase {\n    constexpr static bool\
+    \ eq(const T& x, const T& y) { return x == y; }\n    constexpr static bool lt(const\
+    \ T& x, const T& y) { return x < y; }\n};\ntemplate <typename T>\nstruct FinitePropertyBase\
+    \ {\n    constexpr static bool is_finite = false;\n};\n\ntemplate <typename T,\
+    \ typename SumGroup = SumGroupBase<T>, typename ProdGroup = ProdGroupBase<T>,\
+    \ typename Representation = RepresentationBase<T>, typename Compare = CompareBase<T>,\
+    \ typename FiniteProperty = FinitePropertyBase<T>>\nstruct Field {\n    using\
+    \ R = typename Representation::R;\n    using Coef = typename SumGroup::Coef;\n\
+    \    using Scalar = typename SumGroup::Scalar;\n    T val;\n    constexpr static\
+    \ Field zero() {\n        return SumGroup::zero;\n    }\n    constexpr static\
+    \ Field one() {\n        return ProdGroup::one;\n    }\n    constexpr static bool\
+    \ defzero = SumGroup::defzero;\n    constexpr static bool defone = ProdGroup::defone;\n\
+    \    constexpr static bool is_finite = FiniteProperty::is_finite;\n    constexpr\
+    \ Field() {\n        if constexpr(SumGroup::defzero) val = SumGroup::zero;\n \
+    \       else if constexpr(SumGroup::defone) val = ProdGroup::one;\n        else\
     \ val = T();\n    }\n    constexpr Field(const R& r) : val(Representation::construct(r))\
     \ {}\n    constexpr R represent() const { return Representation::represent(val);\
     \ }\n    constexpr decltype(auto) operator[](size_t i) const {\n        return\
@@ -229,7 +230,7 @@ data:
   isVerificationFile: true
   path: test/aoj-ntl-1-b.test.cpp
   requiredBy: []
-  timestamp: '2022-12-20 07:37:47+09:00'
+  timestamp: '2023-01-07 01:15:40+00:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/aoj-ntl-1-b.test.cpp

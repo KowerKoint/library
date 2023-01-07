@@ -7,13 +7,13 @@ data:
   - icon: ':heavy_check_mark:'
     path: algebra/ratio.hpp
     title: algebra/ratio.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: base.hpp
     title: base.hpp
   - icon: ':heavy_check_mark:'
     path: geometry/point.hpp
     title: geometry/point.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-expansion.hpp
     title: stl-expansion.hpp
   _extendedRequiredBy:
@@ -382,7 +382,7 @@ data:
   requiredBy:
   - geometry/polygon.hpp
   - geometry/segment.hpp
-  timestamp: '2022-12-20 07:37:47+09:00'
+  timestamp: '2023-01-07 01:15:40+00:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/aoj-cgl-3-b.test.cpp

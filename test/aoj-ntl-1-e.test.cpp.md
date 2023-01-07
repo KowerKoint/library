@@ -1,13 +1,13 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: base.hpp
     title: base.hpp
   - icon: ':heavy_check_mark:'
     path: integer/extgcd.hpp
     title: integer/extgcd.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-expansion.hpp
     title: stl-expansion.hpp
   _extendedRequiredBy: []
@@ -91,10 +91,11 @@ data:
     \ {\n        rev[i-1] = rev[i] * i;\n    }\n    return make_pair(res, rev);\n\
     }\n#line 3 \"integer/extgcd.hpp\"\n\nconstexpr ll extgcd(ll a, ll b, ll& x, ll&\
     \ y) {\n    x = 1, y = 0;\n    ll nx = 0, ny = 1;\n    while(b) {\n        ll\
-    \ q = a / b;\n        tie(a, b) = LP(b, a % b);\n        tie(x, nx) = LP(nx, x\
-    \ - nx*q);\n        tie(y, ny) = LP(ny, y - ny*q);\n    }\n    return a;\n}\n\
-    #line 3 \"test/aoj-ntl-1-e.test.cpp\"\n\nint main() {\n    ll a, b; cin >> a >>\
-    \ b;\n    ll x, y;\n    extgcd(a, b, x, y);\n    print(x, y);\n}\n"
+    \ q = a / b;\n        ll r = a % b;\n        a = b, b = r;\n        ll nnx = x\
+    \ - q * nx;\n        ll nny = y - q * ny;\n        x = nx, nx = nnx;\n       \
+    \ y = ny, ny = nny;\n    }\n    return a;\n}\n#line 3 \"test/aoj-ntl-1-e.test.cpp\"\
+    \n\nint main() {\n    ll a, b; cin >> a >> b;\n    ll x, y;\n    extgcd(a, b,\
+    \ x, y);\n    print(x, y);\n}\n"
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=NTL_1_E\"\
     \n#include \"integer/extgcd.hpp\"\n\nint main() {\n    ll a, b; cin >> a >> b;\n\
     \    ll x, y;\n    extgcd(a, b, x, y);\n    print(x, y);\n}\n"
@@ -105,7 +106,7 @@ data:
   isVerificationFile: true
   path: test/aoj-ntl-1-e.test.cpp
   requiredBy: []
-  timestamp: '2022-12-20 07:37:47+09:00'
+  timestamp: '2023-01-07 01:15:40+00:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/aoj-ntl-1-e.test.cpp

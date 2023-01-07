@@ -1,13 +1,13 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: base.hpp
     title: base.hpp
   - icon: ':heavy_check_mark:'
     path: integer/kth-root-integer.hpp
     title: integer/kth-root-integer.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-expansion.hpp
     title: stl-expansion.hpp
   _extendedRequiredBy: []
@@ -109,7 +109,7 @@ data:
   isVerificationFile: true
   path: test/yosupo-kth-root-integer.test.cpp
   requiredBy: []
-  timestamp: '2022-12-20 07:37:47+09:00'
+  timestamp: '2023-01-07 01:15:40+00:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/yosupo-kth-root-integer.test.cpp

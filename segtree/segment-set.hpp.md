@@ -7,29 +7,14 @@ data:
   - icon: ':question:'
     path: stl-expansion.hpp
     title: stl-expansion.hpp
-  _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
-    path: matrix/matrix.hpp
-    title: matrix/matrix.hpp
-  - icon: ':heavy_check_mark:'
-    path: segtree/lazy-segtree.hpp
-    title: segtree/lazy-segtree.hpp
-  - icon: ':heavy_check_mark:'
-    path: segtree/segtree.hpp
-    title: segtree/segtree.hpp
+  _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
-    path: test/aoj-dsl-2-a.test.cpp
-    title: test/aoj-dsl-2-a.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: test/yosupo-determinant-of-matrix.test.cpp
-    title: test/yosupo-determinant-of-matrix.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: test/yosupo-range-affine-range-sum.test.cpp
-    title: test/yosupo-range-affine-range-sum.test.cpp
-  _isVerificationFailed: false
+  - icon: ':x:'
+    path: test/yukicoder-674.test.cpp
+    title: test/yukicoder-674.test.cpp
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     links: []
   bundledCode: "#line 2 \"stl-expansion.hpp\"\n#include <bits/stdc++.h>\n\ntemplate\
@@ -100,102 +85,56 @@ data:
     \ {\n    vector<T> res(n+1), rev(n+1);\n    res[0] = 1;\n    REP(i, n) res[i+1]\
     \ = res[i] * (i+1);\n    rev[n] = 1 / res[n];\n    for(int i = n; i > 0; i--)\
     \ {\n        rev[i-1] = rev[i] * i;\n    }\n    return make_pair(res, rev);\n\
-    }\n#line 3 \"operator.hpp\"\n\ntemplate <typename T>\nT add_op(T a, T b) { return\
-    \ a + b; }\ntemplate <typename T>\nT sub_op(T a, T b) { return a - b; }\ntemplate\
-    \ <typename T>\nT zero_e() { return T(0); }\ntemplate <typename T>\nT div_op(T\
-    \ a, T b) { return a / b; }\ntemplate <typename T>\nT mult_op(T a, T b) { return\
-    \ a * b; }\ntemplate <typename T>\nT one_e() { return T(1); }\ntemplate <typename\
-    \ T>\nT xor_op(T a, T b) { return a ^ b; }\ntemplate <typename T>\nT and_op(T\
-    \ a, T b) { return a & b; }\ntemplate <typename T>\nT or_op(T a, T b) { return\
-    \ a | b; }\nll mod3() { return 998244353LL; }\nll mod7() { return 1000000007LL;\
-    \ }\nll mod9() { return 1000000009LL; }\ntemplate <typename T>\nT max_op(T a,\
-    \ T b) { return max(a, b); }\ntemplate <typename T>\nT min_op(T a, T b) { return\
-    \ min(a, b); }\n\ntemplate <typename T>\nT max_e() { return numeric_limits<T>::max();\
-    \ }\ntemplate <typename T>\nT min_e() { return numeric_limits<T>::min(); }\n"
-  code: '#pragma once
-
-    #include "base.hpp"
-
-
-    template <typename T>
-
-    T add_op(T a, T b) { return a + b; }
-
-    template <typename T>
-
-    T sub_op(T a, T b) { return a - b; }
-
-    template <typename T>
-
-    T zero_e() { return T(0); }
-
-    template <typename T>
-
-    T div_op(T a, T b) { return a / b; }
-
-    template <typename T>
-
-    T mult_op(T a, T b) { return a * b; }
-
-    template <typename T>
-
-    T one_e() { return T(1); }
-
-    template <typename T>
-
-    T xor_op(T a, T b) { return a ^ b; }
-
-    template <typename T>
-
-    T and_op(T a, T b) { return a & b; }
-
-    template <typename T>
-
-    T or_op(T a, T b) { return a | b; }
-
-    ll mod3() { return 998244353LL; }
-
-    ll mod7() { return 1000000007LL; }
-
-    ll mod9() { return 1000000009LL; }
-
-    template <typename T>
-
-    T max_op(T a, T b) { return max(a, b); }
-
-    template <typename T>
-
-    T min_op(T a, T b) { return min(a, b); }
-
-
-    template <typename T>
-
-    T max_e() { return numeric_limits<T>::max(); }
-
-    template <typename T>
-
-    T min_e() { return numeric_limits<T>::min(); }
-
-    '
+    }\n#line 3 \"segtree/segment-set.hpp\"\n\ntemplate <typename T, T neighbor=1>\n\
+    struct SegmentSet {\n    map<T, T> segments;\n    using It = typename map<T, T>::iterator;\n\
+    \n    It get(T x) const {\n        auto it = segments.upper_bound(x);\n      \
+    \  if (it == segments.begin()) return segments.end();\n        return prev(it);\n\
+    \    }\n\n    bool contains(T x) const {\n        return get(x) != segments.end();\n\
+    \    }\n\n    It insert(T l, T r) {\n        auto it = segments.upper_bound(l);\n\
+    \        if(it != segments.begin() && prev(it)->second + neighbor >= l) {\n  \
+    \          it = prev(it);\n            l = it->first;\n        }\n        while(it\
+    \ != segments.end() && it->first <= r + neighbor) {\n            r = max(r, it->second);\n\
+    \            it = segments.erase(it);\n        }\n        return segments.emplace_hint(it,\
+    \ l, r);\n    }\n\n    // not verified\n    void erase(T l, T r) {\n        auto\
+    \ it = segments.upper_bound(l);\n        if(it != segments.begin() && prev(it)->second\
+    \ + neighbor > l) {\n            it = prev(it);\n        }\n        while(it !=\
+    \ segments.end() && it->first < r + neighbor) {\n            T nl = it->first,\
+    \ nr = it->second;\n            if(nl + neighbor < l) {\n                segments.emplace(nl,\
+    \ l - neighbor);\n            }\n            if(r + neighbor < nr) {\n       \
+    \         segments.emplace(r + neighbor, nr);\n            }\n            it =\
+    \ segments.erase(it);\n        }\n    }\n};\n"
+  code: "#pragma once\n#include \"../base.hpp\"\n\ntemplate <typename T, T neighbor=1>\n\
+    struct SegmentSet {\n    map<T, T> segments;\n    using It = typename map<T, T>::iterator;\n\
+    \n    It get(T x) const {\n        auto it = segments.upper_bound(x);\n      \
+    \  if (it == segments.begin()) return segments.end();\n        return prev(it);\n\
+    \    }\n\n    bool contains(T x) const {\n        return get(x) != segments.end();\n\
+    \    }\n\n    It insert(T l, T r) {\n        auto it = segments.upper_bound(l);\n\
+    \        if(it != segments.begin() && prev(it)->second + neighbor >= l) {\n  \
+    \          it = prev(it);\n            l = it->first;\n        }\n        while(it\
+    \ != segments.end() && it->first <= r + neighbor) {\n            r = max(r, it->second);\n\
+    \            it = segments.erase(it);\n        }\n        return segments.emplace_hint(it,\
+    \ l, r);\n    }\n\n    // not verified\n    void erase(T l, T r) {\n        auto\
+    \ it = segments.upper_bound(l);\n        if(it != segments.begin() && prev(it)->second\
+    \ + neighbor > l) {\n            it = prev(it);\n        }\n        while(it !=\
+    \ segments.end() && it->first < r + neighbor) {\n            T nl = it->first,\
+    \ nr = it->second;\n            if(nl + neighbor < l) {\n                segments.emplace(nl,\
+    \ l - neighbor);\n            }\n            if(r + neighbor < nr) {\n       \
+    \         segments.emplace(r + neighbor, nr);\n            }\n            it =\
+    \ segments.erase(it);\n        }\n    }\n};\n"
   dependsOn:
   - base.hpp
   - stl-expansion.hpp
   isVerificationFile: false
-  path: operator.hpp
-  requiredBy:
-  - matrix/matrix.hpp
-  - segtree/lazy-segtree.hpp
-  - segtree/segtree.hpp
+  path: segtree/segment-set.hpp
+  requiredBy: []
   timestamp: '2023-01-07 01:15:40+00:00'
-  verificationStatus: LIBRARY_ALL_AC
+  verificationStatus: LIBRARY_ALL_WA
   verifiedWith:
-  - test/yosupo-determinant-of-matrix.test.cpp
-  - test/yosupo-range-affine-range-sum.test.cpp
-  - test/aoj-dsl-2-a.test.cpp
-documentation_of: operator.hpp
+  - test/yukicoder-674.test.cpp
+documentation_of: segtree/segment-set.hpp
 layout: document
 redirect_from:
-- /library/operator.hpp
-- /library/operator.hpp.html
-title: operator.hpp
+- /library/segtree/segment-set.hpp
+- /library/segtree/segment-set.hpp.html
+title: segtree/segment-set.hpp
 ---

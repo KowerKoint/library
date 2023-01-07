@@ -10,7 +10,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: algebra/modint.hpp
     title: algebra/modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: base.hpp
     title: base.hpp
   - icon: ':heavy_check_mark:'
@@ -25,7 +25,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: integer/pow-mod.hpp
     title: integer/pow-mod.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-expansion.hpp
     title: stl-expansion.hpp
   _extendedRequiredBy: []
@@ -214,28 +214,29 @@ data:
     \    for(int i = 0; i < (int)res.size(); i++) {\n        ret[i] = round(res[i].real());\n\
     \    }\n    return ret;\n}\n#line 3 \"integer/extgcd.hpp\"\n\nconstexpr ll extgcd(ll\
     \ a, ll b, ll& x, ll& y) {\n    x = 1, y = 0;\n    ll nx = 0, ny = 1;\n    while(b)\
-    \ {\n        ll q = a / b;\n        tie(a, b) = LP(b, a % b);\n        tie(x,\
-    \ nx) = LP(nx, x - nx*q);\n        tie(y, ny) = LP(ny, y - ny*q);\n    }\n   \
-    \ return a;\n}\n#line 3 \"integer/pow-mod.hpp\"\n\nconstexpr ll inv_mod(ll n,\
-    \ ll m) {\n    n %= m;\n    if (n < 0) n += m;\n    ll x = -1, y = -1;\n    if(extgcd(n,\
-    \ m, x, y) != 1) throw logic_error(\"\");\n    x %= m;\n    if(x < 0) x += m;\n\
-    \    return x;\n}\n\nconstexpr ll pow_mod(ll a, ll n, ll m) {\n    if(n == 0)\
-    \ return 1LL;\n    if(n < 0) return inv_mod(pow_mod(a, -n, m), m);\n    a %= m;\n\
-    \    if (a < 0) n += m;\n    ll res = 1;\n    while(n) {\n        if(n & 1) {\n\
-    \            res *= a;\n            res %= m;\n        }\n        n >>= 1;\n \
-    \       a *= a;\n        a %= m;\n    }\n    return res;\n}\n#line 4 \"algebra/modint.hpp\"\
-    \n\ntemplate <ll mod>\nstruct SumGroupModint : SumGroupBase<ll> {\n    static\
-    \ ll& addassign(ll& l, const ll& r) {\n        ll ret;\n        if(__builtin_add_overflow(l,\
-    \ r, &ret)) {\n            l = l % mod + r % mod;\n        } else {\n        \
-    \    l = ret;\n        }\n        return l;\n    }\n    constexpr static bool\
-    \ defzero = true;\n    constexpr static ll zero = 0;\n    constexpr static ll\
-    \ minus(const ll& x) {\n        return -x;\n    }\n};\ntemplate <ll mod>\nstruct\
-    \ ProdGroupModint : ProdGroupBase<ll> {\n    constexpr static bool defmul = true;\n\
-    \    static ll& mulassign(ll& l, const ll& r) {\n        ll ret;\n        if(__builtin_mul_overflow(l,\
-    \ r, &ret)) {\n            l = (l % mod) * (r % mod);\n        } else {\n    \
-    \        l = ret;\n        }\n        return l;\n    }\n    constexpr static bool\
-    \ defone = true;\n    constexpr static ll one = 1;\n    constexpr static bool\
-    \ definv = true;\n    constexpr static ll inv(const ll& x) {\n        return inv_mod(x,\
+    \ {\n        ll q = a / b;\n        ll r = a % b;\n        a = b, b = r;\n   \
+    \     ll nnx = x - q * nx;\n        ll nny = y - q * ny;\n        x = nx, nx =\
+    \ nnx;\n        y = ny, ny = nny;\n    }\n    return a;\n}\n#line 3 \"integer/pow-mod.hpp\"\
+    \n\nconstexpr ll inv_mod(ll n, ll m) {\n    n %= m;\n    if (n < 0) n += m;\n\
+    \    ll x = -1, y = -1;\n    if(extgcd(n, m, x, y) != 1) throw logic_error(\"\"\
+    );\n    x %= m;\n    if(x < 0) x += m;\n    return x;\n}\n\nconstexpr ll pow_mod(ll\
+    \ a, ll n, ll m) {\n    if(n == 0) return 1LL;\n    if(n < 0) return inv_mod(pow_mod(a,\
+    \ -n, m), m);\n    a %= m;\n    if (a < 0) n += m;\n    ll res = 1;\n    while(n)\
+    \ {\n        if(n & 1) {\n            res *= a;\n            res %= m;\n     \
+    \   }\n        n >>= 1;\n        a *= a;\n        a %= m;\n    }\n    return res;\n\
+    }\n#line 4 \"algebra/modint.hpp\"\n\ntemplate <ll mod>\nstruct SumGroupModint\
+    \ : SumGroupBase<ll> {\n    static ll& addassign(ll& l, const ll& r) {\n     \
+    \   ll ret;\n        if(__builtin_add_overflow(l, r, &ret)) {\n            l =\
+    \ l % mod + r % mod;\n        } else {\n            l = ret;\n        }\n    \
+    \    return l;\n    }\n    constexpr static bool defzero = true;\n    constexpr\
+    \ static ll zero = 0;\n    constexpr static ll minus(const ll& x) {\n        return\
+    \ -x;\n    }\n};\ntemplate <ll mod>\nstruct ProdGroupModint : ProdGroupBase<ll>\
+    \ {\n    constexpr static bool defmul = true;\n    static ll& mulassign(ll& l,\
+    \ const ll& r) {\n        ll ret;\n        if(__builtin_mul_overflow(l, r, &ret))\
+    \ {\n            l = (l % mod) * (r % mod);\n        } else {\n            l =\
+    \ ret;\n        }\n        return l;\n    }\n    constexpr static bool defone\
+    \ = true;\n    constexpr static ll one = 1;\n    constexpr static bool definv\
+    \ = true;\n    constexpr static ll inv(const ll& x) {\n        return inv_mod(x,\
     \ mod);\n    }\n};\ntemplate <ll mod>\nstruct RepresentationModint : RepresentationBase<ll>\
     \ {\n    using R = ll;\n    constexpr static ll construct(const R& x) { return\
     \ x % mod; }\n    constexpr static R represent(const ll& x) {\n        ll ret\
@@ -330,7 +331,7 @@ data:
   isVerificationFile: true
   path: test/yosupo-convolution.test.cpp
   requiredBy: []
-  timestamp: '2022-12-20 07:37:47+09:00'
+  timestamp: '2023-01-07 01:15:40+00:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/yosupo-convolution.test.cpp

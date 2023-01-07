@@ -1,7 +1,7 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: base.hpp
     title: base.hpp
   - icon: ':heavy_check_mark:'
@@ -10,7 +10,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: integer/kth-root-integer.hpp
     title: integer/kth-root-integer.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: stl-expansion.hpp
     title: stl-expansion.hpp
   _extendedRequiredBy: []
@@ -240,7 +240,7 @@ data:
   isVerificationFile: false
   path: integer/prime.hpp
   requiredBy: []
-  timestamp: '2022-12-20 07:37:47+09:00'
+  timestamp: '2023-01-07 01:15:40+00:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/aoj-itp-1-3-d.test.cpp
