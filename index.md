@@ -20,7 +20,7 @@ data:
       title: algebra/ratio.hpp
   - name: .
     pages:
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: base.hpp
       title: base.hpp
     - icon: ':warning:'
@@ -29,7 +29,7 @@ data:
     - icon: ':heavy_check_mark:'
       path: operator.hpp
       title: operator.hpp
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: stl-expansion.hpp
       title: stl-expansion.hpp
     - icon: ':warning:'
@@ -122,7 +122,7 @@ data:
     - icon: ':heavy_check_mark:'
       path: segtree/lazy-segtree.hpp
       title: segtree/lazy-segtree.hpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: segtree/segment-set.hpp
       title: segtree/segment-set.hpp
     - icon: ':heavy_check_mark:'
@@ -248,7 +248,7 @@ data:
     - icon: ':heavy_check_mark:'
       path: test/yosupo-static-range-frequency.test.cpp
       title: test/yosupo-static-range-frequency.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: test/yukicoder-674.test.cpp
       title: test/yukicoder-674.test.cpp
 layout: toppage

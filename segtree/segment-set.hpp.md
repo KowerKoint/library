@@ -1,20 +1,20 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: base.hpp
     title: base.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-expansion.hpp
     title: stl-expansion.hpp
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: test/yukicoder-674.test.cpp
     title: test/yukicoder-674.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"stl-expansion.hpp\"\n#include <bits/stdc++.h>\n\ntemplate\
@@ -87,48 +87,56 @@ data:
     \ {\n        rev[i-1] = rev[i] * i;\n    }\n    return make_pair(res, rev);\n\
     }\n#line 3 \"segtree/segment-set.hpp\"\n\ntemplate <typename T, T neighbor=1>\n\
     struct SegmentSet {\n    map<T, T> segments;\n    using It = typename map<T, T>::iterator;\n\
-    \n    It get(T x) const {\n        auto it = segments.upper_bound(x);\n      \
-    \  if (it == segments.begin()) return segments.end();\n        return prev(it);\n\
+    \    using CIt = typename map<T, T>::const_iterator;\n\n    It begin() { return\
+    \ segments.begin(); }\n    It end() { return segments.end(); }\n    CIt begin()\
+    \ const { return segments.begin(); }\n    CIt end() const { return segments.end();\
+    \ }\n\n    CIt get(T x) const {\n        CIt it = segments.upper_bound(x);\n \
+    \       if (it == segments.begin()) return segments.end();\n        it--;\n  \
+    \      if (it->first <= x && x <= it->second) return it;\n        return segments.end();\n\
     \    }\n\n    bool contains(T x) const {\n        return get(x) != segments.end();\n\
-    \    }\n\n    It insert(T l, T r) {\n        auto it = segments.upper_bound(l);\n\
+    \    }\n\n    CIt insert(T l, T r) {\n        It it = segments.upper_bound(l);\n\
     \        if(it != segments.begin() && prev(it)->second + neighbor >= l) {\n  \
     \          it = prev(it);\n            l = it->first;\n        }\n        while(it\
     \ != segments.end() && it->first <= r + neighbor) {\n            r = max(r, it->second);\n\
-    \            it = segments.erase(it);\n        }\n        return segments.emplace_hint(it,\
-    \ l, r);\n    }\n\n    // not verified\n    void erase(T l, T r) {\n        auto\
-    \ it = segments.upper_bound(l);\n        if(it != segments.begin() && prev(it)->second\
+    \            it = segments.erase(it);\n        }\n        return segments.emplace(l,\
+    \ r).first;\n    }\n\n    // not verified\n    void erase(T l, T r) {\n      \
+    \  It it = segments.upper_bound(l);\n        if(it != segments.begin() && prev(it)->second\
     \ + neighbor > l) {\n            it = prev(it);\n        }\n        while(it !=\
     \ segments.end() && it->first < r + neighbor) {\n            T nl = it->first,\
     \ nr = it->second;\n            if(nl + neighbor < l) {\n                segments.emplace(nl,\
     \ l - neighbor);\n            }\n            if(r + neighbor < nr) {\n       \
     \         segments.emplace(r + neighbor, nr);\n            }\n            it =\
-    \ segments.erase(it);\n        }\n    }\n};\n"
+    \ segments.erase(it);\n        }\n    }\n};\n\n"
   code: "#pragma once\n#include \"../base.hpp\"\n\ntemplate <typename T, T neighbor=1>\n\
     struct SegmentSet {\n    map<T, T> segments;\n    using It = typename map<T, T>::iterator;\n\
-    \n    It get(T x) const {\n        auto it = segments.upper_bound(x);\n      \
-    \  if (it == segments.begin()) return segments.end();\n        return prev(it);\n\
+    \    using CIt = typename map<T, T>::const_iterator;\n\n    It begin() { return\
+    \ segments.begin(); }\n    It end() { return segments.end(); }\n    CIt begin()\
+    \ const { return segments.begin(); }\n    CIt end() const { return segments.end();\
+    \ }\n\n    CIt get(T x) const {\n        CIt it = segments.upper_bound(x);\n \
+    \       if (it == segments.begin()) return segments.end();\n        it--;\n  \
+    \      if (it->first <= x && x <= it->second) return it;\n        return segments.end();\n\
     \    }\n\n    bool contains(T x) const {\n        return get(x) != segments.end();\n\
-    \    }\n\n    It insert(T l, T r) {\n        auto it = segments.upper_bound(l);\n\
+    \    }\n\n    CIt insert(T l, T r) {\n        It it = segments.upper_bound(l);\n\
     \        if(it != segments.begin() && prev(it)->second + neighbor >= l) {\n  \
     \          it = prev(it);\n            l = it->first;\n        }\n        while(it\
     \ != segments.end() && it->first <= r + neighbor) {\n            r = max(r, it->second);\n\
-    \            it = segments.erase(it);\n        }\n        return segments.emplace_hint(it,\
-    \ l, r);\n    }\n\n    // not verified\n    void erase(T l, T r) {\n        auto\
-    \ it = segments.upper_bound(l);\n        if(it != segments.begin() && prev(it)->second\
+    \            it = segments.erase(it);\n        }\n        return segments.emplace(l,\
+    \ r).first;\n    }\n\n    // not verified\n    void erase(T l, T r) {\n      \
+    \  It it = segments.upper_bound(l);\n        if(it != segments.begin() && prev(it)->second\
     \ + neighbor > l) {\n            it = prev(it);\n        }\n        while(it !=\
     \ segments.end() && it->first < r + neighbor) {\n            T nl = it->first,\
     \ nr = it->second;\n            if(nl + neighbor < l) {\n                segments.emplace(nl,\
     \ l - neighbor);\n            }\n            if(r + neighbor < nr) {\n       \
     \         segments.emplace(r + neighbor, nr);\n            }\n            it =\
-    \ segments.erase(it);\n        }\n    }\n};\n"
+    \ segments.erase(it);\n        }\n    }\n};\n\n"
   dependsOn:
   - base.hpp
   - stl-expansion.hpp
   isVerificationFile: false
   path: segtree/segment-set.hpp
   requiredBy: []
-  timestamp: '2023-01-07 01:15:40+00:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2023-01-07 01:59:41+00:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/yukicoder-674.test.cpp
 documentation_of: segtree/segment-set.hpp

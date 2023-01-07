@@ -1,10 +1,10 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: base.hpp
     title: base.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-expansion.hpp
     title: stl-expansion.hpp
   _extendedRequiredBy:
@@ -161,7 +161,7 @@ data:
   requiredBy:
   - graph/graph.hpp
   - graph/tree.hpp
-  timestamp: '2023-01-07 01:15:40+00:00'
+  timestamp: '2023-01-07 01:59:41+00:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/yosupo-lowest-common-ancestor.test.cpp

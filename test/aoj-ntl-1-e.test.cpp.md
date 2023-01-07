@@ -1,13 +1,13 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: base.hpp
     title: base.hpp
   - icon: ':heavy_check_mark:'
     path: integer/extgcd.hpp
     title: integer/extgcd.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: stl-expansion.hpp
     title: stl-expansion.hpp
   _extendedRequiredBy: []
@@ -106,7 +106,7 @@ data:
   isVerificationFile: true
   path: test/aoj-ntl-1-e.test.cpp
   requiredBy: []
-  timestamp: '2023-01-07 01:15:40+00:00'
+  timestamp: '2023-01-07 01:59:41+00:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/aoj-ntl-1-e.test.cpp

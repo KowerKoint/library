@@ -17,7 +17,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: algebra/ratio.hpp
     title: algebra/ratio.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: base.hpp
     title: base.hpp
   - icon: ':heavy_check_mark:'
@@ -95,7 +95,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: segtree/lazy-segtree.hpp
     title: segtree/lazy-segtree.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: segtree/segment-set.hpp
     title: segtree/segment-set.hpp
   - icon: ':heavy_check_mark:'
@@ -222,12 +222,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: test/yosupo-static-range-frequency.test.cpp
     title: test/yosupo-static-range-frequency.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: test/yukicoder-674.test.cpp
     title: test/yukicoder-674.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"stl-expansion.hpp\"\n#include <bits/stdc++.h>\n\ntemplate\
@@ -299,8 +299,8 @@ data:
   - connectivity/union-find.hpp
   - bit/bitset.hpp
   - operator.hpp
-  timestamp: '2023-01-07 01:15:40+00:00'
-  verificationStatus: LIBRARY_SOME_WA
+  timestamp: '2023-01-07 01:59:41+00:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/aoj-ntl-1-b.test.cpp
   - test/aoj-grl-6-b.test.cpp
