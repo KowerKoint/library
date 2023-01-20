@@ -49,7 +49,7 @@ struct MinCostFlowGraph {
             }
         }
         if(dist[t] == numeric_limits<T>::max()) return {0, 0};
-        REP(i, n) h[i] += dist[i];
+        REP(i, n) if(dist[i] < numeric_limits<T>::max()) h[i] += dist[i];
         for(int u = t; u != s; u = g[u][pre[u]].to) {
             auto& e = g[g[u][pre[u]].to][g[u][pre[u]].rev];
             chmin(f, e.cap - e.flow);
