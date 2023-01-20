@@ -255,7 +255,7 @@ data:
   isVerificationFile: true
   path: test/yosupo-range-chmin-chmax-add-range-sum.test.cpp
   requiredBy: []
-  timestamp: '2023-01-07 01:59:41+00:00'
+  timestamp: '2023-01-21 00:25:23+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/yosupo-range-chmin-chmax-add-range-sum.test.cpp

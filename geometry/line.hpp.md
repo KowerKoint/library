@@ -380,20 +380,20 @@ data:
   isVerificationFile: false
   path: geometry/line.hpp
   requiredBy:
-  - geometry/polygon.hpp
   - geometry/segment.hpp
-  timestamp: '2023-01-07 01:59:41+00:00'
+  - geometry/polygon.hpp
+  timestamp: '2023-01-21 00:25:23+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - test/aoj-cgl-1-a.test.cpp
+  - test/aoj-cgl-4-b.test.cpp
+  - test/aoj-cgl-4-c.test.cpp
   - test/aoj-cgl-3-b.test.cpp
   - test/aoj-cgl-2-a.test.cpp
-  - test/aoj-cgl-4-c.test.cpp
-  - test/aoj-cgl-4-b.test.cpp
   - test/aoj-cgl-1-b.test.cpp
+  - test/aoj-cgl-3-c.test.cpp
   - test/aoj-cgl-3-a.test.cpp
   - test/aoj-cgl-4-a.test.cpp
-  - test/aoj-cgl-3-c.test.cpp
-  - test/aoj-cgl-1-a.test.cpp
 documentation_of: geometry/line.hpp
 layout: document
 redirect_from:

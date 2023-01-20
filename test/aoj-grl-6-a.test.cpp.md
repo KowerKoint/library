@@ -108,33 +108,39 @@ data:
     \                if(dist[e.to] != numeric_limits<int>::max()) continue;\n    \
     \                dist[e.to] = dist[from] + 1;\n                    que.push(e.to);\n\
     \                }\n            }\n            if(dist[t] == numeric_limits<int>::max())\
-    \ break;\n            VI iter(n);\n            while(1) {\n                stack<pair<int,\
-    \ T>> stk;\n                stk.emplace(s, numeric_limits<T>::max());\n      \
-    \          VI pre(n);\n                T flow = 0;\n                while(!stk.empty())\
-    \ {\n                    auto [from, f] = stk.top(); stk.pop();\n            \
-    \        if(from == t && f > 0) {\n                        flow = f;\n       \
-    \                 break;\n                    }\n                    for(int&\
-    \ i = iter[from]; i < (int)g[from].size(); i++) {\n                        auto&\
-    \ e = g[from][i];\n                        if(e.cap - e.flow == 0) continue;\n\
-    \                        if(dist[e.to] != dist[from] + 1) continue;\n        \
-    \                pre[e.to] = e.rev;\n                        stk.emplace(e.to,\
-    \ min(f, e.cap - e.flow));\n                    }\n                }\n       \
-    \         if(flow == 0) break;\n                int cur = t;\n               \
-    \ while(cur != s) {\n                    auto& re = g[cur][pre[cur]];\n      \
-    \              auto& e = g[re.to][re.rev];\n                    e.flow += flow;\n\
-    \                    re.flow -= flow;\n                    cur = re.to;\n    \
-    \            }\n                res += flow;\n            }\n        }\n     \
-    \   return res;\n    }\n    vector<int> min_cut(int s) {\n        assert(0 <=\
-    \ s && s < n);\n        VI seen(n);\n        stack<int> stk;\n        stk.push(s);\n\
-    \        while(!stk.empty()) {\n            int from = stk.top(); stk.pop();\n\
-    \            seen[from] = true;\n            for(auto& e : g[from]) {\n      \
-    \          if(e.cap - e.flow == 0) continue;\n                if(seen[e.to]) continue;\n\
-    \                stk.push(e.to);\n            }\n        }\n        VI res;\n\
-    \        REP(i, n) if(seen[i]) res.push_back(i);\n        return res;\n    }\n\
-    };\n#line 3 \"test/aoj-grl-6-a.test.cpp\"\n\nint main() {\n    int v, e; cin >>\
-    \ v >> e;\n    MaxFlowGraph g(v);\n    REP(i, e) {\n        int a, b, c; cin >>\
-    \ a >> b >> c;\n        g.add_edge(a, b, c);\n    }\n    print(g.max_flow(0, v\
-    \ - 1));\n}\n"
+    \ break;\n            VI iter(n);\n            vector<T> sink_limit(n), sink_flow(n);\n\
+    \            stack<int> stk;\n            stk.push(t);\n            sink_limit[t]\
+    \ = numeric_limits<T>::max();\n            while(!stk.empty()) {\n           \
+    \     int from = stk.top();\n                if(from == s) {\n               \
+    \     sink_flow[from] = sink_limit[from];\n                }\n               \
+    \ if(from == s || sink_limit[from] == 0 || iter[from] == (int)g[from].size())\
+    \ {\n                    stk.pop();\n                    if(!stk.empty()) {\n\
+    \                        int par = stk.top();\n                        auto& re\
+    \ = g[par][iter[par]];\n                        auto& e = g[re.to][re.rev];\n\
+    \                        e.flow += sink_flow[from];\n                        re.flow\
+    \ -= sink_flow[from];\n                        sink_flow[par] += sink_flow[from];\n\
+    \                        sink_limit[par] -= sink_flow[from];\n               \
+    \         if(sink_limit[par] > 0) iter[par]++;\n                    }\n      \
+    \              continue;\n                }\n                while(iter[from]\
+    \ < (int)g[from].size()) {\n                    auto& re = g[from][iter[from]];\n\
+    \                    auto& e = g[re.to][re.rev];\n                    if(e.cap\
+    \ - e.flow == 0 || dist[re.to] >= dist[from]) {\n                        iter[from]++;\n\
+    \                        continue;\n                    }\n                  \
+    \  assert(e.cap - e.flow > 0);\n                    stk.push(re.to);\n       \
+    \             sink_limit[re.to] = min(sink_limit[from], e.cap - e.flow);\n   \
+    \                 sink_flow[re.to] = 0;\n                    break;\n        \
+    \        }\n            }\n            if(sink_flow[t] == 0) break;\n        \
+    \    res += sink_flow[t];\n        }\n        return res;\n    }\n    vector<int>\
+    \ min_cut(int s) {\n        assert(0 <= s && s < n);\n        VI seen(n);\n  \
+    \      stack<int> stk;\n        stk.push(s);\n        while(!stk.empty()) {\n\
+    \            int from = stk.top(); stk.pop();\n            seen[from] = true;\n\
+    \            for(auto& e : g[from]) {\n                if(e.cap - e.flow == 0)\
+    \ continue;\n                if(seen[e.to]) continue;\n                stk.push(e.to);\n\
+    \            }\n        }\n        VI res;\n        REP(i, n) if(seen[i]) res.push_back(i);\n\
+    \        return res;\n    }\n};\n#line 3 \"test/aoj-grl-6-a.test.cpp\"\n\nint\
+    \ main() {\n    int v, e; cin >> v >> e;\n    MaxFlowGraph g(v);\n    REP(i, e)\
+    \ {\n        int a, b, c; cin >> a >> b >> c;\n        g.add_edge(a, b, c);\n\
+    \    }\n    print(g.max_flow(0, v - 1));\n}\n"
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_6_A\"\
     \n#include \"../graph/max-flow.hpp\"\n\nint main() {\n    int v, e; cin >> v >>\
     \ e;\n    MaxFlowGraph g(v);\n    REP(i, e) {\n        int a, b, c; cin >> a >>\
@@ -147,7 +153,7 @@ data:
   isVerificationFile: true
   path: test/aoj-grl-6-a.test.cpp
   requiredBy: []
-  timestamp: '2023-01-07 01:59:41+00:00'
+  timestamp: '2023-01-21 00:25:23+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/aoj-grl-6-a.test.cpp

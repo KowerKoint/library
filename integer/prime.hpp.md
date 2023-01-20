@@ -240,13 +240,13 @@ data:
   isVerificationFile: false
   path: integer/prime.hpp
   requiredBy: []
-  timestamp: '2023-01-07 01:59:41+00:00'
+  timestamp: '2023-01-21 00:25:23+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/aoj-itp-1-3-d.test.cpp
-  - test/yosupo-enumerate-primes.test.cpp
   - test/aoj-alds-1-1-c.test.cpp
   - test/aoj-ntl-1-a.test.cpp
+  - test/yosupo-enumerate-primes.test.cpp
 documentation_of: integer/prime.hpp
 layout: document
 redirect_from:

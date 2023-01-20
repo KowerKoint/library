@@ -106,27 +106,28 @@ data:
     \                if(e.cap > e.flow && chmin(dist[e.to], dist[u] + e.cost + h[u]\
     \ - h[e.to])) {\n                    pre[e.to] = e.rev;\n                    pq.emplace(dist[e.to],\
     \ e.to);\n                }\n            }\n        }\n        if(dist[t] == numeric_limits<T>::max())\
-    \ return {0, 0};\n        REP(i, n) h[i] += dist[i];\n        for(int u = t; u\
-    \ != s; u = g[u][pre[u]].to) {\n            auto& e = g[g[u][pre[u]].to][g[u][pre[u]].rev];\n\
-    \            chmin(f, e.cap - e.flow);\n        }\n        for(int u = t; u !=\
-    \ s; u = g[u][pre[u]].to) {\n            auto& e = g[g[u][pre[u]].to][g[u][pre[u]].rev];\n\
-    \            e.flow += f;\n            g[u][pre[u]].flow -= f;\n        }\n  \
-    \      return {f, f * (h[t] - h[s])};\n    }\n    pair<T, T> min_cost_flow(int\
-    \ s, int t, T f) {\n        assert(0 <= s && s < n && 0 <= t && t < n);\n    \
-    \    assert(s != t);\n        T flow = 0, cost = 0;\n        while(f > 0) {\n\
+    \ return {0, 0};\n        REP(i, n) if(dist[i] < numeric_limits<T>::max()) h[i]\
+    \ += dist[i];\n        for(int u = t; u != s; u = g[u][pre[u]].to) {\n       \
+    \     auto& e = g[g[u][pre[u]].to][g[u][pre[u]].rev];\n            chmin(f, e.cap\
+    \ - e.flow);\n        }\n        for(int u = t; u != s; u = g[u][pre[u]].to) {\n\
+    \            auto& e = g[g[u][pre[u]].to][g[u][pre[u]].rev];\n            e.flow\
+    \ += f;\n            g[u][pre[u]].flow -= f;\n        }\n        return {f, f\
+    \ * (h[t] - h[s])};\n    }\n    pair<T, T> min_cost_flow(int s, int t, T f) {\n\
+    \        assert(0 <= s && s < n && 0 <= t && t < n);\n        assert(s != t);\n\
+    \        T flow = 0, cost = 0;\n        while(f > 0) {\n            auto [cur_flow,\
+    \ cur_cost] = min_cost_one_flow(s, t, f);\n            if(cur_flow == 0) break;\n\
+    \            flow += cur_flow;\n            cost += cur_cost;\n            f -=\
+    \ cur_flow;\n        }\n        return {flow, cost};\n    }\n    vector<pair<T,\
+    \ T>> min_cost_slope(int s, int t, T f = numeric_limits<T>::max()) {\n       \
+    \ assert(0 <= s && s < n && 0 <= t && t < n);\n        assert(s != t);\n     \
+    \   vector<pair<T, T>> res;\n        res.emplace_back(0, 0);\n        T flow =\
+    \ 0, cost = 0;\n        pair<T, T> prev_rate = {0, 0};\n        while(f > 0) {\n\
     \            auto [cur_flow, cur_cost] = min_cost_one_flow(s, t, f);\n       \
     \     if(cur_flow == 0) break;\n            flow += cur_flow;\n            cost\
-    \ += cur_cost;\n            f -= cur_flow;\n        }\n        return {flow, cost};\n\
-    \    }\n    vector<pair<T, T>> min_cost_slope(int s, int t, T f = numeric_limits<T>::max())\
-    \ {\n        assert(0 <= s && s < n && 0 <= t && t < n);\n        assert(s !=\
-    \ t);\n        vector<pair<T, T>> res;\n        res.emplace_back(0, 0);\n    \
-    \    T flow = 0, cost = 0;\n        pair<T, T> prev_rate = {0, 0};\n        while(f\
-    \ > 0) {\n            auto [cur_flow, cur_cost] = min_cost_one_flow(s, t, f);\n\
-    \            if(cur_flow == 0) break;\n            flow += cur_flow;\n       \
-    \     cost += cur_cost;\n            f -= cur_flow;\n            T g = gcd(cur_cost,\
-    \ cur_flow);\n            if(prev_rate == make_pair(cur_cost / g, cur_flow / g))\
-    \ {\n                res.pop_back();\n            } else {\n                prev_rate\
-    \ = {cur_cost / g, cur_flow / g};\n            }\n            res.emplace_back(flow,\
+    \ += cur_cost;\n            f -= cur_flow;\n            T g = gcd(cur_cost, cur_flow);\n\
+    \            if(prev_rate == make_pair(cur_cost / g, cur_flow / g)) {\n      \
+    \          res.pop_back();\n            } else {\n                prev_rate =\
+    \ {cur_cost / g, cur_flow / g};\n            }\n            res.emplace_back(flow,\
     \ cost);\n        }\n        return res;\n    }\n};\n"
   code: "#pragma once\n#include \"../base.hpp\"\n\ntemplate <typename T=int>\nstruct\
     \ MinCostFlowEdge {\n    int to;\n    T cap, cost, flow;\n    int rev;\n    bool\
@@ -149,27 +150,28 @@ data:
     \                if(e.cap > e.flow && chmin(dist[e.to], dist[u] + e.cost + h[u]\
     \ - h[e.to])) {\n                    pre[e.to] = e.rev;\n                    pq.emplace(dist[e.to],\
     \ e.to);\n                }\n            }\n        }\n        if(dist[t] == numeric_limits<T>::max())\
-    \ return {0, 0};\n        REP(i, n) h[i] += dist[i];\n        for(int u = t; u\
-    \ != s; u = g[u][pre[u]].to) {\n            auto& e = g[g[u][pre[u]].to][g[u][pre[u]].rev];\n\
-    \            chmin(f, e.cap - e.flow);\n        }\n        for(int u = t; u !=\
-    \ s; u = g[u][pre[u]].to) {\n            auto& e = g[g[u][pre[u]].to][g[u][pre[u]].rev];\n\
-    \            e.flow += f;\n            g[u][pre[u]].flow -= f;\n        }\n  \
-    \      return {f, f * (h[t] - h[s])};\n    }\n    pair<T, T> min_cost_flow(int\
-    \ s, int t, T f) {\n        assert(0 <= s && s < n && 0 <= t && t < n);\n    \
-    \    assert(s != t);\n        T flow = 0, cost = 0;\n        while(f > 0) {\n\
+    \ return {0, 0};\n        REP(i, n) if(dist[i] < numeric_limits<T>::max()) h[i]\
+    \ += dist[i];\n        for(int u = t; u != s; u = g[u][pre[u]].to) {\n       \
+    \     auto& e = g[g[u][pre[u]].to][g[u][pre[u]].rev];\n            chmin(f, e.cap\
+    \ - e.flow);\n        }\n        for(int u = t; u != s; u = g[u][pre[u]].to) {\n\
+    \            auto& e = g[g[u][pre[u]].to][g[u][pre[u]].rev];\n            e.flow\
+    \ += f;\n            g[u][pre[u]].flow -= f;\n        }\n        return {f, f\
+    \ * (h[t] - h[s])};\n    }\n    pair<T, T> min_cost_flow(int s, int t, T f) {\n\
+    \        assert(0 <= s && s < n && 0 <= t && t < n);\n        assert(s != t);\n\
+    \        T flow = 0, cost = 0;\n        while(f > 0) {\n            auto [cur_flow,\
+    \ cur_cost] = min_cost_one_flow(s, t, f);\n            if(cur_flow == 0) break;\n\
+    \            flow += cur_flow;\n            cost += cur_cost;\n            f -=\
+    \ cur_flow;\n        }\n        return {flow, cost};\n    }\n    vector<pair<T,\
+    \ T>> min_cost_slope(int s, int t, T f = numeric_limits<T>::max()) {\n       \
+    \ assert(0 <= s && s < n && 0 <= t && t < n);\n        assert(s != t);\n     \
+    \   vector<pair<T, T>> res;\n        res.emplace_back(0, 0);\n        T flow =\
+    \ 0, cost = 0;\n        pair<T, T> prev_rate = {0, 0};\n        while(f > 0) {\n\
     \            auto [cur_flow, cur_cost] = min_cost_one_flow(s, t, f);\n       \
     \     if(cur_flow == 0) break;\n            flow += cur_flow;\n            cost\
-    \ += cur_cost;\n            f -= cur_flow;\n        }\n        return {flow, cost};\n\
-    \    }\n    vector<pair<T, T>> min_cost_slope(int s, int t, T f = numeric_limits<T>::max())\
-    \ {\n        assert(0 <= s && s < n && 0 <= t && t < n);\n        assert(s !=\
-    \ t);\n        vector<pair<T, T>> res;\n        res.emplace_back(0, 0);\n    \
-    \    T flow = 0, cost = 0;\n        pair<T, T> prev_rate = {0, 0};\n        while(f\
-    \ > 0) {\n            auto [cur_flow, cur_cost] = min_cost_one_flow(s, t, f);\n\
-    \            if(cur_flow == 0) break;\n            flow += cur_flow;\n       \
-    \     cost += cur_cost;\n            f -= cur_flow;\n            T g = gcd(cur_cost,\
-    \ cur_flow);\n            if(prev_rate == make_pair(cur_cost / g, cur_flow / g))\
-    \ {\n                res.pop_back();\n            } else {\n                prev_rate\
-    \ = {cur_cost / g, cur_flow / g};\n            }\n            res.emplace_back(flow,\
+    \ += cur_cost;\n            f -= cur_flow;\n            T g = gcd(cur_cost, cur_flow);\n\
+    \            if(prev_rate == make_pair(cur_cost / g, cur_flow / g)) {\n      \
+    \          res.pop_back();\n            } else {\n                prev_rate =\
+    \ {cur_cost / g, cur_flow / g};\n            }\n            res.emplace_back(flow,\
     \ cost);\n        }\n        return res;\n    }\n};\n"
   dependsOn:
   - base.hpp
@@ -177,7 +179,7 @@ data:
   isVerificationFile: false
   path: graph/min-cost-flow.hpp
   requiredBy: []
-  timestamp: '2023-01-07 01:59:41+00:00'
+  timestamp: '2023-01-21 00:25:23+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/aoj-grl-6-b.test.cpp

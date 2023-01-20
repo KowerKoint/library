@@ -184,14 +184,14 @@ data:
   path: operator.hpp
   requiredBy:
   - matrix/matrix.hpp
-  - segtree/lazy-segtree.hpp
   - segtree/segtree.hpp
-  timestamp: '2023-01-07 01:59:41+00:00'
+  - segtree/lazy-segtree.hpp
+  timestamp: '2023-01-21 00:25:23+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - test/yosupo-determinant-of-matrix.test.cpp
-  - test/yosupo-range-affine-range-sum.test.cpp
   - test/aoj-dsl-2-a.test.cpp
+  - test/yosupo-range-affine-range-sum.test.cpp
+  - test/yosupo-determinant-of-matrix.test.cpp
 documentation_of: operator.hpp
 layout: document
 redirect_from:

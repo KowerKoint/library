@@ -289,19 +289,19 @@ data:
   - general.hpp
   - convolution/ntt.hpp
   - algebra/fps.hpp
-  timestamp: '2023-01-07 01:59:41+00:00'
+  timestamp: '2023-01-21 00:25:23+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - test/aoj-ntl-1-b.test.cpp
   - test/aoj-dpl-5-j.test.cpp
-  - test/yosupo-convolution.test.cpp
-  - test/aoj-dpl-5-e.test.cpp
-  - test/aoj-dpl-5-b.test.cpp
-  - test/aoj-dpl-5-d.test.cpp
-  - test/aoj-dpl-5-i.test.cpp
   - test/aoj-dpl-5-g.test.cpp
-  - test/yosupo-determinant-of-matrix.test.cpp
+  - test/aoj-dpl-5-e.test.cpp
+  - test/aoj-ntl-1-b.test.cpp
+  - test/aoj-dpl-5-b.test.cpp
   - test/yosupo-range-affine-range-sum.test.cpp
+  - test/yosupo-determinant-of-matrix.test.cpp
+  - test/aoj-dpl-5-i.test.cpp
+  - test/aoj-dpl-5-d.test.cpp
+  - test/yosupo-convolution.test.cpp
 documentation_of: algebra/modint.hpp
 layout: document
 redirect_from:
