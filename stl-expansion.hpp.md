@@ -107,6 +107,9 @@ data:
   - icon: ':warning:'
     path: string.hpp
     title: string.hpp
+  - icon: ':heavy_check_mark:'
+    path: structure/treap.hpp
+    title: Treap
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: test/aoj-alds-1-1-c.test.cpp
@@ -192,6 +195,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: test/aoj-ntl-1-e.test.cpp
     title: test/aoj-ntl-1-e.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: test/yosupo-associative-array.test.cpp
+    title: test/yosupo-associative-array.test.cpp
   - icon: ':heavy_check_mark:'
     path: test/yosupo-convolution.test.cpp
     title: test/yosupo-convolution.test.cpp
@@ -285,6 +291,7 @@ data:
   - bit/bitset.hpp
   - convolution/fft.hpp
   - convolution/ntt.hpp
+  - structure/treap.hpp
   - connectivity/union-find.hpp
   - operator.hpp
   - algebra/fps.hpp
@@ -299,7 +306,7 @@ data:
   - segtree/segtree.hpp
   - segtree/lazy-segtree.hpp
   - segtree/beats.hpp
-  timestamp: '2023-01-21 00:25:23+09:00'
+  timestamp: '2023-02-13 22:34:36+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/aoj-dpl-5-j.test.cpp
@@ -336,6 +343,7 @@ data:
   - test/aoj-cgl-3-a.test.cpp
   - test/aoj-dpl-5-d.test.cpp
   - test/yosupo-nim-product.test.cpp
+  - test/yosupo-associative-array.test.cpp
   - test/yosupo-enumerate-primes.test.cpp
   - test/aoj-grl-6-b.test.cpp
   - test/yosupo-static-range-frequency.test.cpp

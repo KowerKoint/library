@@ -131,6 +131,11 @@ data:
     - icon: ':heavy_check_mark:'
       path: segtree/wavelet-matrix.hpp
       title: segtree/wavelet-matrix.hpp
+  - name: structure
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: structure/treap.hpp
+      title: Treap
   verificationCategories:
   - name: test
     pages:
@@ -218,6 +223,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: test/aoj-ntl-1-e.test.cpp
       title: test/aoj-ntl-1-e.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: test/yosupo-associative-array.test.cpp
+      title: test/yosupo-associative-array.test.cpp
     - icon: ':heavy_check_mark:'
       path: test/yosupo-convolution.test.cpp
       title: test/yosupo-convolution.test.cpp
