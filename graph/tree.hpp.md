@@ -261,7 +261,7 @@ data:
   isVerificationFile: false
   path: graph/tree.hpp
   requiredBy: []
-  timestamp: '2023-02-17 22:12:22+09:00'
+  timestamp: '2023-02-17 23:46:54+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/yosupo-lowest-common-ancestor.test.cpp

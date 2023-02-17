@@ -400,7 +400,7 @@ data:
   - segtree/segtree.hpp
   - segtree/lazy-segtree.hpp
   - segtree/beats.hpp
-  timestamp: '2023-02-17 22:12:22+09:00'
+  timestamp: '2023-02-17 23:46:54+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/aoj-dpl-5-j.test.cpp

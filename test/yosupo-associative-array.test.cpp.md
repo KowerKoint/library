@@ -90,130 +90,155 @@ data:
     \ = res[i] * (i+1);\n    rev[n] = 1 / res[n];\n    for(int i = n; i > 0; i--)\
     \ {\n        rev[i-1] = rev[i] * i;\n    }\n    return make_pair(res, rev);\n\
     }\n#line 3 \"structure/treap.hpp\"\n\n/**\n * @brief Treap\n * @docs docs/treap.md\n\
-    \ */\ntemplate <typename Key, typename Compare = less<Key>, bool multi = false>\n\
-    class Treap {\n    struct Node {\n        Key key;\n        size_t id;\n     \
-    \   ull pri;\n        Node *l, *r, *par;\n        size_t cnt;\n        Node(const\
-    \ Key &key, ull pri) : key(key), pri(pri), l(nullptr), r(nullptr), par(nullptr),\
-    \ cnt(1) {\n            static size_t id = 0;\n            this->id = id++;\n\
-    \        }\n    };\n\n    mt19937_64 _rng;\n    Node *_root;\n    Compare _comp;\n\
-    \n    bool _comp_key_id(const Key &key1, size_t id1, const Key &key2, size_t id2)\
-    \ {\n        return _comp(key1, key2) || (!_comp(key2, key1) && id1 < id2);\n\
-    \    }\n\n    void _update(Node *t) {\n        t->cnt = 1;\n        if (t->l)\
-    \ t->cnt += t->l->cnt;\n        if (t->r) t->cnt += t->r->cnt;\n    }\n\n    void\
-    \ _free_subtree(Node *t) {\n        if(!t) return;\n        stack<Node *> stk;\n\
-    \        stk.push(t);\n        while(!stk.empty()) {\n            Node *p = stk.top();\
-    \ stk.pop();\n            if(p->l) stk.push(p->l);\n            if(p->r) stk.push(p->r);\n\
-    \            delete p;\n        }\n    }\n\n    pair<Node *, Node *> _split(Node\
-    \ *t, const Key &key, size_t id) {\n        stack<pair<Node *, bool>> ret;\n \
-    \       while(t) {\n            if(_comp_key_id(t->key, t->id, key, id)) {\n \
-    \               ret.push({t, true});\n                t = t->r;\n            }\
-    \ else {\n                ret.push({t, false});\n                t = t->l;\n \
-    \           }\n        }\n        Node *l = nullptr, *r = nullptr;\n        while(!ret.empty())\
-    \ {\n            auto [p, b] = ret.top(); ret.pop();\n            if(b) {\n  \
-    \              p->r = l;\n                if(l) l->par = p;\n                _update(p);\n\
-    \                l = p;\n            } else {\n                p->l = r;\n   \
-    \             if(r) r->par = p;\n                _update(p);\n               \
-    \ r = p;\n            }\n        }\n        return {l, r};\n    }\n\n    Node\
-    \ *_merge(Node *l, Node *r) {\n        stack<pair<Node *, bool>> stk;\n      \
-    \  while(1) {\n            if(!l || !r) break;\n            if(l->pri > r->pri)\
-    \ {\n                stk.push({l, true});\n                l = l->r;\n       \
-    \     } else {\n                stk.push({r, false});\n                r = r->l;\n\
-    \            }\n        }\n        Node *t = l ? l : r;\n        while(!stk.empty())\
-    \ {\n            auto [p, b] = stk.top(); stk.pop();\n            if(b) {\n  \
-    \              p->r = t;\n                if(t) t->par = p;\n                _update(p);\n\
-    \                t = p;\n            } else {\n                p->l = t;\n   \
-    \             if(t) t->par = p;\n                _update(p);\n               \
-    \ t = p;\n            }\n        }\n        return t;\n    }\n\n    Node *_lower_bound(Node\
-    \ *t, const Key& key, size_t id) {\n        Node *ret = nullptr;\n        while(t)\
-    \ {\n            if(_comp_key_id(t->key, t->id, key, id)) {\n                t\
-    \ = t->r;\n            } else {\n                ret = t;\n                t =\
-    \ t->l;\n            }\n        }\n        return ret;\n    }\n    const Node\
-    \ *_lower_bound(const Node *t, const Key& key, size_t id) const {\n        const\
-    \ Node *ret = nullptr;\n        while(t) {\n            if(_comp_key_id(t->key,\
+    \ */\ntemplate <typename Key, typename Compare = less<Key>, bool multi = false,\
+    \ typename Value = void*, typename MergeValue = void*>\nclass Treap {\n    struct\
+    \ Node {\n        pair<const Key, Value> key_value;\n        const Key &key;\n\
+    \        Value &value;\n        size_t id;\n        ull pri;\n        Node *l,\
+    \ *r, *par;\n        size_t cnt;\n        Value sum;\n        Node(const Key &key,\
+    \ const Value &value, ull pri) : key_value(key, value), key(key_value.first),\
+    \ value(key_value.second), pri(pri), l(nullptr), r(nullptr), par(nullptr), cnt(1),\
+    \ sum(value) {\n            static size_t id = 0;\n            this->id = id++;\n\
+    \        }\n        Node* leftmost() {\n            Node *t = this;\n        \
+    \    while(l) t = t->l;\n            return t;\n        }\n        const Node*\
+    \ leftmost() const {\n            const Node *t = this;\n            while(t->l)\
+    \ t = t->l;\n            return t;\n        }\n        Node* erase_leftmost()\
+    \ {\n            Node *t = this;\n            if(!t->l) {\n                Node\
+    \ *p = t->r;\n                if(p) p->par = nullptr;\n                delete\
+    \ t;\n                return p;\n            }\n            Node *p = t;\n   \
+    \         while(p->l->l) p = p->l;\n            Node *q = p->l;\n            p->l\
+    \ = q->r;\n            if(q->r) q->r->par = p;\n            delete q;\n      \
+    \      return t;\n        }\n        Node* rightmost() {\n            Node *t\
+    \ = this;\n            while(t->r) t = t->r;\n            return t;\n        }\n\
+    \        const Node* rightmost() const {\n            const Node *t = this;\n\
+    \            if(!t) return nullptr;\n            while(t->r) t = t->r;\n     \
+    \       return t;\n        }\n        Node* erase_rightmost() {\n            Node\
+    \ *t = this;\n            if(!t->r) {\n                Node *p = t->l;\n     \
+    \           if(p) p->par = nullptr;\n                delete t;\n             \
+    \   return p;\n            }\n            Node *p = t;\n            while(p->r->r)\
+    \ p = p->r;\n            Node *q = p->r;\n            p->r = q->l;\n         \
+    \   if(q->l) q->l->par = p;\n            delete q;\n            return t;\n  \
+    \      }\n    };\n\n    mt19937_64 _rng;\n    Node *_root;\n    Compare _comp;\n\
+    \    MergeValue _merge_value;\n\n    bool _comp_key_id(const Key &key1, size_t\
+    \ id1, const Key &key2, size_t id2) {\n        return _comp(key1, key2) || (!_comp(key2,\
+    \ key1) && id1 < id2);\n    }\n    void _update(Node *t) {\n        t->cnt = 1;\n\
+    \        if (t->l) t->cnt += t->l->cnt;\n        if (t->r) t->cnt += t->r->cnt;\n\
+    \        if constexpr (!is_same_v<MergeValue, void*>) {\n            t->sum =\
+    \ t->value;\n            if (t->l) t->sum = _merge_value(t->l->sum, t->sum);\n\
+    \            if (t->r) t->sum = _merge_value(t->sum, t->r->sum);\n        }\n\
+    \    }\n    void _free_subtree(Node *t) {\n        if(!t) return;\n        stack<Node\
+    \ *> stk;\n        stk.push(t);\n        while(!stk.empty()) {\n            Node\
+    \ *p = stk.top(); stk.pop();\n            if(p->l) stk.push(p->l);\n         \
+    \   if(p->r) stk.push(p->r);\n            delete p;\n        }\n    }\n    pair<Node*,\
+    \ Node*> _split(Node *t, const Key &key, size_t id) {\n        stack<pair<Node\
+    \ *, bool>> ret;\n        while(t) {\n            if(_comp_key_id(t->key, t->id,\
+    \ key, id)) {\n                ret.push({t, true});\n                t = t->r;\n\
+    \            } else {\n                ret.push({t, false});\n               \
+    \ t = t->l;\n            }\n        }\n        Node *l = nullptr, *r = nullptr;\n\
+    \        while(!ret.empty()) {\n            auto [p, b] = ret.top(); ret.pop();\n\
+    \            if(b) {\n                p->r = l;\n                if(l) l->par\
+    \ = p;\n                _update(p);\n                l = p;\n            } else\
+    \ {\n                p->l = r;\n                if(r) r->par = p;\n          \
+    \      _update(p);\n                r = p;\n            }\n        }\n       \
+    \ return {l, r};\n    }\n    Node* _merge(Node *l, Node *r) {\n        stack<pair<Node\
+    \ *, bool>> stk;\n        while(1) {\n            if(!l || !r) break;\n      \
+    \      if(l->pri > r->pri) {\n                stk.push({l, true});\n         \
+    \       l = l->r;\n            } else {\n                stk.push({r, false});\n\
+    \                r = r->l;\n            }\n        }\n        Node *t = l ? l\
+    \ : r;\n        while(!stk.empty()) {\n            auto [p, b] = stk.top(); stk.pop();\n\
+    \            if(b) {\n                p->r = t;\n                if(t) t->par\
+    \ = p;\n                _update(p);\n                t = p;\n            } else\
+    \ {\n                p->l = t;\n                if(t) t->par = p;\n          \
+    \      _update(p);\n                t = p;\n            }\n        }\n       \
+    \ return t;\n    }\n    Node* _lower_bound(Node *t, const Key& key, size_t id)\
+    \ {\n        Node *ret = nullptr;\n        while(t) {\n            if(_comp_key_id(t->key,\
     \ t->id, key, id)) {\n                t = t->r;\n            } else {\n      \
     \          ret = t;\n                t = t->l;\n            }\n        }\n   \
-    \     return ret;\n    }\n\n    Node *_leftmost(Node *t) {\n        if(!t) return\
-    \ nullptr;\n        while(t->l) t = t->l;\n        return t;\n    }\n    const\
-    \ Node *_leftmost(const Node *t) const {\n        if(!t) return nullptr;\n   \
-    \     while(t->l) t = t->l;\n        return t;\n    }\n\n    Node *_erase_leftmost(Node\
-    \ *t) {\n        if(!t->l) {\n            Node *p = t->r;\n            if(p) p->par\
-    \ = nullptr;\n            delete t;\n            return p;\n        }\n      \
-    \  Node *p = t;\n        while(p->l->l) p = p->l;\n        Node *q = p->l;\n \
-    \       p->l = q->r;\n        if(q->r) q->r->par = p;\n        delete q;\n   \
-    \     return t;\n    }\n\npublic:\n    class Iterator {\n    private:\n      \
-    \  Node *p;\n    public:\n        Iterator(Node *p) : p(p) {}\n        Iterator&\
-    \ operator++() {\n            if(p->r) {\n                p = p->r;\n        \
-    \        while(p->l) p = p->l;\n            } else {\n                while(p->par\
-    \ && p->par->r == p) p = p->par;\n                p = p->par;\n            }\n\
-    \            return *this;\n        }\n        Iterator& operator--() {\n    \
-    \        if(p->l) {\n                p = p->l;\n                while(p->r) p\
-    \ = p->r;\n            } else {\n                while(p->par && p->par->l ==\
+    \     return ret;\n    }\n    const Node* _lower_bound(const Node *t, const Key&\
+    \ key, size_t id) const {\n        const Node *ret = nullptr;\n        while(t)\
+    \ {\n            if(_comp_key_id(t->key, t->id, key, id)) {\n                t\
+    \ = t->r;\n            } else {\n                ret = t;\n                t =\
+    \ t->l;\n            }\n        }\n        return ret;\n    }\n\npublic:\n   \
+    \ class Iterator {\n    private:\n        Node *root, *p;\n    public:\n     \
+    \   Iterator(Node *root, Node *p) : root(root), p(p) {}\n        Iterator& operator++()\
+    \ {\n            if(p->r) {\n                p = p->r;\n                while(p->l)\
+    \ p = p->l;\n            } else {\n                while(p->par && p->par->r ==\
     \ p) p = p->par;\n                p = p->par;\n            }\n            return\
-    \ *this;\n        }\n        bool operator==(const Iterator &rhs) const { return\
-    \ p == rhs.p; }\n        bool operator!=(const Iterator &rhs) const { return p\
-    \ != rhs.p; }\n        Key& operator*() const { return p->key; }\n        Key*\
-    \ operator->() const { return &p->key; }\n    };\n    class ConstIterator {\n\
-    \    private:\n        const Node *p;\n    public:\n        ConstIterator(const\
-    \ Node *p) : p(p) {}\n        ConstIterator& operator++() {\n            if(p->r)\
-    \ {\n                p = p->r;\n                while(p->l) p = p->l;\n      \
-    \      } else {\n                while(p->par && p->par->r == p) p = p->par;\n\
-    \                p = p->par;\n            }\n            return *this;\n     \
-    \   }\n        ConstIterator& operator--() {\n            if(p->l) {\n       \
-    \         p = p->l;\n                while(p->r) p = p->r;\n            } else\
-    \ {\n                while(p->par && p->par->l == p) p = p->par;\n           \
-    \     p = p->par;\n            }\n            return *this;\n        }\n     \
-    \   bool operator==(const ConstIterator &rhs) const { return p == rhs.p; }\n \
-    \       bool operator!=(const ConstIterator &rhs) const { return p != rhs.p; }\n\
-    \        const Key& operator*() const { return p->key; }\n        const Key* operator->()\
-    \ const { return &p->key; }\n    };\n    friend struct Iterator;\n    friend struct\
-    \ ConstIterator;\n\n    Treap(ull seed = random_device{}()) : _rng(seed), _root(nullptr),\
-    \ _comp()  {}\n    ~Treap() { _free_subtree(_root); }\n    Iterator begin() {\
-    \ return Iterator(_leftmost(_root)); }\n    ConstIterator begin() const { return\
-    \ ConstIterator(_leftmost(_root)); }\n    Iterator end() { return Iterator(nullptr);\
-    \ }\n    ConstIterator end() const { return ConstIterator(nullptr); }\n    size_t\
-    \ size() const { return _root ? _root->size : 0; }\n    Iterator lower_bound(Key\
-    \ key) {\n        return Iterator(_lower_bound(_root, key, 0ULL));\n    }\n  \
-    \  ConstIterator lower_bound(Key key) const {\n        return ConstIterator(_lower_bound(_root,\
-    \ key, 0ULL));\n    }\n    Iterator upper_bound(Key key) {\n        return Iterator(_lower_bound(_root,\
-    \ key, numeric_limits<size_t>::max()));\n    }\n    ConstIterator upper_bound(Key\
-    \ key) const {\n        return ConstIterator(_lower_bound(_root, key, numeric_limits<size_t>::max()));\n\
+    \ *this;\n        }\n        Iterator& operator--() {\n            if(!p) p =\
+    \ root->rightmost();\n            else if(p->l) {\n                p = p->l;\n\
+    \                while(p->r) p = p->r;\n            } else {\n               \
+    \ while(p->par && p->par->l == p) p = p->par;\n                p = p->par;\n \
+    \           }\n            return *this;\n        }\n        bool operator==(const\
+    \ Iterator &rhs) const { return p == rhs.p; }\n        bool operator!=(const Iterator\
+    \ &rhs) const { return p != rhs.p; }\n        pair<const Key, Value>& operator*()\
+    \ const { return p->key_value; }\n        pair<const Key, Value>* operator->()\
+    \ const { return &p->key_value; }\n    };\n    class ConstIterator {\n    private:\n\
+    \        const Node *root, *p;\n    public:\n        ConstIterator(const Node\
+    \ *root, const Node *p) : p(p) {}\n        ConstIterator& operator++() {\n   \
+    \         if(p->r) {\n                p = p->r;\n                while(p->l) p\
+    \ = p->l;\n            } else {\n                while(p->par && p->par->r ==\
+    \ p) p = p->par;\n                p = p->par;\n            }\n            return\
+    \ *this;\n        }\n        ConstIterator& operator--() {\n            if(!p)\
+    \ p = root->rightmost();\n            if(p->l) {\n                p = p->l;\n\
+    \                while(p->r) p = p->r;\n            } else {\n               \
+    \ while(p->par && p->par->l == p) p = p->par;\n                p = p->par;\n \
+    \           }\n            return *this;\n        }\n        bool operator==(const\
+    \ ConstIterator &rhs) const { return p == rhs.p; }\n        bool operator!=(const\
+    \ ConstIterator &rhs) const { return p != rhs.p; }\n        const pair<const Key,\
+    \ Value>& operator*() const { return p->key_value; }\n        const pair<const\
+    \ Key, Value>* operator->() const { return &p->key_value; }\n    };\n    friend\
+    \ struct Iterator;\n    friend struct ConstIterator;\n\n    Treap(ull seed = random_device{}())\
+    \ : _rng(seed), _root(nullptr), _comp()  {}\n    ~Treap() { _free_subtree(_root);\
+    \ }\n    Iterator begin() { return Iterator(_root, _root->leftmost()); }\n   \
+    \ ConstIterator begin() const { return ConstIterator(_root, _root->leftmost());\
+    \ }\n    Iterator end() { return Iterator(_root, nullptr); }\n    ConstIterator\
+    \ end() const { return ConstIterator(_root, nullptr); }\n    size_t size() const\
+    \ { return _root ? _root->size : 0; }\n    Iterator lower_bound(const Key &key)\
+    \ {\n        return Iterator(_root, _lower_bound(_root, key, 0ULL));\n    }\n\
+    \    ConstIterator lower_bound(const Key &key) const {\n        return ConstIterator(_root,\
+    \ _lower_bound(_root, key, 0ULL));\n    }\n    Iterator upper_bound(const Key\
+    \ &key) {\n        return Iterator(_root, _lower_bound(_root, key, numeric_limits<size_t>::max()));\n\
+    \    }\n    ConstIterator upper_bound(const Key &key) const {\n        return\
+    \ ConstIterator(_root, _lower_bound(_root, key, numeric_limits<size_t>::max()));\n\
     \    }\n    Iterator find(const Key &key) {\n        Node *p = _lower_bound(_root,\
     \ key, 0ULL);\n        if(!p || _comp(key, p->key)) return end();\n        return\
-    \ Iterator(p);\n    }\n    ConstIterator find(const Key &key) const {\n      \
-    \  const Node *p = _lower_bound(_root, key, 0ULL);\n        if(!p || _comp(key,\
-    \ p->key)) return end();\n        return ConstIterator(p);\n    }\n    bool contains(Key\
-    \ key) const {\n        Node *p = _lower_bound(_root, key, 0ULL);\n        return\
-    \ p && !_comp(key, p->key);\n    }\n    pair<Iterator, bool> insert(const Key\
-    \ &key) {\n        if constexpr(!multi) {\n            Node *p = _lower_bound(_root,\
-    \ key, 0ULL);\n            if(p && !_comp(key, p->key)) {\n                p->key\
-    \ = key;\n                return {Iterator(p), false};\n            }\n      \
-    \  }\n        Node *p = new Node(key, _rng());\n        auto [l, r] = _split(_root,\
-    \ key, p->id);\n        _root = _merge(_merge(l, p), r);\n        return {Iterator(p),\
-    \ true};\n    }\n    size_t erase(const Key &key) {\n        auto [l, r] = _split(_root,\
+    \ Iterator(_root, p);\n    }\n    ConstIterator find(const Key &key) const {\n\
+    \        const Node *p = _lower_bound(_root, key, 0ULL);\n        if(!p || _comp(key,\
+    \ p->key)) return end();\n        return ConstIterator(_root, p);\n    }\n   \
+    \ bool contains(const Key &key) const {\n        Node *p = _lower_bound(_root,\
+    \ key, 0ULL);\n        return p && !_comp(key, p->key);\n    }\n    pair<Iterator,\
+    \ bool> insert(const Key &key, const Value &value = Value()) {\n        if constexpr(!multi)\
+    \ {\n            Node *p = _lower_bound(_root, key, 0ULL);\n            if(p &&\
+    \ !_comp(key, p->key)) {\n                p->value = value;\n                return\
+    \ {Iterator(_root, p), false};\n            }\n        }\n        Node *p = new\
+    \ Node(key, value, _rng());\n        auto [l, r] = _split(_root, key, p->id);\n\
+    \        _root = _merge(_merge(l, p), r);\n        return {Iterator(_root, p),\
+    \ true};\n    }\n    Value& operator[](const Key &key) {\n        Node *p = _lower_bound(_root,\
+    \ key, 0ULL);\n        if(!p || _comp(key, p->key)) {\n            p = new Node(key,\
+    \ Value(), _rng());\n            auto [l, r] = _split(_root, key, p->id);\n  \
+    \          _root = _merge(_merge(l, p), r);\n        }\n        return p->value;\n\
+    \    }\n    size_t erase(const Key &key) {\n        auto [l, r] = _split(_root,\
     \ key, 0ULL);\n        auto [m, r2] = _split(r, key, numeric_limits<size_t>::max());\n\
     \        _root = _merge(l, r2);\n        size_t ret = m ? m->cnt : 0;\n      \
     \  _free_subtree(m);\n        return ret;\n    }\n    Iterator erase(Iterator\
     \ it) {\n        Node *p = it.p;\n        auto [l, r] = _split(_root, p->key,\
     \ p->id);\n        auto [m, r2] = _split(r, p->key, p->id + 1);\n        Node\
-    \ *ret = r2 ? _leftmost(r2) : nullptr;\n        _root = _merge(l, r2);\n     \
-    \   delete m;\n        return Iterator(ret);\n    }\n    void clear() {\n    \
-    \    _free_subtree(_root);\n        _root = nullptr;\n    }\n};\n#line 3 \"test/yosupo-associative-array.test.cpp\"\
-    \n\nint main() {\n    struct CompareFirst {\n        bool operator()(const LP&\
-    \ a, const LP& b) const {\n            return a.first < b.first;\n        }\n\
-    \    };\n    Treap<LP, CompareFirst> treap;\n    int q; cin >> q;\n    while(q--)\
-    \ {\n        int t; cin >> t;\n        if(t == 0) {\n            ll k, v; cin\
-    \ >> k >> v;\n            treap.insert({k, v});\n        } else if(t == 1) {\n\
-    \            ll k; cin >> k;\n            auto p = treap.lower_bound({k, 0LL});\n\
-    \            print(p != treap.end() && k == p->first ? p->second : 0);\n     \
-    \   }\n    }\n}\n"
+    \ *ret = r2 ? r2->leftmost() : nullptr;\n        _root = _merge(l, r2);\n    \
+    \    delete m;\n        return Iterator(_root, ret);\n    }\n    void clear()\
+    \ {\n        _free_subtree(_root);\n        _root = nullptr;\n    }\n};\n#line\
+    \ 3 \"test/yosupo-associative-array.test.cpp\"\n\nint main() {\n    struct CompareFirst\
+    \ {\n        bool operator()(const LP& a, const LP& b) const {\n            return\
+    \ a.first < b.first;\n        }\n    };\n    Treap<ll, less<ll>, false, ll> treap;\n\
+    \    int q; cin >> q;\n    while(q--) {\n        int t; cin >> t;\n        if(t\
+    \ == 0) {\n            ll k, v; cin >> k >> v;\n            treap.insert(k, v);\n\
+    \        } else if(t == 1) {\n            ll k; cin >> k;\n            print(treap[k]);\n\
+    \        }\n    }\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/associative_array\"\n#include\
     \ \"../structure/treap.hpp\"\n\nint main() {\n    struct CompareFirst {\n    \
     \    bool operator()(const LP& a, const LP& b) const {\n            return a.first\
-    \ < b.first;\n        }\n    };\n    Treap<LP, CompareFirst> treap;\n    int q;\
-    \ cin >> q;\n    while(q--) {\n        int t; cin >> t;\n        if(t == 0) {\n\
-    \            ll k, v; cin >> k >> v;\n            treap.insert({k, v});\n    \
-    \    } else if(t == 1) {\n            ll k; cin >> k;\n            auto p = treap.lower_bound({k,\
-    \ 0LL});\n            print(p != treap.end() && k == p->first ? p->second : 0);\n\
+    \ < b.first;\n        }\n    };\n    Treap<ll, less<ll>, false, ll> treap;\n \
+    \   int q; cin >> q;\n    while(q--) {\n        int t; cin >> t;\n        if(t\
+    \ == 0) {\n            ll k, v; cin >> k >> v;\n            treap.insert(k, v);\n\
+    \        } else if(t == 1) {\n            ll k; cin >> k;\n            print(treap[k]);\n\
     \        }\n    }\n}\n"
   dependsOn:
   - structure/treap.hpp
@@ -222,7 +247,7 @@ data:
   isVerificationFile: true
   path: test/yosupo-associative-array.test.cpp
   requiredBy: []
-  timestamp: '2023-02-17 22:12:22+09:00'
+  timestamp: '2023-02-17 23:46:54+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/yosupo-associative-array.test.cpp
