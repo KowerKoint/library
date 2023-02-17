@@ -269,7 +269,7 @@ data:
   isVerificationFile: false
   path: matrix/matrix.hpp
   requiredBy: []
-  timestamp: '2023-02-13 22:34:36+09:00'
+  timestamp: '2023-02-17 22:12:22+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/yosupo-determinant-of-matrix.test.cpp
