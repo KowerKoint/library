@@ -16,8 +16,8 @@ int main() {
             treap.insert({k, v});
         } else if(t == 1) {
             ll k; cin >> k;
-            auto p = treap.find({k, 0LL});
-            print(p? p->key.second : 0);
+            auto p = treap.lower_bound({k, 0LL});
+            print(p != treap.end() && k == p->first ? p->second : 0);
         }
     }
 }
