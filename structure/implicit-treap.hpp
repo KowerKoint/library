@@ -28,7 +28,7 @@ class ImplicitTreap {
     Node *_root;
     Mapping _mapping;
 
-    inline void _update(Node *t) {
+    void _update(Node *t) {
         t->cnt = 1;
         if (t->l) t->cnt += t->l->cnt;
         if (t->r) t->cnt += t->r->cnt;
@@ -173,7 +173,7 @@ public:
             }
             return *this;
         }
-        operator Value() const {
+        operator Value() {
             stack<Node*> stk;
             Node *t = node;
             while(t->par) {
