@@ -121,14 +121,14 @@ data:
   path: integer/kth-root-integer.hpp
   requiredBy:
   - integer/prime.hpp
-  timestamp: '2023-02-17 23:46:54+09:00'
+  timestamp: '2023-02-20 20:29:22+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - test/yosupo-enumerate-primes.test.cpp
+  - test/yosupo-kth-root-integer.test.cpp
+  - test/aoj-ntl-1-a.test.cpp
   - test/aoj-itp-1-3-d.test.cpp
   - test/aoj-alds-1-1-c.test.cpp
-  - test/aoj-ntl-1-a.test.cpp
-  - test/yosupo-kth-root-integer.test.cpp
-  - test/yosupo-enumerate-primes.test.cpp
 documentation_of: integer/kth-root-integer.hpp
 layout: document
 redirect_from:

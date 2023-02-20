@@ -179,7 +179,7 @@ data:
   isVerificationFile: false
   path: graph/min-cost-flow.hpp
   requiredBy: []
-  timestamp: '2023-02-17 23:46:54+09:00'
+  timestamp: '2023-02-20 20:29:22+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/aoj-grl-6-b.test.cpp

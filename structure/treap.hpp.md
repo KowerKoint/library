@@ -8,13 +8,10 @@ data:
     path: stl-expansion.hpp
     title: stl-expansion.hpp
   _extendedRequiredBy: []
-  _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
-    path: test/yosupo-associative-array.test.cpp
-    title: test/yosupo-associative-array.test.cpp
+  _extendedVerifiedWith: []
   _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':warning:'
   attributes:
     _deprecated_at_docs: docs/treap.md
     document_title: Treap
@@ -89,58 +86,67 @@ data:
     \ {\n        rev[i-1] = rev[i] * i;\n    }\n    return make_pair(res, rev);\n\
     }\n#line 3 \"structure/treap.hpp\"\n\n/**\n * @brief Treap\n * @docs docs/treap.md\n\
     \ */\ntemplate <typename Key, typename Compare = less<Key>, bool multi = false,\
-    \ typename Value = void*, typename MergeValue = void*>\nclass Treap {\n    struct\
-    \ Node {\n        pair<const Key, Value> key_value;\n        const Key &key;\n\
-    \        Value &value;\n        size_t id;\n        ull pri;\n        Node *l,\
-    \ *r, *par;\n        size_t cnt;\n        Value sum;\n        Node(const Key &key,\
-    \ const Value &value, ull pri) : key_value(key, value), key(key_value.first),\
+    \ typename Value = void*, bool ValueIsMonoid = false, typename UpdateMonoid =\
+    \ void*, typename Mapping = void*>\nclass Treap {\n    struct Node {\n       \
+    \ pair<const Key, Value> key_value;\n        const Key &key;\n        Value &value;\n\
+    \        size_t id;\n        ull pri;\n        Node *l, *r, *par;\n        size_t\
+    \ cnt;\n        Value sum;\n        UpdateMonoid lazy;\n        Node(const Key\
+    \ &key, const Value &value, ull pri) : key_value(key, value), key(key_value.first),\
     \ value(key_value.second), pri(pri), l(nullptr), r(nullptr), par(nullptr), cnt(1),\
-    \ sum(value) {\n            static size_t id = 0;\n            this->id = id++;\n\
-    \        }\n        Node* leftmost() {\n            Node *t = this;\n        \
-    \    while(l) t = t->l;\n            return t;\n        }\n        const Node*\
-    \ leftmost() const {\n            const Node *t = this;\n            while(t->l)\
-    \ t = t->l;\n            return t;\n        }\n        Node* erase_leftmost()\
-    \ {\n            Node *t = this;\n            if(!t->l) {\n                Node\
-    \ *p = t->r;\n                if(p) p->par = nullptr;\n                delete\
+    \ sum(value), lazy(UpdateMonoid::id()) {\n            static size_t id = 0;\n\
+    \            this->id = id++;\n        }\n        Node* leftmost() {\n       \
+    \     Node *t = this;\n            while(l) t = t->l;\n            return t;\n\
+    \        }\n        const Node* leftmost() const {\n            const Node *t\
+    \ = this;\n            while(t->l) t = t->l;\n            return t;\n        }\n\
+    \        Node* erase_leftmost() {\n            Node *t = this;\n            if(!t->l)\
+    \ {\n                Node *p = t->r;\n                if(p) p->par = nullptr;\n\
+    \                delete t;\n                return p;\n            }\n       \
+    \     Node *p = t;\n            while(p->l->l) p = p->l;\n            Node *q\
+    \ = p->l;\n            p->l = q->r;\n            if(q->r) q->r->par = p;\n   \
+    \         delete q;\n            return t;\n        }\n        Node* rightmost()\
+    \ {\n            Node *t = this;\n            while(t->r) t = t->r;\n        \
+    \    return t;\n        }\n        const Node* rightmost() const {\n         \
+    \   const Node *t = this;\n            if(!t) return nullptr;\n            while(t->r)\
+    \ t = t->r;\n            return t;\n        }\n        Node* erase_rightmost()\
+    \ {\n            Node *t = this;\n            if(!t->r) {\n                Node\
+    \ *p = t->l;\n                if(p) p->par = nullptr;\n                delete\
     \ t;\n                return p;\n            }\n            Node *p = t;\n   \
-    \         while(p->l->l) p = p->l;\n            Node *q = p->l;\n            p->l\
-    \ = q->r;\n            if(q->r) q->r->par = p;\n            delete q;\n      \
-    \      return t;\n        }\n        Node* rightmost() {\n            Node *t\
-    \ = this;\n            while(t->r) t = t->r;\n            return t;\n        }\n\
-    \        const Node* rightmost() const {\n            const Node *t = this;\n\
-    \            if(!t) return nullptr;\n            while(t->r) t = t->r;\n     \
-    \       return t;\n        }\n        Node* erase_rightmost() {\n            Node\
-    \ *t = this;\n            if(!t->r) {\n                Node *p = t->l;\n     \
-    \           if(p) p->par = nullptr;\n                delete t;\n             \
-    \   return p;\n            }\n            Node *p = t;\n            while(p->r->r)\
-    \ p = p->r;\n            Node *q = p->r;\n            p->r = q->l;\n         \
-    \   if(q->l) q->l->par = p;\n            delete q;\n            return t;\n  \
-    \      }\n    };\n\n    mt19937_64 _rng;\n    Node *_root;\n    Compare _comp;\n\
-    \    MergeValue _merge_value;\n\n    bool _comp_key_id(const Key &key1, size_t\
-    \ id1, const Key &key2, size_t id2) {\n        return _comp(key1, key2) || (!_comp(key2,\
+    \         while(p->r->r) p = p->r;\n            Node *q = p->r;\n            p->r\
+    \ = q->l;\n            if(q->l) q->l->par = p;\n            delete q;\n      \
+    \      return t;\n        }\n    };\n\n    mt19937_64 _rng;\n    Node *_root;\n\
+    \    Compare _comp;\n\n    bool _comp_key_id(const Key &key1, size_t id1, const\
+    \ Key &key2, size_t id2) {\n        return _comp(key1, key2) || (!_comp(key2,\
     \ key1) && id1 < id2);\n    }\n    void _update(Node *t) {\n        t->cnt = 1;\n\
     \        if (t->l) t->cnt += t->l->cnt;\n        if (t->r) t->cnt += t->r->cnt;\n\
-    \        if constexpr (!is_same_v<MergeValue, void*>) {\n            t->sum =\
-    \ t->value;\n            if (t->l) t->sum = _merge_value(t->l->sum, t->sum);\n\
-    \            if (t->r) t->sum = _merge_value(t->sum, t->r->sum);\n        }\n\
+    \        if constexpr (ValueIsMonoid) {\n            t->sum = t->value;\n    \
+    \        if (t->l) t->sum = Value::op(t->l->sum, t->sum);\n            if (t->r)\
+    \ t->sum = Value::op(t->sum, t->r->sum);\n        }\n    }\n    void _push(Node\
+    \ *t) {\n        if constexpr (!is_same_v<UpdateMonoid, void*>) {\n          \
+    \  if(t->l) {\n                t->l->lazy = _composition(t->lazy, t->l->lazy);\n\
+    \                t->l->sum = _mapping(t->lazy, t->l->sum, t->l->cnt);\n      \
+    \      }\n            if(t->r) {\n                t->r->lazy = _composition(t->lazy,\
+    \ t->r->lazy);\n                t->r->sum = _mapping(t->lazy, t->r->sum, t->r->cnt);\n\
+    \            }\n            t->value = _mapping(t->lazy, t->value, t->cnt);\n\
+    \            t->lazy = UpdateMonoid::id();\n            update(t);\n        }\n\
     \    }\n    void _free_subtree(Node *t) {\n        if(!t) return;\n        stack<Node\
     \ *> stk;\n        stk.push(t);\n        while(!stk.empty()) {\n            Node\
     \ *p = stk.top(); stk.pop();\n            if(p->l) stk.push(p->l);\n         \
     \   if(p->r) stk.push(p->r);\n            delete p;\n        }\n    }\n    pair<Node*,\
     \ Node*> _split(Node *t, const Key &key, size_t id) {\n        stack<pair<Node\
-    \ *, bool>> ret;\n        while(t) {\n            if(_comp_key_id(t->key, t->id,\
-    \ key, id)) {\n                ret.push({t, true});\n                t = t->r;\n\
-    \            } else {\n                ret.push({t, false});\n               \
-    \ t = t->l;\n            }\n        }\n        Node *l = nullptr, *r = nullptr;\n\
-    \        while(!ret.empty()) {\n            auto [p, b] = ret.top(); ret.pop();\n\
-    \            if(b) {\n                p->r = l;\n                if(l) l->par\
-    \ = p;\n                _update(p);\n                l = p;\n            } else\
-    \ {\n                p->l = r;\n                if(r) r->par = p;\n          \
-    \      _update(p);\n                r = p;\n            }\n        }\n       \
-    \ return {l, r};\n    }\n    Node* _merge(Node *l, Node *r) {\n        stack<pair<Node\
-    \ *, bool>> stk;\n        while(1) {\n            if(!l || !r) break;\n      \
-    \      if(l->pri > r->pri) {\n                stk.push({l, true});\n         \
-    \       l = l->r;\n            } else {\n                stk.push({r, false});\n\
+    \ *, bool>> ret;\n        while(t) {\n            _push(t);\n            if(_comp_key_id(t->key,\
+    \ t->id, key, id)) {\n                ret.push({t, true});\n                t\
+    \ = t->r;\n            } else {\n                ret.push({t, false});\n     \
+    \           t = t->l;\n            }\n        }\n        Node *l = nullptr, *r\
+    \ = nullptr;\n        while(!ret.empty()) {\n            auto [p, b] = ret.top();\
+    \ ret.pop();\n            if(b) {\n                p->r = l;\n               \
+    \ if(l) l->par = p;\n                _update(p);\n                l = p;\n   \
+    \         } else {\n                p->l = r;\n                if(r) r->par =\
+    \ p;\n                _update(p);\n                r = p;\n            }\n   \
+    \     }\n        return {l, r};\n    }\n    Node* _merge(Node *l, Node *r) {\n\
+    \        stack<pair<Node *, bool>> stk;\n        while(1) {\n            if(l)\
+    \ _push(l);\n            if(r) _push(r);\n            if(!l || !r) break;\n  \
+    \          if(l->pri > r->pri) {\n                stk.push({l, true});\n     \
+    \           l = l->r;\n            } else {\n                stk.push({r, false});\n\
     \                r = r->l;\n            }\n        }\n        Node *t = l ? l\
     \ : r;\n        while(!stk.empty()) {\n            auto [p, b] = stk.top(); stk.pop();\n\
     \            if(b) {\n                p->r = t;\n                if(t) t->par\
@@ -225,58 +231,67 @@ data:
     \ {\n        _free_subtree(_root);\n        _root = nullptr;\n    }\n};\n"
   code: "#pragma once\n#include \"../base.hpp\"\n\n/**\n * @brief Treap\n * @docs\
     \ docs/treap.md\n */\ntemplate <typename Key, typename Compare = less<Key>, bool\
-    \ multi = false, typename Value = void*, typename MergeValue = void*>\nclass Treap\
-    \ {\n    struct Node {\n        pair<const Key, Value> key_value;\n        const\
-    \ Key &key;\n        Value &value;\n        size_t id;\n        ull pri;\n   \
-    \     Node *l, *r, *par;\n        size_t cnt;\n        Value sum;\n        Node(const\
-    \ Key &key, const Value &value, ull pri) : key_value(key, value), key(key_value.first),\
-    \ value(key_value.second), pri(pri), l(nullptr), r(nullptr), par(nullptr), cnt(1),\
-    \ sum(value) {\n            static size_t id = 0;\n            this->id = id++;\n\
-    \        }\n        Node* leftmost() {\n            Node *t = this;\n        \
-    \    while(l) t = t->l;\n            return t;\n        }\n        const Node*\
-    \ leftmost() const {\n            const Node *t = this;\n            while(t->l)\
-    \ t = t->l;\n            return t;\n        }\n        Node* erase_leftmost()\
-    \ {\n            Node *t = this;\n            if(!t->l) {\n                Node\
-    \ *p = t->r;\n                if(p) p->par = nullptr;\n                delete\
-    \ t;\n                return p;\n            }\n            Node *p = t;\n   \
-    \         while(p->l->l) p = p->l;\n            Node *q = p->l;\n            p->l\
-    \ = q->r;\n            if(q->r) q->r->par = p;\n            delete q;\n      \
-    \      return t;\n        }\n        Node* rightmost() {\n            Node *t\
-    \ = this;\n            while(t->r) t = t->r;\n            return t;\n        }\n\
-    \        const Node* rightmost() const {\n            const Node *t = this;\n\
-    \            if(!t) return nullptr;\n            while(t->r) t = t->r;\n     \
-    \       return t;\n        }\n        Node* erase_rightmost() {\n            Node\
-    \ *t = this;\n            if(!t->r) {\n                Node *p = t->l;\n     \
-    \           if(p) p->par = nullptr;\n                delete t;\n             \
-    \   return p;\n            }\n            Node *p = t;\n            while(p->r->r)\
-    \ p = p->r;\n            Node *q = p->r;\n            p->r = q->l;\n         \
-    \   if(q->l) q->l->par = p;\n            delete q;\n            return t;\n  \
-    \      }\n    };\n\n    mt19937_64 _rng;\n    Node *_root;\n    Compare _comp;\n\
-    \    MergeValue _merge_value;\n\n    bool _comp_key_id(const Key &key1, size_t\
-    \ id1, const Key &key2, size_t id2) {\n        return _comp(key1, key2) || (!_comp(key2,\
-    \ key1) && id1 < id2);\n    }\n    void _update(Node *t) {\n        t->cnt = 1;\n\
-    \        if (t->l) t->cnt += t->l->cnt;\n        if (t->r) t->cnt += t->r->cnt;\n\
-    \        if constexpr (!is_same_v<MergeValue, void*>) {\n            t->sum =\
-    \ t->value;\n            if (t->l) t->sum = _merge_value(t->l->sum, t->sum);\n\
-    \            if (t->r) t->sum = _merge_value(t->sum, t->r->sum);\n        }\n\
+    \ multi = false, typename Value = void*, bool ValueIsMonoid = false, typename\
+    \ UpdateMonoid = void*, typename Mapping = void*>\nclass Treap {\n    struct Node\
+    \ {\n        pair<const Key, Value> key_value;\n        const Key &key;\n    \
+    \    Value &value;\n        size_t id;\n        ull pri;\n        Node *l, *r,\
+    \ *par;\n        size_t cnt;\n        Value sum;\n        UpdateMonoid lazy;\n\
+    \        Node(const Key &key, const Value &value, ull pri) : key_value(key, value),\
+    \ key(key_value.first), value(key_value.second), pri(pri), l(nullptr), r(nullptr),\
+    \ par(nullptr), cnt(1), sum(value), lazy(UpdateMonoid::id()) {\n            static\
+    \ size_t id = 0;\n            this->id = id++;\n        }\n        Node* leftmost()\
+    \ {\n            Node *t = this;\n            while(l) t = t->l;\n           \
+    \ return t;\n        }\n        const Node* leftmost() const {\n            const\
+    \ Node *t = this;\n            while(t->l) t = t->l;\n            return t;\n\
+    \        }\n        Node* erase_leftmost() {\n            Node *t = this;\n  \
+    \          if(!t->l) {\n                Node *p = t->r;\n                if(p)\
+    \ p->par = nullptr;\n                delete t;\n                return p;\n  \
+    \          }\n            Node *p = t;\n            while(p->l->l) p = p->l;\n\
+    \            Node *q = p->l;\n            p->l = q->r;\n            if(q->r) q->r->par\
+    \ = p;\n            delete q;\n            return t;\n        }\n        Node*\
+    \ rightmost() {\n            Node *t = this;\n            while(t->r) t = t->r;\n\
+    \            return t;\n        }\n        const Node* rightmost() const {\n \
+    \           const Node *t = this;\n            if(!t) return nullptr;\n      \
+    \      while(t->r) t = t->r;\n            return t;\n        }\n        Node*\
+    \ erase_rightmost() {\n            Node *t = this;\n            if(!t->r) {\n\
+    \                Node *p = t->l;\n                if(p) p->par = nullptr;\n  \
+    \              delete t;\n                return p;\n            }\n         \
+    \   Node *p = t;\n            while(p->r->r) p = p->r;\n            Node *q =\
+    \ p->r;\n            p->r = q->l;\n            if(q->l) q->l->par = p;\n     \
+    \       delete q;\n            return t;\n        }\n    };\n\n    mt19937_64\
+    \ _rng;\n    Node *_root;\n    Compare _comp;\n\n    bool _comp_key_id(const Key\
+    \ &key1, size_t id1, const Key &key2, size_t id2) {\n        return _comp(key1,\
+    \ key2) || (!_comp(key2, key1) && id1 < id2);\n    }\n    void _update(Node *t)\
+    \ {\n        t->cnt = 1;\n        if (t->l) t->cnt += t->l->cnt;\n        if (t->r)\
+    \ t->cnt += t->r->cnt;\n        if constexpr (ValueIsMonoid) {\n            t->sum\
+    \ = t->value;\n            if (t->l) t->sum = Value::op(t->l->sum, t->sum);\n\
+    \            if (t->r) t->sum = Value::op(t->sum, t->r->sum);\n        }\n   \
+    \ }\n    void _push(Node *t) {\n        if constexpr (!is_same_v<UpdateMonoid,\
+    \ void*>) {\n            if(t->l) {\n                t->l->lazy = _composition(t->lazy,\
+    \ t->l->lazy);\n                t->l->sum = _mapping(t->lazy, t->l->sum, t->l->cnt);\n\
+    \            }\n            if(t->r) {\n                t->r->lazy = _composition(t->lazy,\
+    \ t->r->lazy);\n                t->r->sum = _mapping(t->lazy, t->r->sum, t->r->cnt);\n\
+    \            }\n            t->value = _mapping(t->lazy, t->value, t->cnt);\n\
+    \            t->lazy = UpdateMonoid::id();\n            update(t);\n        }\n\
     \    }\n    void _free_subtree(Node *t) {\n        if(!t) return;\n        stack<Node\
     \ *> stk;\n        stk.push(t);\n        while(!stk.empty()) {\n            Node\
     \ *p = stk.top(); stk.pop();\n            if(p->l) stk.push(p->l);\n         \
     \   if(p->r) stk.push(p->r);\n            delete p;\n        }\n    }\n    pair<Node*,\
     \ Node*> _split(Node *t, const Key &key, size_t id) {\n        stack<pair<Node\
-    \ *, bool>> ret;\n        while(t) {\n            if(_comp_key_id(t->key, t->id,\
-    \ key, id)) {\n                ret.push({t, true});\n                t = t->r;\n\
-    \            } else {\n                ret.push({t, false});\n               \
-    \ t = t->l;\n            }\n        }\n        Node *l = nullptr, *r = nullptr;\n\
-    \        while(!ret.empty()) {\n            auto [p, b] = ret.top(); ret.pop();\n\
-    \            if(b) {\n                p->r = l;\n                if(l) l->par\
-    \ = p;\n                _update(p);\n                l = p;\n            } else\
-    \ {\n                p->l = r;\n                if(r) r->par = p;\n          \
-    \      _update(p);\n                r = p;\n            }\n        }\n       \
-    \ return {l, r};\n    }\n    Node* _merge(Node *l, Node *r) {\n        stack<pair<Node\
-    \ *, bool>> stk;\n        while(1) {\n            if(!l || !r) break;\n      \
-    \      if(l->pri > r->pri) {\n                stk.push({l, true});\n         \
-    \       l = l->r;\n            } else {\n                stk.push({r, false});\n\
+    \ *, bool>> ret;\n        while(t) {\n            _push(t);\n            if(_comp_key_id(t->key,\
+    \ t->id, key, id)) {\n                ret.push({t, true});\n                t\
+    \ = t->r;\n            } else {\n                ret.push({t, false});\n     \
+    \           t = t->l;\n            }\n        }\n        Node *l = nullptr, *r\
+    \ = nullptr;\n        while(!ret.empty()) {\n            auto [p, b] = ret.top();\
+    \ ret.pop();\n            if(b) {\n                p->r = l;\n               \
+    \ if(l) l->par = p;\n                _update(p);\n                l = p;\n   \
+    \         } else {\n                p->l = r;\n                if(r) r->par =\
+    \ p;\n                _update(p);\n                r = p;\n            }\n   \
+    \     }\n        return {l, r};\n    }\n    Node* _merge(Node *l, Node *r) {\n\
+    \        stack<pair<Node *, bool>> stk;\n        while(1) {\n            if(l)\
+    \ _push(l);\n            if(r) _push(r);\n            if(!l || !r) break;\n  \
+    \          if(l->pri > r->pri) {\n                stk.push({l, true});\n     \
+    \           l = l->r;\n            } else {\n                stk.push({r, false});\n\
     \                r = r->l;\n            }\n        }\n        Node *t = l ? l\
     \ : r;\n        while(!stk.empty()) {\n            auto [p, b] = stk.top(); stk.pop();\n\
     \            if(b) {\n                p->r = t;\n                if(t) t->par\
@@ -365,10 +380,9 @@ data:
   isVerificationFile: false
   path: structure/treap.hpp
   requiredBy: []
-  timestamp: '2023-02-17 23:46:54+09:00'
-  verificationStatus: LIBRARY_ALL_AC
-  verifiedWith:
-  - test/yosupo-associative-array.test.cpp
+  timestamp: '2023-02-20 20:29:22+09:00'
+  verificationStatus: LIBRARY_NO_TESTS
+  verifiedWith: []
 documentation_of: structure/treap.hpp
 layout: document
 redirect_from:

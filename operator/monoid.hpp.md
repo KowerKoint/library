@@ -9,21 +9,12 @@ data:
     title: stl-expansion.hpp
   _extendedRequiredBy:
   - icon: ':heavy_check_mark:'
-    path: graph/graph.hpp
-    title: graph/graph.hpp
-  - icon: ':heavy_check_mark:'
-    path: graph/tree.hpp
-    title: graph/tree.hpp
+    path: operator/mapping.hpp
+    title: operator/mapping.hpp
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
-    path: test/aoj-dsl-1-b.test.cpp
-    title: test/aoj-dsl-1-b.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: test/yosupo-lowest-common-ancestor.test.cpp
-    title: test/yosupo-lowest-common-ancestor.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: test/yosupo-shortest-path.test.cpp
-    title: test/yosupo-shortest-path.test.cpp
+    path: test/yosupo-dynamic-sequence-range-affine-range-sum.test.cpp
+    title: test/yosupo-dynamic-sequence-range-affine-range-sum.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -97,80 +88,59 @@ data:
     \ {\n    vector<T> res(n+1), rev(n+1);\n    res[0] = 1;\n    REP(i, n) res[i+1]\
     \ = res[i] * (i+1);\n    rev[n] = 1 / res[n];\n    for(int i = n; i > 0; i--)\
     \ {\n        rev[i-1] = rev[i] * i;\n    }\n    return make_pair(res, rev);\n\
-    }\n#line 3 \"connectivity/union-find.hpp\"\n\ntemplate <typename Value=nullptr_t,\
-    \ Value (*merge_value)(Value, Value)=nullptr, typename Potential=int>\nstruct\
-    \ UnionFind {\n    int n;\n    VI par; // size if value is negative\n    vector<Value>\
-    \ val;\n    vector<Potential> pot;\n    UnionFind(int n=0) : n(n), par(n, -1),\
-    \ val(n), pot(n) {\n        assert(n >= 0);\n    }\n    int root(int x) {\n  \
-    \      assert(0 <= x && x < n);\n        if(par[x] < 0) return x;\n        int\
-    \ rt = root(par[x]);\n        pot[x] += pot[par[x]];\n        return par[x] =\
-    \ rt;\n    }\n    Value get_value(int x) {\n        assert(0 <= x && x < n);\n\
-    \        return val[root(x)];\n    }\n    void set_value(int x, Value v) {\n \
-    \       assert(0 <= x && x < n);\n        val[root(x)] = v;\n    }\n    Potential\
-    \ potential(int x) {\n        assert(0 <= x && x < n);\n        root(x);\n   \
-    \     return pot[x];\n    }\n    Potential diff(int x, int y) {\n        assert(0\
-    \ <= x && x < n);\n        assert(0 <= y && y < n);\n        return potential(y)\
-    \ - potential(x);\n    }\n    int size(int x) {\n        assert(0 <= x && x <\
-    \ n);\n        return -par[root(x)];\n    }\n    bool merge(int x, int y, Potential\
-    \ p=0) {\n        assert(0 <= x && x < n);\n        assert(0 <= y && y < n);\n\
-    \        p += potential(x);\n        p -= potential(y);\n        x = root(x),\
-    \ y = root(y);\n        if(x == y) return false;\n        if(par[x] > par[y])\
-    \ {\n            swap(x, y);\n            p = -p;\n        }\n        par[x] +=\
-    \ par[y];\n        par[y] = x;\n        if(merge_value != nullptr) val[x] = merge_value(val[x],\
-    \ val[y]);\n        pot[y] = p;\n        return true;\n    }\n    bool same(int\
-    \ x, int y) {\n        assert(0 <= x && x < n);\n        assert(0 <= y && y <\
-    \ n);\n        return root(x) == root(y);\n    }\n    VVI groups() {\n       \
-    \ VVI res(n);\n        REP(i, n) {\n            res[root(i)].push_back(i);\n \
-    \       }\n        sort(ALL(res), [](VI& a, VI& b) {\n            return a.size()\
-    \ > b.size();\n        });\n        while(!res.empty() && res.back().empty())\
-    \ res.pop_back();\n        return res;\n    }\n};\n\ntemplate <typename Potential>\n\
-    using WeightedUnionFind = UnionFind<nullptr_t, nullptr, Potential>;\n"
-  code: "#pragma once\n#include \"../base.hpp\"\n\ntemplate <typename Value=nullptr_t,\
-    \ Value (*merge_value)(Value, Value)=nullptr, typename Potential=int>\nstruct\
-    \ UnionFind {\n    int n;\n    VI par; // size if value is negative\n    vector<Value>\
-    \ val;\n    vector<Potential> pot;\n    UnionFind(int n=0) : n(n), par(n, -1),\
-    \ val(n), pot(n) {\n        assert(n >= 0);\n    }\n    int root(int x) {\n  \
-    \      assert(0 <= x && x < n);\n        if(par[x] < 0) return x;\n        int\
-    \ rt = root(par[x]);\n        pot[x] += pot[par[x]];\n        return par[x] =\
-    \ rt;\n    }\n    Value get_value(int x) {\n        assert(0 <= x && x < n);\n\
-    \        return val[root(x)];\n    }\n    void set_value(int x, Value v) {\n \
-    \       assert(0 <= x && x < n);\n        val[root(x)] = v;\n    }\n    Potential\
-    \ potential(int x) {\n        assert(0 <= x && x < n);\n        root(x);\n   \
-    \     return pot[x];\n    }\n    Potential diff(int x, int y) {\n        assert(0\
-    \ <= x && x < n);\n        assert(0 <= y && y < n);\n        return potential(y)\
-    \ - potential(x);\n    }\n    int size(int x) {\n        assert(0 <= x && x <\
-    \ n);\n        return -par[root(x)];\n    }\n    bool merge(int x, int y, Potential\
-    \ p=0) {\n        assert(0 <= x && x < n);\n        assert(0 <= y && y < n);\n\
-    \        p += potential(x);\n        p -= potential(y);\n        x = root(x),\
-    \ y = root(y);\n        if(x == y) return false;\n        if(par[x] > par[y])\
-    \ {\n            swap(x, y);\n            p = -p;\n        }\n        par[x] +=\
-    \ par[y];\n        par[y] = x;\n        if(merge_value != nullptr) val[x] = merge_value(val[x],\
-    \ val[y]);\n        pot[y] = p;\n        return true;\n    }\n    bool same(int\
-    \ x, int y) {\n        assert(0 <= x && x < n);\n        assert(0 <= y && y <\
-    \ n);\n        return root(x) == root(y);\n    }\n    VVI groups() {\n       \
-    \ VVI res(n);\n        REP(i, n) {\n            res[root(i)].push_back(i);\n \
-    \       }\n        sort(ALL(res), [](VI& a, VI& b) {\n            return a.size()\
-    \ > b.size();\n        });\n        while(!res.empty() && res.back().empty())\
-    \ res.pop_back();\n        return res;\n    }\n};\n\ntemplate <typename Potential>\n\
-    using WeightedUnionFind = UnionFind<nullptr_t, nullptr, Potential>;\n"
+    }\n#line 3 \"operator/monoid.hpp\"\n\ntemplate <typename T>\nstruct SumMonoid\
+    \ {\n    static T id() { return 0; }\n    static T op(const T& a, const T& b)\
+    \ { return a + b; }\n};\ntemplate <typename T>\nstruct MinMonoid {\n    static\
+    \ T id() { return numeric_limits<T>::max(); }\n    static T op(const T& a, const\
+    \ T& b) { return min(a, b); }\n};\ntemplate <typename T>\nstruct MaxMonoid {\n\
+    \    static T id() { return numeric_limits<T>::min(); }\n    static T op(const\
+    \ T& a, const T& b) { return max(a, b); }\n};\ntemplate <typename T>\nstruct GcdMonoid\
+    \ {\n    static T id() { return 0; }\n    static T op(const T& a, const T& b)\
+    \ { return gcd(a, b); }\n};\ntemplate <typename T>\nstruct LcmMonoid {\n    static\
+    \ T id() { return 1; }\n    static T op(const T& a, const T& b) { return lcm(a,\
+    \ b); }\n};\ntemplate <typename T>\nstruct AndMonoid {\n    static T id() { return\
+    \ numeric_limits<T>::max(); }\n    static T op(const T& a, const T& b) { return\
+    \ a & b; }\n};\ntemplate <typename T>\nstruct OrMonoid {\n    static T id() {\
+    \ return 0; }\n    static T op(const T& a, const T& b) { return a | b; }\n};\n\
+    template <typename T>\nstruct XorMonoid {\n    static T id() { return 0; }\n \
+    \   static T op(const T& a, const T& b) { return a ^ b; }\n};\ntemplate <typename\
+    \ T>\nstruct AffineMonoid {\n    static pair<T, T> id() { return {1, 0}; }\n \
+    \   static pair<T, T> op(const pair<T, T>& a, const pair<T, T>& b) {\n       \
+    \ return {a.first * b.first, a.first * b.second + a.second};\n    }\n};\n"
+  code: "#pragma once\n#include \"../base.hpp\"\n\ntemplate <typename T>\nstruct SumMonoid\
+    \ {\n    static T id() { return 0; }\n    static T op(const T& a, const T& b)\
+    \ { return a + b; }\n};\ntemplate <typename T>\nstruct MinMonoid {\n    static\
+    \ T id() { return numeric_limits<T>::max(); }\n    static T op(const T& a, const\
+    \ T& b) { return min(a, b); }\n};\ntemplate <typename T>\nstruct MaxMonoid {\n\
+    \    static T id() { return numeric_limits<T>::min(); }\n    static T op(const\
+    \ T& a, const T& b) { return max(a, b); }\n};\ntemplate <typename T>\nstruct GcdMonoid\
+    \ {\n    static T id() { return 0; }\n    static T op(const T& a, const T& b)\
+    \ { return gcd(a, b); }\n};\ntemplate <typename T>\nstruct LcmMonoid {\n    static\
+    \ T id() { return 1; }\n    static T op(const T& a, const T& b) { return lcm(a,\
+    \ b); }\n};\ntemplate <typename T>\nstruct AndMonoid {\n    static T id() { return\
+    \ numeric_limits<T>::max(); }\n    static T op(const T& a, const T& b) { return\
+    \ a & b; }\n};\ntemplate <typename T>\nstruct OrMonoid {\n    static T id() {\
+    \ return 0; }\n    static T op(const T& a, const T& b) { return a | b; }\n};\n\
+    template <typename T>\nstruct XorMonoid {\n    static T id() { return 0; }\n \
+    \   static T op(const T& a, const T& b) { return a ^ b; }\n};\ntemplate <typename\
+    \ T>\nstruct AffineMonoid {\n    static pair<T, T> id() { return {1, 0}; }\n \
+    \   static pair<T, T> op(const pair<T, T>& a, const pair<T, T>& b) {\n       \
+    \ return {a.first * b.first, a.first * b.second + a.second};\n    }\n};\n"
   dependsOn:
   - base.hpp
   - stl-expansion.hpp
   isVerificationFile: false
-  path: connectivity/union-find.hpp
+  path: operator/monoid.hpp
   requiredBy:
-  - graph/graph.hpp
-  - graph/tree.hpp
+  - operator/mapping.hpp
   timestamp: '2023-02-20 20:29:22+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - test/yosupo-shortest-path.test.cpp
-  - test/yosupo-lowest-common-ancestor.test.cpp
-  - test/aoj-dsl-1-b.test.cpp
-documentation_of: connectivity/union-find.hpp
+  - test/yosupo-dynamic-sequence-range-affine-range-sum.test.cpp
+documentation_of: operator/monoid.hpp
 layout: document
 redirect_from:
-- /library/connectivity/union-find.hpp
-- /library/connectivity/union-find.hpp.html
-title: connectivity/union-find.hpp
+- /library/operator/monoid.hpp
+- /library/operator/monoid.hpp.html
+title: operator/monoid.hpp
 ---

@@ -114,6 +114,14 @@ data:
     - icon: ':heavy_check_mark:'
       path: matrix/matrix.hpp
       title: matrix/matrix.hpp
+  - name: operator
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: operator/mapping.hpp
+      title: operator/mapping.hpp
+    - icon: ':heavy_check_mark:'
+      path: operator/monoid.hpp
+      title: operator/monoid.hpp
   - name: segtree
     pages:
     - icon: ':heavy_check_mark:'
@@ -134,6 +142,9 @@ data:
   - name: structure
     pages:
     - icon: ':heavy_check_mark:'
+      path: structure/implicit-treap.hpp
+      title: ImplicitTreap
+    - icon: ':warning:'
       path: structure/treap.hpp
       title: Treap
   verificationCategories:
@@ -224,14 +235,14 @@ data:
       path: test/aoj-ntl-1-e.test.cpp
       title: test/aoj-ntl-1-e.test.cpp
     - icon: ':heavy_check_mark:'
-      path: test/yosupo-associative-array.test.cpp
-      title: test/yosupo-associative-array.test.cpp
-    - icon: ':heavy_check_mark:'
       path: test/yosupo-convolution.test.cpp
       title: test/yosupo-convolution.test.cpp
     - icon: ':heavy_check_mark:'
       path: test/yosupo-determinant-of-matrix.test.cpp
       title: test/yosupo-determinant-of-matrix.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: test/yosupo-dynamic-sequence-range-affine-range-sum.test.cpp
+      title: test/yosupo-dynamic-sequence-range-affine-range-sum.test.cpp
     - icon: ':heavy_check_mark:'
       path: test/yosupo-enumerate-primes.test.cpp
       title: test/yosupo-enumerate-primes.test.cpp
