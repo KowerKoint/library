@@ -116,9 +116,6 @@ data:
   - icon: ':heavy_check_mark:'
     path: structure/implicit-treap.hpp
     title: ImplicitTreap
-  - icon: ':warning:'
-    path: structure/treap.hpp
-    title: Treap
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: test/aoj-alds-1-1-c.test.cpp
@@ -294,7 +291,6 @@ data:
   - segtree/segtree.hpp
   - operator.hpp
   - structure/implicit-treap.hpp
-  - structure/treap.hpp
   - string.hpp
   - graph/min-cost-flow.hpp
   - graph/graph.hpp
@@ -318,7 +314,7 @@ data:
   - algebra/fps.hpp
   - connectivity/union-find.hpp
   - general.hpp
-  timestamp: '2023-02-20 20:29:22+09:00'
+  timestamp: '2023-02-20 20:46:40+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/yosupo-enumerate-primes.test.cpp

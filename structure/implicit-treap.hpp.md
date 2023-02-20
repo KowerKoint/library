@@ -16,7 +16,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/implicit-treap.md
     document_title: ImplicitTreap
     links: []
   bundledCode: "#line 2 \"stl-expansion.hpp\"\n#include <bits/stdc++.h>\n\ntemplate\
@@ -88,13 +87,22 @@ data:
     \ = res[i] * (i+1);\n    rev[n] = 1 / res[n];\n    for(int i = n; i > 0; i--)\
     \ {\n        rev[i-1] = rev[i] * i;\n    }\n    return make_pair(res, rev);\n\
     }\n#line 3 \"structure/implicit-treap.hpp\"\n\n/**\n * @brief ImplicitTreap\n\
-    \ * @docs docs/implicit-treap.md\n */\ntemplate <typename Value, typename ValueMonoid\
-    \ = void*, typename Update = void*, typename UpdateMonoid = void*, typename Mapping\
-    \ = void*, bool MappingWithSize = false>\nclass ImplicitTreap {\n    struct Node\
-    \ {\n        Value value;\n        ull pri;\n        Node *l, *r, *par;\n    \
-    \    size_t cnt;\n        Value sum;\n        bool rev;\n        Update lazy;\n\
-    \        Node(const Value &value, ull pri) : value(value), pri(pri), l(nullptr),\
-    \ r(nullptr), par(nullptr), cnt(1), sum(value), rev(false), lazy(UpdateMonoid::id())\
+    \ *\n * @tparam Value \u5024\u306E\u578B\n * @tparam ValueMonoid \u5024\u306E\u7DCF\
+    \u548C\u3092\u8A08\u7B97\u3059\u308B\u30E2\u30CE\u30A4\u30C9 void*\u306E\u5834\
+    \u5408\u306F\u8A08\u7B97\u3057\u306A\u3044\n * @tparam Update \u66F4\u65B0\u5024\
+    \ void*\u306E\u5834\u5408\u306F\u66F4\u65B0\u3057\u306A\u3044\n * @tparam UpdateMonoid\
+    \ \u66F4\u65B0\u5024\u306E\u5408\u6210\u95A2\u6570\u3092\u793A\u3059\u30E2\u30CE\
+    \u30A4\u30C9\n * @tparam Mapping \u66F4\u65B0\u5024\u3092\u5024\u3084\u7DCF\u548C\
+    \u306B\u4F5C\u7528\u3055\u305B\u308B\u95A2\u6570(Update, Value)\u307E\u305F\u306F\
+    (Update, Value, size_t)\n * @tparam MappingWithSize Mapping\u304C3\u5F15\u6570\
+    \u304B\u3069\u3046\u304B 3\u756A\u76EE\u306E\u5F15\u6570\u306F\u7DCF\u548C\u306B\
+    \u542B\u307E\u308C\u308B\u5024\u306E\u500B\u6570\n */\ntemplate <typename Value,\
+    \ typename ValueMonoid = void*, typename Update = void*, typename UpdateMonoid\
+    \ = void*, typename Mapping = void*, bool MappingWithSize = false>\nclass ImplicitTreap\
+    \ {\n    struct Node {\n        Value value;\n        ull pri;\n        Node *l,\
+    \ *r, *par;\n        size_t cnt;\n        Value sum;\n        bool rev;\n    \
+    \    Update lazy;\n        Node(const Value &value, ull pri) : value(value), pri(pri),\
+    \ l(nullptr), r(nullptr), par(nullptr), cnt(1), sum(value), rev(false), lazy(UpdateMonoid::id())\
     \ {}\n    };\n\n    mt19937_64 _rng;\n    Node *_root;\n    Mapping _mapping;\n\
     \n    inline void _update(Node *t) {\n        t->cnt = 1;\n        if (t->l) t->cnt\
     \ += t->l->cnt;\n        if (t->r) t->cnt += t->r->cnt;\n        if constexpr\
@@ -143,14 +151,14 @@ data:
     \         } else {\n                p->l = t;\n                if(t) t->par =\
     \ p;\n                _update(p);\n                t = p;\n            }\n   \
     \     }\n        return t;\n    }\n\npublic:\n    class ValueReference {\n   \
-    \ private:\n        ImplicitTreap &treap;\n        Node *node;\n    public:\n\
-    \        ValueReference(ImplicitTreap &treap, Node *node) : treap(treap), node(node)\
-    \ {}\n        ValueReference& operator=(const Value& v) {\n            stack<Node*>\
-    \ stk;\n            Node *t = node;\n            while(t->par) {\n           \
-    \     stk.push(t);\n                t = t->par;\n            }\n            while(!stk.empty())\
-    \ {\n                treap._push(t);\n                t = stk.top(); stk.pop();\n\
-    \            }\n            treap._push(t);\n            t->value = v;\n     \
-    \       treap._update(t);\n            while(t->par) {\n                t = t->par;\n\
+    \ private:\n        ImplicitTreap &treap;\n        Node *node;\n        ValueReference(ImplicitTreap\
+    \ &treap, Node *node) : treap(treap), node(node) {}\n    public:\n        ValueReference&\
+    \ operator=(const Value& v) {\n            stack<Node*> stk;\n            Node\
+    \ *t = node;\n            while(t->par) {\n                stk.push(t);\n    \
+    \            t = t->par;\n            }\n            while(!stk.empty()) {\n \
+    \               treap._push(t);\n                t = stk.top(); stk.pop();\n \
+    \           }\n            treap._push(t);\n            t->value = v;\n      \
+    \      treap._update(t);\n            while(t->par) {\n                t = t->par;\n\
     \                treap._update(t);\n            }\n            return *this;\n\
     \        }\n        operator Value() const {\n            stack<Node*> stk;\n\
     \            Node *t = node;\n            while(t->par) {\n                stk.push(t);\n\
@@ -158,8 +166,8 @@ data:
     \                treap._push(t);\n                t = stk.top(); stk.pop();\n\
     \            }\n            treap._push(t);\n            return t->value;\n  \
     \      }\n    };\n\n    class Iterator {\n    private:\n        ImplicitTreap\
-    \ &treap;\n        Node *node;\n    public:\n        Iterator(ImplicitTreap &treap,\
-    \ Node *node) : treap(treap), node(node) {}\n        Iterator& operator++() {\n\
+    \ &treap;\n        Node *node;\n        Iterator(ImplicitTreap &treap, Node *node)\
+    \ : treap(treap), node(node) {}\n    public:\n        Iterator& operator++() {\n\
     \            if(node->r) {\n                node = node->r;\n                while(node->l)\
     \ node = node->l;\n            } else {\n                while(node->par && node->par->r\
     \ == node) node = node->par;\n                node = node->par;\n            }\n\
@@ -173,44 +181,93 @@ data:
     \ itr) const { return node != itr.node; }\n        ValueReference operator*()\
     \ { return ValueReference(treap, node); }\n        ValueReference operator->()\
     \ { return ValueReference(treap, node); }\n    };\n    friend class Iterator;\n\
-    \n    ImplicitTreap(ull seed = random_device{}()) : _rng(seed), _root(nullptr),\
-    \ _mapping() {}\n    template <typename It>\n    ImplicitTreap(It first, It last,\
-    \ ull seed = random_device{}()) : ImplicitTreap(seed) {\n        while(first !=\
-    \ last) {\n            push_back(*first);\n            ++first;\n        }\n \
-    \   }\n    ~ImplicitTreap() { _free_subtree(_root); }\n    Iterator begin() {\n\
-    \        if(!_root) return Iterator(*this, nullptr);\n        auto [l, r] = _split(_root,\
-    \ 1);\n        _root = _merge(l, r);\n        return Iterator(*this, l);\n   \
-    \ }\n    Iterator end() { return Iterator(_root, nullptr); }\n    size_t size()\
-    \ const { return _root ? _root->cnt : 0; }\n    Iterator kth_element(size_t k)\
-    \ {\n        auto [l, r] = _split(_root, k);\n        auto [m, r2] = _split(r,\
-    \ 1);\n        _root = _merge(_merge(l, m), r2);\n        return Iterator(*this,\
-    \ m);\n    }\n    ValueReference operator[](size_t k) {\n        auto [l, r] =\
-    \ _split(_root, k);\n        auto [m, rr] = _split(r, 1);\n        _root = _merge(l,\
-    \ rr);\n        return ValueReference(*this, m);\n    }\n    Value query(size_t\
-    \ l, size_t r) {\n        auto [l1, r1] = _split(_root, l);\n        auto [m,\
-    \ r2] = _split(r1, r - l);\n        Value ret = m->sum;\n        _root = _merge(_merge(l1,\
-    \ m), r2);\n        return ret;\n    }\n    void insert(size_t k, const Value&\
-    \ v) {\n        auto [l, r] = _split(_root, k);\n        _root = _merge(_merge(l,\
-    \ new Node(v, _rng())), r);\n    }\n    void push_back(const Value& v) { insert(size(),\
-    \ v); }\n    void erase(size_t k) {\n        auto [l, r] = _split(_root, k);\n\
-    \        auto [m, r2] = _split(r, 1);\n        _root = _merge(l, r2);\n      \
-    \  delete m;\n    }\n    void pop_back() { erase(size() - 1); }\n    void reverse(size_t\
-    \ l, size_t r) {\n        auto [l1, r1] = _split(_root, l);\n        auto [m,\
-    \ r2] = _split(r1, r - l);\n        m->rev ^= true;\n        _root = _merge(_merge(l1,\
-    \ m), r2);\n    }\n    void apply(size_t l, size_t r, const Update& f) {\n   \
-    \     auto [l1, r1] = _split(_root, l);\n        auto [m, r2] = _split(r1, r -\
-    \ l);\n        if constexpr(MappingWithSize) {\n            m->sum = _mapping(f,\
+    \n    /**\n     * @brief \u30B3\u30F3\u30B9\u30C8\u30E9\u30AF\u30BF\n     * @param\
+    \ seed \u4E71\u6570\u751F\u6210\u5668\u306E\u30B7\u30FC\u30C9\n     *\n     *\
+    \ O(1)\n     */\n    ImplicitTreap(ull seed = random_device{}()) : _rng(seed),\
+    \ _root(nullptr), _mapping() {}\n    /**\n     * @brief \u30B3\u30F3\u30B9\u30C8\
+    \u30E9\u30AF\u30BF(\u521D\u671F\u5316\u4ED8\u304D)\n     * @param first \u521D\
+    \u671F\u5316\u306B\u7528\u3044\u308B\u30A4\u30C6\u30EC\u30FC\u30BF\u306E\u5148\
+    \u982D\n     * @param last \u521D\u671F\u5316\u306B\u7528\u3044\u308B\u30A4\u30C6\
+    \u30EC\u30FC\u30BF\u306E\u672B\u5C3E\n     * @param seed \u4E71\u6570\u751F\u6210\
+    \u5668\u306E\u30B7\u30FC\u30C9\n     *\n     * O(N)\n     */\n    template <typename\
+    \ It>\n    ImplicitTreap(It first, It last, ull seed = random_device{}()) : ImplicitTreap(seed)\
+    \ {\n        while(first != last) {\n            push_back(*first);\n        \
+    \    ++first;\n        }\n    }\n    /**\n     * @brief \u30C7\u30B9\u30C8\u30E9\
+    \u30AF\u30BF\n     *\n     * O(N)\n     */\n    ~ImplicitTreap() { _free_subtree(_root);\
+    \ }\n    /**\n     * @brief begin\u30A4\u30C6\u30EC\u30FC\u30BF\n     * @return\
+    \ begin\u30A4\u30C6\u30EC\u30FC\u30BF\n     *\n     * O(log N)\n     * \u30A4\u30C6\
+    \u30EC\u30FC\u30BF\u95A2\u9023\u306E\u64CD\u4F5C\u306FO(log N)\n     */\n    Iterator\
+    \ begin() {\n        if(!_root) return Iterator(*this, nullptr);\n        auto\
+    \ [l, r] = _split(_root, 1);\n        _root = _merge(l, r);\n        return Iterator(*this,\
+    \ l);\n    }\n    /**\n     * @brief end\u30A4\u30C6\u30EC\u30FC\u30BF\n     *\
+    \ @return end\u30A4\u30C6\u30EC\u30FC\u30BF\n     *\n     * O(1)\n     * \u30A4\
+    \u30C6\u30EC\u30FC\u30BF\u95A2\u9023\u306E\u64CD\u4F5C\u306FO(log N)\n     */\n\
+    \    Iterator end() { return Iterator(_root, nullptr); }\n    /**\n     * @brief\
+    \ \u8981\u7D20\u6570\n     * @return \u8981\u7D20\u6570\n     *\n     * O(1)\n\
+    \     */\n    size_t size() const { return _root ? _root->cnt : 0; }\n    /**\n\
+    \     * @brief \u7A7A\u304B\u3069\u3046\u304B\n     * @return \u7A7A\u306A\u3089\
+    true\n     *\n     * O(1)\n     */\n    bool empty() const { return !_root; }\n\
+    \    /**\n     * @brief k\u756A\u76EE\u306E\u8981\u7D20\u3078\u306E\u53C2\u7167\
+    \n     * @param k \u8981\u7D20\u306E\u6DFB\u5B57\n     * @return k\u756A\u76EE\
+    \u306E\u8981\u7D20\u306E\u30A4\u30C6\u30EC\u30FC\u30BF\n     *\n     * O(log N)\n\
+    \     */\n    Iterator kth_element(size_t k) {\n        auto [l, r] = _split(_root,\
+    \ k);\n        auto [m, r2] = _split(r, 1);\n        _root = _merge(_merge(l,\
+    \ m), r2);\n        return Iterator(*this, m);\n    }\n    /**\n     * @brief\
+    \ k\u756A\u76EE\u306E\u8981\u7D20\u3078\u306E\u53C2\u7167\n     * @param k \u8981\
+    \u7D20\u306E\u6DFB\u5B57\n     * @return k\u756A\u76EE\u306E\u8981\u7D20\u3078\
+    \u306E\u53C2\u7167\n     *\n     * O(log N)\n     * \u4EE3\u5165\u53EF\u80FD\n\
+    \     * \u53C2\u7167\u306E\u6271\u3044\u3082O(log N)\u304B\u304B\u308B\n     */\n\
+    \    ValueReference operator[](size_t k) {\n        auto [l, r] = _split(_root,\
+    \ k);\n        auto [m, rr] = _split(r, 1);\n        _root = _merge(l, rr);\n\
+    \        return ValueReference(*this, m);\n    }\n    /**\n     * @brief \u7DCF\
+    \u548C\n     * @param l \u7BC4\u56F2\u306E\u5148\u982D\n     * @param r \u7BC4\
+    \u56F2\u306E\u672B\u5C3E\n     * @return [l,r)\u306E\u7DCF\u548C\n     */\n  \
+    \  Value query(size_t l, size_t r) {\n        auto [l1, r1] = _split(_root, l);\n\
+    \        auto [m, r2] = _split(r1, r - l);\n        Value ret = m->sum;\n    \
+    \    _root = _merge(_merge(l1, m), r2);\n        return ret;\n    }\n    /**\n\
+    \     * @brief \u633F\u5165\n     * @param k \u633F\u5165\u3059\u308B\u8981\u7D20\
+    \u306E\u6DFB\u5B57\n     *\n     * O(log N)\n     */\n    void insert(size_t k,\
+    \ const Value& v) {\n        auto [l, r] = _split(_root, k);\n        _root =\
+    \ _merge(_merge(l, new Node(v, _rng())), r);\n    }\n    /**\n     * @brief \u672B\
+    \u5C3E\u3078\u306E\u633F\u5165\n     *\n     * O(log N)\n     */\n    void push_back(const\
+    \ Value& v) { insert(size(), v); }\n    /**\n     * @brief \u524A\u9664\n    \
+    \ * @param k \u524A\u9664\u3059\u308B\u8981\u7D20\u306E\u6DFB\u5B57\n     *\n\
+    \     * O(log N)\n     */\n    void erase(size_t k) {\n        auto [l, r] = _split(_root,\
+    \ k);\n        auto [m, r2] = _split(r, 1);\n        _root = _merge(l, r2);\n\
+    \        delete m;\n    }\n    /**\n     * @brief \u672B\u5C3E\u306E\u524A\u9664\
+    \n     *\n     * O(log N)\n     */\n    void pop_back() { erase(size() - 1); }\n\
+    \    /**\n     * @brief [l,r)\u306E\u53CD\u8EE2\n     * @param l \u7BC4\u56F2\u306E\
+    \u5148\u982D\n     * @param r \u7BC4\u56F2\u306E\u672B\u5C3E\n     *\n     * O(log\
+    \ N)\n     * ValueMonoid\u3092\u6307\u5B9A\u3059\u308B\u5834\u5408\u306F\u53EF\
+    \u63DB\u3067\u306A\u3051\u308C\u3070\u306A\u3089\u306A\u3044\n     */\n    void\
+    \ reverse(size_t l, size_t r) {\n        auto [l1, r1] = _split(_root, l);\n \
+    \       auto [m, r2] = _split(r1, r - l);\n        m->rev ^= true;\n        _root\
+    \ = _merge(_merge(l1, m), r2);\n    }\n    /**\n     * @brief [l,r)\u306E\u66F4\
+    \u65B0\n     * @param l \u7BC4\u56F2\u306E\u5148\u982D\n     * @param r \u7BC4\
+    \u56F2\u306E\u672B\u5C3E\n     * @param v \u66F4\u65B0\u3059\u308B\u5024\n   \
+    \  *\n     * O(log N)\n     */\n    void apply(size_t l, size_t r, const Update&\
+    \ f) {\n        auto [l1, r1] = _split(_root, l);\n        auto [m, r2] = _split(r1,\
+    \ r - l);\n        if constexpr(MappingWithSize) {\n            m->sum = _mapping(f,\
     \ m->sum, m->cnt);\n        } else {\n            m->sum = _mapping(f, m->sum);\n\
     \        }\n        m->lazy = UpdateMonoid::op(f, m->lazy);\n        _root = _merge(_merge(l1,\
     \ m), r2);\n    }\n};\n"
   code: "#pragma once\n#include \"../base.hpp\"\n\n/**\n * @brief ImplicitTreap\n\
-    \ * @docs docs/implicit-treap.md\n */\ntemplate <typename Value, typename ValueMonoid\
-    \ = void*, typename Update = void*, typename UpdateMonoid = void*, typename Mapping\
-    \ = void*, bool MappingWithSize = false>\nclass ImplicitTreap {\n    struct Node\
-    \ {\n        Value value;\n        ull pri;\n        Node *l, *r, *par;\n    \
-    \    size_t cnt;\n        Value sum;\n        bool rev;\n        Update lazy;\n\
-    \        Node(const Value &value, ull pri) : value(value), pri(pri), l(nullptr),\
-    \ r(nullptr), par(nullptr), cnt(1), sum(value), rev(false), lazy(UpdateMonoid::id())\
+    \ *\n * @tparam Value \u5024\u306E\u578B\n * @tparam ValueMonoid \u5024\u306E\u7DCF\
+    \u548C\u3092\u8A08\u7B97\u3059\u308B\u30E2\u30CE\u30A4\u30C9 void*\u306E\u5834\
+    \u5408\u306F\u8A08\u7B97\u3057\u306A\u3044\n * @tparam Update \u66F4\u65B0\u5024\
+    \ void*\u306E\u5834\u5408\u306F\u66F4\u65B0\u3057\u306A\u3044\n * @tparam UpdateMonoid\
+    \ \u66F4\u65B0\u5024\u306E\u5408\u6210\u95A2\u6570\u3092\u793A\u3059\u30E2\u30CE\
+    \u30A4\u30C9\n * @tparam Mapping \u66F4\u65B0\u5024\u3092\u5024\u3084\u7DCF\u548C\
+    \u306B\u4F5C\u7528\u3055\u305B\u308B\u95A2\u6570(Update, Value)\u307E\u305F\u306F\
+    (Update, Value, size_t)\n * @tparam MappingWithSize Mapping\u304C3\u5F15\u6570\
+    \u304B\u3069\u3046\u304B 3\u756A\u76EE\u306E\u5F15\u6570\u306F\u7DCF\u548C\u306B\
+    \u542B\u307E\u308C\u308B\u5024\u306E\u500B\u6570\n */\ntemplate <typename Value,\
+    \ typename ValueMonoid = void*, typename Update = void*, typename UpdateMonoid\
+    \ = void*, typename Mapping = void*, bool MappingWithSize = false>\nclass ImplicitTreap\
+    \ {\n    struct Node {\n        Value value;\n        ull pri;\n        Node *l,\
+    \ *r, *par;\n        size_t cnt;\n        Value sum;\n        bool rev;\n    \
+    \    Update lazy;\n        Node(const Value &value, ull pri) : value(value), pri(pri),\
+    \ l(nullptr), r(nullptr), par(nullptr), cnt(1), sum(value), rev(false), lazy(UpdateMonoid::id())\
     \ {}\n    };\n\n    mt19937_64 _rng;\n    Node *_root;\n    Mapping _mapping;\n\
     \n    inline void _update(Node *t) {\n        t->cnt = 1;\n        if (t->l) t->cnt\
     \ += t->l->cnt;\n        if (t->r) t->cnt += t->r->cnt;\n        if constexpr\
@@ -259,14 +316,14 @@ data:
     \         } else {\n                p->l = t;\n                if(t) t->par =\
     \ p;\n                _update(p);\n                t = p;\n            }\n   \
     \     }\n        return t;\n    }\n\npublic:\n    class ValueReference {\n   \
-    \ private:\n        ImplicitTreap &treap;\n        Node *node;\n    public:\n\
-    \        ValueReference(ImplicitTreap &treap, Node *node) : treap(treap), node(node)\
-    \ {}\n        ValueReference& operator=(const Value& v) {\n            stack<Node*>\
-    \ stk;\n            Node *t = node;\n            while(t->par) {\n           \
-    \     stk.push(t);\n                t = t->par;\n            }\n            while(!stk.empty())\
-    \ {\n                treap._push(t);\n                t = stk.top(); stk.pop();\n\
-    \            }\n            treap._push(t);\n            t->value = v;\n     \
-    \       treap._update(t);\n            while(t->par) {\n                t = t->par;\n\
+    \ private:\n        ImplicitTreap &treap;\n        Node *node;\n        ValueReference(ImplicitTreap\
+    \ &treap, Node *node) : treap(treap), node(node) {}\n    public:\n        ValueReference&\
+    \ operator=(const Value& v) {\n            stack<Node*> stk;\n            Node\
+    \ *t = node;\n            while(t->par) {\n                stk.push(t);\n    \
+    \            t = t->par;\n            }\n            while(!stk.empty()) {\n \
+    \               treap._push(t);\n                t = stk.top(); stk.pop();\n \
+    \           }\n            treap._push(t);\n            t->value = v;\n      \
+    \      treap._update(t);\n            while(t->par) {\n                t = t->par;\n\
     \                treap._update(t);\n            }\n            return *this;\n\
     \        }\n        operator Value() const {\n            stack<Node*> stk;\n\
     \            Node *t = node;\n            while(t->par) {\n                stk.push(t);\n\
@@ -274,8 +331,8 @@ data:
     \                treap._push(t);\n                t = stk.top(); stk.pop();\n\
     \            }\n            treap._push(t);\n            return t->value;\n  \
     \      }\n    };\n\n    class Iterator {\n    private:\n        ImplicitTreap\
-    \ &treap;\n        Node *node;\n    public:\n        Iterator(ImplicitTreap &treap,\
-    \ Node *node) : treap(treap), node(node) {}\n        Iterator& operator++() {\n\
+    \ &treap;\n        Node *node;\n        Iterator(ImplicitTreap &treap, Node *node)\
+    \ : treap(treap), node(node) {}\n    public:\n        Iterator& operator++() {\n\
     \            if(node->r) {\n                node = node->r;\n                while(node->l)\
     \ node = node->l;\n            } else {\n                while(node->par && node->par->r\
     \ == node) node = node->par;\n                node = node->par;\n            }\n\
@@ -289,33 +346,73 @@ data:
     \ itr) const { return node != itr.node; }\n        ValueReference operator*()\
     \ { return ValueReference(treap, node); }\n        ValueReference operator->()\
     \ { return ValueReference(treap, node); }\n    };\n    friend class Iterator;\n\
-    \n    ImplicitTreap(ull seed = random_device{}()) : _rng(seed), _root(nullptr),\
-    \ _mapping() {}\n    template <typename It>\n    ImplicitTreap(It first, It last,\
-    \ ull seed = random_device{}()) : ImplicitTreap(seed) {\n        while(first !=\
-    \ last) {\n            push_back(*first);\n            ++first;\n        }\n \
-    \   }\n    ~ImplicitTreap() { _free_subtree(_root); }\n    Iterator begin() {\n\
-    \        if(!_root) return Iterator(*this, nullptr);\n        auto [l, r] = _split(_root,\
-    \ 1);\n        _root = _merge(l, r);\n        return Iterator(*this, l);\n   \
-    \ }\n    Iterator end() { return Iterator(_root, nullptr); }\n    size_t size()\
-    \ const { return _root ? _root->cnt : 0; }\n    Iterator kth_element(size_t k)\
-    \ {\n        auto [l, r] = _split(_root, k);\n        auto [m, r2] = _split(r,\
-    \ 1);\n        _root = _merge(_merge(l, m), r2);\n        return Iterator(*this,\
-    \ m);\n    }\n    ValueReference operator[](size_t k) {\n        auto [l, r] =\
-    \ _split(_root, k);\n        auto [m, rr] = _split(r, 1);\n        _root = _merge(l,\
-    \ rr);\n        return ValueReference(*this, m);\n    }\n    Value query(size_t\
-    \ l, size_t r) {\n        auto [l1, r1] = _split(_root, l);\n        auto [m,\
-    \ r2] = _split(r1, r - l);\n        Value ret = m->sum;\n        _root = _merge(_merge(l1,\
-    \ m), r2);\n        return ret;\n    }\n    void insert(size_t k, const Value&\
-    \ v) {\n        auto [l, r] = _split(_root, k);\n        _root = _merge(_merge(l,\
-    \ new Node(v, _rng())), r);\n    }\n    void push_back(const Value& v) { insert(size(),\
-    \ v); }\n    void erase(size_t k) {\n        auto [l, r] = _split(_root, k);\n\
-    \        auto [m, r2] = _split(r, 1);\n        _root = _merge(l, r2);\n      \
-    \  delete m;\n    }\n    void pop_back() { erase(size() - 1); }\n    void reverse(size_t\
-    \ l, size_t r) {\n        auto [l1, r1] = _split(_root, l);\n        auto [m,\
-    \ r2] = _split(r1, r - l);\n        m->rev ^= true;\n        _root = _merge(_merge(l1,\
-    \ m), r2);\n    }\n    void apply(size_t l, size_t r, const Update& f) {\n   \
-    \     auto [l1, r1] = _split(_root, l);\n        auto [m, r2] = _split(r1, r -\
-    \ l);\n        if constexpr(MappingWithSize) {\n            m->sum = _mapping(f,\
+    \n    /**\n     * @brief \u30B3\u30F3\u30B9\u30C8\u30E9\u30AF\u30BF\n     * @param\
+    \ seed \u4E71\u6570\u751F\u6210\u5668\u306E\u30B7\u30FC\u30C9\n     *\n     *\
+    \ O(1)\n     */\n    ImplicitTreap(ull seed = random_device{}()) : _rng(seed),\
+    \ _root(nullptr), _mapping() {}\n    /**\n     * @brief \u30B3\u30F3\u30B9\u30C8\
+    \u30E9\u30AF\u30BF(\u521D\u671F\u5316\u4ED8\u304D)\n     * @param first \u521D\
+    \u671F\u5316\u306B\u7528\u3044\u308B\u30A4\u30C6\u30EC\u30FC\u30BF\u306E\u5148\
+    \u982D\n     * @param last \u521D\u671F\u5316\u306B\u7528\u3044\u308B\u30A4\u30C6\
+    \u30EC\u30FC\u30BF\u306E\u672B\u5C3E\n     * @param seed \u4E71\u6570\u751F\u6210\
+    \u5668\u306E\u30B7\u30FC\u30C9\n     *\n     * O(N)\n     */\n    template <typename\
+    \ It>\n    ImplicitTreap(It first, It last, ull seed = random_device{}()) : ImplicitTreap(seed)\
+    \ {\n        while(first != last) {\n            push_back(*first);\n        \
+    \    ++first;\n        }\n    }\n    /**\n     * @brief \u30C7\u30B9\u30C8\u30E9\
+    \u30AF\u30BF\n     *\n     * O(N)\n     */\n    ~ImplicitTreap() { _free_subtree(_root);\
+    \ }\n    /**\n     * @brief begin\u30A4\u30C6\u30EC\u30FC\u30BF\n     * @return\
+    \ begin\u30A4\u30C6\u30EC\u30FC\u30BF\n     *\n     * O(log N)\n     * \u30A4\u30C6\
+    \u30EC\u30FC\u30BF\u95A2\u9023\u306E\u64CD\u4F5C\u306FO(log N)\n     */\n    Iterator\
+    \ begin() {\n        if(!_root) return Iterator(*this, nullptr);\n        auto\
+    \ [l, r] = _split(_root, 1);\n        _root = _merge(l, r);\n        return Iterator(*this,\
+    \ l);\n    }\n    /**\n     * @brief end\u30A4\u30C6\u30EC\u30FC\u30BF\n     *\
+    \ @return end\u30A4\u30C6\u30EC\u30FC\u30BF\n     *\n     * O(1)\n     * \u30A4\
+    \u30C6\u30EC\u30FC\u30BF\u95A2\u9023\u306E\u64CD\u4F5C\u306FO(log N)\n     */\n\
+    \    Iterator end() { return Iterator(_root, nullptr); }\n    /**\n     * @brief\
+    \ \u8981\u7D20\u6570\n     * @return \u8981\u7D20\u6570\n     *\n     * O(1)\n\
+    \     */\n    size_t size() const { return _root ? _root->cnt : 0; }\n    /**\n\
+    \     * @brief \u7A7A\u304B\u3069\u3046\u304B\n     * @return \u7A7A\u306A\u3089\
+    true\n     *\n     * O(1)\n     */\n    bool empty() const { return !_root; }\n\
+    \    /**\n     * @brief k\u756A\u76EE\u306E\u8981\u7D20\u3078\u306E\u53C2\u7167\
+    \n     * @param k \u8981\u7D20\u306E\u6DFB\u5B57\n     * @return k\u756A\u76EE\
+    \u306E\u8981\u7D20\u306E\u30A4\u30C6\u30EC\u30FC\u30BF\n     *\n     * O(log N)\n\
+    \     */\n    Iterator kth_element(size_t k) {\n        auto [l, r] = _split(_root,\
+    \ k);\n        auto [m, r2] = _split(r, 1);\n        _root = _merge(_merge(l,\
+    \ m), r2);\n        return Iterator(*this, m);\n    }\n    /**\n     * @brief\
+    \ k\u756A\u76EE\u306E\u8981\u7D20\u3078\u306E\u53C2\u7167\n     * @param k \u8981\
+    \u7D20\u306E\u6DFB\u5B57\n     * @return k\u756A\u76EE\u306E\u8981\u7D20\u3078\
+    \u306E\u53C2\u7167\n     *\n     * O(log N)\n     * \u4EE3\u5165\u53EF\u80FD\n\
+    \     * \u53C2\u7167\u306E\u6271\u3044\u3082O(log N)\u304B\u304B\u308B\n     */\n\
+    \    ValueReference operator[](size_t k) {\n        auto [l, r] = _split(_root,\
+    \ k);\n        auto [m, rr] = _split(r, 1);\n        _root = _merge(l, rr);\n\
+    \        return ValueReference(*this, m);\n    }\n    /**\n     * @brief \u7DCF\
+    \u548C\n     * @param l \u7BC4\u56F2\u306E\u5148\u982D\n     * @param r \u7BC4\
+    \u56F2\u306E\u672B\u5C3E\n     * @return [l,r)\u306E\u7DCF\u548C\n     */\n  \
+    \  Value query(size_t l, size_t r) {\n        auto [l1, r1] = _split(_root, l);\n\
+    \        auto [m, r2] = _split(r1, r - l);\n        Value ret = m->sum;\n    \
+    \    _root = _merge(_merge(l1, m), r2);\n        return ret;\n    }\n    /**\n\
+    \     * @brief \u633F\u5165\n     * @param k \u633F\u5165\u3059\u308B\u8981\u7D20\
+    \u306E\u6DFB\u5B57\n     *\n     * O(log N)\n     */\n    void insert(size_t k,\
+    \ const Value& v) {\n        auto [l, r] = _split(_root, k);\n        _root =\
+    \ _merge(_merge(l, new Node(v, _rng())), r);\n    }\n    /**\n     * @brief \u672B\
+    \u5C3E\u3078\u306E\u633F\u5165\n     *\n     * O(log N)\n     */\n    void push_back(const\
+    \ Value& v) { insert(size(), v); }\n    /**\n     * @brief \u524A\u9664\n    \
+    \ * @param k \u524A\u9664\u3059\u308B\u8981\u7D20\u306E\u6DFB\u5B57\n     *\n\
+    \     * O(log N)\n     */\n    void erase(size_t k) {\n        auto [l, r] = _split(_root,\
+    \ k);\n        auto [m, r2] = _split(r, 1);\n        _root = _merge(l, r2);\n\
+    \        delete m;\n    }\n    /**\n     * @brief \u672B\u5C3E\u306E\u524A\u9664\
+    \n     *\n     * O(log N)\n     */\n    void pop_back() { erase(size() - 1); }\n\
+    \    /**\n     * @brief [l,r)\u306E\u53CD\u8EE2\n     * @param l \u7BC4\u56F2\u306E\
+    \u5148\u982D\n     * @param r \u7BC4\u56F2\u306E\u672B\u5C3E\n     *\n     * O(log\
+    \ N)\n     * ValueMonoid\u3092\u6307\u5B9A\u3059\u308B\u5834\u5408\u306F\u53EF\
+    \u63DB\u3067\u306A\u3051\u308C\u3070\u306A\u3089\u306A\u3044\n     */\n    void\
+    \ reverse(size_t l, size_t r) {\n        auto [l1, r1] = _split(_root, l);\n \
+    \       auto [m, r2] = _split(r1, r - l);\n        m->rev ^= true;\n        _root\
+    \ = _merge(_merge(l1, m), r2);\n    }\n    /**\n     * @brief [l,r)\u306E\u66F4\
+    \u65B0\n     * @param l \u7BC4\u56F2\u306E\u5148\u982D\n     * @param r \u7BC4\
+    \u56F2\u306E\u672B\u5C3E\n     * @param v \u66F4\u65B0\u3059\u308B\u5024\n   \
+    \  *\n     * O(log N)\n     */\n    void apply(size_t l, size_t r, const Update&\
+    \ f) {\n        auto [l1, r1] = _split(_root, l);\n        auto [m, r2] = _split(r1,\
+    \ r - l);\n        if constexpr(MappingWithSize) {\n            m->sum = _mapping(f,\
     \ m->sum, m->cnt);\n        } else {\n            m->sum = _mapping(f, m->sum);\n\
     \        }\n        m->lazy = UpdateMonoid::op(f, m->lazy);\n        _root = _merge(_merge(l1,\
     \ m), r2);\n    }\n};\n"
@@ -325,7 +422,7 @@ data:
   isVerificationFile: false
   path: structure/implicit-treap.hpp
   requiredBy: []
-  timestamp: '2023-02-20 20:29:22+09:00'
+  timestamp: '2023-02-20 20:46:40+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/yosupo-dynamic-sequence-range-affine-range-sum.test.cpp
