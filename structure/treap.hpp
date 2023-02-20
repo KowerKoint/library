@@ -5,7 +5,7 @@
  * @brief Treap
  * @docs docs/treap.md
  */
-template <typename Key, typename Compare = less<Key>, bool multi = false, typename Value = void*, typename MergeValue = void*>
+template <typename Key, typename Compare = less<Key>, bool multi = false, typename Value = void*, bool ValueIsMonoid = false, typename UpdateMonoid = void*, typename Mapping = void*>
 class Treap {
     struct Node {
         pair<const Key, Value> key_value;
@@ -16,7 +16,8 @@ class Treap {
         Node *l, *r, *par;
         size_t cnt;
         Value sum;
-        Node(const Key &key, const Value &value, ull pri) : key_value(key, value), key(key_value.first), value(key_value.second), pri(pri), l(nullptr), r(nullptr), par(nullptr), cnt(1), sum(value) {
+        UpdateMonoid lazy;
+        Node(const Key &key, const Value &value, ull pri) : key_value(key, value), key(key_value.first), value(key_value.second), pri(pri), l(nullptr), r(nullptr), par(nullptr), cnt(1), sum(value), lazy(UpdateMonoid::id()) {
             static size_t id = 0;
             this->id = id++;
         }
@@ -78,7 +79,6 @@ class Treap {
     mt19937_64 _rng;
     Node *_root;
     Compare _comp;
-    MergeValue _merge_value;
 
     bool _comp_key_id(const Key &key1, size_t id1, const Key &key2, size_t id2) {
         return _comp(key1, key2) || (!_comp(key2, key1) && id1 < id2);
@@ -87,10 +87,25 @@ class Treap {
         t->cnt = 1;
         if (t->l) t->cnt += t->l->cnt;
         if (t->r) t->cnt += t->r->cnt;
-        if constexpr (!is_same_v<MergeValue, void*>) {
+        if constexpr (ValueIsMonoid) {
             t->sum = t->value;
-            if (t->l) t->sum = _merge_value(t->l->sum, t->sum);
-            if (t->r) t->sum = _merge_value(t->sum, t->r->sum);
+            if (t->l) t->sum = Value::op(t->l->sum, t->sum);
+            if (t->r) t->sum = Value::op(t->sum, t->r->sum);
+        }
+    }
+    void _push(Node *t) {
+        if constexpr (!is_same_v<UpdateMonoid, void*>) {
+            if(t->l) {
+                t->l->lazy = _composition(t->lazy, t->l->lazy);
+                t->l->sum = _mapping(t->lazy, t->l->sum, t->l->cnt);
+            }
+            if(t->r) {
+                t->r->lazy = _composition(t->lazy, t->r->lazy);
+                t->r->sum = _mapping(t->lazy, t->r->sum, t->r->cnt);
+            }
+            t->value = _mapping(t->lazy, t->value, t->cnt);
+            t->lazy = UpdateMonoid::id();
+            update(t);
         }
     }
     void _free_subtree(Node *t) {
@@ -107,6 +122,7 @@ class Treap {
     pair<Node*, Node*> _split(Node *t, const Key &key, size_t id) {
         stack<pair<Node *, bool>> ret;
         while(t) {
+            _push(t);
             if(_comp_key_id(t->key, t->id, key, id)) {
                 ret.push({t, true});
                 t = t->r;
@@ -135,6 +151,8 @@ class Treap {
     Node* _merge(Node *l, Node *r) {
         stack<pair<Node *, bool>> stk;
         while(1) {
+            if(l) _push(l);
+            if(r) _push(r);
             if(!l || !r) break;
             if(l->pri > r->pri) {
                 stk.push({l, true});
