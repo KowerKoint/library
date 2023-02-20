@@ -3,7 +3,13 @@
 
 /**
  * @brief ImplicitTreap
- * @docs docs/implicit-treap.md
+ *
+ * @tparam Value 値の型
+ * @tparam ValueMonoid 値の総和を計算するモノイド void*の場合は計算しない
+ * @tparam Update 更新値 void*の場合は更新しない
+ * @tparam UpdateMonoid 更新値の合成関数を示すモノイド
+ * @tparam Mapping 更新値を値や総和に作用させる関数(Update, Value)または(Update, Value, size_t)
+ * @tparam MappingWithSize Mappingが3引数かどうか 3番目の引数は総和に含まれる値の個数
  */
 template <typename Value, typename ValueMonoid = void*, typename Update = void*, typename UpdateMonoid = void*, typename Mapping = void*, bool MappingWithSize = false>
 class ImplicitTreap {
@@ -145,8 +151,8 @@ public:
     private:
         ImplicitTreap &treap;
         Node *node;
-    public:
         ValueReference(ImplicitTreap &treap, Node *node) : treap(treap), node(node) {}
+    public:
         ValueReference& operator=(const Value& v) {
             stack<Node*> stk;
             Node *t = node;
@@ -187,8 +193,8 @@ public:
     private:
         ImplicitTreap &treap;
         Node *node;
-    public:
         Iterator(ImplicitTreap &treap, Node *node) : treap(treap), node(node) {}
+    public:
         Iterator& operator++() {
             if(node->r) {
                 node = node->r;
@@ -217,7 +223,21 @@ public:
     };
     friend class Iterator;
 
+    /**
+     * @brief コンストラクタ
+     * @param seed 乱数生成器のシード
+     *
+     * O(1)
+     */
     ImplicitTreap(ull seed = random_device{}()) : _rng(seed), _root(nullptr), _mapping() {}
+    /**
+     * @brief コンストラクタ(初期化付き)
+     * @param first 初期化に用いるイテレータの先頭
+     * @param last 初期化に用いるイテレータの末尾
+     * @param seed 乱数生成器のシード
+     *
+     * O(N)
+     */
     template <typename It>
     ImplicitTreap(It first, It last, ull seed = random_device{}()) : ImplicitTreap(seed) {
         while(first != last) {
@@ -225,27 +245,81 @@ public:
             ++first;
         }
     }
+    /**
+     * @brief デストラクタ
+     *
+     * O(N)
+     */
     ~ImplicitTreap() { _free_subtree(_root); }
+    /**
+     * @brief beginイテレータ
+     * @return beginイテレータ
+     *
+     * O(log N)
+     * イテレータ関連の操作はO(log N)
+     */
     Iterator begin() {
         if(!_root) return Iterator(*this, nullptr);
         auto [l, r] = _split(_root, 1);
         _root = _merge(l, r);
         return Iterator(*this, l);
     }
+    /**
+     * @brief endイテレータ
+     * @return endイテレータ
+     *
+     * O(1)
+     * イテレータ関連の操作はO(log N)
+     */
     Iterator end() { return Iterator(_root, nullptr); }
+    /**
+     * @brief 要素数
+     * @return 要素数
+     *
+     * O(1)
+     */
     size_t size() const { return _root ? _root->cnt : 0; }
+    /**
+     * @brief 空かどうか
+     * @return 空ならtrue
+     *
+     * O(1)
+     */
+    bool empty() const { return !_root; }
+    /**
+     * @brief k番目の要素への参照
+     * @param k 要素の添字
+     * @return k番目の要素のイテレータ
+     *
+     * O(log N)
+     */
     Iterator kth_element(size_t k) {
         auto [l, r] = _split(_root, k);
         auto [m, r2] = _split(r, 1);
         _root = _merge(_merge(l, m), r2);
         return Iterator(*this, m);
     }
+    /**
+     * @brief k番目の要素への参照
+     * @param k 要素の添字
+     * @return k番目の要素への参照
+     *
+     * O(log N)
+     * 代入可能
+     * 参照の扱いもO(log N)かかる
+     */
     ValueReference operator[](size_t k) {
         auto [l, r] = _split(_root, k);
         auto [m, rr] = _split(r, 1);
         _root = _merge(l, rr);
         return ValueReference(*this, m);
     }
+    /**
+     * @brief 総和
+     * @param l 範囲の先頭
+     * @param r 範囲の末尾
+     * @return [l,r)の総和
+     */
     Value query(size_t l, size_t r) {
         auto [l1, r1] = _split(_root, l);
         auto [m, r2] = _split(r1, r - l);
@@ -253,24 +327,62 @@ public:
         _root = _merge(_merge(l1, m), r2);
         return ret;
     }
+    /**
+     * @brief 挿入
+     * @param k 挿入する要素の添字
+     *
+     * O(log N)
+     */
     void insert(size_t k, const Value& v) {
         auto [l, r] = _split(_root, k);
         _root = _merge(_merge(l, new Node(v, _rng())), r);
     }
+    /**
+     * @brief 末尾への挿入
+     *
+     * O(log N)
+     */
     void push_back(const Value& v) { insert(size(), v); }
+    /**
+     * @brief 削除
+     * @param k 削除する要素の添字
+     *
+     * O(log N)
+     */
     void erase(size_t k) {
         auto [l, r] = _split(_root, k);
         auto [m, r2] = _split(r, 1);
         _root = _merge(l, r2);
         delete m;
     }
+    /**
+     * @brief 末尾の削除
+     *
+     * O(log N)
+     */
     void pop_back() { erase(size() - 1); }
+    /**
+     * @brief [l,r)の反転
+     * @param l 範囲の先頭
+     * @param r 範囲の末尾
+     *
+     * O(log N)
+     * ValueMonoidを指定する場合は可換でなければならない
+     */
     void reverse(size_t l, size_t r) {
         auto [l1, r1] = _split(_root, l);
         auto [m, r2] = _split(r1, r - l);
         m->rev ^= true;
         _root = _merge(_merge(l1, m), r2);
     }
+    /**
+     * @brief [l,r)の更新
+     * @param l 範囲の先頭
+     * @param r 範囲の末尾
+     * @param v 更新する値
+     *
+     * O(log N)
+     */
     void apply(size_t l, size_t r, const Update& f) {
         auto [l1, r1] = _split(_root, l);
         auto [m, r2] = _split(r1, r - l);
