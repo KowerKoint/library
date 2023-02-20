@@ -104,54 +104,54 @@ data:
     \    Update lazy;\n        Node(const Value &value, ull pri) : value(value), pri(pri),\
     \ l(nullptr), r(nullptr), par(nullptr), cnt(1), sum(value), rev(false), lazy(UpdateMonoid::id())\
     \ {}\n    };\n\n    mt19937_64 _rng;\n    Node *_root;\n    Mapping _mapping;\n\
-    \n    inline void _update(Node *t) {\n        t->cnt = 1;\n        if (t->l) t->cnt\
-    \ += t->l->cnt;\n        if (t->r) t->cnt += t->r->cnt;\n        if constexpr\
-    \ (!is_same_v<ValueMonoid, void*>) {\n            t->sum = t->value;\n       \
-    \     if (t->l) t->sum = ValueMonoid::op(t->l->sum, t->sum);\n            if (t->r)\
-    \ t->sum = ValueMonoid::op(t->sum, t->r->sum);\n        }\n    }\n    void _push(Node\
-    \ *t) {\n        if(t->rev) {\n            swap(t->l, t->r);\n            if (t->l)\
-    \ t->l->rev ^= true;\n            if (t->r) t->r->rev ^= true;\n            t->rev\
-    \ = false;\n        }\n        if constexpr (!is_same_v<Update, void*>) {\n  \
-    \          if(t->l) {\n                t->l->lazy = UpdateMonoid::op(t->lazy,\
-    \ t->l->lazy);\n                if constexpr(MappingWithSize) {\n            \
-    \        t->l->sum = _mapping(t->lazy, t->l->sum, t->l->cnt);\n              \
-    \  } else {\n                    t->l->sum = _mapping(t->lazy, t->l->sum);\n \
-    \               }\n            }\n            if(t->r) {\n                t->r->lazy\
-    \ = UpdateMonoid::op(t->lazy, t->r->lazy);\n                if constexpr(MappingWithSize)\
-    \ {\n                    t->r->sum = _mapping(t->lazy, t->r->sum, t->r->cnt);\n\
-    \                } else {\n                    t->r->sum = _mapping(t->lazy, t->r->sum);\n\
-    \                }\n            }\n            if constexpr(MappingWithSize) {\n\
-    \                t->value = _mapping(t->lazy, t->value, 1);\n            } else\
-    \ {\n                t->value = _mapping(t->lazy, t->value);\n            }\n\
-    \            t->lazy = UpdateMonoid::id();\n            _update(t);\n        }\n\
-    \    }\n    void _free_subtree(Node *t) {\n        if(!t) return;\n        stack<Node\
-    \ *> stk;\n        stk.push(t);\n        while(!stk.empty()) {\n            Node\
-    \ *p = stk.top(); stk.pop();\n            if(p->l) stk.push(p->l);\n         \
-    \   if(p->r) stk.push(p->r);\n            delete p;\n        }\n    }\n    pair<Node*,\
-    \ Node*> _split(Node *t, size_t k) {\n        stack<pair<Node*, bool>> ret;\n\
-    \        while(t) {\n            _push(t);\n            size_t implicit_key =\
-    \ 1;\n            if(t->l) implicit_key += t->l->cnt;\n            if(k < implicit_key)\
-    \ {\n                ret.push({t, true});\n                t = t->l;\n       \
-    \     } else {\n                ret.push({t, false});\n                t = t->r;\n\
-    \                k -= implicit_key;\n            }\n        }\n        Node *l\
-    \ = nullptr, *r = nullptr;\n        while(!ret.empty()) {\n            auto [p,\
-    \ b] = ret.top(); ret.pop();\n            if(b) {\n                p->l = r;\n\
-    \                if(r) r->par = p;\n                _update(p);\n            \
-    \    r = p;\n            } else {\n                p->r = l;\n               \
-    \ if(l) l->par = p;\n                _update(p);\n                l = p;\n   \
-    \         }\n        }\n        return {l, r};\n    }\n    Node* _merge(Node *l,\
-    \ Node *r) {\n        stack<pair<Node*, bool>> stk;\n        while(1) {\n    \
-    \        if(l) _push(l);\n            if(r) _push(r);\n            if(!l || !r)\
-    \ break;\n            if(l->pri > r->pri) {\n                stk.push({l, true});\n\
-    \                l = l->r;\n            } else {\n                stk.push({r,\
-    \ false});\n                r = r->l;\n            }\n        }\n        Node\
-    \ *t = l ? l : r;\n        while(!stk.empty()) {\n            auto [p, b] = stk.top();\
-    \ stk.pop();\n            if(b) {\n                p->r = t;\n               \
-    \ if(t) t->par = p;\n                _update(p);\n                t = p;\n   \
-    \         } else {\n                p->l = t;\n                if(t) t->par =\
-    \ p;\n                _update(p);\n                t = p;\n            }\n   \
-    \     }\n        return t;\n    }\n\npublic:\n    class ValueReference {\n   \
-    \ private:\n        ImplicitTreap &treap;\n        Node *node;\n        ValueReference(ImplicitTreap\
+    \n    void _update(Node *t) {\n        t->cnt = 1;\n        if (t->l) t->cnt +=\
+    \ t->l->cnt;\n        if (t->r) t->cnt += t->r->cnt;\n        if constexpr (!is_same_v<ValueMonoid,\
+    \ void*>) {\n            t->sum = t->value;\n            if (t->l) t->sum = ValueMonoid::op(t->l->sum,\
+    \ t->sum);\n            if (t->r) t->sum = ValueMonoid::op(t->sum, t->r->sum);\n\
+    \        }\n    }\n    void _push(Node *t) {\n        if(t->rev) {\n         \
+    \   swap(t->l, t->r);\n            if (t->l) t->l->rev ^= true;\n            if\
+    \ (t->r) t->r->rev ^= true;\n            t->rev = false;\n        }\n        if\
+    \ constexpr (!is_same_v<Update, void*>) {\n            if(t->l) {\n          \
+    \      t->l->lazy = UpdateMonoid::op(t->lazy, t->l->lazy);\n                if\
+    \ constexpr(MappingWithSize) {\n                    t->l->sum = _mapping(t->lazy,\
+    \ t->l->sum, t->l->cnt);\n                } else {\n                    t->l->sum\
+    \ = _mapping(t->lazy, t->l->sum);\n                }\n            }\n        \
+    \    if(t->r) {\n                t->r->lazy = UpdateMonoid::op(t->lazy, t->r->lazy);\n\
+    \                if constexpr(MappingWithSize) {\n                    t->r->sum\
+    \ = _mapping(t->lazy, t->r->sum, t->r->cnt);\n                } else {\n     \
+    \               t->r->sum = _mapping(t->lazy, t->r->sum);\n                }\n\
+    \            }\n            if constexpr(MappingWithSize) {\n                t->value\
+    \ = _mapping(t->lazy, t->value, 1);\n            } else {\n                t->value\
+    \ = _mapping(t->lazy, t->value);\n            }\n            t->lazy = UpdateMonoid::id();\n\
+    \            _update(t);\n        }\n    }\n    void _free_subtree(Node *t) {\n\
+    \        if(!t) return;\n        stack<Node *> stk;\n        stk.push(t);\n  \
+    \      while(!stk.empty()) {\n            Node *p = stk.top(); stk.pop();\n  \
+    \          if(p->l) stk.push(p->l);\n            if(p->r) stk.push(p->r);\n  \
+    \          delete p;\n        }\n    }\n    pair<Node*, Node*> _split(Node *t,\
+    \ size_t k) {\n        stack<pair<Node*, bool>> ret;\n        while(t) {\n   \
+    \         _push(t);\n            size_t implicit_key = 1;\n            if(t->l)\
+    \ implicit_key += t->l->cnt;\n            if(k < implicit_key) {\n           \
+    \     ret.push({t, true});\n                t = t->l;\n            } else {\n\
+    \                ret.push({t, false});\n                t = t->r;\n          \
+    \      k -= implicit_key;\n            }\n        }\n        Node *l = nullptr,\
+    \ *r = nullptr;\n        while(!ret.empty()) {\n            auto [p, b] = ret.top();\
+    \ ret.pop();\n            if(b) {\n                p->l = r;\n               \
+    \ if(r) r->par = p;\n                _update(p);\n                r = p;\n   \
+    \         } else {\n                p->r = l;\n                if(l) l->par =\
+    \ p;\n                _update(p);\n                l = p;\n            }\n   \
+    \     }\n        return {l, r};\n    }\n    Node* _merge(Node *l, Node *r) {\n\
+    \        stack<pair<Node*, bool>> stk;\n        while(1) {\n            if(l)\
+    \ _push(l);\n            if(r) _push(r);\n            if(!l || !r) break;\n  \
+    \          if(l->pri > r->pri) {\n                stk.push({l, true});\n     \
+    \           l = l->r;\n            } else {\n                stk.push({r, false});\n\
+    \                r = r->l;\n            }\n        }\n        Node *t = l ? l\
+    \ : r;\n        while(!stk.empty()) {\n            auto [p, b] = stk.top(); stk.pop();\n\
+    \            if(b) {\n                p->r = t;\n                if(t) t->par\
+    \ = p;\n                _update(p);\n                t = p;\n            } else\
+    \ {\n                p->l = t;\n                if(t) t->par = p;\n          \
+    \      _update(p);\n                t = p;\n            }\n        }\n       \
+    \ return t;\n    }\n\npublic:\n    class ValueReference {\n    private:\n    \
+    \    ImplicitTreap &treap;\n        Node *node;\n        ValueReference(ImplicitTreap\
     \ &treap, Node *node) : treap(treap), node(node) {}\n    public:\n        ValueReference&\
     \ operator=(const Value& v) {\n            stack<Node*> stk;\n            Node\
     \ *t = node;\n            while(t->par) {\n                stk.push(t);\n    \
@@ -160,8 +160,8 @@ data:
     \           }\n            treap._push(t);\n            t->value = v;\n      \
     \      treap._update(t);\n            while(t->par) {\n                t = t->par;\n\
     \                treap._update(t);\n            }\n            return *this;\n\
-    \        }\n        operator Value() const {\n            stack<Node*> stk;\n\
-    \            Node *t = node;\n            while(t->par) {\n                stk.push(t);\n\
+    \        }\n        operator Value() {\n            stack<Node*> stk;\n      \
+    \      Node *t = node;\n            while(t->par) {\n                stk.push(t);\n\
     \                t = t->par;\n            }\n            while(!stk.empty()) {\n\
     \                treap._push(t);\n                t = stk.top(); stk.pop();\n\
     \            }\n            treap._push(t);\n            return t->value;\n  \
@@ -269,54 +269,54 @@ data:
     \    Update lazy;\n        Node(const Value &value, ull pri) : value(value), pri(pri),\
     \ l(nullptr), r(nullptr), par(nullptr), cnt(1), sum(value), rev(false), lazy(UpdateMonoid::id())\
     \ {}\n    };\n\n    mt19937_64 _rng;\n    Node *_root;\n    Mapping _mapping;\n\
-    \n    inline void _update(Node *t) {\n        t->cnt = 1;\n        if (t->l) t->cnt\
-    \ += t->l->cnt;\n        if (t->r) t->cnt += t->r->cnt;\n        if constexpr\
-    \ (!is_same_v<ValueMonoid, void*>) {\n            t->sum = t->value;\n       \
-    \     if (t->l) t->sum = ValueMonoid::op(t->l->sum, t->sum);\n            if (t->r)\
-    \ t->sum = ValueMonoid::op(t->sum, t->r->sum);\n        }\n    }\n    void _push(Node\
-    \ *t) {\n        if(t->rev) {\n            swap(t->l, t->r);\n            if (t->l)\
-    \ t->l->rev ^= true;\n            if (t->r) t->r->rev ^= true;\n            t->rev\
-    \ = false;\n        }\n        if constexpr (!is_same_v<Update, void*>) {\n  \
-    \          if(t->l) {\n                t->l->lazy = UpdateMonoid::op(t->lazy,\
-    \ t->l->lazy);\n                if constexpr(MappingWithSize) {\n            \
-    \        t->l->sum = _mapping(t->lazy, t->l->sum, t->l->cnt);\n              \
-    \  } else {\n                    t->l->sum = _mapping(t->lazy, t->l->sum);\n \
-    \               }\n            }\n            if(t->r) {\n                t->r->lazy\
-    \ = UpdateMonoid::op(t->lazy, t->r->lazy);\n                if constexpr(MappingWithSize)\
-    \ {\n                    t->r->sum = _mapping(t->lazy, t->r->sum, t->r->cnt);\n\
-    \                } else {\n                    t->r->sum = _mapping(t->lazy, t->r->sum);\n\
-    \                }\n            }\n            if constexpr(MappingWithSize) {\n\
-    \                t->value = _mapping(t->lazy, t->value, 1);\n            } else\
-    \ {\n                t->value = _mapping(t->lazy, t->value);\n            }\n\
-    \            t->lazy = UpdateMonoid::id();\n            _update(t);\n        }\n\
-    \    }\n    void _free_subtree(Node *t) {\n        if(!t) return;\n        stack<Node\
-    \ *> stk;\n        stk.push(t);\n        while(!stk.empty()) {\n            Node\
-    \ *p = stk.top(); stk.pop();\n            if(p->l) stk.push(p->l);\n         \
-    \   if(p->r) stk.push(p->r);\n            delete p;\n        }\n    }\n    pair<Node*,\
-    \ Node*> _split(Node *t, size_t k) {\n        stack<pair<Node*, bool>> ret;\n\
-    \        while(t) {\n            _push(t);\n            size_t implicit_key =\
-    \ 1;\n            if(t->l) implicit_key += t->l->cnt;\n            if(k < implicit_key)\
-    \ {\n                ret.push({t, true});\n                t = t->l;\n       \
-    \     } else {\n                ret.push({t, false});\n                t = t->r;\n\
-    \                k -= implicit_key;\n            }\n        }\n        Node *l\
-    \ = nullptr, *r = nullptr;\n        while(!ret.empty()) {\n            auto [p,\
-    \ b] = ret.top(); ret.pop();\n            if(b) {\n                p->l = r;\n\
-    \                if(r) r->par = p;\n                _update(p);\n            \
-    \    r = p;\n            } else {\n                p->r = l;\n               \
-    \ if(l) l->par = p;\n                _update(p);\n                l = p;\n   \
-    \         }\n        }\n        return {l, r};\n    }\n    Node* _merge(Node *l,\
-    \ Node *r) {\n        stack<pair<Node*, bool>> stk;\n        while(1) {\n    \
-    \        if(l) _push(l);\n            if(r) _push(r);\n            if(!l || !r)\
-    \ break;\n            if(l->pri > r->pri) {\n                stk.push({l, true});\n\
-    \                l = l->r;\n            } else {\n                stk.push({r,\
-    \ false});\n                r = r->l;\n            }\n        }\n        Node\
-    \ *t = l ? l : r;\n        while(!stk.empty()) {\n            auto [p, b] = stk.top();\
-    \ stk.pop();\n            if(b) {\n                p->r = t;\n               \
-    \ if(t) t->par = p;\n                _update(p);\n                t = p;\n   \
-    \         } else {\n                p->l = t;\n                if(t) t->par =\
-    \ p;\n                _update(p);\n                t = p;\n            }\n   \
-    \     }\n        return t;\n    }\n\npublic:\n    class ValueReference {\n   \
-    \ private:\n        ImplicitTreap &treap;\n        Node *node;\n        ValueReference(ImplicitTreap\
+    \n    void _update(Node *t) {\n        t->cnt = 1;\n        if (t->l) t->cnt +=\
+    \ t->l->cnt;\n        if (t->r) t->cnt += t->r->cnt;\n        if constexpr (!is_same_v<ValueMonoid,\
+    \ void*>) {\n            t->sum = t->value;\n            if (t->l) t->sum = ValueMonoid::op(t->l->sum,\
+    \ t->sum);\n            if (t->r) t->sum = ValueMonoid::op(t->sum, t->r->sum);\n\
+    \        }\n    }\n    void _push(Node *t) {\n        if(t->rev) {\n         \
+    \   swap(t->l, t->r);\n            if (t->l) t->l->rev ^= true;\n            if\
+    \ (t->r) t->r->rev ^= true;\n            t->rev = false;\n        }\n        if\
+    \ constexpr (!is_same_v<Update, void*>) {\n            if(t->l) {\n          \
+    \      t->l->lazy = UpdateMonoid::op(t->lazy, t->l->lazy);\n                if\
+    \ constexpr(MappingWithSize) {\n                    t->l->sum = _mapping(t->lazy,\
+    \ t->l->sum, t->l->cnt);\n                } else {\n                    t->l->sum\
+    \ = _mapping(t->lazy, t->l->sum);\n                }\n            }\n        \
+    \    if(t->r) {\n                t->r->lazy = UpdateMonoid::op(t->lazy, t->r->lazy);\n\
+    \                if constexpr(MappingWithSize) {\n                    t->r->sum\
+    \ = _mapping(t->lazy, t->r->sum, t->r->cnt);\n                } else {\n     \
+    \               t->r->sum = _mapping(t->lazy, t->r->sum);\n                }\n\
+    \            }\n            if constexpr(MappingWithSize) {\n                t->value\
+    \ = _mapping(t->lazy, t->value, 1);\n            } else {\n                t->value\
+    \ = _mapping(t->lazy, t->value);\n            }\n            t->lazy = UpdateMonoid::id();\n\
+    \            _update(t);\n        }\n    }\n    void _free_subtree(Node *t) {\n\
+    \        if(!t) return;\n        stack<Node *> stk;\n        stk.push(t);\n  \
+    \      while(!stk.empty()) {\n            Node *p = stk.top(); stk.pop();\n  \
+    \          if(p->l) stk.push(p->l);\n            if(p->r) stk.push(p->r);\n  \
+    \          delete p;\n        }\n    }\n    pair<Node*, Node*> _split(Node *t,\
+    \ size_t k) {\n        stack<pair<Node*, bool>> ret;\n        while(t) {\n   \
+    \         _push(t);\n            size_t implicit_key = 1;\n            if(t->l)\
+    \ implicit_key += t->l->cnt;\n            if(k < implicit_key) {\n           \
+    \     ret.push({t, true});\n                t = t->l;\n            } else {\n\
+    \                ret.push({t, false});\n                t = t->r;\n          \
+    \      k -= implicit_key;\n            }\n        }\n        Node *l = nullptr,\
+    \ *r = nullptr;\n        while(!ret.empty()) {\n            auto [p, b] = ret.top();\
+    \ ret.pop();\n            if(b) {\n                p->l = r;\n               \
+    \ if(r) r->par = p;\n                _update(p);\n                r = p;\n   \
+    \         } else {\n                p->r = l;\n                if(l) l->par =\
+    \ p;\n                _update(p);\n                l = p;\n            }\n   \
+    \     }\n        return {l, r};\n    }\n    Node* _merge(Node *l, Node *r) {\n\
+    \        stack<pair<Node*, bool>> stk;\n        while(1) {\n            if(l)\
+    \ _push(l);\n            if(r) _push(r);\n            if(!l || !r) break;\n  \
+    \          if(l->pri > r->pri) {\n                stk.push({l, true});\n     \
+    \           l = l->r;\n            } else {\n                stk.push({r, false});\n\
+    \                r = r->l;\n            }\n        }\n        Node *t = l ? l\
+    \ : r;\n        while(!stk.empty()) {\n            auto [p, b] = stk.top(); stk.pop();\n\
+    \            if(b) {\n                p->r = t;\n                if(t) t->par\
+    \ = p;\n                _update(p);\n                t = p;\n            } else\
+    \ {\n                p->l = t;\n                if(t) t->par = p;\n          \
+    \      _update(p);\n                t = p;\n            }\n        }\n       \
+    \ return t;\n    }\n\npublic:\n    class ValueReference {\n    private:\n    \
+    \    ImplicitTreap &treap;\n        Node *node;\n        ValueReference(ImplicitTreap\
     \ &treap, Node *node) : treap(treap), node(node) {}\n    public:\n        ValueReference&\
     \ operator=(const Value& v) {\n            stack<Node*> stk;\n            Node\
     \ *t = node;\n            while(t->par) {\n                stk.push(t);\n    \
@@ -325,8 +325,8 @@ data:
     \           }\n            treap._push(t);\n            t->value = v;\n      \
     \      treap._update(t);\n            while(t->par) {\n                t = t->par;\n\
     \                treap._update(t);\n            }\n            return *this;\n\
-    \        }\n        operator Value() const {\n            stack<Node*> stk;\n\
-    \            Node *t = node;\n            while(t->par) {\n                stk.push(t);\n\
+    \        }\n        operator Value() {\n            stack<Node*> stk;\n      \
+    \      Node *t = node;\n            while(t->par) {\n                stk.push(t);\n\
     \                t = t->par;\n            }\n            while(!stk.empty()) {\n\
     \                treap._push(t);\n                t = stk.top(); stk.pop();\n\
     \            }\n            treap._push(t);\n            return t->value;\n  \
@@ -422,7 +422,7 @@ data:
   isVerificationFile: false
   path: structure/implicit-treap.hpp
   requiredBy: []
-  timestamp: '2023-02-20 20:46:40+09:00'
+  timestamp: '2023-02-20 21:14:01+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/yosupo-dynamic-sequence-range-affine-range-sum.test.cpp
