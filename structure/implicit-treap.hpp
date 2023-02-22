@@ -321,6 +321,7 @@ public:
      * @return [l,r)の総和
      */
     Value query(size_t l, size_t r) {
+        if(l == r) return ValueMonoid::id();
         auto [l1, r1] = _split(_root, l);
         auto [m, r2] = _split(r1, r - l);
         Value ret = m->sum;
@@ -370,6 +371,7 @@ public:
      * ValueMonoidを指定する場合は可換でなければならない
      */
     void reverse(size_t l, size_t r) {
+        if(l == r) return;
         auto [l1, r1] = _split(_root, l);
         auto [m, r2] = _split(r1, r - l);
         m->rev ^= true;
@@ -384,6 +386,7 @@ public:
      * O(log N)
      */
     void apply(size_t l, size_t r, const Update& f) {
+        if(l == r) return;
         auto [l1, r1] = _split(_root, l);
         auto [m, r2] = _split(r1, r - l);
         if constexpr(MappingWithSize) {
