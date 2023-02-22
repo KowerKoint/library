@@ -37,10 +37,10 @@ public:
         add_x_minus_a(a);
     }
     void clear_right() {
-        while(!_right.empty()) _right.pop(0);
+        while(!_right.empty()) _right.pop();
     }
     void clear_left() {
-        while(!_left.empty()) _left.pop(0);
+        while(!_left.empty()) _left.pop();
     }
     void shift(const T &a) {
         _l_shift += a;
