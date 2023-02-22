@@ -1,6 +1,8 @@
 #pragma once
 #include "../base.hpp"
 
+// verify: https://atcoder.jp/contests/arc123/submissions/39108795
+
 template <typename T>
 class SlopeTrick {
     T _min_f;
