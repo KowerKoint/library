@@ -7,17 +7,11 @@ data:
   - icon: ':heavy_check_mark:'
     path: stl-expansion.hpp
     title: stl-expansion.hpp
-  _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
-    path: operator/mapping.hpp
-    title: operator/mapping.hpp
-  _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
-    path: test/yosupo-dynamic-sequence-range-affine-range-sum.test.cpp
-    title: test/yosupo-dynamic-sequence-range-affine-range-sum.test.cpp
+  _extendedRequiredBy: []
+  _extendedVerifiedWith: []
   _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':warning:'
   attributes:
     links: []
   bundledCode: "#line 2 \"stl-expansion.hpp\"\n#include <bits/stdc++.h>\n\ntemplate\
@@ -88,59 +82,57 @@ data:
     \ {\n    vector<T> res(n+1), rev(n+1);\n    res[0] = 1;\n    REP(i, n) res[i+1]\
     \ = res[i] * (i+1);\n    rev[n] = 1 / res[n];\n    for(int i = n; i > 0; i--)\
     \ {\n        rev[i-1] = rev[i] * i;\n    }\n    return make_pair(res, rev);\n\
-    }\n#line 3 \"operator/monoid.hpp\"\n\ntemplate <typename T>\nstruct SumMonoid\
-    \ {\n    static T id() { return 0; }\n    static T op(const T& a, const T& b)\
-    \ { return a + b; }\n};\ntemplate <typename T>\nstruct MinMonoid {\n    static\
-    \ T id() { return numeric_limits<T>::max(); }\n    static T op(const T& a, const\
-    \ T& b) { return min(a, b); }\n};\ntemplate <typename T>\nstruct MaxMonoid {\n\
-    \    static T id() { return numeric_limits<T>::min(); }\n    static T op(const\
-    \ T& a, const T& b) { return max(a, b); }\n};\ntemplate <typename T>\nstruct GcdMonoid\
-    \ {\n    static T id() { return 0; }\n    static T op(const T& a, const T& b)\
-    \ { return gcd(a, b); }\n};\ntemplate <typename T>\nstruct LcmMonoid {\n    static\
-    \ T id() { return 1; }\n    static T op(const T& a, const T& b) { return lcm(a,\
-    \ b); }\n};\ntemplate <typename T>\nstruct AndMonoid {\n    static T id() { return\
-    \ numeric_limits<T>::max(); }\n    static T op(const T& a, const T& b) { return\
-    \ a & b; }\n};\ntemplate <typename T>\nstruct OrMonoid {\n    static T id() {\
-    \ return 0; }\n    static T op(const T& a, const T& b) { return a | b; }\n};\n\
-    template <typename T>\nstruct XorMonoid {\n    static T id() { return 0; }\n \
-    \   static T op(const T& a, const T& b) { return a ^ b; }\n};\ntemplate <typename\
-    \ T>\nstruct AffineMonoid {\n    static pair<T, T> id() { return {1, 0}; }\n \
-    \   static pair<T, T> op(const pair<T, T>& a, const pair<T, T>& b) {\n       \
-    \ return {a.first * b.first, a.first * b.second + a.second};\n    }\n};\n"
-  code: "#pragma once\n#include \"../base.hpp\"\n\ntemplate <typename T>\nstruct SumMonoid\
-    \ {\n    static T id() { return 0; }\n    static T op(const T& a, const T& b)\
-    \ { return a + b; }\n};\ntemplate <typename T>\nstruct MinMonoid {\n    static\
-    \ T id() { return numeric_limits<T>::max(); }\n    static T op(const T& a, const\
-    \ T& b) { return min(a, b); }\n};\ntemplate <typename T>\nstruct MaxMonoid {\n\
-    \    static T id() { return numeric_limits<T>::min(); }\n    static T op(const\
-    \ T& a, const T& b) { return max(a, b); }\n};\ntemplate <typename T>\nstruct GcdMonoid\
-    \ {\n    static T id() { return 0; }\n    static T op(const T& a, const T& b)\
-    \ { return gcd(a, b); }\n};\ntemplate <typename T>\nstruct LcmMonoid {\n    static\
-    \ T id() { return 1; }\n    static T op(const T& a, const T& b) { return lcm(a,\
-    \ b); }\n};\ntemplate <typename T>\nstruct AndMonoid {\n    static T id() { return\
-    \ numeric_limits<T>::max(); }\n    static T op(const T& a, const T& b) { return\
-    \ a & b; }\n};\ntemplate <typename T>\nstruct OrMonoid {\n    static T id() {\
-    \ return 0; }\n    static T op(const T& a, const T& b) { return a | b; }\n};\n\
-    template <typename T>\nstruct XorMonoid {\n    static T id() { return 0; }\n \
-    \   static T op(const T& a, const T& b) { return a ^ b; }\n};\ntemplate <typename\
-    \ T>\nstruct AffineMonoid {\n    static pair<T, T> id() { return {1, 0}; }\n \
-    \   static pair<T, T> op(const pair<T, T>& a, const pair<T, T>& b) {\n       \
-    \ return {a.first * b.first, a.first * b.second + a.second};\n    }\n};\n"
+    }\n#line 3 \"structure/slope-trick.hpp\"\n\ntemplate <typename T>\nclass SlopeTrick\
+    \ {\n    T _min_f;\n    PQ<T> _left;\n    GPQ<T> _right;\n    T _l_shift, _r_shift;\n\
+    \npublic:\n    SlopeTrick() : _min_f(0), _l_shift(0), _r_shift(0) {}\n    T min_f()\
+    \ const { return _min_f; }\n    void add_all(const T &a) { _min_f += a; }\n  \
+    \  void add_a_minus_x(const T &a) {\n        if(_right.empty() || a < _right.top()\
+    \ + _r_shift) {\n            _left.push(a - _l_shift);\n        } else {\n   \
+    \         _min_f += a - _right.top() - _r_shift;\n            _left.push(_right.top()\
+    \ + _r_shift - _l_shift);\n            _right.pop();\n            _right.push(a\
+    \ - _r_shift);\n        }\n    }\n    void add_x_minus_a(const T &a) {\n     \
+    \   if(_left.empty() || _left.top() + _l_shift < a) {\n            _right.push(a\
+    \ - _r_shift);\n        } else {\n            _min_f += _left.top() + _l_shift\
+    \ - a;\n            _right.push(_left.top() + _l_shift - _r_shift);\n        \
+    \    _left.pop();\n            _left.push(a - _l_shift);\n        }\n    }\n \
+    \   void add_abs(const T &a) {\n        add_a_minus_x(a);\n        add_x_minus_a(a);\n\
+    \    }\n    void clear_right() {\n        while(!_right.empty()) _right.pop(0);\n\
+    \    }\n    void clear_left() {\n        while(!_left.empty()) _left.pop(0);\n\
+    \    }\n    void shift(const T &a) {\n        _l_shift += a;\n        _r_shift\
+    \ += a;\n    }\n    void shift(const T &a, const T &b) {\n        _l_shift +=\
+    \ a;\n        _r_shift += b;\n    }\n};\n"
+  code: "#pragma once\n#include \"../base.hpp\"\n\ntemplate <typename T>\nclass SlopeTrick\
+    \ {\n    T _min_f;\n    PQ<T> _left;\n    GPQ<T> _right;\n    T _l_shift, _r_shift;\n\
+    \npublic:\n    SlopeTrick() : _min_f(0), _l_shift(0), _r_shift(0) {}\n    T min_f()\
+    \ const { return _min_f; }\n    void add_all(const T &a) { _min_f += a; }\n  \
+    \  void add_a_minus_x(const T &a) {\n        if(_right.empty() || a < _right.top()\
+    \ + _r_shift) {\n            _left.push(a - _l_shift);\n        } else {\n   \
+    \         _min_f += a - _right.top() - _r_shift;\n            _left.push(_right.top()\
+    \ + _r_shift - _l_shift);\n            _right.pop();\n            _right.push(a\
+    \ - _r_shift);\n        }\n    }\n    void add_x_minus_a(const T &a) {\n     \
+    \   if(_left.empty() || _left.top() + _l_shift < a) {\n            _right.push(a\
+    \ - _r_shift);\n        } else {\n            _min_f += _left.top() + _l_shift\
+    \ - a;\n            _right.push(_left.top() + _l_shift - _r_shift);\n        \
+    \    _left.pop();\n            _left.push(a - _l_shift);\n        }\n    }\n \
+    \   void add_abs(const T &a) {\n        add_a_minus_x(a);\n        add_x_minus_a(a);\n\
+    \    }\n    void clear_right() {\n        while(!_right.empty()) _right.pop(0);\n\
+    \    }\n    void clear_left() {\n        while(!_left.empty()) _left.pop(0);\n\
+    \    }\n    void shift(const T &a) {\n        _l_shift += a;\n        _r_shift\
+    \ += a;\n    }\n    void shift(const T &a, const T &b) {\n        _l_shift +=\
+    \ a;\n        _r_shift += b;\n    }\n};\n"
   dependsOn:
   - base.hpp
   - stl-expansion.hpp
   isVerificationFile: false
-  path: operator/monoid.hpp
-  requiredBy:
-  - operator/mapping.hpp
+  path: structure/slope-trick.hpp
+  requiredBy: []
   timestamp: '2023-02-22 17:31:52+09:00'
-  verificationStatus: LIBRARY_ALL_AC
-  verifiedWith:
-  - test/yosupo-dynamic-sequence-range-affine-range-sum.test.cpp
-documentation_of: operator/monoid.hpp
+  verificationStatus: LIBRARY_NO_TESTS
+  verifiedWith: []
+documentation_of: structure/slope-trick.hpp
 layout: document
 redirect_from:
-- /library/operator/monoid.hpp
-- /library/operator/monoid.hpp.html
-title: operator/monoid.hpp
+- /library/structure/slope-trick.hpp
+- /library/structure/slope-trick.hpp.html
+title: structure/slope-trick.hpp
 ---

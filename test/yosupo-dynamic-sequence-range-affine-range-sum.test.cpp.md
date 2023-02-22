@@ -244,43 +244,45 @@ data:
     \        return ValueReference(*this, m);\n    }\n    /**\n     * @brief \u7DCF\
     \u548C\n     * @param l \u7BC4\u56F2\u306E\u5148\u982D\n     * @param r \u7BC4\
     \u56F2\u306E\u672B\u5C3E\n     * @return [l,r)\u306E\u7DCF\u548C\n     */\n  \
-    \  Value query(size_t l, size_t r) {\n        auto [l1, r1] = _split(_root, l);\n\
-    \        auto [m, r2] = _split(r1, r - l);\n        Value ret = m->sum;\n    \
-    \    _root = _merge(_merge(l1, m), r2);\n        return ret;\n    }\n    /**\n\
-    \     * @brief \u633F\u5165\n     * @param k \u633F\u5165\u3059\u308B\u8981\u7D20\
-    \u306E\u6DFB\u5B57\n     *\n     * O(log N)\n     */\n    void insert(size_t k,\
-    \ const Value& v) {\n        auto [l, r] = _split(_root, k);\n        _root =\
-    \ _merge(_merge(l, new Node(v, _rng())), r);\n    }\n    /**\n     * @brief \u672B\
-    \u5C3E\u3078\u306E\u633F\u5165\n     *\n     * O(log N)\n     */\n    void push_back(const\
-    \ Value& v) { insert(size(), v); }\n    /**\n     * @brief \u524A\u9664\n    \
-    \ * @param k \u524A\u9664\u3059\u308B\u8981\u7D20\u306E\u6DFB\u5B57\n     *\n\
-    \     * O(log N)\n     */\n    void erase(size_t k) {\n        auto [l, r] = _split(_root,\
-    \ k);\n        auto [m, r2] = _split(r, 1);\n        _root = _merge(l, r2);\n\
-    \        delete m;\n    }\n    /**\n     * @brief \u672B\u5C3E\u306E\u524A\u9664\
-    \n     *\n     * O(log N)\n     */\n    void pop_back() { erase(size() - 1); }\n\
-    \    /**\n     * @brief [l,r)\u306E\u53CD\u8EE2\n     * @param l \u7BC4\u56F2\u306E\
-    \u5148\u982D\n     * @param r \u7BC4\u56F2\u306E\u672B\u5C3E\n     *\n     * O(log\
-    \ N)\n     * ValueMonoid\u3092\u6307\u5B9A\u3059\u308B\u5834\u5408\u306F\u53EF\
-    \u63DB\u3067\u306A\u3051\u308C\u3070\u306A\u3089\u306A\u3044\n     */\n    void\
-    \ reverse(size_t l, size_t r) {\n        auto [l1, r1] = _split(_root, l);\n \
-    \       auto [m, r2] = _split(r1, r - l);\n        m->rev ^= true;\n        _root\
-    \ = _merge(_merge(l1, m), r2);\n    }\n    /**\n     * @brief [l,r)\u306E\u66F4\
-    \u65B0\n     * @param l \u7BC4\u56F2\u306E\u5148\u982D\n     * @param r \u7BC4\
-    \u56F2\u306E\u672B\u5C3E\n     * @param v \u66F4\u65B0\u3059\u308B\u5024\n   \
-    \  *\n     * O(log N)\n     */\n    void apply(size_t l, size_t r, const Update&\
-    \ f) {\n        auto [l1, r1] = _split(_root, l);\n        auto [m, r2] = _split(r1,\
-    \ r - l);\n        if constexpr(MappingWithSize) {\n            m->sum = _mapping(f,\
-    \ m->sum, m->cnt);\n        } else {\n            m->sum = _mapping(f, m->sum);\n\
-    \        }\n        m->lazy = UpdateMonoid::op(f, m->lazy);\n        _root = _merge(_merge(l1,\
-    \ m), r2);\n    }\n};\n#line 3 \"integer/extgcd.hpp\"\n\nconstexpr ll extgcd(ll\
-    \ a, ll b, ll& x, ll& y) {\n    x = 1, y = 0;\n    ll nx = 0, ny = 1;\n    while(b)\
-    \ {\n        ll q = a / b;\n        ll r = a % b;\n        a = b, b = r;\n   \
-    \     ll nnx = x - q * nx;\n        ll nny = y - q * ny;\n        x = nx, nx =\
-    \ nnx;\n        y = ny, ny = nny;\n    }\n    return a;\n}\n#line 3 \"integer/pow-mod.hpp\"\
-    \n\nconstexpr ll inv_mod(ll n, ll m) {\n    n %= m;\n    if (n < 0) n += m;\n\
-    \    ll x = -1, y = -1;\n    if(extgcd(n, m, x, y) != 1) throw logic_error(\"\"\
-    );\n    x %= m;\n    if(x < 0) x += m;\n    return x;\n}\n\nconstexpr ll pow_mod(ll\
-    \ a, ll n, ll m) {\n    if(n == 0) return 1LL;\n    if(n < 0) return inv_mod(pow_mod(a,\
+    \  Value query(size_t l, size_t r) {\n        if(l == r) return ValueMonoid::id();\n\
+    \        auto [l1, r1] = _split(_root, l);\n        auto [m, r2] = _split(r1,\
+    \ r - l);\n        Value ret = m->sum;\n        _root = _merge(_merge(l1, m),\
+    \ r2);\n        return ret;\n    }\n    /**\n     * @brief \u633F\u5165\n    \
+    \ * @param k \u633F\u5165\u3059\u308B\u8981\u7D20\u306E\u6DFB\u5B57\n     *\n\
+    \     * O(log N)\n     */\n    void insert(size_t k, const Value& v) {\n     \
+    \   auto [l, r] = _split(_root, k);\n        _root = _merge(_merge(l, new Node(v,\
+    \ _rng())), r);\n    }\n    /**\n     * @brief \u672B\u5C3E\u3078\u306E\u633F\u5165\
+    \n     *\n     * O(log N)\n     */\n    void push_back(const Value& v) { insert(size(),\
+    \ v); }\n    /**\n     * @brief \u524A\u9664\n     * @param k \u524A\u9664\u3059\
+    \u308B\u8981\u7D20\u306E\u6DFB\u5B57\n     *\n     * O(log N)\n     */\n    void\
+    \ erase(size_t k) {\n        auto [l, r] = _split(_root, k);\n        auto [m,\
+    \ r2] = _split(r, 1);\n        _root = _merge(l, r2);\n        delete m;\n   \
+    \ }\n    /**\n     * @brief \u672B\u5C3E\u306E\u524A\u9664\n     *\n     * O(log\
+    \ N)\n     */\n    void pop_back() { erase(size() - 1); }\n    /**\n     * @brief\
+    \ [l,r)\u306E\u53CD\u8EE2\n     * @param l \u7BC4\u56F2\u306E\u5148\u982D\n  \
+    \   * @param r \u7BC4\u56F2\u306E\u672B\u5C3E\n     *\n     * O(log N)\n     *\
+    \ ValueMonoid\u3092\u6307\u5B9A\u3059\u308B\u5834\u5408\u306F\u53EF\u63DB\u3067\
+    \u306A\u3051\u308C\u3070\u306A\u3089\u306A\u3044\n     */\n    void reverse(size_t\
+    \ l, size_t r) {\n        if(l == r) return;\n        auto [l1, r1] = _split(_root,\
+    \ l);\n        auto [m, r2] = _split(r1, r - l);\n        m->rev ^= true;\n  \
+    \      _root = _merge(_merge(l1, m), r2);\n    }\n    /**\n     * @brief [l,r)\u306E\
+    \u66F4\u65B0\n     * @param l \u7BC4\u56F2\u306E\u5148\u982D\n     * @param r\
+    \ \u7BC4\u56F2\u306E\u672B\u5C3E\n     * @param v \u66F4\u65B0\u3059\u308B\u5024\
+    \n     *\n     * O(log N)\n     */\n    void apply(size_t l, size_t r, const Update&\
+    \ f) {\n        if(l == r) return;\n        auto [l1, r1] = _split(_root, l);\n\
+    \        auto [m, r2] = _split(r1, r - l);\n        if constexpr(MappingWithSize)\
+    \ {\n            m->sum = _mapping(f, m->sum, m->cnt);\n        } else {\n   \
+    \         m->sum = _mapping(f, m->sum);\n        }\n        m->lazy = UpdateMonoid::op(f,\
+    \ m->lazy);\n        _root = _merge(_merge(l1, m), r2);\n    }\n};\n#line 3 \"\
+    integer/extgcd.hpp\"\n\nconstexpr ll extgcd(ll a, ll b, ll& x, ll& y) {\n    x\
+    \ = 1, y = 0;\n    ll nx = 0, ny = 1;\n    while(b) {\n        ll q = a / b;\n\
+    \        ll r = a % b;\n        a = b, b = r;\n        ll nnx = x - q * nx;\n\
+    \        ll nny = y - q * ny;\n        x = nx, nx = nnx;\n        y = ny, ny =\
+    \ nny;\n    }\n    return a;\n}\n#line 3 \"integer/pow-mod.hpp\"\n\nconstexpr\
+    \ ll inv_mod(ll n, ll m) {\n    n %= m;\n    if (n < 0) n += m;\n    ll x = -1,\
+    \ y = -1;\n    if(extgcd(n, m, x, y) != 1) throw logic_error(\"\");\n    x %=\
+    \ m;\n    if(x < 0) x += m;\n    return x;\n}\n\nconstexpr ll pow_mod(ll a, ll\
+    \ n, ll m) {\n    if(n == 0) return 1LL;\n    if(n < 0) return inv_mod(pow_mod(a,\
     \ -n, m), m);\n    a %= m;\n    if (a < 0) n += m;\n    ll res = 1;\n    while(n)\
     \ {\n        if(n & 1) {\n            res *= a;\n            res %= m;\n     \
     \   }\n        n >>= 1;\n        a *= a;\n        a %= m;\n    }\n    return res;\n\
@@ -464,7 +466,7 @@ data:
   isVerificationFile: true
   path: test/yosupo-dynamic-sequence-range-affine-range-sum.test.cpp
   requiredBy: []
-  timestamp: '2023-02-20 21:14:01+09:00'
+  timestamp: '2023-02-22 17:31:52+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/yosupo-dynamic-sequence-range-affine-range-sum.test.cpp

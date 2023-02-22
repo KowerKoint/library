@@ -144,6 +144,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: structure/implicit-treap.hpp
       title: ImplicitTreap
+    - icon: ':warning:'
+      path: structure/slope-trick.hpp
+      title: structure/slope-trick.hpp
   verificationCategories:
   - name: test
     pages:

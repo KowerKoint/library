@@ -222,35 +222,36 @@ data:
     \        return ValueReference(*this, m);\n    }\n    /**\n     * @brief \u7DCF\
     \u548C\n     * @param l \u7BC4\u56F2\u306E\u5148\u982D\n     * @param r \u7BC4\
     \u56F2\u306E\u672B\u5C3E\n     * @return [l,r)\u306E\u7DCF\u548C\n     */\n  \
-    \  Value query(size_t l, size_t r) {\n        auto [l1, r1] = _split(_root, l);\n\
-    \        auto [m, r2] = _split(r1, r - l);\n        Value ret = m->sum;\n    \
-    \    _root = _merge(_merge(l1, m), r2);\n        return ret;\n    }\n    /**\n\
-    \     * @brief \u633F\u5165\n     * @param k \u633F\u5165\u3059\u308B\u8981\u7D20\
-    \u306E\u6DFB\u5B57\n     *\n     * O(log N)\n     */\n    void insert(size_t k,\
-    \ const Value& v) {\n        auto [l, r] = _split(_root, k);\n        _root =\
-    \ _merge(_merge(l, new Node(v, _rng())), r);\n    }\n    /**\n     * @brief \u672B\
-    \u5C3E\u3078\u306E\u633F\u5165\n     *\n     * O(log N)\n     */\n    void push_back(const\
-    \ Value& v) { insert(size(), v); }\n    /**\n     * @brief \u524A\u9664\n    \
-    \ * @param k \u524A\u9664\u3059\u308B\u8981\u7D20\u306E\u6DFB\u5B57\n     *\n\
-    \     * O(log N)\n     */\n    void erase(size_t k) {\n        auto [l, r] = _split(_root,\
-    \ k);\n        auto [m, r2] = _split(r, 1);\n        _root = _merge(l, r2);\n\
-    \        delete m;\n    }\n    /**\n     * @brief \u672B\u5C3E\u306E\u524A\u9664\
-    \n     *\n     * O(log N)\n     */\n    void pop_back() { erase(size() - 1); }\n\
-    \    /**\n     * @brief [l,r)\u306E\u53CD\u8EE2\n     * @param l \u7BC4\u56F2\u306E\
-    \u5148\u982D\n     * @param r \u7BC4\u56F2\u306E\u672B\u5C3E\n     *\n     * O(log\
-    \ N)\n     * ValueMonoid\u3092\u6307\u5B9A\u3059\u308B\u5834\u5408\u306F\u53EF\
-    \u63DB\u3067\u306A\u3051\u308C\u3070\u306A\u3089\u306A\u3044\n     */\n    void\
-    \ reverse(size_t l, size_t r) {\n        auto [l1, r1] = _split(_root, l);\n \
-    \       auto [m, r2] = _split(r1, r - l);\n        m->rev ^= true;\n        _root\
-    \ = _merge(_merge(l1, m), r2);\n    }\n    /**\n     * @brief [l,r)\u306E\u66F4\
-    \u65B0\n     * @param l \u7BC4\u56F2\u306E\u5148\u982D\n     * @param r \u7BC4\
-    \u56F2\u306E\u672B\u5C3E\n     * @param v \u66F4\u65B0\u3059\u308B\u5024\n   \
-    \  *\n     * O(log N)\n     */\n    void apply(size_t l, size_t r, const Update&\
-    \ f) {\n        auto [l1, r1] = _split(_root, l);\n        auto [m, r2] = _split(r1,\
-    \ r - l);\n        if constexpr(MappingWithSize) {\n            m->sum = _mapping(f,\
-    \ m->sum, m->cnt);\n        } else {\n            m->sum = _mapping(f, m->sum);\n\
-    \        }\n        m->lazy = UpdateMonoid::op(f, m->lazy);\n        _root = _merge(_merge(l1,\
-    \ m), r2);\n    }\n};\n"
+    \  Value query(size_t l, size_t r) {\n        if(l == r) return ValueMonoid::id();\n\
+    \        auto [l1, r1] = _split(_root, l);\n        auto [m, r2] = _split(r1,\
+    \ r - l);\n        Value ret = m->sum;\n        _root = _merge(_merge(l1, m),\
+    \ r2);\n        return ret;\n    }\n    /**\n     * @brief \u633F\u5165\n    \
+    \ * @param k \u633F\u5165\u3059\u308B\u8981\u7D20\u306E\u6DFB\u5B57\n     *\n\
+    \     * O(log N)\n     */\n    void insert(size_t k, const Value& v) {\n     \
+    \   auto [l, r] = _split(_root, k);\n        _root = _merge(_merge(l, new Node(v,\
+    \ _rng())), r);\n    }\n    /**\n     * @brief \u672B\u5C3E\u3078\u306E\u633F\u5165\
+    \n     *\n     * O(log N)\n     */\n    void push_back(const Value& v) { insert(size(),\
+    \ v); }\n    /**\n     * @brief \u524A\u9664\n     * @param k \u524A\u9664\u3059\
+    \u308B\u8981\u7D20\u306E\u6DFB\u5B57\n     *\n     * O(log N)\n     */\n    void\
+    \ erase(size_t k) {\n        auto [l, r] = _split(_root, k);\n        auto [m,\
+    \ r2] = _split(r, 1);\n        _root = _merge(l, r2);\n        delete m;\n   \
+    \ }\n    /**\n     * @brief \u672B\u5C3E\u306E\u524A\u9664\n     *\n     * O(log\
+    \ N)\n     */\n    void pop_back() { erase(size() - 1); }\n    /**\n     * @brief\
+    \ [l,r)\u306E\u53CD\u8EE2\n     * @param l \u7BC4\u56F2\u306E\u5148\u982D\n  \
+    \   * @param r \u7BC4\u56F2\u306E\u672B\u5C3E\n     *\n     * O(log N)\n     *\
+    \ ValueMonoid\u3092\u6307\u5B9A\u3059\u308B\u5834\u5408\u306F\u53EF\u63DB\u3067\
+    \u306A\u3051\u308C\u3070\u306A\u3089\u306A\u3044\n     */\n    void reverse(size_t\
+    \ l, size_t r) {\n        if(l == r) return;\n        auto [l1, r1] = _split(_root,\
+    \ l);\n        auto [m, r2] = _split(r1, r - l);\n        m->rev ^= true;\n  \
+    \      _root = _merge(_merge(l1, m), r2);\n    }\n    /**\n     * @brief [l,r)\u306E\
+    \u66F4\u65B0\n     * @param l \u7BC4\u56F2\u306E\u5148\u982D\n     * @param r\
+    \ \u7BC4\u56F2\u306E\u672B\u5C3E\n     * @param v \u66F4\u65B0\u3059\u308B\u5024\
+    \n     *\n     * O(log N)\n     */\n    void apply(size_t l, size_t r, const Update&\
+    \ f) {\n        if(l == r) return;\n        auto [l1, r1] = _split(_root, l);\n\
+    \        auto [m, r2] = _split(r1, r - l);\n        if constexpr(MappingWithSize)\
+    \ {\n            m->sum = _mapping(f, m->sum, m->cnt);\n        } else {\n   \
+    \         m->sum = _mapping(f, m->sum);\n        }\n        m->lazy = UpdateMonoid::op(f,\
+    \ m->lazy);\n        _root = _merge(_merge(l1, m), r2);\n    }\n};\n"
   code: "#pragma once\n#include \"../base.hpp\"\n\n/**\n * @brief ImplicitTreap\n\
     \ *\n * @tparam Value \u5024\u306E\u578B\n * @tparam ValueMonoid \u5024\u306E\u7DCF\
     \u548C\u3092\u8A08\u7B97\u3059\u308B\u30E2\u30CE\u30A4\u30C9 void*\u306E\u5834\
@@ -387,42 +388,43 @@ data:
     \        return ValueReference(*this, m);\n    }\n    /**\n     * @brief \u7DCF\
     \u548C\n     * @param l \u7BC4\u56F2\u306E\u5148\u982D\n     * @param r \u7BC4\
     \u56F2\u306E\u672B\u5C3E\n     * @return [l,r)\u306E\u7DCF\u548C\n     */\n  \
-    \  Value query(size_t l, size_t r) {\n        auto [l1, r1] = _split(_root, l);\n\
-    \        auto [m, r2] = _split(r1, r - l);\n        Value ret = m->sum;\n    \
-    \    _root = _merge(_merge(l1, m), r2);\n        return ret;\n    }\n    /**\n\
-    \     * @brief \u633F\u5165\n     * @param k \u633F\u5165\u3059\u308B\u8981\u7D20\
-    \u306E\u6DFB\u5B57\n     *\n     * O(log N)\n     */\n    void insert(size_t k,\
-    \ const Value& v) {\n        auto [l, r] = _split(_root, k);\n        _root =\
-    \ _merge(_merge(l, new Node(v, _rng())), r);\n    }\n    /**\n     * @brief \u672B\
-    \u5C3E\u3078\u306E\u633F\u5165\n     *\n     * O(log N)\n     */\n    void push_back(const\
-    \ Value& v) { insert(size(), v); }\n    /**\n     * @brief \u524A\u9664\n    \
-    \ * @param k \u524A\u9664\u3059\u308B\u8981\u7D20\u306E\u6DFB\u5B57\n     *\n\
-    \     * O(log N)\n     */\n    void erase(size_t k) {\n        auto [l, r] = _split(_root,\
-    \ k);\n        auto [m, r2] = _split(r, 1);\n        _root = _merge(l, r2);\n\
-    \        delete m;\n    }\n    /**\n     * @brief \u672B\u5C3E\u306E\u524A\u9664\
-    \n     *\n     * O(log N)\n     */\n    void pop_back() { erase(size() - 1); }\n\
-    \    /**\n     * @brief [l,r)\u306E\u53CD\u8EE2\n     * @param l \u7BC4\u56F2\u306E\
-    \u5148\u982D\n     * @param r \u7BC4\u56F2\u306E\u672B\u5C3E\n     *\n     * O(log\
-    \ N)\n     * ValueMonoid\u3092\u6307\u5B9A\u3059\u308B\u5834\u5408\u306F\u53EF\
-    \u63DB\u3067\u306A\u3051\u308C\u3070\u306A\u3089\u306A\u3044\n     */\n    void\
-    \ reverse(size_t l, size_t r) {\n        auto [l1, r1] = _split(_root, l);\n \
-    \       auto [m, r2] = _split(r1, r - l);\n        m->rev ^= true;\n        _root\
-    \ = _merge(_merge(l1, m), r2);\n    }\n    /**\n     * @brief [l,r)\u306E\u66F4\
-    \u65B0\n     * @param l \u7BC4\u56F2\u306E\u5148\u982D\n     * @param r \u7BC4\
-    \u56F2\u306E\u672B\u5C3E\n     * @param v \u66F4\u65B0\u3059\u308B\u5024\n   \
-    \  *\n     * O(log N)\n     */\n    void apply(size_t l, size_t r, const Update&\
-    \ f) {\n        auto [l1, r1] = _split(_root, l);\n        auto [m, r2] = _split(r1,\
-    \ r - l);\n        if constexpr(MappingWithSize) {\n            m->sum = _mapping(f,\
-    \ m->sum, m->cnt);\n        } else {\n            m->sum = _mapping(f, m->sum);\n\
-    \        }\n        m->lazy = UpdateMonoid::op(f, m->lazy);\n        _root = _merge(_merge(l1,\
-    \ m), r2);\n    }\n};\n"
+    \  Value query(size_t l, size_t r) {\n        if(l == r) return ValueMonoid::id();\n\
+    \        auto [l1, r1] = _split(_root, l);\n        auto [m, r2] = _split(r1,\
+    \ r - l);\n        Value ret = m->sum;\n        _root = _merge(_merge(l1, m),\
+    \ r2);\n        return ret;\n    }\n    /**\n     * @brief \u633F\u5165\n    \
+    \ * @param k \u633F\u5165\u3059\u308B\u8981\u7D20\u306E\u6DFB\u5B57\n     *\n\
+    \     * O(log N)\n     */\n    void insert(size_t k, const Value& v) {\n     \
+    \   auto [l, r] = _split(_root, k);\n        _root = _merge(_merge(l, new Node(v,\
+    \ _rng())), r);\n    }\n    /**\n     * @brief \u672B\u5C3E\u3078\u306E\u633F\u5165\
+    \n     *\n     * O(log N)\n     */\n    void push_back(const Value& v) { insert(size(),\
+    \ v); }\n    /**\n     * @brief \u524A\u9664\n     * @param k \u524A\u9664\u3059\
+    \u308B\u8981\u7D20\u306E\u6DFB\u5B57\n     *\n     * O(log N)\n     */\n    void\
+    \ erase(size_t k) {\n        auto [l, r] = _split(_root, k);\n        auto [m,\
+    \ r2] = _split(r, 1);\n        _root = _merge(l, r2);\n        delete m;\n   \
+    \ }\n    /**\n     * @brief \u672B\u5C3E\u306E\u524A\u9664\n     *\n     * O(log\
+    \ N)\n     */\n    void pop_back() { erase(size() - 1); }\n    /**\n     * @brief\
+    \ [l,r)\u306E\u53CD\u8EE2\n     * @param l \u7BC4\u56F2\u306E\u5148\u982D\n  \
+    \   * @param r \u7BC4\u56F2\u306E\u672B\u5C3E\n     *\n     * O(log N)\n     *\
+    \ ValueMonoid\u3092\u6307\u5B9A\u3059\u308B\u5834\u5408\u306F\u53EF\u63DB\u3067\
+    \u306A\u3051\u308C\u3070\u306A\u3089\u306A\u3044\n     */\n    void reverse(size_t\
+    \ l, size_t r) {\n        if(l == r) return;\n        auto [l1, r1] = _split(_root,\
+    \ l);\n        auto [m, r2] = _split(r1, r - l);\n        m->rev ^= true;\n  \
+    \      _root = _merge(_merge(l1, m), r2);\n    }\n    /**\n     * @brief [l,r)\u306E\
+    \u66F4\u65B0\n     * @param l \u7BC4\u56F2\u306E\u5148\u982D\n     * @param r\
+    \ \u7BC4\u56F2\u306E\u672B\u5C3E\n     * @param v \u66F4\u65B0\u3059\u308B\u5024\
+    \n     *\n     * O(log N)\n     */\n    void apply(size_t l, size_t r, const Update&\
+    \ f) {\n        if(l == r) return;\n        auto [l1, r1] = _split(_root, l);\n\
+    \        auto [m, r2] = _split(r1, r - l);\n        if constexpr(MappingWithSize)\
+    \ {\n            m->sum = _mapping(f, m->sum, m->cnt);\n        } else {\n   \
+    \         m->sum = _mapping(f, m->sum);\n        }\n        m->lazy = UpdateMonoid::op(f,\
+    \ m->lazy);\n        _root = _merge(_merge(l1, m), r2);\n    }\n};\n"
   dependsOn:
   - base.hpp
   - stl-expansion.hpp
   isVerificationFile: false
   path: structure/implicit-treap.hpp
   requiredBy: []
-  timestamp: '2023-02-20 21:14:01+09:00'
+  timestamp: '2023-02-22 17:31:52+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/yosupo-dynamic-sequence-range-affine-range-sum.test.cpp
