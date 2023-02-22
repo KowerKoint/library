@@ -13,7 +13,8 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':warning:'
   attributes:
-    links: []
+    links:
+    - https://atcoder.jp/contests/arc123/submissions/39108795
   bundledCode: "#line 2 \"stl-expansion.hpp\"\n#include <bits/stdc++.h>\n\ntemplate\
     \ <typename T1, typename T2>\nstd::istream& operator>>(std::istream& is, std::pair<T1,\
     \ T2>& p) {\n    is >> p.first >> p.second;\n    return is;\n}\ntemplate <typename\
@@ -82,51 +83,51 @@ data:
     \ {\n    vector<T> res(n+1), rev(n+1);\n    res[0] = 1;\n    REP(i, n) res[i+1]\
     \ = res[i] * (i+1);\n    rev[n] = 1 / res[n];\n    for(int i = n; i > 0; i--)\
     \ {\n        rev[i-1] = rev[i] * i;\n    }\n    return make_pair(res, rev);\n\
-    }\n#line 3 \"structure/slope-trick.hpp\"\n\ntemplate <typename T>\nclass SlopeTrick\
-    \ {\n    T _min_f;\n    PQ<T> _left;\n    GPQ<T> _right;\n    T _l_shift, _r_shift;\n\
-    \npublic:\n    SlopeTrick() : _min_f(0), _l_shift(0), _r_shift(0) {}\n    T min_f()\
-    \ const { return _min_f; }\n    void add_all(const T &a) { _min_f += a; }\n  \
-    \  void add_a_minus_x(const T &a) {\n        if(_right.empty() || a < _right.top()\
-    \ + _r_shift) {\n            _left.push(a - _l_shift);\n        } else {\n   \
-    \         _min_f += a - _right.top() - _r_shift;\n            _left.push(_right.top()\
-    \ + _r_shift - _l_shift);\n            _right.pop();\n            _right.push(a\
-    \ - _r_shift);\n        }\n    }\n    void add_x_minus_a(const T &a) {\n     \
-    \   if(_left.empty() || _left.top() + _l_shift < a) {\n            _right.push(a\
-    \ - _r_shift);\n        } else {\n            _min_f += _left.top() + _l_shift\
-    \ - a;\n            _right.push(_left.top() + _l_shift - _r_shift);\n        \
-    \    _left.pop();\n            _left.push(a - _l_shift);\n        }\n    }\n \
-    \   void add_abs(const T &a) {\n        add_a_minus_x(a);\n        add_x_minus_a(a);\n\
-    \    }\n    void clear_right() {\n        while(!_right.empty()) _right.pop(0);\n\
-    \    }\n    void clear_left() {\n        while(!_left.empty()) _left.pop(0);\n\
-    \    }\n    void shift(const T &a) {\n        _l_shift += a;\n        _r_shift\
-    \ += a;\n    }\n    void shift(const T &a, const T &b) {\n        _l_shift +=\
-    \ a;\n        _r_shift += b;\n    }\n};\n"
-  code: "#pragma once\n#include \"../base.hpp\"\n\ntemplate <typename T>\nclass SlopeTrick\
-    \ {\n    T _min_f;\n    PQ<T> _left;\n    GPQ<T> _right;\n    T _l_shift, _r_shift;\n\
-    \npublic:\n    SlopeTrick() : _min_f(0), _l_shift(0), _r_shift(0) {}\n    T min_f()\
-    \ const { return _min_f; }\n    void add_all(const T &a) { _min_f += a; }\n  \
-    \  void add_a_minus_x(const T &a) {\n        if(_right.empty() || a < _right.top()\
-    \ + _r_shift) {\n            _left.push(a - _l_shift);\n        } else {\n   \
-    \         _min_f += a - _right.top() - _r_shift;\n            _left.push(_right.top()\
-    \ + _r_shift - _l_shift);\n            _right.pop();\n            _right.push(a\
-    \ - _r_shift);\n        }\n    }\n    void add_x_minus_a(const T &a) {\n     \
-    \   if(_left.empty() || _left.top() + _l_shift < a) {\n            _right.push(a\
-    \ - _r_shift);\n        } else {\n            _min_f += _left.top() + _l_shift\
-    \ - a;\n            _right.push(_left.top() + _l_shift - _r_shift);\n        \
-    \    _left.pop();\n            _left.push(a - _l_shift);\n        }\n    }\n \
-    \   void add_abs(const T &a) {\n        add_a_minus_x(a);\n        add_x_minus_a(a);\n\
-    \    }\n    void clear_right() {\n        while(!_right.empty()) _right.pop(0);\n\
-    \    }\n    void clear_left() {\n        while(!_left.empty()) _left.pop(0);\n\
-    \    }\n    void shift(const T &a) {\n        _l_shift += a;\n        _r_shift\
-    \ += a;\n    }\n    void shift(const T &a, const T &b) {\n        _l_shift +=\
-    \ a;\n        _r_shift += b;\n    }\n};\n"
+    }\n#line 3 \"structure/slope-trick.hpp\"\n\n// verify: https://atcoder.jp/contests/arc123/submissions/39108795\n\
+    \ntemplate <typename T>\nclass SlopeTrick {\n    T _min_f;\n    PQ<T> _left;\n\
+    \    GPQ<T> _right;\n    T _l_shift, _r_shift;\n\npublic:\n    SlopeTrick() :\
+    \ _min_f(0), _l_shift(0), _r_shift(0) {}\n    T min_f() const { return _min_f;\
+    \ }\n    void add_all(const T &a) { _min_f += a; }\n    void add_a_minus_x(const\
+    \ T &a) {\n        if(_right.empty() || a < _right.top() + _r_shift) {\n     \
+    \       _left.push(a - _l_shift);\n        } else {\n            _min_f += a -\
+    \ _right.top() - _r_shift;\n            _left.push(_right.top() + _r_shift - _l_shift);\n\
+    \            _right.pop();\n            _right.push(a - _r_shift);\n        }\n\
+    \    }\n    void add_x_minus_a(const T &a) {\n        if(_left.empty() || _left.top()\
+    \ + _l_shift < a) {\n            _right.push(a - _r_shift);\n        } else {\n\
+    \            _min_f += _left.top() + _l_shift - a;\n            _right.push(_left.top()\
+    \ + _l_shift - _r_shift);\n            _left.pop();\n            _left.push(a\
+    \ - _l_shift);\n        }\n    }\n    void add_abs(const T &a) {\n        add_a_minus_x(a);\n\
+    \        add_x_minus_a(a);\n    }\n    void clear_right() {\n        while(!_right.empty())\
+    \ _right.pop();\n    }\n    void clear_left() {\n        while(!_left.empty())\
+    \ _left.pop();\n    }\n    void shift(const T &a) {\n        _l_shift += a;\n\
+    \        _r_shift += a;\n    }\n    void shift(const T &a, const T &b) {\n   \
+    \     _l_shift += a;\n        _r_shift += b;\n    }\n};\n"
+  code: "#pragma once\n#include \"../base.hpp\"\n\n// verify: https://atcoder.jp/contests/arc123/submissions/39108795\n\
+    \ntemplate <typename T>\nclass SlopeTrick {\n    T _min_f;\n    PQ<T> _left;\n\
+    \    GPQ<T> _right;\n    T _l_shift, _r_shift;\n\npublic:\n    SlopeTrick() :\
+    \ _min_f(0), _l_shift(0), _r_shift(0) {}\n    T min_f() const { return _min_f;\
+    \ }\n    void add_all(const T &a) { _min_f += a; }\n    void add_a_minus_x(const\
+    \ T &a) {\n        if(_right.empty() || a < _right.top() + _r_shift) {\n     \
+    \       _left.push(a - _l_shift);\n        } else {\n            _min_f += a -\
+    \ _right.top() - _r_shift;\n            _left.push(_right.top() + _r_shift - _l_shift);\n\
+    \            _right.pop();\n            _right.push(a - _r_shift);\n        }\n\
+    \    }\n    void add_x_minus_a(const T &a) {\n        if(_left.empty() || _left.top()\
+    \ + _l_shift < a) {\n            _right.push(a - _r_shift);\n        } else {\n\
+    \            _min_f += _left.top() + _l_shift - a;\n            _right.push(_left.top()\
+    \ + _l_shift - _r_shift);\n            _left.pop();\n            _left.push(a\
+    \ - _l_shift);\n        }\n    }\n    void add_abs(const T &a) {\n        add_a_minus_x(a);\n\
+    \        add_x_minus_a(a);\n    }\n    void clear_right() {\n        while(!_right.empty())\
+    \ _right.pop();\n    }\n    void clear_left() {\n        while(!_left.empty())\
+    \ _left.pop();\n    }\n    void shift(const T &a) {\n        _l_shift += a;\n\
+    \        _r_shift += a;\n    }\n    void shift(const T &a, const T &b) {\n   \
+    \     _l_shift += a;\n        _r_shift += b;\n    }\n};\n"
   dependsOn:
   - base.hpp
   - stl-expansion.hpp
   isVerificationFile: false
   path: structure/slope-trick.hpp
   requiredBy: []
-  timestamp: '2023-02-22 17:31:52+09:00'
+  timestamp: '2023-02-22 17:51:21+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: structure/slope-trick.hpp

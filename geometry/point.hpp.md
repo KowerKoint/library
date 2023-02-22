@@ -356,7 +356,7 @@ data:
   - geometry/line.hpp
   - geometry/segment.hpp
   - geometry/polygon.hpp
-  timestamp: '2023-02-22 17:31:52+09:00'
+  timestamp: '2023-02-22 17:51:21+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/aoj-cgl-2-c.test.cpp
