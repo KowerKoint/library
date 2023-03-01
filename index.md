@@ -147,6 +147,9 @@ data:
     - icon: ':warning:'
       path: structure/slope-trick.hpp
       title: structure/slope-trick.hpp
+    - icon: ':warning:'
+      path: structure/union-find.hpp
+      title: structure/union-find.hpp
   verificationCategories:
   - name: test
     pages:

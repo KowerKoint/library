@@ -119,6 +119,9 @@ data:
   - icon: ':warning:'
     path: structure/slope-trick.hpp
     title: structure/slope-trick.hpp
+  - icon: ':warning:'
+    path: structure/union-find.hpp
+    title: structure/union-find.hpp
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: test/aoj-alds-1-1-c.test.cpp
@@ -390,6 +393,7 @@ data:
   - operator.hpp
   - structure/implicit-treap.hpp
   - structure/slope-trick.hpp
+  - structure/union-find.hpp
   - string.hpp
   - graph/min-cost-flow.hpp
   - graph/graph.hpp
@@ -412,7 +416,7 @@ data:
   - algebra/fps.hpp
   - connectivity/union-find.hpp
   - general.hpp
-  timestamp: '2023-02-22 17:51:21+09:00'
+  timestamp: '2023-03-02 00:13:11+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/yosupo-enumerate-primes.test.cpp

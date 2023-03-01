@@ -135,7 +135,7 @@ data:
   isVerificationFile: false
   path: segtree/segment-set.hpp
   requiredBy: []
-  timestamp: '2023-02-22 17:51:21+09:00'
+  timestamp: '2023-03-02 00:13:11+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/yukicoder-674.test.cpp

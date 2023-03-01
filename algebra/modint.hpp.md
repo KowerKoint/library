@@ -292,7 +292,7 @@ data:
   - convolution/ntt.hpp
   - algebra/fps.hpp
   - general.hpp
-  timestamp: '2023-02-22 17:51:21+09:00'
+  timestamp: '2023-03-02 00:13:11+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/yosupo-dynamic-sequence-range-affine-range-sum.test.cpp
