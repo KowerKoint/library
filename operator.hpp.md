@@ -183,15 +183,15 @@ data:
   isVerificationFile: false
   path: operator.hpp
   requiredBy:
-  - segtree/lazy-segtree.hpp
   - segtree/segtree.hpp
+  - segtree/lazy-segtree.hpp
   - matrix/matrix.hpp
-  timestamp: '2023-03-02 00:13:11+09:00'
+  timestamp: '2023-03-10 07:30:50+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/yosupo-range-affine-range-sum.test.cpp
-  - test/yosupo-determinant-of-matrix.test.cpp
   - test/aoj-dsl-2-a.test.cpp
+  - test/yosupo-determinant-of-matrix.test.cpp
 documentation_of: operator.hpp
 layout: document
 redirect_from:

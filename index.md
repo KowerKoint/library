@@ -40,11 +40,6 @@ data:
     - icon: ':heavy_check_mark:'
       path: bit/bitset.hpp
       title: bit/bitset.hpp
-  - name: connectivity
-    pages:
-    - icon: ':heavy_check_mark:'
-      path: connectivity/union-find.hpp
-      title: connectivity/union-find.hpp
   - name: convolution
     pages:
     - icon: ':heavy_check_mark:'
@@ -147,7 +142,7 @@ data:
     - icon: ':warning:'
       path: structure/slope-trick.hpp
       title: structure/slope-trick.hpp
-    - icon: ':warning:'
+    - icon: ':heavy_check_mark:'
       path: structure/union-find.hpp
       title: structure/union-find.hpp
   verificationCategories:

@@ -7,11 +7,26 @@ data:
   - icon: ':heavy_check_mark:'
     path: stl-expansion.hpp
     title: stl-expansion.hpp
-  _extendedRequiredBy: []
-  _extendedVerifiedWith: []
+  _extendedRequiredBy:
+  - icon: ':heavy_check_mark:'
+    path: graph/graph.hpp
+    title: graph/graph.hpp
+  - icon: ':heavy_check_mark:'
+    path: graph/tree.hpp
+    title: graph/tree.hpp
+  _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: test/aoj-dsl-1-b.test.cpp
+    title: test/aoj-dsl-1-b.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: test/yosupo-lowest-common-ancestor.test.cpp
+    title: test/yosupo-lowest-common-ancestor.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: test/yosupo-shortest-path.test.cpp
+    title: test/yosupo-shortest-path.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"stl-expansion.hpp\"\n#include <bits/stdc++.h>\n\ntemplate\
@@ -282,10 +297,15 @@ data:
   - stl-expansion.hpp
   isVerificationFile: false
   path: structure/union-find.hpp
-  requiredBy: []
-  timestamp: '2023-03-02 00:13:11+09:00'
-  verificationStatus: LIBRARY_NO_TESTS
-  verifiedWith: []
+  requiredBy:
+  - graph/graph.hpp
+  - graph/tree.hpp
+  timestamp: '2023-03-10 07:30:50+09:00'
+  verificationStatus: LIBRARY_ALL_AC
+  verifiedWith:
+  - test/aoj-dsl-1-b.test.cpp
+  - test/yosupo-shortest-path.test.cpp
+  - test/yosupo-lowest-common-ancestor.test.cpp
 documentation_of: structure/union-find.hpp
 layout: document
 redirect_from:

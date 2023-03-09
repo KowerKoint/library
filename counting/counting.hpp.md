@@ -170,15 +170,15 @@ data:
   path: counting/counting.hpp
   requiredBy:
   - general.hpp
-  timestamp: '2023-03-02 00:13:11+09:00'
+  timestamp: '2023-03-10 07:30:50+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - test/aoj-dpl-5-b.test.cpp
-  - test/aoj-dpl-5-g.test.cpp
   - test/aoj-dpl-5-i.test.cpp
-  - test/aoj-dpl-5-d.test.cpp
+  - test/aoj-dpl-5-b.test.cpp
   - test/aoj-dpl-5-j.test.cpp
   - test/aoj-dpl-5-e.test.cpp
+  - test/aoj-dpl-5-g.test.cpp
+  - test/aoj-dpl-5-d.test.cpp
 documentation_of: counting/counting.hpp
 layout: document
 redirect_from:

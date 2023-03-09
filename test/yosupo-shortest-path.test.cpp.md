@@ -5,14 +5,14 @@ data:
     path: base.hpp
     title: base.hpp
   - icon: ':heavy_check_mark:'
-    path: connectivity/union-find.hpp
-    title: connectivity/union-find.hpp
-  - icon: ':heavy_check_mark:'
     path: graph/graph.hpp
     title: graph/graph.hpp
   - icon: ':heavy_check_mark:'
     path: stl-expansion.hpp
     title: stl-expansion.hpp
+  - icon: ':heavy_check_mark:'
+    path: structure/union-find.hpp
+    title: structure/union-find.hpp
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
   _isVerificationFailed: false
@@ -92,40 +92,108 @@ data:
     \ {\n    vector<T> res(n+1), rev(n+1);\n    res[0] = 1;\n    REP(i, n) res[i+1]\
     \ = res[i] * (i+1);\n    rev[n] = 1 / res[n];\n    for(int i = n; i > 0; i--)\
     \ {\n        rev[i-1] = rev[i] * i;\n    }\n    return make_pair(res, rev);\n\
-    }\n#line 3 \"connectivity/union-find.hpp\"\n\ntemplate <typename Value=nullptr_t,\
-    \ Value (*merge_value)(Value, Value)=nullptr, typename Potential=int>\nstruct\
-    \ UnionFind {\n    int n;\n    VI par; // size if value is negative\n    vector<Value>\
-    \ val;\n    vector<Potential> pot;\n    UnionFind(int n=0) : n(n), par(n, -1),\
-    \ val(n), pot(n) {\n        assert(n >= 0);\n    }\n    int root(int x) {\n  \
-    \      assert(0 <= x && x < n);\n        if(par[x] < 0) return x;\n        int\
-    \ rt = root(par[x]);\n        pot[x] += pot[par[x]];\n        return par[x] =\
-    \ rt;\n    }\n    Value get_value(int x) {\n        assert(0 <= x && x < n);\n\
-    \        return val[root(x)];\n    }\n    void set_value(int x, Value v) {\n \
-    \       assert(0 <= x && x < n);\n        val[root(x)] = v;\n    }\n    Potential\
-    \ potential(int x) {\n        assert(0 <= x && x < n);\n        root(x);\n   \
-    \     return pot[x];\n    }\n    Potential diff(int x, int y) {\n        assert(0\
-    \ <= x && x < n);\n        assert(0 <= y && y < n);\n        return potential(y)\
-    \ - potential(x);\n    }\n    int size(int x) {\n        assert(0 <= x && x <\
-    \ n);\n        return -par[root(x)];\n    }\n    bool merge(int x, int y, Potential\
-    \ p=0) {\n        assert(0 <= x && x < n);\n        assert(0 <= y && y < n);\n\
-    \        p += potential(x);\n        p -= potential(y);\n        x = root(x),\
-    \ y = root(y);\n        if(x == y) return false;\n        if(par[x] > par[y])\
-    \ {\n            swap(x, y);\n            p = -p;\n        }\n        par[x] +=\
-    \ par[y];\n        par[y] = x;\n        if(merge_value != nullptr) val[x] = merge_value(val[x],\
-    \ val[y]);\n        pot[y] = p;\n        return true;\n    }\n    bool same(int\
-    \ x, int y) {\n        assert(0 <= x && x < n);\n        assert(0 <= y && y <\
-    \ n);\n        return root(x) == root(y);\n    }\n    VVI groups() {\n       \
-    \ VVI res(n);\n        REP(i, n) {\n            res[root(i)].push_back(i);\n \
-    \       }\n        sort(ALL(res), [](VI& a, VI& b) {\n            return a.size()\
-    \ > b.size();\n        });\n        while(!res.empty() && res.back().empty())\
-    \ res.pop_back();\n        return res;\n    }\n};\n\ntemplate <typename Potential>\n\
-    using WeightedUnionFind = UnionFind<nullptr_t, nullptr, Potential>;\n#line 4 \"\
-    graph/graph.hpp\"\n\ntemplate <typename T=int>\nstruct Edge {\n    int from, to;\n\
-    \    T cost;\n    int id;\n    Edge() = default;\n    Edge(int from, int to, T\
-    \ cost=1, int id=-1) : from(from), to(to), cost(cost), id(id) {}\n    operator\
-    \ int() const { return to; }\n};\n\ntemplate <typename T=int>\nstruct Graph {\n\
-    \    int n;\n    int m;\n    vector<vector<Edge<T>>> g;\n    Graph(int n_=0) :\
-    \ n(n_), m(0), g(n_) {\n        assert(n_ >= 0);\n    }\n    void add_edge(int\
+    }\n#line 3 \"structure/union-find.hpp\"\n\ntemplate<typename GroupValue_, typename\
+    \ VertexValue_, typename VertexValueCoef_>\nstruct UnionFindData {\n    GroupValue_\
+    \ group_value;\n    bool vertex_value_determined;\n    VertexValue_ vertex_value;\n\
+    \    VertexValueCoef_ a;\n    VertexValue_ b;\n};\ntemplate<>\nstruct UnionFindData<nullptr_t,\
+    \ nullptr_t, nullptr_t> {\n};\ntemplate<typename VertexValue_>\nstruct UnionFindData<nullptr_t,\
+    \ VertexValue_, nullptr_t> {\n    bool vertex_value_determined;\n    VertexValue_\
+    \ vertex_value;\n    VertexValue_ b;\n};\ntemplate<typename VertexValue_, typename\
+    \ VertexValueCoef_>\nstruct UnionFindData<nullptr_t, VertexValue_, VertexValueCoef_>\
+    \ {\n    bool vertex_value_determined;\n    VertexValue_ vertex_value;\n    VertexValueCoef_\
+    \ a;\n    VertexValue_ b;\n};\ntemplate <typename GroupValue_>\nstruct UnionFindData<GroupValue_,\
+    \ nullptr_t, nullptr_t> {\n    GroupValue_ group_value;\n};\ntemplate<typename\
+    \ GroupValue_, typename VertexValue_>\nstruct UnionFindData<GroupValue_, VertexValue_,\
+    \ nullptr_t> {\n    GroupValue_ group_value;\n    bool vertex_value_determined;\n\
+    \    VertexValue_ vertex_value;\n    VertexValue_ b;\n};\n\ntemplate <typename\
+    \ GroupValue=nullptr_t, typename MergeGroupValue=nullptr_t, typename VertexValue=nullptr_t,\
+    \ typename VertexValueCoef = nullptr_t>\nclass UnionFind {\n    int _n;\n    VI\
+    \ _par; //size if value is negative\n    vector<UnionFindData<GroupValue, VertexValue,\
+    \ VertexValueCoef>> _data;\n    MergeGroupValue _merge_group_value;\n\npublic:\n\
+    \    UnionFind(int n=0) : _n(n), _par(n, -1), _data(n) {\n        for(auto &d\
+    \ : _data) {\n            if constexpr(!is_same_v<VertexValue, nullptr_t>) {\n\
+    \                d.vertex_value_determined = false;\n                d.b = 0;\n\
+    \                if constexpr(!is_same_v<VertexValueCoef, nullptr_t>) {\n    \
+    \                d.a = 1;\n                }\n            }\n        }\n    }\n\
+    \    int root(int x) {\n        if (_par[x] < 0) return x;\n        int r = root(_par[x]);\n\
+    \        if constexpr (!is_same_v<VertexValue, nullptr_t>) {\n            if constexpr\
+    \ (is_same_v<VertexValueCoef, nullptr_t>) {\n                _data[x].b += _data[_par[x]].b;\n\
+    \            } else {\n                _data[x].b =_data[x].a * _data[_par[x]].b\
+    \ + _data[x].b;\n                _data[x].a *= _data[_par[x]].a;\n           \
+    \ }\n        }\n        return _par[x] = r;\n    }\n    GroupValue get_group_value(int\
+    \ x) {\n        return _data[root(x)].group_value;\n    }\n    void set_group_value(int\
+    \ x, GroupValue v) {\n        _data[root(x)].group_value = v;\n    }\n    pair<bool,\
+    \ VertexValue> get_vertex_value(int x) {\n        int r = root(x);\n        if(!_data[r].vertex_value_determined)\
+    \ return {false, {}};\n        if constexpr (is_same_v<VertexValueCoef, nullptr_t>)\
+    \ {\n            return {true, _data[r].vertex_value + _data[x].b};\n        }\
+    \ else {\n            return {true, _data[x].a * _data[r].vertex_value + _data[x].b};\n\
+    \        }\n    }\n    bool set_vertex_value(int x, VertexValue v) {\n       \
+    \ auto [determined, old] = get_vertex_value(x);\n        if(determined) return\
+    \ old == v;\n        int r = root(x);\n        _data[r].vertex_value_determined\
+    \ = true;\n        _data[r].vertex_value = (v - _data[x].b) / _data[x].a;\n  \
+    \      return true;\n    }\n    int size(int x) {\n        return -_par[root(x)];\n\
+    \    }\n    bool merge(int x, int y) {\n        static_assert(is_same_v<VertexValue,\
+    \ nullptr_t>);\n        x = root(x);\n        y = root(y);\n        if (x == y)\
+    \ return false;\n        if (_par[x] > _par[y]) swap(x, y);\n        _par[x] +=\
+    \ _par[y];\n        _par[y] = x;\n        if constexpr (!is_same_v<GroupValue,\
+    \ nullptr_t>) {\n            _data[x].group_value = _merge_group_value(_data[x].group_value,\
+    \ _data[y].group_value);\n        }\n        return true;\n    }\n    pair<bool,\
+    \ bool> merge(int x, int y, VertexValue b) {\n        static_assert(!is_same_v<VertexValue,\
+    \ nullptr_t>);\n        static_assert(is_same_v<VertexValueCoef, nullptr_t>);\n\
+    \        int rx = root(x);\n        int ry = root(y);\n        if (rx == ry) {\n\
+    \            if(_data[x].b + b != _data[y].b) return {false, false};\n       \
+    \     return {true, false};\n        }\n        b += _data[x].b;\n        b -=\
+    \ _data[y].b;\n        x = rx, y = ry;\n        if (_par[x] > _par[y]) {\n   \
+    \         swap(x, y);\n            b = -b;\n        }\n        if(_data[y].vertex_value_determined)\
+    \ {\n            if(_data[x].vertex_value_determined) {\n                if(_data[x].vertex_value\
+    \ + b != _data[y].vertex_value) return {false, false};\n            } else {\n\
+    \                _data[x].vertex_value_determined = true;\n                _data[x].vertex_value\
+    \ = _data[y].vertex_value - b;\n            }\n        }\n        _par[x] += _par[y];\n\
+    \        _par[y] = x;\n        if constexpr (!is_same_v<GroupValue, nullptr_t>)\
+    \ {\n            _data[x].group_value = _merge_group_value(_data[x].group_value,\
+    \ _data[y].group_value);\n        }\n        _data[y].b = b;\n        return {true,\
+    \ true};\n    }\n    pair<bool, bool> merge(int x, int y, VertexValueCoef a, VertexValue\
+    \ b) {\n        static_assert(!is_same_v<VertexValue, nullptr_t>);\n        static_assert(!is_same_v<VertexValueCoef,\
+    \ nullptr_t>);\n        int rx = root(x);\n        int ry = root(y);\n       \
+    \ if (rx == ry) {\n            VertexValueCoef a1 = a * _data[x].a - _data[y].a;\n\
+    \            VertexValue b1 = a * _data[x].b + b - _data[y].b;\n            if(a1\
+    \ == 0) {\n                if(b1 != 0) return {false, false};\n            } else\
+    \ if(_data[rx].vertex_value_determined) {\n                if(a1 * _data[rx].vertex_value\
+    \ + b1 != 0) return {false, false};\n            } else {\n                _data[rx].vertex_value_determined\
+    \ = true;\n                _data[rx].vertex_value = -b1 / a1;\n            }\n\
+    \            return {true, false};\n        }\n        b = a * _data[x].b + b;\n\
+    \        a *= _data[x].a;\n        b = (b - _data[y].b) / _data[y].a;\n      \
+    \  a /= _data[y].a;\n        x = rx, y = ry;\n        if (_par[x] > _par[y]) {\n\
+    \            swap(x, y);\n            a = 1 / a;\n            b *= -a;\n     \
+    \   }\n        if(_data[y].vertex_value_determined) {\n            if(_data[x].vertex_value_determined)\
+    \ {\n                if(a * _data[x].vertex_value + b != _data[y].vertex_value)\
+    \ return {false, false};\n            } else {\n                _data[x].vertex_value_determined\
+    \ = true;\n                _data[x].vertex_value = (_data[y].vertex_value - b)\
+    \ / a;\n            }\n        }\n        _par[x] += _par[y];\n        _par[y]\
+    \ = x;\n        if constexpr (!is_same_v<GroupValue, nullptr_t>) {\n         \
+    \   _data[x].group_value = _merge_group_value(_data[x].group_value, _data[y].group_value);\n\
+    \        }\n        _data[y].a = a;\n        _data[y].b = b;\n        return {true,\
+    \ true};\n    }\n    bool same(int x, int y) {\n        return root(x) == root(y);\n\
+    \    }\n    VertexValue diff(int x, int y) {\n        static_assert(!is_same_v<VertexValue,\
+    \ nullptr_t>);\n        static_assert(is_same_v<VertexValueCoef, nullptr_t>);\n\
+    \        assert(root(x) == root(y));\n        return _data[y].b - _data[x].b;\n\
+    \    }\n    pair<VertexValueCoef, VertexValue> relation(int x, int y) {\n    \
+    \    static_assert(!is_same_v<VertexValue, nullptr_t>);\n        static_assert(!is_same_v<VertexValueCoef,\
+    \ nullptr_t>);\n        assert(root(x) == root(y));\n        VertexValueCoef a\
+    \ = _data[y].a / _data[x].a;\n        VertexValue b = _data[y].b - a * _data[x].b;\n\
+    \        return {a, b};\n    }\n    VVI groups() {\n        VVI res(_n);\n   \
+    \     REP(i, _n) {\n            res[root(i)].push_back(i);\n        }\n      \
+    \  sort(ALL(res), [](const VI &a, const VI &b) { return a.size() > b.size(); });\n\
+    \        while (res.size() && res.back().empty()) res.pop_back();\n        return\
+    \ res;\n    }\n};\n\ntemplate <typename Potential>\nusing PotentialUnionFind =\
+    \ UnionFind<nullptr_t, nullptr_t, Potential>;\ntemplate <typename Coef, typename\
+    \ Potential>\nusing RelationUnionFind = UnionFind<nullptr_t, nullptr_t, Potential,\
+    \ Coef>;\n#line 4 \"graph/graph.hpp\"\n\ntemplate <typename T=int>\nstruct Edge\
+    \ {\n    int from, to;\n    T cost;\n    int id;\n    Edge() = default;\n    Edge(int\
+    \ from, int to, T cost=1, int id=-1) : from(from), to(to), cost(cost), id(id)\
+    \ {}\n    operator int() const { return to; }\n};\n\ntemplate <typename T=int>\n\
+    struct Graph {\n    int n;\n    int m;\n    vector<vector<Edge<T>>> g;\n    Graph(int\
+    \ n_=0) : n(n_), m(0), g(n_) {\n        assert(n_ >= 0);\n    }\n    void add_edge(int\
     \ u, int v, T w=1) {\n        assert(0 <= u && u < n);\n        assert(0 <= v\
     \ && v < n);\n        g[u].push_back({u, v, w, m});\n        g[v].push_back({v,\
     \ u, w, m++});\n    }\n    void add_directed_edge(int u, int v, T w=1) {\n   \
@@ -183,11 +251,11 @@ data:
   - graph/graph.hpp
   - base.hpp
   - stl-expansion.hpp
-  - connectivity/union-find.hpp
+  - structure/union-find.hpp
   isVerificationFile: true
   path: test/yosupo-shortest-path.test.cpp
   requiredBy: []
-  timestamp: '2023-03-02 00:13:11+09:00'
+  timestamp: '2023-03-10 07:30:50+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/yosupo-shortest-path.test.cpp
