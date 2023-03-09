@@ -1,9 +1,9 @@
 #define PROBLEM "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_1_B"
-#include "../connectivity/union-find.hpp"
+#include "../structure/union-find.hpp"
 
 int main() {
     int n, q; cin >> n >> q;
-    WeightedUnionFind<int> uf(n);
+    PotentialUnionFind<int> uf(n);
     while(q--) {
         int cmd; cin >> cmd;
         if(cmd == 0) {

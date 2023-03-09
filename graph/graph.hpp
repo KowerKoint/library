@@ -1,6 +1,6 @@
 #pragma once
 #include "../base.hpp"
-#include "../connectivity/union-find.hpp"
+#include "../structure/union-find.hpp"
 
 template <typename T=int>
 struct Edge {
