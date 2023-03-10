@@ -121,7 +121,7 @@ data:
   path: integer/kth-root-integer.hpp
   requiredBy:
   - integer/prime.hpp
-  timestamp: '2023-03-10 07:30:50+09:00'
+  timestamp: '2023-03-10 23:06:42+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/aoj-alds-1-1-c.test.cpp

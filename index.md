@@ -134,6 +134,11 @@ data:
     - icon: ':heavy_check_mark:'
       path: segtree/wavelet-matrix.hpp
       title: segtree/wavelet-matrix.hpp
+  - name: string
+    pages:
+    - icon: ':warning:'
+      path: string/rolling-hash.hpp
+      title: string/rolling-hash.hpp
   - name: structure
     pages:
     - icon: ':heavy_check_mark:'

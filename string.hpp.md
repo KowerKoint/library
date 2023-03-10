@@ -135,24 +135,7 @@ data:
     \  aho_corasick(begin, end, f);\n        return res;\n    }\n\n    void aho_corasick(string\
     \ &s, function<void(vector<int>&)>& f) {\n        aho_corasick(ALL(s), f);\n \
     \   }\n\n    ll aho_corasick(string &s) {\n        return aho_corasick(ALL(s));\n\
-    \    }\n};\n\ntemplate <typename T>\nstruct RollingHash {\n    int num;\n    vector<T>\
-    \ base;\n    vector<vector<T>> power;\n\n    RollingHash(const vector<T>& base_)\
-    \ : num(base_.size()), base(base_) {\n        power = vector<vector<T>>(num, vector<T>(1,\
-    \ 1));\n    }\n\n    RollingHash(int num_=3) : num(num_) {\n        assert(num_\
-    \ > 0);\n        power = vector<vector<T>>(num, vector<T>(1, 1));\n        mt19937\
-    \ engine((random_device){}());\n        REP(i, num) base.push_back(engine());\n\
-    \    }\n\n    void expand(int n) {\n        int m = power[0].size();\n       \
-    \ if(m > n) return;\n        REP(i, num) {\n            power[i].resize(n+1);\n\
-    \            FOR(j, m, n+1) power[i][j] = power[i][j-1] * base[i];\n        }\n\
-    \    }\n\n    template<typename It>\n    vector<vector<T>> build(It begin, It\
-    \ end) {\n        int n = end - begin;\n        vector<vector<T>> res(num, vector<T>(n+1));\n\
-    \        REP(i, num) REP(j, n) {\n            res[i][j+1] = res[i][j] * base[i]\
-    \ + *(begin+j);\n        }\n        return res;\n    }\n\n    vector<vector<T>>\
-    \ build(const string& s) {\n        return build(ALL(s));\n    }\n\n    vector<T>\
-    \ query(const vector<vector<T>>& hash, int l, int r) {\n        assert(hash.size()\
-    \ == num);\n        assert(0 <= l && l <= r && r < hash[0].size());\n        expand(r\
-    \ - l);\n        vector<T> res(num);\n        REP(i, num) res[i] = hash[i][r]\
-    \ - hash[i][l] * power[i][r-l];\n        return res;\n    }\n};\n"
+    \    }\n};\n"
   code: "#pragma once\n\n#include \"base.hpp\"\n\ntemplate <typename It>\nvector<int>\
     \ kmp_table(It begin, It end) {\n    int m = end - begin;\n    vector<int> table(m);\n\
     \    int j = 0;\n    FOR(i, 1, m) {\n        while(j > 0 && *(begin+i) != *(begin+j))\
@@ -206,31 +189,14 @@ data:
     \  aho_corasick(begin, end, f);\n        return res;\n    }\n\n    void aho_corasick(string\
     \ &s, function<void(vector<int>&)>& f) {\n        aho_corasick(ALL(s), f);\n \
     \   }\n\n    ll aho_corasick(string &s) {\n        return aho_corasick(ALL(s));\n\
-    \    }\n};\n\ntemplate <typename T>\nstruct RollingHash {\n    int num;\n    vector<T>\
-    \ base;\n    vector<vector<T>> power;\n\n    RollingHash(const vector<T>& base_)\
-    \ : num(base_.size()), base(base_) {\n        power = vector<vector<T>>(num, vector<T>(1,\
-    \ 1));\n    }\n\n    RollingHash(int num_=3) : num(num_) {\n        assert(num_\
-    \ > 0);\n        power = vector<vector<T>>(num, vector<T>(1, 1));\n        mt19937\
-    \ engine((random_device){}());\n        REP(i, num) base.push_back(engine());\n\
-    \    }\n\n    void expand(int n) {\n        int m = power[0].size();\n       \
-    \ if(m > n) return;\n        REP(i, num) {\n            power[i].resize(n+1);\n\
-    \            FOR(j, m, n+1) power[i][j] = power[i][j-1] * base[i];\n        }\n\
-    \    }\n\n    template<typename It>\n    vector<vector<T>> build(It begin, It\
-    \ end) {\n        int n = end - begin;\n        vector<vector<T>> res(num, vector<T>(n+1));\n\
-    \        REP(i, num) REP(j, n) {\n            res[i][j+1] = res[i][j] * base[i]\
-    \ + *(begin+j);\n        }\n        return res;\n    }\n\n    vector<vector<T>>\
-    \ build(const string& s) {\n        return build(ALL(s));\n    }\n\n    vector<T>\
-    \ query(const vector<vector<T>>& hash, int l, int r) {\n        assert(hash.size()\
-    \ == num);\n        assert(0 <= l && l <= r && r < hash[0].size());\n        expand(r\
-    \ - l);\n        vector<T> res(num);\n        REP(i, num) res[i] = hash[i][r]\
-    \ - hash[i][l] * power[i][r-l];\n        return res;\n    }\n};\n"
+    \    }\n};\n"
   dependsOn:
   - base.hpp
   - stl-expansion.hpp
   isVerificationFile: false
   path: string.hpp
   requiredBy: []
-  timestamp: '2023-03-10 07:30:50+09:00'
+  timestamp: '2023-03-10 23:06:42+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: string.hpp

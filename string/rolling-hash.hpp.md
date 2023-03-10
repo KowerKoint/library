@@ -5,23 +5,16 @@ data:
     path: base.hpp
     title: base.hpp
   - icon: ':heavy_check_mark:'
-    path: integer/kth-root-integer.hpp
-    title: integer/kth-root-integer.hpp
-  - icon: ':heavy_check_mark:'
     path: stl-expansion.hpp
     title: stl-expansion.hpp
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
   _isVerificationFailed: false
-  _pathExtension: cpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _pathExtension: hpp
+  _verificationStatusIcon: ':warning:'
   attributes:
-    '*NOT_SPECIAL_COMMENTS*': ''
-    PROBLEM: https://judge.yosupo.jp/problem/kth_root_integer
-    links:
-    - https://judge.yosupo.jp/problem/kth_root_integer
-  bundledCode: "#line 1 \"test/yosupo-kth-root-integer.test.cpp\"\n#define PROBLEM\
-    \ \"https://judge.yosupo.jp/problem/kth_root_integer\"\n\n#line 2 \"stl-expansion.hpp\"\
+    links: []
+  bundledCode: "#line 2 \"string/rolling-hash.hpp\"\n\n#line 2 \"stl-expansion.hpp\"\
     \n#include <bits/stdc++.h>\n\ntemplate <typename T1, typename T2>\nstd::istream&\
     \ operator>>(std::istream& is, std::pair<T1, T2>& p) {\n    is >> p.first >> p.second;\n\
     \    return is;\n}\ntemplate <typename T, size_t N>\nstd::istream& operator>>(std::istream&\
@@ -89,33 +82,57 @@ data:
     \ {\n    vector<T> res(n+1), rev(n+1);\n    res[0] = 1;\n    REP(i, n) res[i+1]\
     \ = res[i] * (i+1);\n    rev[n] = 1 / res[n];\n    for(int i = n; i > 0; i--)\
     \ {\n        rev[i-1] = rev[i] * i;\n    }\n    return make_pair(res, rev);\n\
-    }\n#line 3 \"integer/kth-root-integer.hpp\"\n\null kth_root_integer(ull x, ull\
-    \ k) {\n    if(k == 1) return x;\n    ll res = 0;\n    for(int i = 31; i >= 0;\
-    \ i--) {\n        bool over = false;\n        ull tmp = 1;\n        ull nxt =\
-    \ res | 1ULL << i;\n        REP(i, k) {\n            if(tmp > x / nxt) {\n   \
-    \             over = true;\n                break;\n            }\n          \
-    \  tmp *= nxt;\n        }\n        if(!over) res = nxt;\n    }\n    return res;\n\
-    }\n\n#line 4 \"test/yosupo-kth-root-integer.test.cpp\"\n\nint main() {\n    int\
-    \ t; cin >> t;\n    while(t--) {\n        ull a, k; cin >> a >> k;\n        print(kth_root_integer(a,\
-    \ k));\n    }\n}\n"
-  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/kth_root_integer\"\n\n\
-    #include \"../integer/kth-root-integer.hpp\"\n\nint main() {\n    int t; cin >>\
-    \ t;\n    while(t--) {\n        ull a, k; cin >> a >> k;\n        print(kth_root_integer(a,\
-    \ k));\n    }\n}\n"
+    }\n#line 4 \"string/rolling-hash.hpp\"\n\nstruct RollingHash {\n    constexpr\
+    \ static ull MASK30 = (1ULL << 30) - 1;\n    constexpr static ull MASK31 = (1ULL\
+    \ << 31) - 1;\n    constexpr static ull MOD = (1ULL << 61) - 1;\n    constexpr\
+    \ static ull MASK61 = MOD;\n\n    constexpr static inline ull add(ull a, ull b)\
+    \ {\n        if((a += b) >= MOD) a -= MOD;\n        return a;\n    }\n\n    constexpr\
+    \ static inline ull mul(ull a, ull b) {\n        __uint128_t c = (__uint128_t)a\
+    \ * b;\n        return add(c >> 61, c & MASK61);\n    }\n\n    uint base;\n  \
+    \  vector<ull> power;\n\n    RollingHash(ull base = 0) : base(base) {\n      \
+    \  if(base == 0) {\n            mt19937 mt((random_device())());\n           \
+    \ base = uniform_int_distribution<uint>(129, ~0U)(mt);\n        }\n        power\
+    \ = {1};\n    }\n\n    void expand(int n) {\n        int m = power.size();\n \
+    \       if(m > n) return;\n        power.resize(n+1);\n        FOR(i, m, n+1)\
+    \ power[i] = power[i-1] * base;\n    }\n\n    template<typename It>\n    vector<ull>\
+    \ build(It begin, It end) {\n        int n = end - begin;\n        vector<ull>\
+    \ res(n+1);\n        REP(i, n) {\n            res[i+1] = add(mul(res[i], base),\
+    \ *(begin+i));\n        }\n        return res;\n    }\n\n    vector<ull> build(const\
+    \ string& s) {\n        return build(ALL(s));\n    }\n\n    ull query(const vector<ull>&\
+    \ hs, int l, int r) {\n        expand(r - l);\n        return add(hs[r], MOD -\
+    \ mul(hs[l], power[r-l]));\n    }\n};\n"
+  code: "#pragma once\n\n#include \"../base.hpp\"\n\nstruct RollingHash {\n    constexpr\
+    \ static ull MASK30 = (1ULL << 30) - 1;\n    constexpr static ull MASK31 = (1ULL\
+    \ << 31) - 1;\n    constexpr static ull MOD = (1ULL << 61) - 1;\n    constexpr\
+    \ static ull MASK61 = MOD;\n\n    constexpr static inline ull add(ull a, ull b)\
+    \ {\n        if((a += b) >= MOD) a -= MOD;\n        return a;\n    }\n\n    constexpr\
+    \ static inline ull mul(ull a, ull b) {\n        __uint128_t c = (__uint128_t)a\
+    \ * b;\n        return add(c >> 61, c & MASK61);\n    }\n\n    uint base;\n  \
+    \  vector<ull> power;\n\n    RollingHash(ull base = 0) : base(base) {\n      \
+    \  if(base == 0) {\n            mt19937 mt((random_device())());\n           \
+    \ base = uniform_int_distribution<uint>(129, ~0U)(mt);\n        }\n        power\
+    \ = {1};\n    }\n\n    void expand(int n) {\n        int m = power.size();\n \
+    \       if(m > n) return;\n        power.resize(n+1);\n        FOR(i, m, n+1)\
+    \ power[i] = power[i-1] * base;\n    }\n\n    template<typename It>\n    vector<ull>\
+    \ build(It begin, It end) {\n        int n = end - begin;\n        vector<ull>\
+    \ res(n+1);\n        REP(i, n) {\n            res[i+1] = add(mul(res[i], base),\
+    \ *(begin+i));\n        }\n        return res;\n    }\n\n    vector<ull> build(const\
+    \ string& s) {\n        return build(ALL(s));\n    }\n\n    ull query(const vector<ull>&\
+    \ hs, int l, int r) {\n        expand(r - l);\n        return add(hs[r], MOD -\
+    \ mul(hs[l], power[r-l]));\n    }\n};\n"
   dependsOn:
-  - integer/kth-root-integer.hpp
   - base.hpp
   - stl-expansion.hpp
-  isVerificationFile: true
-  path: test/yosupo-kth-root-integer.test.cpp
+  isVerificationFile: false
+  path: string/rolling-hash.hpp
   requiredBy: []
   timestamp: '2023-03-10 23:06:42+09:00'
-  verificationStatus: TEST_ACCEPTED
+  verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
-documentation_of: test/yosupo-kth-root-integer.test.cpp
+documentation_of: string/rolling-hash.hpp
 layout: document
 redirect_from:
-- /verify/test/yosupo-kth-root-integer.test.cpp
-- /verify/test/yosupo-kth-root-integer.test.cpp.html
-title: test/yosupo-kth-root-integer.test.cpp
+- /library/string/rolling-hash.hpp
+- /library/string/rolling-hash.hpp.html
+title: string/rolling-hash.hpp
 ---
