@@ -121,7 +121,7 @@ data:
   path: integer/kth-root-integer.hpp
   requiredBy:
   - integer/prime.hpp
-  timestamp: '2023-04-05 21:42:18+09:00'
+  timestamp: '2023-04-05 22:01:35+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/yosupo-kth-root-integer.test.cpp

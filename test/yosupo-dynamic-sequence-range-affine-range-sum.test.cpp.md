@@ -466,7 +466,7 @@ data:
   isVerificationFile: true
   path: test/yosupo-dynamic-sequence-range-affine-range-sum.test.cpp
   requiredBy: []
-  timestamp: '2023-04-05 21:42:18+09:00'
+  timestamp: '2023-04-05 22:01:35+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/yosupo-dynamic-sequence-range-affine-range-sum.test.cpp

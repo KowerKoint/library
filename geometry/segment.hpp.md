@@ -385,7 +385,7 @@ data:
   path: geometry/segment.hpp
   requiredBy:
   - geometry/polygon.hpp
-  timestamp: '2023-04-05 21:42:18+09:00'
+  timestamp: '2023-04-05 22:01:35+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/aoj-cgl-3-b.test.cpp
