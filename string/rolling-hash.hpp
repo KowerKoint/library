@@ -33,7 +33,7 @@ struct RollingHash {
         int m = power.size();
         if(m > n) return;
         power.resize(n+1);
-        FOR(i, m, n+1) power[i] = power[i-1] * base;
+        FOR(i, m, n+1) power[i] = mul(power[i-1], base);
     }
 
     template<typename It>
