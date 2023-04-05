@@ -24,7 +24,7 @@ struct RollingHash {
     RollingHash(ull base = 0) : base(base) {
         if(base == 0) {
             mt19937 mt((random_device())());
-            base = uniform_int_distribution<uint>(129, ~0U)(mt);
+            this->base = uniform_int_distribution<uint>(129, ~0U)(mt);
         }
         power = {1};
     }
