@@ -127,7 +127,7 @@ data:
   isVerificationFile: true
   path: test/yukicoder-674.test.cpp
   requiredBy: []
-  timestamp: '2023-03-10 23:06:42+09:00'
+  timestamp: '2023-04-05 21:42:18+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/yukicoder-674.test.cpp

@@ -186,12 +186,12 @@ data:
   - segtree/segtree.hpp
   - segtree/lazy-segtree.hpp
   - matrix/matrix.hpp
-  timestamp: '2023-03-10 23:06:42+09:00'
+  timestamp: '2023-04-05 21:42:18+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - test/yosupo-range-affine-range-sum.test.cpp
-  - test/aoj-dsl-2-a.test.cpp
   - test/yosupo-determinant-of-matrix.test.cpp
+  - test/aoj-dsl-2-a.test.cpp
+  - test/yosupo-range-affine-range-sum.test.cpp
 documentation_of: operator.hpp
 layout: document
 redirect_from:

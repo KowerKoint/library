@@ -286,7 +286,7 @@ data:
   path: convolution/ntt.hpp
   requiredBy:
   - algebra/fps.hpp
-  timestamp: '2023-03-10 23:06:42+09:00'
+  timestamp: '2023-04-05 21:42:18+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/yosupo-convolution.test.cpp

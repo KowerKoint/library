@@ -91,9 +91,9 @@ data:
     \ * b;\n        return add(c >> 61, c & MASK61);\n    }\n\n    uint base;\n  \
     \  vector<ull> power;\n\n    RollingHash(ull base = 0) : base(base) {\n      \
     \  if(base == 0) {\n            mt19937 mt((random_device())());\n           \
-    \ base = uniform_int_distribution<uint>(129, ~0U)(mt);\n        }\n        power\
-    \ = {1};\n    }\n\n    void expand(int n) {\n        int m = power.size();\n \
-    \       if(m > n) return;\n        power.resize(n+1);\n        FOR(i, m, n+1)\
+    \ this->base = uniform_int_distribution<uint>(129, ~0U)(mt);\n        }\n    \
+    \    power = {1};\n    }\n\n    void expand(int n) {\n        int m = power.size();\n\
+    \        if(m > n) return;\n        power.resize(n+1);\n        FOR(i, m, n+1)\
     \ power[i] = power[i-1] * base;\n    }\n\n    template<typename It>\n    vector<ull>\
     \ build(It begin, It end) {\n        int n = end - begin;\n        vector<ull>\
     \ res(n+1);\n        REP(i, n) {\n            res[i+1] = add(mul(res[i], base),\
@@ -110,9 +110,9 @@ data:
     \ * b;\n        return add(c >> 61, c & MASK61);\n    }\n\n    uint base;\n  \
     \  vector<ull> power;\n\n    RollingHash(ull base = 0) : base(base) {\n      \
     \  if(base == 0) {\n            mt19937 mt((random_device())());\n           \
-    \ base = uniform_int_distribution<uint>(129, ~0U)(mt);\n        }\n        power\
-    \ = {1};\n    }\n\n    void expand(int n) {\n        int m = power.size();\n \
-    \       if(m > n) return;\n        power.resize(n+1);\n        FOR(i, m, n+1)\
+    \ this->base = uniform_int_distribution<uint>(129, ~0U)(mt);\n        }\n    \
+    \    power = {1};\n    }\n\n    void expand(int n) {\n        int m = power.size();\n\
+    \        if(m > n) return;\n        power.resize(n+1);\n        FOR(i, m, n+1)\
     \ power[i] = power[i-1] * base;\n    }\n\n    template<typename It>\n    vector<ull>\
     \ build(It begin, It end) {\n        int n = end - begin;\n        vector<ull>\
     \ res(n+1);\n        REP(i, n) {\n            res[i+1] = add(mul(res[i], base),\
@@ -126,7 +126,7 @@ data:
   isVerificationFile: false
   path: string/rolling-hash.hpp
   requiredBy: []
-  timestamp: '2023-03-10 23:06:42+09:00'
+  timestamp: '2023-04-05 21:42:18+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: string/rolling-hash.hpp

@@ -385,15 +385,15 @@ data:
   path: geometry/segment.hpp
   requiredBy:
   - geometry/polygon.hpp
-  timestamp: '2023-03-10 23:06:42+09:00'
+  timestamp: '2023-04-05 21:42:18+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - test/aoj-cgl-3-a.test.cpp
-  - test/aoj-cgl-4-b.test.cpp
-  - test/aoj-cgl-4-a.test.cpp
   - test/aoj-cgl-3-b.test.cpp
   - test/aoj-cgl-3-c.test.cpp
+  - test/aoj-cgl-4-a.test.cpp
+  - test/aoj-cgl-4-b.test.cpp
   - test/aoj-cgl-4-c.test.cpp
+  - test/aoj-cgl-3-a.test.cpp
 documentation_of: geometry/segment.hpp
 layout: document
 redirect_from:
